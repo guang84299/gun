@@ -626,6 +626,8 @@ cc.Class({
             jiesuorole:[{num:2,coin:10},{num:4,coin:30}]
         };
 
+        this.GAME.inviteconfig = [50,70,80,100,600];
+
         this.poolbullets = new cc.NodePool();
         this.poolhits = new cc.NodePool();
         this.poolsmokes = new cc.NodePool();
@@ -859,6 +861,7 @@ cc.Class({
         //this.setStorageGunJieSuoNum(1);
         //this.setStorageRoleJieSuoNum(4);
         //cc.sys.localStorage.setItem("playnum",0);
+        //this.setStorageInviteNum(4);
 
     },
 
@@ -908,11 +911,7 @@ cc.Class({
         this.node_rank = cc.find("Canvas/node_rank");
 
         this.node_fuhuo = cc.find("Canvas/node_fuhuo");
-        this.node_fuhuo_card = cc.find("pro/fuhuo_card",this.node_fuhuo);
-        this.node_fuhuo_card_num = cc.find("pro/fuhuo_card/num",this.node_fuhuo);
         this.node_fuhuo_share = cc.find("fuhuo_share",this.node_fuhuo);
-        this.node_fuhuo_skip = cc.find("bottom/bg/skip",this.node_fuhuo);
-        this.node_fuhuo_pro = cc.find("pro",this.node_fuhuo);
         this.node_fuhuo_coin = cc.find("coin/num",this.node_fuhuo);
         this.node_fuhuo_score = cc.find("score",this.node_fuhuo);
 
@@ -929,6 +928,9 @@ cc.Class({
         this.node_chengjiu_score = cc.find("score",this.node_chengjiu);
         this.node_chengjiu_coin = cc.find("coin/num",this.node_chengjiu);
         this.node_chengjiu_scroll_content = cc.find("scroll/view/content",this.node_chengjiu);
+
+        this.node_award = cc.find("Canvas/node_award");
+        this.node_award_itembg = cc.find("bg/itembg",this.node_award);
 
         this.node_tishi =  cc.find("Canvas/node_tishi");
         this.node_tishi.hand =  cc.find("hand",this.node_tishi);
@@ -970,7 +972,6 @@ cc.Class({
             }
         }
 
-        this.GAME.fangdanyi = true;
         var cardnum = this.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
@@ -1058,6 +1059,10 @@ cc.Class({
                 this.setStorageHitBossNum(parseInt(datas.hitBossNum));
             if(datas.hitBossAwardNum)
                 this.setStorageHitBossAwardNum(parseInt(datas.hitBossAwardNum));
+            if(datas.inviteNum)
+                this.setStorageInviteNum(parseInt(datas.inviteNum));
+            if(datas.inviteAwardNum)
+                this.setStorageInviteAwardNum(parseInt(datas.inviteAwardNum));
 
 
             this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
@@ -1109,7 +1114,8 @@ cc.Class({
         datas.hitHeadAwardNum = this.getStorageHitHeadAwardNum();
         datas.hitBossNum = this.getStorageHitBossNum();
         datas.hitBossAwardNum = this.getStorageHitBossAwardNum();
-
+        datas.inviteNum = this.getStorageInviteNum();
+        datas.inviteAwardNum = this.getStorageInviteAwardNum();
 
         var data = JSON.stringify(datas);
         qianqista.uploaddatas(data,function(res){
@@ -1122,7 +1128,7 @@ cc.Class({
     {
         var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_role,this.node_gun,this.node_setting,
             this.node_card,this.node_duihuan,this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
-            this.node_chengjiu];
+            this.node_chengjiu,this.node_award];
         for(var i=0;i<nodes.length;i++)
         {
             var items = nodes[i].children;
@@ -1462,6 +1468,23 @@ cc.Class({
                 this.lingquChengjiu(event.target.cjid,event.target.coin);
             }
         }
+        else if(data == "lingjiang")
+        {
+            this.openAward();
+            this.wxQuanState(false);
+        }
+        else if(data == "close_award")
+        {
+            this.node_award.active = false;
+            this.wxQuanState(true);
+        }
+        else if(data == "item_award")
+        {
+            if(event.target.canset)
+            {
+                this.lingquAward(event.target.awardid);
+            }
+        }
 
         cc.log(data);
     },
@@ -1481,20 +1504,9 @@ cc.Class({
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
             if(index == 0)
             {
-                if(this.GAME.control.length>0)
+                if(this.GAME.fangdanyi)
                 {
-                    for(var i=0;i<this.GAME.control.length;i++)
-                    {
-                        var con = this.GAME.control[i];
-                        if(con.id == "sharecard")
-                        {
-                            if(con.value == "1")
-                            {
-                                cc.find("roleyaoqing",this.node_gun).active = true;
-                            }
-                            break;
-                        }
-                    }
+                    cc.find("roleyaoqing",this.node_gun).active = true;
                 }
                 cc.find("gunjiesuo",this.node_gun).active = true;
             }
@@ -1502,6 +1514,50 @@ cc.Class({
             {
                 cc.find("gunjiesuo",this.node_gun).active = false;
                 cc.find("roleyaoqing",this.node_gun).active = false;
+            }
+        }
+    },
+
+    lingquAward: function(id)
+    {
+        var coin = this.GAME.inviteconfig[id-1];
+        this.setStorageCoin(parseInt(this.getStorageCoin())+coin);
+
+        var inviteAwardNum = this.getStorageInviteAwardNum();
+        this.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
+        this.uploadData();
+        this.showToast("金币+"+coin);
+        this.openAward();
+        this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
+    },
+
+    openAward: function()
+    {
+        this.node_award.active = true;
+        var inviteNum = this.getStorageInviteNum();
+        var inviteAwardNum = this.getStorageInviteAwardNum();
+
+        for(var i=1;i<=5;i++)
+        {
+            var item = cc.find("item_"+i,this.node_award_itembg);
+            var box = cc.find("box",item);
+            box.awardid = i;
+            box.canset = false;
+            if(inviteAwardNum<i)
+            {
+                if(inviteNum>=i)
+                {
+                    box.color = cc.color(137,87,161);
+                    box.canset = true;
+                }
+                else
+                {
+                    box.color = cc.color(255,255,255);
+                }
+            }
+            else
+            {
+                box.color = cc.color(181,181,181);
             }
         }
     },
@@ -3935,81 +3991,27 @@ cc.Class({
     judgeFuHuo: function()
     {
         var self = this;
-        if(this.GAME.control.length>0)
+        if(!this.GAME.fangdanyi)
         {
-            for(var i=0;i<this.GAME.control.length;i++)
-            {
-                var con = this.GAME.control[i];
-                if(con.id == "sharecard")
-                {
-                    if(con.value == "0")
-                    {
-                        this.gameResult();
-                        return;
-                    }
-                }
-            }
+            this.gameResult();
+            return;
         }
 
         this.node_fuhuo.active = true;
 
         this.node_game_ui.active = false;
-        this.node_fuhuo_skip.active = false;
         this.node_fuhuo_coin.getComponent("cc.Label").string = Math.floor(this.GAME.coin);
         this.node_fuhuo_score.getComponent("cc.Label").string = parseInt(this.GAME.score);
-
-        var cardnum = this.getStorageCard();
-        if(cardnum <= 0)
-        {
-            this.node_fuhuo_pro.active = false;
-            this.node_fuhuo_share.active = true;
-        }
-        else
-        {
-            this.node_fuhuo_pro.active = true;
-            this.node_fuhuo_share.active = false;
-
-            this.node_fuhuo_card_num.getComponent("cc.Label").string = "剩余:"+cardnum;
-            this.node_fuhuo_pro.getComponent("cc.ProgressBar").progress = 1;
-            this.node_fuhuo_pro.runtime = 8;
-            var seq = cc.sequence(
-                cc.delayTime(0.1),
-                cc.callFunc(function(){
-                    self.node_fuhuo_pro.runtime -= 0.1;
-                    var p = self.node_fuhuo_pro.runtime/8;
-                    self.node_fuhuo_pro.getComponent("cc.ProgressBar").progress = p;
-                })
-            );
-            var seq2 = cc.sequence(
-                cc.delayTime(8),
-                cc.callFunc(function(){
-                    self.gameResult();
-                    self.node_fuhuo.active = false;
-                })
-            );
-
-            self.node_fuhuo_pro.runAction(cc.repeat(seq,80));
-            self.node_fuhuo_pro.runAction(seq2);
-        }
-        var seq3 = cc.sequence(
-            cc.delayTime(1.5),
-            cc.callFunc(function(){
-                self.node_fuhuo_skip.active = true;
-            })
-        );
-        this.node_fuhuo.runAction(seq3);
     },
 
     skip: function()
     {
-        this.node_fuhuo_pro.stopAllActions();
         this.node_fuhuo.active = false;
         this.gameResult();
     },
 
     fuhuo: function(isCard)
     {
-        this.node_fuhuo_pro.stopAllActions();
         this.node_fuhuo.active = false;
         this.node_game_ui.active = true;
 
@@ -4543,6 +4545,28 @@ cc.Class({
         num = num ? num : 0;
         return num;
     },
+
+    setStorageInviteNum: function(num)
+    {
+        cc.sys.localStorage.setItem("invite_num",num);
+    },
+    getStorageInviteNum: function()
+    {
+        var num = cc.sys.localStorage.getItem("invite_num");
+        num = num ? num : 0;
+        return num;
+    },
+    setStorageInviteAwardNum: function(num)
+    {
+        cc.sys.localStorage.setItem("invite_award_num",num);
+    },
+    getStorageInviteAwardNum: function()
+    {
+        var num = cc.sys.localStorage.getItem("invite_award_num");
+        num = num ? num : 0;
+        return num;
+    },
+
 
     getChaoyue: function()
     {

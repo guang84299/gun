@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "6332bc54-d95f-4255-a50c-cc3f27cba967",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "gun_10_model": {
+      "ver": "1.0.3",
+      "uuid": "ff6801ab-490d-4985-97c5-97146e2b4e23",
+      "rawTextureUuid": "6332bc54-d95f-4255-a50c-cc3f27cba967",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0.5,
+      "trimX": 2,
+      "trimY": 2,
+      "width": 331,
+      "height": 145,
+      "rawWidth": 335,
+      "rawHeight": 150,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

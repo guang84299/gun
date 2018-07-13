@@ -1,0 +1,13 @@
+gun/library/
+gun/temp/
+gun/local/
+gun/build/
+gun/.idea/
+
+rank/library/
+rank/temp/
+rank/local/
+rank/build/
+rank/.idea/
+
+.DS_Store

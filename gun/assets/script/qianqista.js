@@ -49,6 +49,9 @@
  *
  *  8.上传用户游戏数据
  *  qianqista.uploaddatas(datas,callback)
+ *
+ *  9.//获取群id
+ *  qianqista.getGrpupId(encryptedData,iv,callback)
  *  */
 module.exports = {
     gameId: "", //游戏id
@@ -63,6 +66,7 @@ module.exports = {
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
     initcallback: null,
+    fromid:"",
     init: function(gameId,secret,gameName,initcallback)
     {
         this.gameId = gameId;
@@ -88,6 +92,12 @@ module.exports = {
                 if(this.channel == "" || this.channel == null)
                 {
                     this.channel = scene+"";
+                }
+
+                if(query && query.fromid && query.fromid.length > 0)
+                {
+                    this.fromid = query.fromid;
+                    console.log('fromid:', query.fromid);
                 }
             }
 
@@ -136,6 +146,18 @@ module.exports = {
                 console.log("init:",res);
                 if(self.initcallback)
                     self.initcallback();
+
+                //初始化成功上传分享来源获取金币
+                if(self.fromid && self.fromid.length>1)
+                {
+                    var data = {};
+                    data.invitelist = self.openid;
+                    var datas = JSON.stringify(data);
+                    self.sendRequest("uploaddatas",{gameId:self.gameId,openid:self.fromid,datas:datas},function(res){
+                        console.log("upload invitelist:",res);
+                    });
+                }
+
             });
             if(this.updatePower && this.power == 1)
             {
@@ -224,7 +246,7 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            this.sendRequest("uploaddatas",{gameId:this.gameId,openid:this.openid,datas:datas},function(res){
+            this.httpPost("uploaddatas",{gameId:this.gameId,openid:this.openid,datas:datas},function(res){
                 console.log("uploaddatas:",res);
                 if(callback)
                     callback(res);
@@ -258,6 +280,38 @@ module.exports = {
             });
         }
 
+    },
+    //获取群id
+    getGrpupId: function(encryptedData,iv,callback)
+    {
+        if(this.state == 1)
+        {
+            var self = this;
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            {
+                self.httpPost("groupid",{encryptedData:encryptedData,sessionkey:self.session_key,iv:iv},function(r){
+                    if(r.state == 200)
+                    {
+                        var msg = r.data;
+                        var b = (msg == null || msg == "null") ? false : true;
+                        console.log('groupid:', msg.openGId);
+                        if(callback)
+                        {
+                            if(b == true)
+                            {
+                                callback(b,msg.openGId,msg.watermark.timestamp*1000);
+                            }
+                            else
+                            {
+                                callback(b);
+                            }
+                        }
+
+                    }
+                    console.log('groupid:', r);
+                });
+            }
+        }
     },
 
 
@@ -298,6 +352,35 @@ module.exports = {
         }
         xhr.send();
         return xhr;
+    },
+
+    httpPost: function (url, params, handler) {
+        var xhr = cc.loader.getXMLHttpRequest();
+        var requestURL = this.url + url;
+        console.log("RequestURL:" + requestURL);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+                try {
+                    var ret = JSON.parse(xhr.responseText);
+                    if (handler !== null) {
+                        handler(ret);
+                    }
+                } catch (e) {
+                    console.log("sendRequest Err:" + e);
+                } finally {}
+            }
+        };
+        xhr.open("POST", requestURL, true);
+        if (cc.sys.isNative) {
+            xhr.setRequestHeader("Accept-Encoding", "gzip,deflate");
+        }
+
+        // note: In Internet Explorer, the timeout property may be set only after calling the open()
+        // method and before calling the send() method.
+        xhr.timeout = 5000;// 5 seconds for timeout
+
+        xhr.send(params);
     }
+
 
 };

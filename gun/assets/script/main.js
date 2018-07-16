@@ -495,6 +495,7 @@ cc.Class({
          this.userInfo = {};
          this.uploadScoreDt = 0;
          this.openover = false;
+         this.openstore = false;
 
          this.initPhysics();
          this.initData();
@@ -510,7 +511,16 @@ cc.Class({
          this.preloadSound();
 
          var self = this;
-         qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
+         //qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
+         //    qianqista.datas(function(res){
+         //        console.log('my datas:', res);
+         //        if(res.state == 200)
+         //        {
+         //            self.updateLocalData(res.data);
+         //        }
+         //    });
+         //});
+         qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
              qianqista.datas(function(res){
                  console.log('my datas:', res);
                  if(res.state == 200)
@@ -611,7 +621,7 @@ cc.Class({
             {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:1.8,coin:1.8}
         ];
 
-        this.GAME.bgcolor = [cc.color(136,110,94),cc.color(25,112,133),cc.color(110,24,128),
+        this.GAME.bgcolor = [cc.color(110,24,128),cc.color(25,112,133),cc.color(136,110,94),
             cc.color(89,89,89),cc.color(132,131,172),cc.color(134,152,118),cc.color(149,149,149),
             cc.color(24,128,93),cc.color(122,28,24),cc.color(24,95,128),cc.color(149,140,46),
             cc.color(208,163,162),cc.color(107,133,148),cc.color(140,31,57),cc.color(86,127,22)];
@@ -665,174 +675,174 @@ cc.Class({
 
         this.GAME.loutis = [
             [
-                [1,2,3],
-                [2,3,1],
                 [1,2,1],
+                [2,2,0],
+                [1,2,0],
+                [2,3,0],
+                [1,3,-1],
+                [2,2,0],
+                [1,2,0],
+                [2,3,0],
+                [1,4,-1],
+                [2,3,0],
+                [1,2,1],
+                [2,3,0],
+                [1,4,-1],
+                [2,3,0],
+                [1,4,-1],
+                [2,4,-1],
+                [1,4,-1],
+                [2,3,0],
+                [1,3,-1],
+                [2,2,1],
+                [1,2,1],
+                [2,4,2],
+                [1,4,-1],
                 [2,3,1],
+                [1,2,0],
+                [2,4,-1],
+                [1,3,0],
+                [2,3,0],
                 [1,3,0],
                 [2,4,1],
+                [1,2,0],
+                [2,2,0]
+            ],
+            [
+                [1,2,1],
+                [2,2,-1],
+                [1,3,-1],
+                [2,4,-1],
+                [1,2,0],
+                [2,3,0],
+                [1,4,0],
+                [2,3,-1],
+                [1,4,0],
+                [2,4,-1],
+                [1,2,1],
+                [2,4,-1],
+                [1,4,-2],
+                [2,3,-2],
+                [1,2,0],
+                [2,3,1],
+                [1,4,-1],
+                [2,3,-1],
+                [1,2,1],
+                [2,4,1],
+                [1,3,0],
+                [2,2,1],
+                [1,5,-2],
+                [2,4,0],
+                [1,5,-2],
+                [2,3,0],
+                [1,4,-1],
+                [2,5,-1],
+                [1,2,0],
+                [2,4,-1],
+                [1,4,-2],
+                [2,2,0]
+            ],
+            [
+                [1,2,1],
+                [2,2,0],
+                [1,5,-2],
+                [2,4,-2],
+                [1,3,0],
+                [2,4,0],
+                [1,5,-2],
+                [2,4,-2],
+                [1,3,1],
+                [2,3,1],
+                [1,5,-2],
+                [2,4,-1],
                 [1,2,1],
                 [2,3,1],
+                [1,2,0],
+                [2,4,-1],
+                [1,2,0],
+                [2,3,-1],
+                [1,5,-1],
+                [2,3,1],
+                [1,5,0],
+                [2,2,0],
+                [1,3,1],
+                [2,5,-1],
+                [1,5,-2],
+                [2,4,0],
+                [1,3,1],
+                [2,5,-1],
+                [1,2,1],
+                [2,3,1],
+                [1,2,1],
+                [2,2,0]
+            ],
+            [
+                [1,2,1],
+                [2,3,-1],
+                [1,5,-2],
+                [2,5,-2],
+                [1,4,0],
+                [2,4,-1],
+                [1,3,0],
+                [2,2,1],
+                [1,5,-2],
+                [2,3,0],
+                [1,4,-1],
+                [2,5,-1],
                 [1,4,0],
                 [2,5,-1],
                 [1,2,2],
-                [2,3,1],
-                [1,5,-1],
                 [2,3,2],
-                [1,4,2],
-                [2,4,-1],
-                [1,5,0],
-                [2,3,1],
-                [1,3,0],
-                [2,2,4],
+                [1,5,-2],
+                [2,5,-1],
                 [1,2,2],
-                [2,4,1],
-                [1,4,2],
-                [2,3,3],
-                [1,2,1],
-                [2,4,1],
-                [1,5,-1],
-                [2,3,2],
-                [1,3,1],
-                [2,4,2],
-                [1,2,1],
-                [2,3,0]
-            ],
-            [
-                [1,2,3],
-                [2,2,0],
-                [1,3,0],
-                [2,4,2],
-                [1,2,0],
-                [2,3,1],
-                [1,4,1],
-                [2,3,0],
-                [1,5,0],
-                [2,4,2],
-                [1,2,0],
-                [2,4,2],
-                [1,8,0],
-                [2,5,0],
-                [1,2,1],
-                [2,3,2],
-                [1,5,-1],
-                [2,4,0],
-                [1,2,2],
-                [2,4,3],
-                [1,3,0],
-                [2,2,2],
-                [1,5,1],
-                [2,6,1],
-                [1,7,0],
-                [2,3,1],
-                [1,4,-1],
-                [2,5,2],
-                [1,2,2],
-                [2,4,0],
-                [1,4,1],
-                [2,3,0]
-            ],
-            [
-                [1,2,3],
-                [2,3,1],
-                [1,6,0],
-                [2,4,-1],
-                [1,3,1],
-                [2,5,1],
-                [1,6,1],
-                [2,8,-1],
-                [1,4,0],
-                [2,4,2],
-                [1,6,-1],
-                [2,4,1],
-                [1,3,2],
-                [2,2,2],
-                [1,2,1],
-                [2,5,1],
-                [1,2,-1],
-                [2,3,0],
-                [1,5,2],
-                [2,3,2],
-                [1,5,2],
-                [2,2,1],
-                [1,3,2],
-                [2,7,0],
-                [1,5,0],
-                [2,4,1],
-                [1,3,2],
-                [2,5,3],
-                [1,2,1],
-                [2,3,3],
-                [1,2,2],
-                [2,3,0]
-            ],
-            [
-                [1,2,3],
-                [2,3,1],
-                [1,5,2],
-                [2,6,1],
-                [1,4,2],
-                [2,4,1],
-                [1,3,2],
-                [2,2,4],
-                [1,7,0],
-                [2,3,1],
-                [1,4,1],
-                [2,6,1],
-                [1,4,2],
-                [2,5,1],
-                [1,2,3],
-                [2,3,2],
-                [1,6,0],
-                [2,7,-1],
-                [1,2,3],
-                [2,5,1],
+                [2,5,-1],
                 [1,6,-2],
-                [2,8,-2],
-                [1,3,0],
-                [2,4,2],
-                [1,2,3],
-                [2,4,1],
-                [1,5,0],
-                [2,3,2],
-                [1,4,2],
-                [2,6,-1],
+                [2,3,-1],
+                [1,4,0],
+                [2,3,0],
+                [1,2,1],
+                [2,4,0],
+                [1,3,-2],
+                [2,3,1],
                 [1,4,1],
-                [2,3,1]
+                [2,6,-2],
+                [1,4,0],
+                [2,2,0]
             ],
             [
-                [1,2,3],
+                [1,2,1],
+                [2,4,-1],
+                [1,2,1],
+                [2,5,-2],
+                [1,3,0],
                 [2,4,0],
+                [1,5,-2],
+                [2,2,1],
+                [1,4,-1],
+                [2,3,1],
+                [1,4,0],
+                [2,5,-1],
+                [1,3,0],
+                [2,4,0],
+                [1,5,-2],
+                [2,4,0],
+                [1,5,-1],
+                [2,2,2],
+                [1,4,0],
+                [2,5,-1],
                 [1,2,1],
                 [2,5,0],
-                [1,3,1],
-                [2,4,1],
-                [1,5,0],
+                [1,5,-2],
+                [2,3,1],
+                [1,5,-2],
+                [2,3,1],
+                [1,4,0],
                 [2,2,2],
-                [1,6,0],
-                [2,3,2],
-                [1,4,1],
-                [2,6,0],
-                [1,3,1],
-                [2,4,1],
                 [1,5,0],
                 [2,4,1],
-                [1,6,0],
-                [2,2,3],
-                [1,4,2],
-                [2,5,1],
-                [1,2,2],
-                [2,5,1],
-                [1,6,1],
-                [2,3,2],
-                [1,6,0],
-                [2,3,2],
-                [1,4,1],
-                [2,2,3],
-                [1,5,1],
-                [2,4,2],
-                [1,5,0],
-                [2,2,1]
+                [1,5,-1],
+                [2,2,0]
             ]
 
         ];
@@ -843,6 +853,8 @@ cc.Class({
             this.setStorageMusic(1);
             this.setStorageSound(1);
             this.setStorageVibrate(1);
+            this.setStorageShareGroupList("groups:");
+            this.setStorageShareGroupTime(-1);
         }
 
         //for(var i=1;i<=9;i++)
@@ -943,12 +955,14 @@ cc.Class({
         //}
         this.initGmae();
         this.updateUIControl();
+        this.updateDian();
     },
 
     updateUIControl: function()
     {
+        cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingqu",this.node_main).active = false;
-        cc.find("lingqu",this.node_over).active = false;
+        cc.find("lingjiang",this.node_main).active = false;
         cc.find("roleyaoqing",this.node_role).active = false;
         cc.find("roleyaoqing",this.node_gun).active = false;
 
@@ -961,8 +975,9 @@ cc.Class({
                 {
                     if(con.value == "1")
                     {
+                        cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingqu",this.node_main).active = true;
-                        cc.find("lingqu",this.node_over).active = true;
+                        cc.find("lingjiang",this.node_main).active = true;
                         cc.find("roleyaoqing",this.node_role).active = true;
                         cc.find("roleyaoqing",this.node_gun).active = true;
                         this.GAME.fangdanyi = true;
@@ -1063,6 +1078,12 @@ cc.Class({
                 this.setStorageInviteNum(parseInt(datas.inviteNum));
             if(datas.inviteAwardNum)
                 this.setStorageInviteAwardNum(parseInt(datas.inviteAwardNum));
+            if(datas.invitelist)
+                this.setStorageInviteNum(datas.invitelist.length);
+            if(datas.shareGroupList)
+                this.setStorageShareGroupList(datas.shareGroupList);
+            if(datas.shareGroupTime)
+                this.setStorageShareGroupTime(datas.shareGroupTime);
 
 
             this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
@@ -1072,6 +1093,18 @@ cc.Class({
         {
             this.uploadData();
         }
+    },
+
+    updateData: function()
+    {
+        var self = this;
+        qianqista.datas(function(res){
+            console.log('my datas:', res);
+            if(res.state == 200)
+            {
+                self.updateLocalData(res.data);
+            }
+        });
     },
 
     uploadData: function()
@@ -1116,10 +1149,15 @@ cc.Class({
         datas.hitBossAwardNum = this.getStorageHitBossAwardNum();
         datas.inviteNum = this.getStorageInviteNum();
         datas.inviteAwardNum = this.getStorageInviteAwardNum();
+        datas.shareGroupList = this.getStorageShareGroupList();
+        datas.shareGroupTime = this.getStorageShareGroupTime();
 
         var data = JSON.stringify(datas);
+        var self = this;
         qianqista.uploaddatas(data,function(res){
             console.log("--uploaddatas:",res);
+            if(res && res.state == 200)
+                self.updateData();
         });
     },
 
@@ -1451,7 +1489,8 @@ cc.Class({
         }
         else if(data == "roleyaoqing")
         {
-            this.wxGropShareCoin();
+            this.openstore = true;
+            this.openAward();
         }
         else if(data == "chengjiu")
         {
@@ -1476,6 +1515,11 @@ cc.Class({
         else if(data == "close_award")
         {
             this.node_award.active = false;
+            if(this.openstore)
+            {
+                this.openstore = false;
+            }
+            else
             this.wxQuanState(true);
         }
         else if(data == "item_award")
@@ -1484,6 +1528,10 @@ cc.Class({
             {
                 this.lingquAward(event.target.awardid);
             }
+        }
+        else if(data == "lijiyaoqing")
+        {
+            this.wxGropShareCoin();
         }
 
         cc.log(data);
@@ -1518,6 +1566,120 @@ cc.Class({
         }
     },
 
+    updateDian: function()
+    {
+        var qiandao_dian = cc.find("qiandao/dian",this.node_main);
+        var lingjiang_dian = cc.find("lingjiang/dian",this.node_main);
+        var chengjiu_dian = cc.find("bottom/chengjiu/dian",this.node_main);
+        var chengjiu_dian2 = cc.find("home/dian",this.node_over);
+
+        qiandao_dian.active = false;
+        lingjiang_dian.active = false;
+        chengjiu_dian.active = false;
+        chengjiu_dian2.active = false;
+
+        var currQianDao = this.getStorageQianDao();
+        var currQianDaoTime = this.getStorageQianDaoTime();
+        var now = new Date().getDate();
+        currQianDao = parseInt(currQianDao)+1;
+        for(var i=1;i<=7;i++)
+        {
+            if(i==currQianDao && now != currQianDaoTime)
+            {
+                qiandao_dian.active = true;
+                break;
+            }
+        }
+
+        var inviteNum = this.getStorageInviteNum();
+        var inviteAwardNum = this.getStorageInviteAwardNum();
+        if(inviteAwardNum<=5 && inviteAwardNum < inviteNum)
+        {
+            lingjiang_dian.active = true;
+        }
+
+        var isshow = false;
+        for(var i=1;i<=5;i++) {
+            if (i == 1) {
+                var num = this.getStorageHitEnemyNum();
+                var awardnum = this.getStorageHitEnemyAwardNum();
+                if (awardnum >= this.GAME.chengjiuconfig.hitenemy.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.GAME.chengjiuconfig.hitenemy[awardnum];
+
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+
+            }
+            else if (i == 2) {
+                var num = this.getStorageHitHeadNum();
+                var awardnum = this.getStorageHitHeadAwardNum();
+                var isend = false;
+                if (awardnum >= this.GAME.chengjiuconfig.hithead.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.GAME.chengjiuconfig.hithead[awardnum];
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+            }
+            else if (i == 3) {
+                var num = this.getStorageHitBossNum();
+                var awardnum = this.getStorageHitBossAwardNum();
+                var isend = false;
+                if (awardnum >= this.GAME.chengjiuconfig.hitboss.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.GAME.chengjiuconfig.hitboss[awardnum];
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+            }
+            else if (i == 4) {
+                var num = this.getStorageGunJieSuoNum();
+                var awardnum = this.getStorageGunJieSuoAwardNum();
+                var isend = false;
+                if (awardnum >= this.GAME.chengjiuconfig.jiesuogun.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.GAME.chengjiuconfig.jiesuogun[awardnum];
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+            }
+            else if (i == 5) {
+                var num = this.getStorageRoleJieSuoNum();
+                var awardnum = this.getStorageRoleJieSuoAwardNum();
+                var isend = false;
+                if (awardnum >= this.GAME.chengjiuconfig.jiesuorole.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.GAME.chengjiuconfig.jiesuorole[awardnum];
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+            }
+        }
+
+        if(isshow)
+        {
+            chengjiu_dian.active = true;
+            chengjiu_dian2.active = true;
+        }
+    },
+
     lingquAward: function(id)
     {
         var coin = this.GAME.inviteconfig[id-1];
@@ -1529,6 +1691,7 @@ cc.Class({
         this.showToast("金币+"+coin);
         this.openAward();
         this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
+        this.updateDian();
     },
 
     openAward: function()
@@ -1594,6 +1757,7 @@ cc.Class({
         this.uploadData();
         this.showToast("金币+"+coin);
         this.openChengjiu();
+        this.updateDian();
     },
 
     judgeChengjiuUI: function()
@@ -1670,11 +1834,12 @@ cc.Class({
 
     openChengjiu: function()
     {
+        this.wxQuanState(false);
         var s = cc.winSize;
         this.node_main.active = false;
         this.node_chengjiu.active = true;
         this.node_chengjiu_center.height = s.height - 335;
-        this.node_chengjiu_center = this.ltcolor;
+        this.node_chengjiu_center.color = this.ltcolor;
 
         this.node_chengjiu_top_player.removeAllChildren();
         var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
@@ -1923,6 +2088,7 @@ cc.Class({
                         self.uploadData();
                         //self.showToast("角色已经开启");
                         self.openGun();
+                        self.updateDian();
                     })
                 );
                 seq.setTag(1);
@@ -1954,7 +2120,6 @@ cc.Class({
         if(currQianDao == 7)
         {
             this.setStorageGun(10);
-            this.uploadData();
         }
 
         this.updateGunRiQi();
@@ -1964,10 +2129,11 @@ cc.Class({
         this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
 
         this.uploadData();
+        this.updateDian();
     },
 
     openQianDao: function()
-    {this.player.fangdanyi.active = true;
+    {
         this.node_qiandao.active = true;
         this.wxQuanState(false);
 
@@ -2078,6 +2244,11 @@ cc.Class({
         var jscoin = cc.find("gunjiesuo/coin",this.node_gun);
         jscoin.color = this.ltcolor;
         jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+
+        cc.find("roleyaoqing/coinbg",this.node_gun).color = this.ltcolor;
+        cc.find("roleyaoqing/txt",this.node_gun).color = this.ltcolor;
+        cc.find("roleyaoqing/txt2",this.node_gun).color = this.ltcolor;
+        cc.find("roleyaoqing/coin",this.node_gun).color = this.ltcolor;
 
         var currGun = this.getStorageCurrGun();
         for(var i=1;i<=9;i++)
@@ -2190,6 +2361,7 @@ cc.Class({
                         self.uploadData();
                         //self.showToast("角色已经开启");
                         self.openJuese();
+                        self.updateDian();
                     })
                 );
                 seq.setTag(1);
@@ -2236,6 +2408,11 @@ cc.Class({
         cc.find("rolejiesuo/coinbg",this.node_role).color = this.ltcolor;
         cc.find("rolejiesuo/txt",this.node_role).color = this.ltcolor;
         cc.find("rolejiesuo/coin",this.node_role).color = this.ltcolor;
+
+        cc.find("roleyaoqing/coinbg",this.node_role).color = this.ltcolor;
+        cc.find("roleyaoqing/txt",this.node_role).color = this.ltcolor;
+        cc.find("roleyaoqing/txt2",this.node_role).color = this.ltcolor;
+        cc.find("roleyaoqing/coin",this.node_role).color = this.ltcolor;
 
         var currPlayer = this.getStorageCurrPlayer();
         for(var i=1;i<=9;i++)
@@ -3986,11 +4163,11 @@ cc.Class({
         this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.getChaoyue() +"的用户";
         this.wxOverRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
         this.uploadData();
+        this.updateDian();
     },
 
     judgeFuHuo: function()
     {
-        var self = this;
         if(!this.GAME.fangdanyi)
         {
             this.gameResult();
@@ -4002,11 +4179,12 @@ cc.Class({
         this.node_game_ui.active = false;
         this.node_fuhuo_coin.getComponent("cc.Label").string = Math.floor(this.GAME.coin);
         this.node_fuhuo_score.getComponent("cc.Label").string = parseInt(this.GAME.score);
+        this.wxFuhuoRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
     },
 
     skip: function()
     {
-        this.node_fuhuo.active = false;
+        this.wxCloseFuhuo();
         this.gameResult();
     },
 
@@ -4028,6 +4206,7 @@ cc.Class({
         else
         {
             this.GAME.playerfuhuo = false;
+            this.wxCloseFuhuo();
         }
     },
 
@@ -4567,6 +4746,55 @@ cc.Class({
         return num;
     },
 
+    setStorageShareGroupList: function(item)
+    {
+        cc.sys.localStorage.setItem("shareGroupList",item);
+    },
+    getStorageShareGroupList: function()
+    {
+        var shareGroupList = cc.sys.localStorage.getItem("shareGroupList");
+        return shareGroupList;
+    },
+    setStorageShareGroupTime: function(time)
+    {
+        cc.sys.localStorage.setItem("shareGroupTime",time);
+    },
+    getStorageShareGroupTime: function()
+    {
+        var time = cc.sys.localStorage.getItem("shareGroupTime");
+        return time;
+    },
+
+    judgeShareGroupState: function(openGId,timestamp)
+    {
+        var shareGroupList = this.getStorageShareGroupList();
+        if(!shareGroupList || shareGroupList=="" || shareGroupList == null)
+        {
+            this.setStorageShareGroupList(openGId);
+            this.setStorageShareGroupTime(timestamp);
+            return true;
+        }
+        else
+        {
+            if(new Date(timestamp).getDate() != new Date(this.getStorageShareGroupTime()).getDate())
+            {
+                this.setStorageShareGroupList(openGId);
+                this.setStorageShareGroupTime(timestamp);
+                return true;
+            }
+            else
+            {
+                if(shareGroupList.indexOf(openGId) == -1)
+                {
+                    this.setStorageShareGroupList(shareGroupList+","+openGId);
+                    this.setStorageShareGroupTime(timestamp);
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+
 
     getChaoyue: function()
     {
@@ -4660,7 +4888,6 @@ cc.Class({
                 success: function (res) {
                     // 分享成功
                     qianqista.share(true);
-                    cc.log(res);
                 },
                 fail: function (res) {
                     // 分享失败
@@ -4671,10 +4898,23 @@ cc.Class({
             wx.onShareAppMessage(function (ops){
                 return {
                     query:"channel=sharemenu",
+                    withShareTicket: true,
                     title: "自从玩了这个游戏，每把吃鸡都能拿98K",
                     imageUrl: cc.url.raw("resources/zhuanfa.jpg")
                 }
             });
+
+            wx.updateShareMenu({
+                withShareTicket: true,
+                success: function (res) {
+                    // 分享成功
+                    qianqista.share(true);
+                },
+                fail: function (res) {
+                    // 分享失败
+                    qianqista.share(false);
+                }
+            })
         }
     },
 
@@ -4684,14 +4924,19 @@ cc.Class({
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             self.node_quanxian.active = true;
+            var quan = cc.find("bg",self.node_quanxian);
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
+            var sc = sharedCanvas.width/this.dsize.width;
+            var dpi = cc.view._devicePixelRatio;
+            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
+
             var button = wx.createOpenSettingButton({
                 type: 'text',
                 text: '打开设置页面',
                 style: {
-                    left: sharedCanvas.width/4-50,
-                    top: sharedCanvas.height/4+30,
+                    left: pos.x-50,
+                    top: pos.y+15,
                     width: 100,
                     height: 30,
                     lineHeight: 30,
@@ -4764,17 +5009,18 @@ cc.Class({
         {
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
-            var quan = cc.find("quan",this.node_main);
+            var quan = cc.find("quan",this.node_main_bottom);
             var sc = sharedCanvas.width/this.dsize.width;
             var dpi = cc.view._devicePixelRatio;
-            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
+            //var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
+            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
             this.quan_button = wx.createGameClubButton({
                 icon: 'white',
                 style: {
-                    left: pos.x - 15,
-                    top: pos.y - 15,
-                    width: 30,
-                    height: 30
+                    left: pos.x - 13,
+                    top: pos.y - 13,
+                    width: 26,
+                    height: 26
                 }
             })
         }
@@ -4809,6 +5055,14 @@ cc.Class({
             wx.postMessage({ message: "closeRank" });
     },
 
+    wxCloseFuhuo: function()
+    {
+        this.node_fuhuo.active = false;
+        this.display_gray.active = false;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            wx.postMessage({ message: "closeFuhuo" });
+    },
+
     wxRank: function()
     {
         this.node_rank.active = true;
@@ -4823,6 +5077,14 @@ cc.Class({
         this.display_gray.active = true;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
+    },
+
+    wxFuhuoRank: function(score,playerId,gunId)
+    {
+        this.node_fuhuo.active = true;
+        this.display_gray.active = true;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxUploadScore: function(score,playerId,gunId)
@@ -4874,31 +5136,9 @@ cc.Class({
         }
 
     },
+
     wxGropShareCard: function()
     {
-        var sharetime = cc.sys.localStorage.getItem("sharetime");
-        sharetime = sharetime ? sharetime : 0;
-        var now = new Date().getTime();
-        if(now - sharetime > 24*60*60*1000)
-        {
-            cc.sys.localStorage.setItem("sharetime",now);
-            cc.sys.localStorage.setItem("sharenum",0);
-        }
-
-        var sharenum = cc.sys.localStorage.getItem("sharenum");
-        sharenum = sharenum ? sharenum : 0;
-        if(sharenum>=5)
-        {
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            {
-                wx.showToast({
-                    title: "每天最多领取5次"
-                });
-            }
-
-            return;
-        }
-
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -4908,16 +5148,43 @@ cc.Class({
                 imageUrl: cc.url.raw("resources/zhuanfa.jpg"),
                 success: function(res)
                 {
-                    wx.showToast({
-                        title: "获取到一个复活卡"
-                    });
-                    cc.sys.localStorage.setItem("sharenum",(sharenum+1));
+                    if(res.shareTickets && res.shareTickets.length>0)
+                    {
+                        wx.getShareInfo({
+                            shareTicket: res.shareTickets[0],
+                            success: function(res)
+                            {
+                                console.log("------",res);
+                                qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
+                                    if(b==true && self.judgeShareGroupState(openGId,timestamp))
+                                    {
+                                        wx.showToast({
+                                            title: "获取到一个防弹衣"
+                                        });
 
-                    var cardnum = self.getStorageCard();
-                    cardnum = parseInt(cardnum) + 1;
-                    self.setStorageCard(cardnum);
-                    self.node_card_num.getComponent("cc.Label").string = cardnum+"";
-                    self.uploadData();
+                                        var cardnum = self.getStorageCard();
+                                        cardnum = parseInt(cardnum) + 1;
+                                        self.setStorageCard(cardnum);
+                                        self.node_card_num.getComponent("cc.Label").string = cardnum+"";
+                                        self.uploadData();
+                                    }
+                                    else
+                                    {
+                                        wx.showToast({
+                                            title: "每个群每天只能转发一次"
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        wx.showToast({
+                            title: "请分享到群"
+                        });
+                    }
+
                     qianqista.share(true);
                     cc.log(res);
                 },
@@ -4938,56 +5205,34 @@ cc.Class({
 
     wxGropShareCoin: function()
     {
-        var sharetime = cc.sys.localStorage.getItem("sharetime_coin");
-        sharetime = sharetime ? sharetime : 0;
-        var now = new Date().getTime();
-        if(now - sharetime > 24*60*60*1000)
-        {
-            cc.sys.localStorage.setItem("sharetime_coin",now);
-            cc.sys.localStorage.setItem("sharenum_coin",0);
-        }
-
-        var sharenum = cc.sys.localStorage.getItem("sharenum_coin");
-        sharenum = sharenum ? sharenum : 0;
-
-        if(sharenum>=2)
-        {
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            {
-                wx.showToast({
-                    title: "每天最多领取2次"
-                });
-            }
-
-            return;
-        }
-
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             wx.shareAppMessage({
-                query:"channel=sharecoinmenu",
+                query:"channel=sharecoinmenu&fromid="+qianqista.openid,
                 title: "自从玩了这个游戏，每把吃鸡都能拿98K",
                 imageUrl: cc.url.raw("resources/zhuanfa.jpg"),
                 success: function(res)
                 {
                     wx.showToast({
-                        title: "获取到100金币"
+                        title: "分享成功，等待好友上线吧"
                     });
-                    cc.sys.localStorage.setItem("sharenum_coin",(sharenum+1));
 
-                    var cardnum = self.getStorageCoin();
-                    cardnum = parseInt(cardnum) + 100;
-                    self.setStorageCoin(cardnum);
-                    self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
-                    self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
-                    self.uploadData();
+                    //var cardnum = self.getStorageCoin();
+                    //cardnum = parseInt(cardnum) + 100;
+                    //self.setStorageCoin(cardnum);
+                    //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
+                    //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
+                    //self.uploadData();
                     qianqista.share(true);
                     cc.log(res);
                 },
                 fail: function()
                 {
                     qianqista.share(false);
+                    wx.showToast({
+                        title: "分享失败！"
+                    });
                 }
             });
         }
@@ -5003,30 +5248,51 @@ cc.Class({
 
     wxGropShareFuhuo: function()
     {
-        var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        var coinnum = this.getStorageCoin();
+        if(coinnum>=100)
         {
-            wx.shareAppMessage({
-                query:"channel=sharefuhuomenu",
-                title: this.userInfo.nickName +"挑战失败，快来帮帮 Ta",
-                imageUrl: cc.url.raw("resources/zhuanfa.jpg"),
-                success: function(res)
-                {
-                    wx.showToast({
-                        title: "复活成功"
-                    });
-                    self.fuhuo();
-                    qianqista.share(true);
-                },
-                fail: function()
-                {
-                    qianqista.share(false);
-                }
-            });
+            coinnum = parseInt(coinnum) - 100;
+            this.setStorageCoin(coinnum);
+            this.fuhuo();
+            this.uploadData();
         }
         else
         {
-            self.fuhuo(false);
+            this.showToast("金币不足！")
+        }
+    },
+
+    wxVideoLoad: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' });
+            this.rewardedVideoAd.onLoad(function(){
+                console.log('激励视频 广告加载成功')
+            });
+            this.rewardedVideoAd.onClose(function(res){
+                // 用户点击了【关闭广告】按钮
+                // 小于 2.1.0 的基础库版本，res 是一个 undefined
+                if (res && res.isEnded || res === undefined) {
+                // 正常播放结束，可以下发游戏奖励
+                }
+                else {
+                    // 播放中途退出，不下发游戏奖励
+                }
+            });
+        }
+    },
+    wxVideoShow: function(type)
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var self = this;
+            this.rewardedVideoAd.type = type;
+            this.rewardedVideoAd.show().catch(function(err){
+                self.rewardedVideoAd.load().then(function(){
+                    self.rewardedVideoAd.show();
+                });
+            });
         }
     },
 

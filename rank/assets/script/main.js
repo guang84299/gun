@@ -87,6 +87,42 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        gun_11: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_12: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_13: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_14: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_15: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_16: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_17: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_18: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_19: {
+            default: null,
+            type: cc.Prefab
+        },
         box_1: {
             default: null,
             type: cc.SpriteFrame
@@ -114,18 +150,29 @@ cc.Class({
         this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
             this.player_6,this.player_7,this.player_8,this.player_9];
         this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
-            this.gun_9,this.gun_10];
+            this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
+            this.gun_17,this.gun_18,this.gun_19];
         this.GAME.gunsconfig = [
-            {aimLen:1,type:1,fire:2,num:1,angle:0,y:15,speed:0},
-            {aimLen:1,type:1,fire:3,num:1,angle:0,y:15,speed:0},
-            {aimLen:0.8,type:2,fire:1,num:3,angle:5,y:15,speed:0.1},
-            {aimLen:1,type:2,fire:2,num:3,angle:3,y:15,speed:0.2},
-            {aimLen:1,type:2,fire:3,num:3,angle:3,y:15,speed:0.2},
-            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0.2},
-            {aimLen:0.6,type:3,fire:2,num:3,angle:5,y:15,speed:0.2},
-            {aimLen:1,type:2,fire:3,num:3,angle:5,y:15,speed:0.2},
-            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2},
-            {aimLen:2.5,type:1,fire:5,num:1,angle:0,y:2,speed:0.2}
+            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
+            {aimLen:1.2,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
+            {aimLen:0.6,type:2,fire:1,num:3,angle:8,y:15,speed:0.08,score:1,coin:1},
+            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
+            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
+            {aimLen:1.6,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
+            {aimLen:0.5,type:3,fire:2,num:3,angle:8,y:15,speed:0.2,score:1,coin:1},
+            {aimLen:0.9,type:2,fire:3,num:3,angle:7,y:15,speed:0.18,score:1,coin:1},
+            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
+            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:1.8,coin:1.8},
+
+            {aimLen:1,type:3,fire:2,num:4,angle:8,y:15,speed:0,score:1.2,coin:1.2},
+            {aimLen:0.8,type:2,fire:2,num:4,angle:7,y:15,speed:0.06,score:1,coin:1},
+            {aimLen:1.2,type:3,fire:3,num:2,angle:7,y:15,speed:0,score:1.2,coin:1.2},
+            {aimLen:1,type:2,fire:2,num:4,angle:7,y:15,speed:0.15,score:1,coin:1},
+            {aimLen:0.5,type:3,fire:2,num:5,angle:10,y:15,speed:0,score:1,coin:1},
+            {aimLen:0.7,type:2,fire:1,num:5,angle:5,y:15,speed:0.06,score:1,coin:1},
+            {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
+            {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
+            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:1.2,coin:2}
         ];
 
         this.initUI();
@@ -695,6 +742,7 @@ cc.Class({
         var selfrank = null;
         if(this.friendRank && this.userInfo)
         {
+
             for(var i=0;i<this.friendRank.length;i++)
             {
                 var data = this.friendRank[i];
@@ -721,7 +769,8 @@ cc.Class({
                 //    j3.active = true;
 
                 num.getComponent("cc.Label").string = (i+1)+"";
-                this.loadPic(icon,data.avatarUrl);
+                if(data.avatarUrl && data.avatarUrl.length>10)
+                    this.loadPic(icon,data.avatarUrl);
                 nick.getComponent("cc.Label").string = data.nickname;
                 score.getComponent("cc.Label").string = rank.wxgame.score+"";
 

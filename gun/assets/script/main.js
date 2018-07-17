@@ -240,6 +240,42 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        gun_11: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_12: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_13: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_14: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_15: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_16: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_17: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_18: {
+            default: null,
+            type: cc.Prefab
+        },
+        gun_19: {
+            default: null,
+            type: cc.Prefab
+        },
         bullet_1: {
             default: null,
             type: cc.Prefab
@@ -444,6 +480,42 @@ cc.Class({
             url: cc.AudioClip,
             default: null
         },
+        audio_gun_11: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_12: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_13: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_14: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_15: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_16: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_17: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_18: {
+            url: cc.AudioClip,
+            default: null
+        },
+        audio_gun_19: {
+            url: cc.AudioClip,
+            default: null
+        },
         audio_hit_head_yuyin: {
             url: cc.AudioClip,
             default: null
@@ -480,6 +552,10 @@ cc.Class({
             url: cc.AudioClip,
             default: null
         },
+        audio_chengjiu: {
+            url: cc.AudioClip,
+            default: null
+        },
 
         display: cc.Sprite,
         display_gray: cc.Node,
@@ -494,6 +570,7 @@ cc.Class({
          this.subdt = 0;
          this.userInfo = {};
          this.uploadScoreDt = 0;
+         this.videoTimeDt = 0;
          this.openover = false;
          this.openstore = false;
 
@@ -509,18 +586,10 @@ cc.Class({
 
          this.playMusic(this.audio_bgm);
          this.preloadSound();
+         this.wxVideoLoad();
 
          var self = this;
-         //qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
-         //    qianqista.datas(function(res){
-         //        console.log('my datas:', res);
-         //        if(res.state == 200)
-         //        {
-         //            self.updateLocalData(res.data);
-         //        }
-         //    });
-         //});
-         qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
+         qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
              qianqista.datas(function(res){
                  console.log('my datas:', res);
                  if(res.state == 200)
@@ -529,6 +598,15 @@ cc.Class({
                  }
              });
          });
+         //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
+         //    qianqista.datas(function(res){
+         //        console.log('my datas:', res);
+         //        if(res.state == 200)
+         //        {
+         //            self.updateLocalData(res.data);
+         //        }
+         //    });
+         //});
          qianqista.control(function(res){
              console.log('my control:', res);
              if(res.state == 200)
@@ -537,6 +615,8 @@ cc.Class({
                  self.updateUIControl();
              }
          });
+
+         cc.game.setFrameRate(50);
      },
 
     initPhysics: function()
@@ -573,9 +653,12 @@ cc.Class({
         this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
             this.player_6,this.player_7,this.player_8,this.player_9];
         this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
-            this.gun_9,this.gun_10];
+            this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
+            this.gun_17,this.gun_18,this.gun_19];
         this.GAME.gunaudios = [this.audio_gun_1,this.audio_gun_2,this.audio_gun_3,this.audio_gun_4,this.audio_gun_5,
-            this.audio_gun_6,this.audio_gun_7,this.audio_gun_8,this.audio_gun_9,this.audio_gun_10];
+            this.audio_gun_6,this.audio_gun_7,this.audio_gun_8,this.audio_gun_9,this.audio_gun_10,this.audio_gun_11,
+            this.audio_gun_12,this.audio_gun_13,this.audio_gun_14,this.audio_gun_15,this.audio_gun_16,this.audio_gun_17,
+            this.audio_gun_18,this.audio_gun_19];
         this.GAME.wujians = [this.wujian_1,this.wujian_2,this.wujian_3,this.wujian_4,this.wujian_5,this.wujian_6,
             this.wujian_7,this.wujian_8,this.wujian_9,this.wujian_10,this.wujian_11,this.wujian_12,this.wujian_13,
             this.wujian_14,this.wujian_15,this.wujian_16,this.wujian_17,this.wujian_18,this.wujian_19];
@@ -609,16 +692,26 @@ cc.Class({
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2}
         ];
         this.GAME.gunsconfig = [
-            {aimLen:1,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
-            {aimLen:1,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
-            {aimLen:0.5,type:2,fire:1,num:3,angle:8,y:15,speed:0.08,score:1,coin:1},
-            {aimLen:0.6,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
-            {aimLen:0.6,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
-            {aimLen:1.5,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
-            {aimLen:0.4,type:3,fire:2,num:3,angle:8,y:15,speed:0.2,score:1,coin:1},
-            {aimLen:0.7,type:2,fire:3,num:3,angle:7,y:15,speed:0.18,score:1,coin:1},
-            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
-            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:1.8,coin:1.8}
+            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
+            {aimLen:1.2,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
+            {aimLen:0.6,type:2,fire:1,num:3,angle:8,y:15,speed:0.08,score:1,coin:1},
+            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
+            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
+            {aimLen:1.6,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
+            {aimLen:0.5,type:3,fire:2,num:3,angle:8,y:15,speed:0.2,score:1,coin:1},
+            {aimLen:0.9,type:2,fire:3,num:3,angle:7,y:15,speed:0.18,score:1,coin:1},
+            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
+            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:2,coin:1.8},
+
+            {aimLen:1,type:3,fire:2,num:4,angle:8,y:15,speed:0,score:1.2,coin:1.2},
+            {aimLen:0.8,type:2,fire:2,num:4,angle:7,y:15,speed:0.06,score:1,coin:1},
+            {aimLen:1.2,type:3,fire:3,num:2,angle:7,y:15,speed:0,score:1.2,coin:1.2},
+            {aimLen:1,type:2,fire:2,num:4,angle:7,y:15,speed:0.15,score:1,coin:1},
+            {aimLen:0.5,type:3,fire:2,num:5,angle:15,y:15,speed:0,score:1,coin:1},
+            {aimLen:0.7,type:2,fire:1,num:5,angle:5,y:15,speed:0.06,score:1,coin:1},
+            {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:3,coin:2},
+            {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
+            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2}
         ];
 
         this.GAME.bgcolor = [cc.color(110,24,128),cc.color(25,112,133),cc.color(136,110,94),
@@ -632,8 +725,8 @@ cc.Class({
             hitenemy:[{num:100,coin:10},{num:200,coin:20},{num:500,coin:30},{num:1000,coin:50},{num:5000,coin:100},{num:10000,coin:200}],
             hithead:[{num:50,coin:10},{num:100,coin:20},{num:200,coin:30},{num:500,coin:50},{num:1000,coin:100},{num:5000,coin:200}],
             hitboss:[{num:20,coin:10},{num:50,coin:20},{num:100,coin:30},{num:200,coin:50},{num:500,coin:100},{num:1000,coin:200}],
-            jiesuogun:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}],
-            jiesuorole:[{num:2,coin:10},{num:4,coin:30}]
+            jiesuogun:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100},{num:10,coin:200},{num:12,coin:300},{num:14,coin:300},{num:16,coin:300}],
+            jiesuorole:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}]
         };
 
         this.GAME.inviteconfig = [50,70,80,100,600];
@@ -644,7 +737,7 @@ cc.Class({
         this.poolshells = new cc.NodePool();
         this.poolbloods = new cc.NodePool();
         this.poolbigbloods = new cc.NodePool();
-        for(var i=0;i<3;i++)
+        for(var i=0;i<5;i++)
         {
             var bullet_1 = cc.instantiate(this.bullet_1);
             this.poolbullets.put(bullet_1);
@@ -855,6 +948,7 @@ cc.Class({
             this.setStorageVibrate(1);
             this.setStorageShareGroupList("groups:");
             this.setStorageShareGroupTime(-1);
+            this.setStorageCard(2);
         }
 
         //for(var i=1;i<=9;i++)
@@ -893,6 +987,9 @@ cc.Class({
         this.node_main_coin = cc.find("coin/num",this.node_main);
         this.node_main_score = cc.find("score",this.node_main);
         this.node_main_bottom = cc.find("bottom",this.node_main);
+        this.node_main_lingqu = cc.find("lingqu",this.node_main);
+        this.node_main_lingqu_time = cc.find("lingqu/time",this.node_main);
+
         this.node_role = cc.find("Canvas/node_role");
         this.node_role_center = cc.find("center",this.node_role);
         this.node_role_top_player = cc.find("top/player",this.node_role);
@@ -908,6 +1005,7 @@ cc.Class({
         this.node_gun_page = cc.find("page",this.node_gun);
         this.node_gun_page1 = cc.find("page/view/content/page_1",this.node_gun);
         this.node_gun_page2 = cc.find("page/view/content/page_2",this.node_gun);
+        this.node_gun_page3 = cc.find("page/view/content/page_3",this.node_gun);
 
         this.node_setting = cc.find("Canvas/node_setting");
         this.node_setting_music = cc.find("bg/music",this.node_setting);
@@ -926,6 +1024,8 @@ cc.Class({
         this.node_fuhuo_share = cc.find("fuhuo_share",this.node_fuhuo);
         this.node_fuhuo_coin = cc.find("coin/num",this.node_fuhuo);
         this.node_fuhuo_score = cc.find("score",this.node_fuhuo);
+        this.node_fuhuo_fu_coin = cc.find("fuhuo_coin",this.node_fuhuo_share);
+        this.node_fuhuo_fu_video = cc.find("fuhuo_video",this.node_fuhuo_share);
 
         this.node_over = cc.find("Canvas/node_over");
         this.node_over_coin = cc.find("coin/num",this.node_over);
@@ -961,7 +1061,6 @@ cc.Class({
     updateUIControl: function()
     {
         cc.find("fangdanyi",this.node_main).active = false;
-        cc.find("lingqu",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
         cc.find("roleyaoqing",this.node_role).active = false;
         cc.find("roleyaoqing",this.node_gun).active = false;
@@ -976,7 +1075,6 @@ cc.Class({
                     if(con.value == "1")
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
-                        cc.find("lingqu",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
                         cc.find("roleyaoqing",this.node_role).active = true;
                         cc.find("roleyaoqing",this.node_gun).active = true;
@@ -986,7 +1084,6 @@ cc.Class({
                 }
             }
         }
-
         var cardnum = this.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
@@ -1048,6 +1145,24 @@ cc.Class({
                 this.setStorageGun(9,parseInt(datas.gun_9));
             if(datas.gun_10)
                 this.setStorageGun(10,parseInt(datas.gun_10));
+            if(datas.gun_11)
+                this.setStorageGun(11,parseInt(datas.gun_11));
+            if(datas.gun_12)
+                this.setStorageGun(12,parseInt(datas.gun_12));
+            if(datas.gun_13)
+                this.setStorageGun(13,parseInt(datas.gun_13));
+            if(datas.gun_14)
+                this.setStorageGun(14,parseInt(datas.gun_14));
+            if(datas.gun_15)
+                this.setStorageGun(15,parseInt(datas.gun_15));
+            if(datas.gun_16)
+                this.setStorageGun(16,parseInt(datas.gun_16));
+            if(datas.gun_17)
+                this.setStorageGun(17,parseInt(datas.gun_17));
+            if(datas.gun_18)
+                this.setStorageGun(18,parseInt(datas.gun_18));
+            if(datas.gun_19)
+                this.setStorageGun(19,parseInt(datas.gun_19));
 
             if(datas.currGun)
                 this.setStorageCurrGun(parseInt(datas.currGun));
@@ -1056,6 +1171,8 @@ cc.Class({
 
             if(datas.gunJiesuoNum)
                 this.setStorageGunJieSuoNum(parseInt(datas.gunJiesuoNum));
+            if(datas.gunJiesuoNum2)
+                this.setStorageGunJieSuoNum2(parseInt(datas.gunJiesuoNum2));
             if(datas.gunJiesuoAwardNum)
                 this.setStorageGunJieSuoAwardNum(parseInt(datas.gunJiesuoAwardNum));
             if(datas.roleJiesuoNum)
@@ -1134,10 +1251,20 @@ cc.Class({
         datas.gun_8 = this.getStorageGun(8);
         datas.gun_9 = this.getStorageGun(9);
         datas.gun_10 = this.getStorageGun(10);
+        datas.gun_11 = this.getStorageGun(11);
+        datas.gun_12 = this.getStorageGun(12);
+        datas.gun_13 = this.getStorageGun(13);
+        datas.gun_14 = this.getStorageGun(14);
+        datas.gun_15 = this.getStorageGun(15);
+        datas.gun_16 = this.getStorageGun(16);
+        datas.gun_17 = this.getStorageGun(17);
+        datas.gun_18 = this.getStorageGun(18);
+        datas.gun_19 = this.getStorageGun(19);
         datas.currGun = this.getStorageCurrGun();
         datas.currPlayer = this.getStorageCurrPlayer();
 
         datas.gunJiesuoNum = this.getStorageGunJieSuoNum();
+        datas.gunJiesuoNum2 = this.getStorageGunJieSuoNum2();
         datas.gunJiesuoAwardNum = this.getStorageGunJieSuoAwardNum();
         datas.roleJiesuoNum = this.getStorageRoleJieSuoNum();
         datas.roleJiesuoAwardNum = this.getStorageRoleJieSuoAwardNum();
@@ -1207,8 +1334,9 @@ cc.Class({
         this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
         this.GAME.currGun = this.getStorageCurrGun()-1;
 
-        this.GAME.playerfuhuo = true;
+        this.GAME.playerfuhuo = true;//金币
         this.GAME.playerfangdanyi = true;
+        this.GAME.playerfuhuovideo = true;//看视频
         this.GAME.yindao = this.getStorageYindao();
     },
 
@@ -1336,7 +1464,11 @@ cc.Class({
         }
         else if(data == "gunjiesuo")
         {
-            this.gunjiesuo();
+            var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
+            if(index == 0)
+                this.gunjiesuo();
+            else if(index == 1)
+                this.gunjiesuo2();
         }
         else if(data == "riqi")
         {
@@ -1533,6 +1665,14 @@ cc.Class({
         {
             this.wxGropShareCoin();
         }
+        else if(data == "adlingqu")
+        {
+            this.wxVideoShow(1);
+        }
+        else if(data == "fuhuo_video")
+        {
+            this.wxVideoShow(2);
+        }
 
         cc.log(data);
     },
@@ -1550,13 +1690,21 @@ cc.Class({
         if(data == "page_gun")
         {
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
-            if(index == 0)
+            if(index != 2)
             {
                 if(this.GAME.fangdanyi)
                 {
                     cc.find("roleyaoqing",this.node_gun).active = true;
                 }
                 cc.find("gunjiesuo",this.node_gun).active = true;
+                if(index == 0)
+                {
+                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+                }
+                else if(index == 1)
+                {
+                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (this.getStorageGunJieSuoNum2()*50 + 750);
+                }
             }
             else
             {
@@ -1645,6 +1793,7 @@ cc.Class({
             }
             else if (i == 4) {
                 var num = this.getStorageGunJieSuoNum();
+                num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
                 var awardnum = this.getStorageGunJieSuoAwardNum();
                 var isend = false;
                 if (awardnum >= this.GAME.chengjiuconfig.jiesuogun.length) {
@@ -1692,6 +1841,7 @@ cc.Class({
         this.openAward();
         this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
         this.updateDian();
+        this.playSound(this.audio_coin);
     },
 
     openAward: function()
@@ -1758,6 +1908,7 @@ cc.Class({
         this.showToast("金币+"+coin);
         this.openChengjiu();
         this.updateDian();
+        this.playSound(this.audio_coin);
     },
 
     judgeChengjiuUI: function()
@@ -1766,6 +1917,7 @@ cc.Class({
         if(awardnum<this.GAME.chengjiuconfig.jiesuogun.length)
         {
             var num = this.getStorageGunJieSuoNum();
+            num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
             var data = this.GAME.chengjiuconfig.jiesuogun[awardnum];
             if(num >= data.num)
             {
@@ -1957,6 +2109,7 @@ cc.Class({
             else if(i == 4)
             {
                 var num = this.getStorageGunJieSuoNum();
+                num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
                 var awardnum = this.getStorageGunJieSuoAwardNum();
                 var isend = false;
                 if(awardnum>=this.GAME.chengjiuconfig.jiesuogun.length)
@@ -2098,6 +2251,84 @@ cc.Class({
         }
     },
 
+    gunjiesuo2: function()
+    {
+        var self = this;
+        var needcoin = this.getStorageGunJieSuoNum2()*50 + 750;
+        if(this.getStorageCoin()< needcoin)
+        {
+            this.showToast("金币不足");
+        }
+        else
+        {
+            var uopen = [];
+            var items = [];
+            for(var i=1;i<=9;i++)
+            {
+                if(this.getStorageGun(i+10) != 1)
+                {
+                    uopen.push(i);
+                    var item = cc.find("item_" + i, this.node_gun_page2);
+                    var box1 = cc.find("box_1", item);
+                    items.push(box1);
+                }
+            }
+            if(uopen.length<=0)
+            {
+                this.showToast("枪支已经全部开启");
+            }
+            else
+            {
+                var act = this.node_gun_page2.getActionByTag(1);
+                if(act && !act.isDone())
+                    return;
+                var id = Math.floor(Math.random()*uopen.length);
+                var dt = 0;
+                for(var n=0;n<2;n++)
+                {
+                    for(var i=0;i<items.length;i++)
+                    {
+                        var box = items[i];
+                        var seq = cc.sequence(
+                            cc.delayTime(0.1+dt),
+                            cc.tintTo(0,82,175,226),
+                            cc.callFunc(function(){
+                                self.playSound(self.audio_rand);
+                            }),
+                            cc.delayTime(0.1),
+                            cc.tintTo(0,100,100,100)
+                        );
+                        dt += 0.2;
+                        box.runAction(seq);
+                        if(n == 1 && id == i)
+                        {
+                            id = uopen[id] + 10;
+                            break;
+                        }
+                    }
+                }
+                dt += 0.3;
+                var seq = cc.sequence(
+                    cc.delayTime(dt),
+                    cc.callFunc(function(){
+                        self.playSound(self.audio_jiesuo);
+                        self.setStorageCoin(self.getStorageCoin() - needcoin);
+                        self.setStorageGun(id);
+                        self.setStorageGunJieSuoNum2(parseInt(self.getStorageGunJieSuoNum2())+1);
+                        self.judgeChengjiuUI();
+                        self.uploadData();
+                        //self.showToast("角色已经开启");
+                        self.openGun();
+                        self.updateDian();
+                    })
+                );
+                seq.setTag(1);
+                this.node_gun_page1.runAction(seq);
+
+            }
+        }
+    },
+
     setGun: function(id)
     {
         var currGun = this.getStorageCurrGun();
@@ -2123,6 +2354,7 @@ cc.Class({
         }
 
         this.updateGunRiQi();
+        this.openQianDao();
 
         this.setStorageCoin(parseInt(this.getStorageCoin()) +  this.GAME.qiandaoconfig[id-1]);
         this.showToast("金币+"+this.GAME.qiandaoconfig[id-1]);
@@ -2130,6 +2362,7 @@ cc.Class({
 
         this.uploadData();
         this.updateDian();
+        this.playSound(this.audio_coin);
     },
 
     openQianDao: function()
@@ -2175,7 +2408,7 @@ cc.Class({
 
         for(var i=1;i<=7;i++)
         {
-            var item = cc.find("riqi/riqi"+i,this.node_gun_page2);
+            var item = cc.find("riqi/riqi"+i,this.node_gun_page3);
             item.riqiId = i;
             item.canset = false;
             if(i<currQianDao)
@@ -2190,9 +2423,9 @@ cc.Class({
         }
 
         var currGun = this.getStorageCurrGun();
-        var box1 = cc.find("box_1",this.node_gun_page2);
-        var box2 = cc.find("box_2",this.node_gun_page2);
-        this.node_gun_page2.gunId = 10;
+        var box1 = cc.find("box_1",this.node_gun_page3);
+        var box2 = cc.find("box_2",this.node_gun_page3);
+        this.node_gun_page3.gunId = 10;
 
         if(10 == currGun)
         {
@@ -2207,12 +2440,12 @@ cc.Class({
             if(this.getStorageGun(10) == 1)
             {
                 box1.color = cc.color(243,180,69);
-                this.node_gun_page2.canset = true;
+                this.node_gun_page3.canset = true;
             }
             else
             {
                 box1.color = cc.color(100,100,100);
-                this.node_gun_page2.canset = false;
+                this.node_gun_page3.canset = false;
             }
         }
     },
@@ -2243,7 +2476,11 @@ cc.Class({
         cc.find("gunjiesuo/txt",this.node_gun).color = this.ltcolor;
         var jscoin = cc.find("gunjiesuo/coin",this.node_gun);
         jscoin.color = this.ltcolor;
-        jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+        var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
+        if(index == 0)
+            jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+        else
+            jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum2()*50 + 750);
 
         cc.find("roleyaoqing/coinbg",this.node_gun).color = this.ltcolor;
         cc.find("roleyaoqing/txt",this.node_gun).color = this.ltcolor;
@@ -2251,9 +2488,17 @@ cc.Class({
         cc.find("roleyaoqing/coin",this.node_gun).color = this.ltcolor;
 
         var currGun = this.getStorageCurrGun();
-        for(var i=1;i<=9;i++)
+        for(var i=1;i<=19;i++)
         {
-            var item = cc.find("item_"+i,this.node_gun_page1);
+            if(i == 10)
+                continue;
+            var item = null;
+            if(i<10)
+                item = cc.find("item_"+i,this.node_gun_page1);
+            else if(i>10)
+            {
+                item = cc.find("item_"+(i-10),this.node_gun_page2);
+            }
             var box1 = cc.find("box_1",item);
             var box2 = cc.find("box_2",item);
             var txt1 = cc.find("txt1",item);
@@ -2459,11 +2704,18 @@ cc.Class({
 
     startGmae: function()
     {
-        this.GAME.state = "start";
+        var self = this;
         this.node_main.active = false;
         this.node_game_ui.active = true;
         this.movenum = 0;
         this.playerMove(false);
+
+        this.node.runAction(cc.sequence(
+            cc.delayTime(0.3),
+            cc.callFunc(function(){
+                self.GAME.state = "start";
+            })
+        ));
     },
 
     goMain: function()
@@ -2571,7 +2823,7 @@ cc.Class({
                 this.last_h = this.last_h + item[1]*this.tih;
                 this.ltzorder--;
                 index = i;
-                if(currH > s.height)
+                if(currH > s.height*0.6)
                 {
                     currH += item[1]*this.tih;
                     break;
@@ -2852,7 +3104,7 @@ cc.Class({
         }
         this.GAME.enemy_num --;
         this.enemy.ismove = false;
-        this.enemy.die = true;
+        //this.enemy.die = true;
     },
 
     copyEnemy: function()
@@ -3064,7 +3316,7 @@ cc.Class({
                                 cc.moveBy(0.05,cc.v2(0,10)).easing(cc.easeSineIn()),
                                 cc.moveBy(0.05,cc.v2(0,-10)).easing(cc.easeSineOut())
                             ));
-                            self.enemy.die = false;
+                            //self.enemy.die = false;
                             self.vibrate();
                         }));
                     }
@@ -3131,11 +3383,11 @@ cc.Class({
 
                     acs.push(cc.spawn(
                         cc.repeat(cc.sequence(cc.rotateBy(0.1,-10),cc.rotateBy(0.1,10)),5),
-                        cc.moveTo(1,posx,posy)
+                        cc.moveTo(0.8,posx,posy)
                     ));
-                    acs.push(cc.callFunc(function(){
-                        self.enemy.die = false;
-                    }));
+                    //acs.push(cc.callFunc(function(){
+                    //    self.enemy.die = false;
+                    //}));
                 }
             }
             else
@@ -3160,7 +3412,7 @@ cc.Class({
                                 cc.moveBy(0.05,cc.v2(0,10)).easing(cc.easeSineIn()),
                                 cc.moveBy(0.05,cc.v2(0,-10)).easing(cc.easeSineOut())
                             ));
-                            self.enemy.die = false;
+                            //self.enemy.die = false;
                             self.vibrate();
                         }));
                     }
@@ -3226,11 +3478,11 @@ cc.Class({
 
                     acs.push(cc.spawn(
                         cc.repeat(cc.sequence(cc.rotateBy(0.1,10),cc.rotateBy(0.1,-10)),5),
-                        cc.moveTo(1,posx,posy)
+                        cc.moveTo(0.8,posx,posy)
                     ));
-                    acs.push(cc.callFunc(function(){
-                        self.enemy.die = false;
-                    }));
+                    //acs.push(cc.callFunc(function(){
+                    //    self.enemy.die = false;
+                    //}));
                 }
 
             }
@@ -3284,9 +3536,9 @@ cc.Class({
             this.player.gun.firenum = 0;
             var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
             var dis = 1584;
-            var bulletspeed = 2500;
+            var bulletspeed = 2200;
             if(cc.sys.os == cc.sys.OS_ANDROID)
-                bulletspeed = 1600;
+                bulletspeed = 1200;
             if(gunConf.type == 1)
             {
                 var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
@@ -3466,6 +3718,8 @@ cc.Class({
                         r = cc.random0To1()*gunConf.angle;
                     else if(i == 2)
                         r = -cc.random0To1()*gunConf.angle;
+                    else
+                        r = cc.randomMinus1To1()*gunConf.angle;
 
                     dir = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
                     var pos = cc.pMult(dir,1584);
@@ -3580,6 +3834,9 @@ cc.Class({
                         r = cc.random0To1()*gunConf.angle;
                     else if(i == 2)
                         r = -cc.random0To1()*gunConf.angle;
+                    else
+                        r = cc.randomMinus1To1()*gunConf.angle;
+
                     dir = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
                     var pos = cc.pMult(dir,1584);
 
@@ -3697,9 +3954,9 @@ cc.Class({
         var self = this;
         this.enemy.gun.rotation = 0;
         var dis = 1584;
-        var bulletspeed = 2500;
+        var bulletspeed = 2200;
         if(cc.sys.os == cc.sys.OS_ANDROID)
-            bulletspeed = 1600;
+            bulletspeed = 1200;
 
         var dir = cc.pSub(this.player.position,this.enemy.position);
         dir = cc.pNormalize(dir);
@@ -3849,8 +4106,8 @@ cc.Class({
             ));
 
             this.vibrate();
-            this.playSound(this.audio_hit_head);
-            this.playSound(this.audio_coin);
+            //this.playSound(this.audio_hit_head);
+
 
             var par = null;
             if (this.poolbigbloods.size() > 0) {
@@ -3882,7 +4139,7 @@ cc.Class({
                 killhscore += 5*this.GAME.killhead;
             this.getScore(killhscore);
             this.GAME.killhead = 0;
-            this.playSound(this.audio_hit_torso);
+            //this.playSound(this.audio_hit_torso);
 
             var par = null;
             if (this.poolbloods.size() > 0) {
@@ -3905,7 +4162,7 @@ cc.Class({
             ));
         }
         var seq = cc.sequence(
-            cc.scaleTo(0.4,sct,sct).easing(cc.easeSineIn()),
+            cc.scaleTo(0.3,sct,sct).easing(cc.easeSineIn()),
             cc.callFunc(function(){
                 self.poolhits.put(hit);
             })
@@ -3924,12 +4181,12 @@ cc.Class({
             var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
             if(this.enemy.hp > 0)
             {
-                if(this.enemy.hp%3 == 0)
-                    this.playSound(this.audio_boss_hurt_1);
-                else if(this.enemy.hp%3 == 1)
-                    this.playSound(this.audio_boss_hurt_2);
-                else
-                    this.playSound(this.audio_boss_hurt_3);
+                //if(this.enemy.hp%3 == 0)
+                //    this.playSound(this.audio_boss_hurt_1);
+                //else if(this.enemy.hp%3 == 1)
+                //    this.playSound(this.audio_boss_hurt_2);
+                //else
+                //    this.playSound(this.audio_boss_hurt_3);
                 var hhp = (gunConf.fire+playerConf.fire);
                 if(isHead)
                     hhp *= 2;
@@ -3978,14 +4235,19 @@ cc.Class({
                 this.enemy.judgeboss = false;
                 this.node.stopActionByTag(1000);
                 this.removeColl();
-                var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, cc.winSize.width));
-                var roang = 360;
+                var roang = 180;
+                var dis = cc.winSize.width - this.enemy.x;
                 if(this.enemy.scaleX == 1)
+                {
                     roang = -roang;
+                    dis = this.enemy.x;
+                }
+                dis += 100;
+                var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, dis));
                 var ac = cc.sequence(
                     cc.spawn(
-                        cc.jumpTo(0.8,pos,cc.winSize.width/4,1),
-                        cc.rotateBy(0.8,roang)
+                        cc.jumpTo(dis/900,pos,dis/2,1),
+                        cc.rotateBy(dis/900,roang)
                     ),
                     cc.callFunc(function(){
                         self.playerMove(true);
@@ -4007,28 +4269,31 @@ cc.Class({
         else
         {
             this.removeColl();
-            var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, cc.winSize.width));
-            var roang = 360;
+            var roang = 180;
+            var dis = cc.winSize.width - this.enemy.x;
             if(this.enemy.scaleX == 1)
+            {
                 roang = -roang;
+                dis = this.enemy.x;
+            }
+            dis += 100;
+            var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, dis));
+
             var ac = cc.sequence(
                 cc.spawn(
-                    cc.jumpTo(0.8,pos,cc.winSize.width/4,1),
-                    cc.rotateBy(0.8,roang),
-                    cc.sequence(
-                        cc.delayTime(0.1),
-                        cc.callFunc(function(){
-                            self.playerMove(false);
-                        })
-                    )
+                    cc.jumpTo(dis/900,pos,dis/2,1),
+                    cc.rotateBy(dis/900,roang)
                 ),
+                cc.callFunc(function(){
+                    self.playerMove(false);
+                }),
                 cc.removeSelf()
             );
-            var enemy = this.copyEnemy();
-            enemy.runAction(ac);
+            //var enemy = this.copyEnemy();
+            //enemy.runAction(ac);
 
             this.enemy.die = true;
-            this.enemy.destroy();
+            this.enemy.runAction(ac);
         }
         this.judgeChengjiuGame();
     },
@@ -4140,7 +4405,7 @@ cc.Class({
         }
         else
         {
-            if(this.GAME.playerfuhuo)
+            if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
                 this.judgeFuHuo();
             else
             {
@@ -4168,17 +4433,27 @@ cc.Class({
 
     judgeFuHuo: function()
     {
-        if(!this.GAME.fangdanyi)
-        {
-            this.gameResult();
-            return;
-        }
+        //if(!this.GAME.fangdanyi)
+        //{
+        //    this.gameResult();
+        //    return;
+        //}
 
         this.node_fuhuo.active = true;
 
         this.node_game_ui.active = false;
         this.node_fuhuo_coin.getComponent("cc.Label").string = Math.floor(this.GAME.coin);
         this.node_fuhuo_score.getComponent("cc.Label").string = parseInt(this.GAME.score);
+        this.node_fuhuo_fu_coin.getComponent("cc.Button").interactable = this.GAME.playerfuhuo;
+        this.node_fuhuo_fu_video.getComponent("cc.Button").interactable = this.GAME.playerfuhuovideo;
+        if(this.GAME.playerfuhuo)
+            this.node_fuhuo_fu_coin.color = cc.color(255,255,255);
+        else
+            this.node_fuhuo_fu_coin.color = cc.color(161,161,161);
+        if(this.GAME.playerfuhuovideo)
+            this.node_fuhuo_fu_video.color = cc.color(255,255,255);
+        else
+            this.node_fuhuo_fu_video.color = cc.color(161,161,161);
         this.wxFuhuoRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
     },
 
@@ -4188,12 +4463,13 @@ cc.Class({
         this.gameResult();
     },
 
-    fuhuo: function(isCard)
+    fuhuo: function(isCard,isCoin,isVideo)
     {
+        var self = this;
         this.node_fuhuo.active = false;
         this.node_game_ui.active = true;
 
-        this.GAME.state = "start";
+
         this.player.position = this.GAME.lastplayerpos;
         this.rotateGun();
 
@@ -4202,12 +4478,28 @@ cc.Class({
             this.GAME.playerfangdanyi = false;
             this.setStorageCard(this.getStorageCard()-1);
             this.uploadData();
+            this.GAME.state = "start";
         }
-        else
+        else if(isCoin)
         {
             this.GAME.playerfuhuo = false;
-            this.wxCloseFuhuo();
         }
+        else if(isVideo)
+        {
+            this.GAME.playerfuhuovideo = false;
+        }
+
+        if(!isCard)
+        {
+            this.wxCloseFuhuo();
+            this.node.runAction(cc.sequence(
+                cc.delayTime(0.3),
+                cc.callFunc(function(){
+                    self.GAME.state = "start";
+                })
+            ));
+        }
+
     },
 
     addCoin: function()
@@ -4237,6 +4529,7 @@ cc.Class({
                 cc.v2(x,coin.y+Math.random()*200),this.node_game_ui.coinicon.position]),
             cc.callFunc(function(){
                 self.getCoin(coinNum);
+                self.playSound(self.audio_coin);
             }),
             cc.removeSelf()
         );
@@ -4364,6 +4657,23 @@ cc.Class({
             }
         }
 
+        this.videoTimeDt += dt;
+        if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
+        {
+            this.videoTimeDt = 0;
+            var videoTime = this.getStorageVideoTime();
+            if(videoTime<0)
+            {
+                this.node_main_lingqu_time.active = false;
+                this.node_main_lingqu.getComponent("cc.Button").interactable = true;
+            }
+            else
+            {
+                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
+                this.setStorageVideoTime(videoTime-1);
+            }
+        }
+
     },
 
     vibrate: function(isLong)
@@ -4401,6 +4711,7 @@ cc.Class({
     {
         var toast = cc.instantiate(this.toast_cj);
         toast.opacity = 0;
+        toast.y = cc.winSize.height/2 - 50;
         this.node.addChild(toast,1000);
 
         var seq = cc.sequence(
@@ -4410,12 +4721,25 @@ cc.Class({
             cc.removeSelf()
         );
         toast.runAction(seq);
+        this.playSound(this.audio_chengjiu);
     },
 
     playMusic: function(music)
     {
         if(this.getStorageMusic() == 1)
             cc.audioEngine.play(music,true,0.6);
+    },
+
+    pauseMusic: function()
+    {
+        if(this.getStorageMusic() == 1)
+            cc.audioEngine.pauseAll();
+    },
+
+    resumeMusic: function()
+    {
+        if(this.getStorageMusic() == 1)
+            cc.audioEngine.resumeAll();
     },
 
     stopMusic: function()
@@ -4600,6 +4924,16 @@ cc.Class({
         num = num ? num : 0;
         return num;
     },
+    setStorageGunJieSuoNum2: function(num)
+    {
+        cc.sys.localStorage.setItem("gun_jiesuo_num2",num);
+    },
+    getStorageGunJieSuoNum2: function()
+    {
+        var num = cc.sys.localStorage.getItem("gun_jiesuo_num2");
+        num = num ? num : 0;
+        return num;
+    },
     setStorageGunJieSuoAwardNum: function(num)
     {
         cc.sys.localStorage.setItem("gun_jiesuo_award_num",num);
@@ -4762,6 +5096,17 @@ cc.Class({
     getStorageShareGroupTime: function()
     {
         var time = cc.sys.localStorage.getItem("shareGroupTime");
+        return time;
+    },
+
+    setStorageVideoTime: function(time)
+    {
+        cc.sys.localStorage.setItem("VideoTime",time);
+    },
+    getStorageVideoTime: function()
+    {
+        var time = cc.sys.localStorage.getItem("VideoTime");
+        time = time ? time : 0;
         return time;
     },
 
@@ -5214,9 +5559,8 @@ cc.Class({
                 imageUrl: cc.url.raw("resources/zhuanfa.jpg"),
                 success: function(res)
                 {
-                    wx.showToast({
-                        title: "分享成功，等待好友上线吧"
-                    });
+
+                    self.showToast("分享成功，等待好友上线吧");
 
                     //var cardnum = self.getStorageCoin();
                     //cardnum = parseInt(cardnum) + 100;
@@ -5253,7 +5597,7 @@ cc.Class({
         {
             coinnum = parseInt(coinnum) - 100;
             this.setStorageCoin(coinnum);
-            this.fuhuo();
+            this.fuhuo(false,true,false);
             this.uploadData();
         }
         else
@@ -5264,9 +5608,10 @@ cc.Class({
 
     wxVideoLoad: function()
     {
+        var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' });
+            this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-b9e3b716f84a52de'});
             this.rewardedVideoAd.onLoad(function(){
                 console.log('激励视频 广告加载成功')
             });
@@ -5274,25 +5619,99 @@ cc.Class({
                 // 用户点击了【关闭广告】按钮
                 // 小于 2.1.0 的基础库版本，res 是一个 undefined
                 if (res && res.isEnded || res === undefined) {
-                // 正常播放结束，可以下发游戏奖励
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        var coin = self.getStorageCoin();
+                        coin = parseInt(coin) + 100;
+                        self.setStorageCoin(coin);
+                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                        self.uploadData();
+
+                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                        self.node_main_lingqu_time.active = true;
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:59";
+                        self.setStorageVideoTime(59);
+                        self.showToast("金币+100");
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                        self.showToast("金币获取失败");
                 }
+                self.resumeMusic();
+            });
+
+            this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
+            this.rewardedVideoAd2.onLoad(function(){
+                console.log('激励视频 广告加载成功')
+            });
+            this.rewardedVideoAd2.onClose(function(res){
+                // 用户点击了【关闭广告】按钮
+                // 小于 2.1.0 的基础库版本，res 是一个 undefined
+                if (res && res.isEnded || res === undefined) {
+                    if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.fuhuo(false,false,true);
+                        self.showToast("复活成功");
+                    }
+                }
+                else {
+                    // 播放中途退出，不下发游戏奖励
+                    if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.showToast("复活失败");
+                    }
+
+                }
+                self.resumeMusic();
             });
         }
     },
     wxVideoShow: function(type)
     {
+        var self = this;
+        self.pauseMusic();
+        this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var self = this;
-            this.rewardedVideoAd.type = type;
-            this.rewardedVideoAd.show().catch(function(err){
-                self.rewardedVideoAd.load().then(function(){
-                    self.rewardedVideoAd.show();
+            if(type == 1)
+            {
+                this.rewardedVideoAd.show().catch(function(err){
+                    self.rewardedVideoAd.load().then(function(){
+                        self.rewardedVideoAd.show();
+                    });
                 });
-            });
+            }
+            else
+            {
+                this.rewardedVideoAd2.show().catch(function(err){
+                    self.rewardedVideoAd2.load().then(function(){
+                        self.rewardedVideoAd2.show();
+                    });
+                });
+            }
+        }
+        else
+        {
+            if(type == 1)
+            {
+                var coin = self.getStorageCoin();
+                coin = parseInt(coin) + 100;
+                self.setStorageCoin(coin);
+                self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                self.uploadData();
+
+                this.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                this.node_main_lingqu_time.active = true;
+                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:59";
+                this.setStorageVideoTime(59);
+            }
+            else
+            {
+                this.fuhuo(false,false,true);
+            }
+            self.resumeMusic();
         }
     },
 
@@ -5301,7 +5720,7 @@ cc.Class({
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             wx.previewImage({
-                urls: ["https://www.77qqup.com:442/images/apptuijian/hulubox.jpg"],
+                urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
                 success: function (res) {
                 },
                 fail: function (res) {

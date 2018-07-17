@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "bafc454a-66b3-44d3-b76f-d81456e4169b",
+  "uuid": "9d08340c-94a5-4467-b272-f546365e6fdc",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "btn_fuhuo_video": {
+    "gun_13": {
       "ver": "1.0.3",
-      "uuid": "760e95bd-c14a-4a32-80c0-d097f21e374d",
-      "rawTextureUuid": "bafc454a-66b3-44d3-b76f-d81456e4169b",
+      "uuid": "4ca7d979-9427-4f98-8b6f-f2af76a7a1f2",
+      "rawTextureUuid": "9d08340c-94a5-4467-b272-f546365e6fdc",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 44,
-      "height": 35,
-      "rawWidth": 44,
-      "rawHeight": 35,
+      "width": 120,
+      "height": 27,
+      "rawWidth": 120,
+      "rawHeight": 27,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

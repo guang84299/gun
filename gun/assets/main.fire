@@ -6770,8 +6770,8 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 0.6,
-    "_scaleY": 0.6,
+    "_scaleX": 0.8,
+    "_scaleY": 0.8,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -6930,7 +6930,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -54
+      "y": -68
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -6951,7 +6951,7 @@
     "_actualFontSize": 30,
     "_fontSize": 30,
     "_lineHeight": 30,
-    "_enableWrapText": false,
+    "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
@@ -7087,8 +7087,8 @@
     },
     "_rotationX": -25,
     "_rotationY": -25,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 1.2,
+    "_scaleY": 1.2,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -7247,7 +7247,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -54
+      "y": -67
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -40333,7 +40333,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 720,
-      "y": 1392
+      "y": 580
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -52042,7 +52042,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "超级战士",
+    "_N$string": "领取幻灭",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

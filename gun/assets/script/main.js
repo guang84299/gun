@@ -6337,13 +6337,13 @@ cc.Class({
             {
                 if(Math.random()>0.5)
                 {
-                    query = "channel=sharecoinmenu_1&fromid="+qianqista.openid;
+                    query = "channel=sharegun&fromid="+qianqista.openid;
                     title = this.GAME.shares.coinmenu_txt1;
                     imageUrl = this.GAME.shares.coinmenu_pic1;
                 }
                 else
                 {
-                    query = "channel=sharecoinmenu_2&fromid="+qianqista.openid;
+                    query = "channel=sharegun&fromid="+qianqista.openid;
                     title = this.GAME.shares.coinmenu_txt2;
                     imageUrl = this.GAME.shares.coinmenu_pic2;
                 }
@@ -6485,9 +6485,16 @@ cc.Class({
                 adUnitId: 'adunit-805ad9676746d8d2',
                 style: {
                     left: 0,
-                    top: sharedCanvas.height/dpi-sharedCanvas.width/dpi/3,
-                    width: sharedCanvas.width/dpi
+                    top: sharedCanvas.height/dpi-320/3.5,
+                    width: 320,
                 }
+            });
+            var bannerAd = this.bannerAd;
+            this.bannerAd.onResize(function(res){
+                // console.log(res.width, res.height)
+                // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
+                bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
+                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
             });
 
         }
@@ -6565,14 +6572,25 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            wx.previewImage({
-                urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
-                success: function (res) {
-                },
-                fail: function (res) {
-                    return;
-                }
+            wx.navigateToMiniProgram({
+              appId: 'wx604f780b017da7df',
+              path: 'pages/main/main',
+              extraData: {
+                foo: 'bar'
+              },
+              // envVersion: 'develop',
+              success(res) {
+                // 打开成功
+              }
             });
+            // wx.previewImage({
+            //     urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
+            //     success: function (res) {
+            //     },
+            //     fail: function (res) {
+            //         return;
+            //     }
+            // });
         }
     },
 

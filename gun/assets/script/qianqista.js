@@ -83,7 +83,13 @@ module.exports = {
                 var query = opts.query;
                 var scene = opts.scene;
                 if(path && path.indexOf('channel=') != -1)
+                {
                     this.channel = path.substr(path.indexOf("channel=")+8);
+                    if(this.channel.length>16)
+                    {
+                        this.channel = this.channel.substr(0,15);
+                    }
+                }
                 if(this.channel == "" || this.channel == null)
                 {
                     if(query && query.channel && query.channel.length > 0)
@@ -151,7 +157,11 @@ module.exports = {
                 if(self.fromid && self.fromid.length>1)
                 {
                     var data = {};
-                    data.invitelist = self.openid;
+                    if(self.channel == "sharegun")
+                        data.guninvitelist = self.openid;
+                    else
+                        data.invitelist = self.openid;
+
                     var datas = JSON.stringify(data);
                     self.sendRequest("uploaddatas",{gameId:self.gameId,openid:self.fromid,datas:datas},function(res){
                         console.log("upload invitelist:",res);

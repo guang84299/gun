@@ -76,6 +76,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        player_10: {
+            default: null,
+            type: cc.Prefab
+        },
         enemy_1: {
             default: null,
             type: cc.Prefab
@@ -696,6 +700,7 @@ cc.Class({
         this.op = [255, 242, 216, 191, 165, 140, 114, 89, 63, 38, 12, 5, 3, 1, 0];
         this.GAME = {};
         this.GAME.control = [];
+        this.GAME.xuming = "00:30-00:30";
         this.GAME.state = "stop";
         this.GAME.enemys = [this.enemy_1, this.enemy_2, this.enemy_3, this.enemy_4, this.enemy_5,
             this.enemy_6, this.enemy_7, this.enemy_8, this.enemy_9, this.enemy_10, this.enemy_11,
@@ -704,7 +709,7 @@ cc.Class({
             this.boss_7, this.boss_8, this.boss_9, this.boss_10, this.boss_11, this.boss_12,this.boss_13,
             this.boss_14,this.boss_15,this.boss_16];
         this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
-            this.player_6,this.player_7,this.player_8,this.player_9];
+            this.player_6,this.player_7,this.player_8,this.player_9,this.player_10];
         this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
             this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
             this.gun_17,this.gun_18,this.gun_19];
@@ -742,7 +747,8 @@ cc.Class({
             {speed:1,coin:1,fire:1,aimLen:1,aimSpeed:1.0},
             {speed:1,coin:1,fire:0,aimLen:1.1,aimSpeed:1.0},
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.1},
-            {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2}
+            {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2},
+            {speed:1.5,coin:1,fire:0,aimLen:1.2,aimSpeed:1.1}
         ];
         this.GAME.gunsconfig = [
             {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
@@ -1010,7 +1016,7 @@ cc.Class({
         //    this.setStorageGun(i,0);
         this.setStoragePlayer(1);
         this.setStorageGun(1);
-        //this.setStorageCoin(15000);
+        //this.setStorageCoin(0);
 
         //this.setStorageGun(10,0);
         //this.setStorageCurrGun(1);
@@ -1021,8 +1027,13 @@ cc.Class({
         //this.setStorageRoleJieSuoNum(4);
         //cc.sys.localStorage.setItem("playnum",0);
         //this.setStorageInviteNum(4);
+        //this.setStorageInviteAwardNum(4);
 
+        //this.setStorageGunInviteNum(1);
+        //this.setStorageGunInviteAwardNum(0);
+        //this.setStorageGun(16,0);
     },
+
 
     initUI: function()
     {
@@ -1079,6 +1090,7 @@ cc.Class({
         this.node_fuhuo_score = cc.find("score",this.node_fuhuo);
         this.node_fuhuo_fu_coin = cc.find("fuhuo_coin",this.node_fuhuo_share);
         this.node_fuhuo_fu_video = cc.find("fuhuo_video",this.node_fuhuo_share);
+        this.node_fuhuo_fu_xuming = cc.find("fuhuo_xuming",this.node_fuhuo_share);
 
         this.node_over = cc.find("Canvas/node_over");
         this.node_over_coin = cc.find("coin/num",this.node_over);
@@ -1099,6 +1111,26 @@ cc.Class({
 
         this.node_tishi =  cc.find("Canvas/node_tishi");
         this.node_tishi.hand =  cc.find("hand",this.node_tishi);
+        this.node_tishi.ios = cc.find("tishibg/ios",this.node_tishi);
+        if(cc.sys.os == cc.sys.OS_IOS)
+        {
+            this.node_tishi.ios.getComponent("cc.Label").string = "2、点击下方【添加到我的小程序】。";
+        }
+
+        this.node_zhanshi = cc.find("Canvas/node_zhanshi");
+        this.node_zhanshi_guang = cc.find("bg/guang",this.node_zhanshi);
+        this.node_zhanshi_zhanshivedio = cc.find("bg/zhanshivedio",this.node_zhanshi);
+        this.node_zhanshi_vediostart = cc.find("bg/vediostart",this.node_zhanshi);
+
+        this.node_linggun = cc.find("Canvas/node_linggun");
+        this.node_linggun_guang = cc.find("bg/guang",this.node_linggun);
+
+        this.node_xuming = cc.find("Canvas/node_xuming");
+
+        this.node_coin = cc.find("Canvas/node_coin");
+        this.node_coin_vedio = cc.find("bg/vediocoin",this.node_coin);
+        this.node_coin_time = cc.find("time",this.node_coin_vedio);
+
 
         //var stringTime = "2018-07-05 17:01:00";
         //var timestamp2 = (new Date(Date.parse(stringTime.replace(/-/g,"/")))).getTime();
@@ -1108,12 +1140,196 @@ cc.Class({
         //}
         this.initGmae();
         this.updateUIControl();
+        this.updateDitu();
+    },
+
+    updateDitu: function()
+    {
+        var num = this.getStorageGunJieSuoNum();
+        num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
+        if(num>0)
+        {
+            this.GAME.loutis = [
+                [
+                    [1,2,3],
+                    [2,3,1],
+                    [1,2,1],
+                    [2,3,1],
+                    [1,3,0],
+                    [2,4,1],
+                    [1,2,1],
+                    [2,3,1],
+                    [1,4,0],
+                    [2,5,-1],
+                    [1,2,2],
+                    [2,3,1],
+                    [1,5,-1],
+                    [2,3,2],
+                    [1,4,2],
+                    [2,4,-1],
+                    [1,5,0],
+                    [2,3,1],
+                    [1,3,0],
+                    [2,2,4],
+                    [1,2,2],
+                    [2,4,1],
+                    [1,4,2],
+                    [2,3,3],
+                    [1,2,1],
+                    [2,4,1],
+                    [1,5,-1],
+                    [2,3,2],
+                    [1,3,1],
+                    [2,4,2],
+                    [1,2,1],
+                    [2,3,0]
+                ],
+                [
+                    [1,2,3],
+                    [2,2,0],
+                    [1,3,0],
+                    [2,4,2],
+                    [1,2,0],
+                    [2,3,1],
+                    [1,4,1],
+                    [2,3,0],
+                    [1,5,0],
+                    [2,4,2],
+                    [1,2,0],
+                    [2,4,2],
+                    [1,8,0],
+                    [2,5,0],
+                    [1,2,1],
+                    [2,3,2],
+                    [1,5,-1],
+                    [2,4,0],
+                    [1,2,2],
+                    [2,4,3],
+                    [1,3,0],
+                    [2,2,2],
+                    [1,5,1],
+                    [2,6,1],
+                    [1,7,0],
+                    [2,3,1],
+                    [1,4,-1],
+                    [2,5,2],
+                    [1,2,2],
+                    [2,4,0],
+                    [1,4,1],
+                    [2,3,0]
+                ],
+                [
+                    [1,2,3],
+                    [2,3,1],
+                    [1,6,0],
+                    [2,4,-1],
+                    [1,3,1],
+                    [2,5,1],
+                    [1,6,1],
+                    [2,8,-1],
+                    [1,4,0],
+                    [2,4,2],
+                    [1,6,-1],
+                    [2,4,1],
+                    [1,3,2],
+                    [2,2,2],
+                    [1,2,1],
+                    [2,5,1],
+                    [1,2,-1],
+                    [2,3,0],
+                    [1,5,2],
+                    [2,3,2],
+                    [1,5,2],
+                    [2,2,1],
+                    [1,3,2],
+                    [2,7,0],
+                    [1,5,0],
+                    [2,4,1],
+                    [1,3,2],
+                    [2,5,3],
+                    [1,2,1],
+                    [2,3,3],
+                    [1,2,2],
+                    [2,3,0]
+                ],
+                [
+                    [1,2,3],
+                    [2,3,1],
+                    [1,5,2],
+                    [2,6,1],
+                    [1,4,2],
+                    [2,4,1],
+                    [1,3,2],
+                    [2,2,4],
+                    [1,7,0],
+                    [2,3,1],
+                    [1,4,1],
+                    [2,6,1],
+                    [1,4,2],
+                    [2,5,1],
+                    [1,2,3],
+                    [2,3,2],
+                    [1,6,0],
+                    [2,7,-1],
+                    [1,2,3],
+                    [2,5,1],
+                    [1,6,-2],
+                    [2,8,-2],
+                    [1,3,0],
+                    [2,4,2],
+                    [1,2,3],
+                    [2,4,1],
+                    [1,5,0],
+                    [2,3,2],
+                    [1,4,2],
+                    [2,6,-1],
+                    [1,4,1],
+                    [2,3,1]
+                ],
+                [
+                    [1,2,3],
+                    [2,4,0],
+                    [1,2,1],
+                    [2,5,0],
+                    [1,3,1],
+                    [2,4,1],
+                    [1,5,0],
+                    [2,2,2],
+                    [1,6,0],
+                    [2,3,2],
+                    [1,4,1],
+                    [2,6,0],
+                    [1,3,1],
+                    [2,4,1],
+                    [1,5,0],
+                    [2,4,1],
+                    [1,6,0],
+                    [2,2,3],
+                    [1,4,2],
+                    [2,5,1],
+                    [1,2,2],
+                    [2,5,1],
+                    [1,6,1],
+                    [2,3,2],
+                    [1,6,0],
+                    [2,3,2],
+                    [1,4,1],
+                    [2,2,3],
+                    [1,5,1],
+                    [2,4,2],
+                    [1,5,0],
+                    [2,2,1]
+                ]
+            ];
+        }
+
     },
 
     updateUIControl: function()
     {
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
+        cc.find("linggunbg",this.node_main).active = false;
         cc.find("roleyaoqing",this.node_role).active = false;
         cc.find("roleyaoqing",this.node_gun).active = false;
 
@@ -1129,10 +1345,15 @@ cc.Class({
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
+                        cc.find("linggunbg",this.node_main).active = true;
                         cc.find("roleyaoqing",this.node_role).active = true;
                         cc.find("roleyaoqing",this.node_gun).active = true;
                         this.GAME.fangdanyi = true;
                     }
+                }
+                else if(con.id == "sharefuhuo")
+                {
+                    this.GAME.xuming = con.value;
                 }
                 else
                 {
@@ -1259,10 +1480,15 @@ cc.Class({
                 this.setStorageShareGroupList(datas.shareGroupList);
             if(datas.shareGroupTime)
                 this.setStorageShareGroupTime(datas.shareGroupTime);
+            if(datas.gunInviteAwardNum)
+                this.setStorageGunInviteAwardNum(parseInt(datas.gunInviteAwardNum));
+            if(datas.guninvitelist)
+                this.setStorageGunInviteNum(datas.guninvitelist.length);
 
 
             this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
             this.node_main_score.getComponent("cc.Label").string = this.getStorageScore();
+            this.updateDitu();
         }
         else
         {
@@ -1336,6 +1562,7 @@ cc.Class({
         datas.inviteAwardNum = this.getStorageInviteAwardNum();
         datas.shareGroupList = this.getStorageShareGroupList();
         datas.shareGroupTime = this.getStorageShareGroupTime();
+        datas.gunInviteAwardNum = this.getStorageGunInviteAwardNum();
 
         var data = JSON.stringify(datas);
         var self = this;
@@ -1351,7 +1578,7 @@ cc.Class({
     {
         var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_role,this.node_gun,this.node_setting,
             this.node_card,this.node_duihuan,this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
-            this.node_chengjiu,this.node_award];
+            this.node_chengjiu,this.node_award,this.node_zhanshi];
         for(var i=0;i<nodes.length;i++)
         {
             var items = nodes[i].children;
@@ -1389,8 +1616,13 @@ cc.Class({
         this.GAME.score = 0;
         this.GAME.coin = 0;
         this.GAME.killhead = 0;
-        this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
+        if(!this.GAME.useZhanShi)
+        {
+            this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
+            this.GAME.currPlayerTmp = this.GAME.currPlayer;
+        }
         this.GAME.currGun = this.getStorageCurrGun()-1;
+        this.GAME.currGunTmp = this.GAME.currGun;
 
         this.GAME.playerfuhuo = true;//金币
         this.GAME.playerfangdanyi = true;
@@ -1401,7 +1633,7 @@ cc.Class({
     initGmae: function()
     {
         this.initGameData();
-        this.node_game.removeAllChildren();
+        this.node_game.destroyAllChildren();
         this.node_game.y = -792;
         this.node_main.active = true;
         this.node_game_ui.active = false;
@@ -1432,7 +1664,7 @@ cc.Class({
         this.GAME.state = "stop";
         this.GAME.enemy_num = 3 + Math.floor(Math.random() * 3 + 1);
         this.GAME.killhead = 0;
-        this.node_game.removeAllChildren();
+        this.node_game.destroyAllChildren();
         this.node_game.y = -792;
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
@@ -1449,7 +1681,7 @@ cc.Class({
         this.openover = false;
         this.initGameData();
 
-        this.node_game.removeAllChildren();
+        this.node_game.destroyAllChildren();
         this.node_game.y = -792;
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
@@ -1468,21 +1700,19 @@ cc.Class({
         {
             this.wxQuanState(false);
             this.startGmae();
-            if(cc.sys.os == cc.sys.OS_ANDROID)
+
+            var playnum = cc.sys.localStorage.getItem("playnum");
+            playnum = playnum ? playnum : 0;
+            if(playnum == 1)
             {
-                var playnum = cc.sys.localStorage.getItem("playnum");
-                playnum = playnum ? playnum : 0;
-                if(playnum == 1)
-                {
-                    this.node_tishi.active = true;
-                    this.node_tishi.hand.runAction(cc.repeatForever(cc.sequence(
-                        cc.moveBy(0.3,10,0).easing(cc.easeSineIn()),
-                        cc.moveBy(0.3,-10,0).easing(cc.easeSineIn())
-                    )));
-                }
-                playnum ++;
-                cc.sys.localStorage.setItem("playnum",playnum);
+                this.node_tishi.active = true;
+                this.node_tishi.hand.runAction(cc.repeatForever(cc.sequence(
+                    cc.moveBy(0.3,10,0).easing(cc.easeSineIn()),
+                    cc.moveBy(0.3,-10,0).easing(cc.easeSineIn())
+                )));
             }
+            playnum ++;
+            cc.sys.localStorage.setItem("playnum",playnum);
         }
         else if(data == "resume")
         {
@@ -1752,9 +1982,150 @@ cc.Class({
         {
             this.wxtoTempFilePath();
         }
-
+        else if(data == "zhanshi")
+        {
+            this.openzhanshi();
+        }
+        else if(data == "zhanshivedio")
+        {
+            this.wxVideoShow(3);
+        }
+        else if(data == "vediostart")
+        {
+            this.useZhanshiStart();
+        }
+        else if(data == "close_zhanshi")
+        {
+            this.node_zhanshi.active = false;
+            this.wxQuanState(true);
+        }
+        else if(data == "linggun")
+        {
+            this.openLingGun();
+        }
+        else if(data == "linggunshare")
+        {
+            this.lingquGun();
+        }
+        else if(data == "close_linggun")
+        {
+            this.node_linggun.active = false;
+            this.wxQuanState(true);
+        }
+        else if(data == "fuhuo_xuming")
+        {
+            this.node_xuming.active = true;
+        }
+        else if(data == "close_xuming")
+        {
+            this.node_xuming.active = false;
+        }
+        else if(data == "xuming")
+        {
+            this.node_xuming.active = false;
+            this.wxXuMing();
+        }
+        else if(data == "close_coin")
+        {
+            this.node_coin.active = false;
+        }
+        else if(data == "vediocoin")
+        {
+            this.wxVideoShow(1);
+        }
 
         cc.log(data);
+    },
+
+    openCoinNode: function()
+    {
+        this.node_coin.active = true;
+    },
+
+    lingquGun: function()
+    {
+        var gunInviteNum = this.getStorageGunInviteNum();
+        var gunInviteAwardNum = this.getStorageGunInviteAwardNum();
+        if(gunInviteNum>=4 && gunInviteAwardNum < 1)
+        {
+            if(this.getStorageGun(16) == 1)
+            {
+                this.setStorageCoin(parseInt(this.getStorageCoin())+2000);
+
+                this.setStorageGunInviteAwardNum(1);
+                this.uploadData();
+                this.showToast("金币+"+2000);
+                this.openLingGun();
+                this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
+                this.playSound(this.audio_coin);
+            }
+            else
+            {
+                this.setStorageGun(16,1);
+                this.setStorageGunInviteAwardNum(1);
+                this.uploadData();
+                this.showToast("恭喜获取幻灭");
+                this.openLingGun();
+            }
+        }
+        else
+            this.wxGropShareLingGun();
+    },
+
+    openLingGun: function()
+    {
+        this.wxQuanState(false);
+        this.node_linggun.active = true;
+        this.node_linggun_guang.stopAllActions();
+        this.node_linggun_guang.runAction(cc.repeatForever(
+            cc.rotateBy(1,180)
+        ));
+
+        var gunInviteNum = this.getStorageGunInviteNum();
+        var gunInviteAwardNum = this.getStorageGunInviteAwardNum();
+
+        for(var i=1;i<=4;i++)
+        {
+            var xiaolian = cc.find("bg/xiaolian_"+i,this.node_linggun);
+            if(gunInviteNum>=i)
+            {
+                xiaolian.color = cc.color(243,152,0);
+            }
+            else
+            {
+                xiaolian.color = cc.color(160,160,160);
+            }
+        }
+        if(gunInviteNum>=4 && gunInviteAwardNum < 1)
+        {
+            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "领取";
+        }
+        else
+        {
+            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "邀请好友";
+        }
+    },
+
+    useZhanshiStart: function()
+    {
+        this.GAME.currPlayerTmp = this.GAME.currPlayer;
+        this.GAME.currPlayer = 9;
+        this.GAME.useZhanShi = true;
+        this.node_zhanshi_vediostart.active = false;
+        this.node_zhanshi_zhanshivedio.active = true;
+        this.node_zhanshi.active = false;
+        this.wxQuanState(false);
+        this.again();
+    },
+
+    openzhanshi: function()
+    {
+        this.wxQuanState(false);
+        this.node_zhanshi.active = true;
+        this.node_zhanshi_guang.stopAllActions();
+        this.node_zhanshi_guang.runAction(cc.repeatForever(
+            cc.rotateBy(1,180)
+        ));
     },
 
     openSetting: function()
@@ -1821,7 +2192,7 @@ cc.Class({
 
         var inviteNum = this.getStorageInviteNum();
         var inviteAwardNum = this.getStorageInviteAwardNum();
-        if(inviteAwardNum<=5 && inviteAwardNum < inviteNum)
+        if(inviteAwardNum<10 &&  parseInt(inviteAwardNum) <  parseInt(inviteNum))
         {
             lingjiang_dian.active = true;
         }
@@ -1911,10 +2282,13 @@ cc.Class({
 
     lingquAward: function(id)
     {
+        var inviteAwardNum = this.getStorageInviteAwardNum();
+
         var coin = this.GAME.inviteconfig[id-1];
+        if(inviteAwardNum>=5)
+            coin*=2;
         this.setStorageCoin(parseInt(this.getStorageCoin())+coin);
 
-        var inviteAwardNum = this.getStorageInviteAwardNum();
         this.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
         this.uploadData();
         this.showToast("金币+"+coin);
@@ -1922,6 +2296,17 @@ cc.Class({
         this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
         this.updateDian();
         this.playSound(this.audio_coin);
+
+        var self = this;
+        if(inviteAwardNum==4)
+        {
+            this.node.runAction(cc.sequence(
+                cc.delayTime(1),
+                cc.callFunc(function(){
+                    self.showToast("继续邀请，奖励翻倍");
+                })
+            ));
+        }
 
         qianqista.event("invite_num_"+(parseInt(inviteAwardNum)+1));
     },
@@ -1931,28 +2316,58 @@ cc.Class({
         this.node_award.active = true;
         var inviteNum = this.getStorageInviteNum();
         var inviteAwardNum = this.getStorageInviteAwardNum();
-
-        for(var i=1;i<=5;i++)
+        if(inviteAwardNum<5)
         {
-            var item = cc.find("item_"+i,this.node_award_itembg);
-            var box = cc.find("box",item);
-            box.awardid = i;
-            box.canset = false;
-            if(inviteAwardNum<i)
+            for(var i=1;i<=5;i++)
             {
-                if(inviteNum>=i)
+                var item = cc.find("item_"+i,this.node_award_itembg);
+                var box = cc.find("box",item);
+                box.awardid = i;
+                box.canset = false;
+                if(inviteAwardNum<i)
                 {
-                    box.color = cc.color(137,87,161);
-                    box.canset = true;
+                    if(inviteNum>=i)
+                    {
+                        box.color = cc.color(137,87,161);
+                        box.canset = true;
+                    }
+                    else
+                    {
+                        box.color = cc.color(255,255,255);
+                    }
                 }
                 else
                 {
-                    box.color = cc.color(255,255,255);
+                    box.color = cc.color(181,181,181);
                 }
             }
-            else
+        }
+        else
+        {
+            for(var i=1;i<=5;i++)
             {
-                box.color = cc.color(181,181,181);
+                var item = cc.find("item_"+i,this.node_award_itembg);
+                var box = cc.find("box",item);
+                var coin = cc.find("coin",box);
+                coin.getComponent("cc.Label").string = this.GAME.inviteconfig[i-1]*2;
+                box.awardid = i;
+                box.canset = false;
+                if(inviteAwardNum<i+5)
+                {
+                    if(inviteNum>=i+5)
+                    {
+                        box.color = cc.color(137,87,161);
+                        box.canset = true;
+                    }
+                    else
+                    {
+                        box.color = cc.color(255,255,255);
+                    }
+                }
+                else
+                {
+                    box.color = cc.color(181,181,181);
+                }
             }
         }
     },
@@ -2092,7 +2507,7 @@ cc.Class({
         this.node_chengjiu_center.height = s.height - 335;
         this.node_chengjiu_center.color = this.ltcolor;
 
-        this.node_chengjiu_top_player.removeAllChildren();
+        this.node_chengjiu_top_player.destroyAllChildren();
         var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
         this.node_chengjiu_top_player.addChild(player);
 
@@ -2278,7 +2693,7 @@ cc.Class({
         var needcoin = this.getStorageGunJieSuoNum()*50 + 200;
         if(this.getStorageCoin()< needcoin)
         {
-            this.showToast("金币不足");
+            this.openCoinNode();
         }
         else
         {
@@ -2344,6 +2759,7 @@ cc.Class({
                         var jiesuonum = parseInt(self.getStorageGunJieSuoNum()) + parseInt(self.getStorageGunJieSuoNum2());
                         if(jiesuonum >= 2)
                             qianqista.event("jiesuo_gun_num_"+jiesuonum);
+                        self.updateDitu();
                     })
                 );
                 seq.setTag(1);
@@ -2359,7 +2775,7 @@ cc.Class({
         var needcoin = this.getStorageGunJieSuoNum2()*50 + 750;
         if(this.getStorageCoin()< needcoin)
         {
-            this.showToast("金币不足");
+            this.openCoinNode();
         }
         else
         {
@@ -2426,6 +2842,7 @@ cc.Class({
                         var jiesuonum = parseInt(self.getStorageGunJieSuoNum()) + parseInt(self.getStorageGunJieSuoNum2());
                         if(jiesuonum >= 2)
                             qianqista.event("jiesuo_gun_num_"+jiesuonum);
+                        self.updateDitu();
                     })
                 );
                 seq.setTag(1);
@@ -2443,6 +2860,7 @@ cc.Class({
             this.playSound(this.audio_role_huan);
             this.setStorageCurrGun(id);
             this.GAME.currGun = this.getStorageCurrGun()-1;
+            this.GAME.currGunTmp = this.GAME.currGun;
             this.openGun();
             this.uploadData();
         }
@@ -2567,7 +2985,7 @@ cc.Class({
         this.node_gun_center.height = s.height - 335;
         this.node_gun_center.color = this.ltcolor;
 
-        this.node_gun_top_player.removeAllChildren();
+        this.node_gun_top_player.destroyAllChildren();
         var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
         this.node_gun_top_player.addChild(player);
 
@@ -2651,7 +3069,7 @@ cc.Class({
         var self = this;
         if(this.getStorageCoin()<500)
         {
-            this.showToast("金币不足");
+            this.openCoinNode();
         }
         else
         {
@@ -2735,6 +3153,7 @@ cc.Class({
             this.playSound(this.audio_role_huan);
             this.setStorageCurrPlayer(id);
             this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
+            this.GAME.currPlayerTmp = this.GAME.currPlayer;
             this.openJuese();
             this.uploadData();
         }
@@ -2750,7 +3169,7 @@ cc.Class({
         this.node_role_center.height = s.height - 335;
         this.node_role_center.color = this.ltcolor;
 
-        this.node_role_top_player.removeAllChildren();
+        this.node_role_top_player.destroyAllChildren();
         var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
         this.node_role_top_player.addChild(player);
 
@@ -2934,7 +3353,7 @@ cc.Class({
                 this.last_h = this.last_h + item[1]*this.tih;
                 this.ltzorder--;
                 index = i;
-                if(currH > s.height*0.6)
+                if(currH > s.height*0.8)
                 {
                     currH += item[1]*this.tih;
                     break;
@@ -4202,7 +4621,7 @@ cc.Class({
             this.node_game_ui.killhead.active = true;
             sct = 1;
             this.addCoin();
-            if(disnum>5)
+            if(disnum>7)
                 this.addCoin();
 
             this.node_game_ui.hitbg.runAction(cc.sequence(
@@ -4543,9 +4962,18 @@ cc.Class({
         cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.getChaoyue();
         cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.getChaoyue4();
         this.wxOverRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
+
+
+        if(this.GAME.useZhanShi)
+        {
+            this.GAME.useZhanShi = false;
+            this.GAME.currPlayer = this.GAME.currPlayerTmp;
+        }
         this.uploadData();
         this.updateDian();
+        this.wxBannerHide();
         qianqista.event("ui_jiesuan");
+
     },
 
     judgeFuHuo: function()
@@ -4564,14 +4992,39 @@ cc.Class({
         this.node_fuhuo_fu_coin.getComponent("cc.Button").interactable = this.GAME.playerfuhuo;
         this.node_fuhuo_fu_video.getComponent("cc.Button").interactable = this.GAME.playerfuhuovideo;
         if(this.GAME.playerfuhuo)
+        {
             this.node_fuhuo_fu_coin.color = cc.color(255,255,255);
+            this.node_fuhuo_fu_xuming.color = cc.color(255,255,255);
+        }
         else
+        {
             this.node_fuhuo_fu_coin.color = cc.color(161,161,161);
+            this.node_fuhuo_fu_xuming.color = cc.color(161,161,161);
+        }
         if(this.GAME.playerfuhuovideo)
             this.node_fuhuo_fu_video.color = cc.color(255,255,255);
         else
             this.node_fuhuo_fu_video.color = cc.color(161,161,161);
+
+        var date = new Date();
+        var stringtime = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+        var time1 = stringtime + " " + this.GAME.xuming.split("-")[0] + ":00";
+        var time2 = stringtime + " " + this.GAME.xuming.split("-")[1] + ":00";
+        var timestamp1 = (new Date(Date.parse(time1.replace(/-/g,"/")))).getTime();
+        var timestamp2 = (new Date(Date.parse(time2.replace(/-/g,"/")))).getTime();
+        if(date.getTime()>timestamp1 && date.getTime() < timestamp2)
+        {
+            this.node_fuhuo_fu_xuming.active = true;
+            this.node_fuhuo_fu_coin.active = false;
+            this.node_fuhuo_fu_xuming.getComponent("cc.Button").interactable = this.GAME.playerfuhuo;
+        }
+        else
+        {
+            this.node_fuhuo_fu_xuming.active = false;
+            this.node_fuhuo_fu_coin.active = true;
+        }
         this.wxFuhuoRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
+        this.wxBannerShow();
     },
 
     skip: function()
@@ -4617,6 +5070,7 @@ cc.Class({
             ));
         }
 
+        this.wxBannerHide();
     },
 
     addCoin: function()
@@ -4783,10 +5237,14 @@ cc.Class({
             {
                 this.node_main_lingqu_time.active = false;
                 this.node_main_lingqu.getComponent("cc.Button").interactable = true;
+
+                this.node_coin_time.active = false;
+                this.node_coin_vedio.getComponent("cc.Button").interactable = true;
             }
             else
             {
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
+                this.node_coin_time.getComponent("cc.Label").string = "0:"+videoTime;
                 this.setStorageVideoTime(videoTime-1);
             }
         }
@@ -5193,6 +5651,27 @@ cc.Class({
     getStorageInviteAwardNum: function()
     {
         var num = cc.sys.localStorage.getItem("invite_award_num");
+        num = num ? num : 0;
+        return num;
+    },
+
+    setStorageGunInviteNum: function(num)
+    {
+        cc.sys.localStorage.setItem("gun_invite_num",num);
+    },
+    getStorageGunInviteNum: function()
+    {
+        var num = cc.sys.localStorage.getItem("gun_invite_num");
+        num = num ? num : 0;
+        return num;
+    },
+    setStorageGunInviteAwardNum: function(num)
+    {
+        cc.sys.localStorage.setItem("gun_invite_award_num",num);
+    },
+    getStorageGunInviteAwardNum: function()
+    {
+        var num = cc.sys.localStorage.getItem("gun_invite_award_num");
         num = num ? num : 0;
         return num;
     },
@@ -5694,9 +6173,7 @@ cc.Class({
                                 qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
                                     if(b==true && self.judgeShareGroupState(openGId,timestamp))
                                     {
-                                        wx.showToast({
-                                            title: "获取到一个防弹衣"
-                                        });
+                                        self.showToast("获取到一个防弹衣");
 
                                         var cardnum = self.getStorageCard();
                                         cardnum = parseInt(cardnum) + 1;
@@ -5706,9 +6183,7 @@ cc.Class({
                                     }
                                     else
                                     {
-                                        wx.showToast({
-                                            title: "每个群每天只能转发一次"
-                                        });
+                                        self.showToast("每个群每天只能转发一次");
                                     }
                                 });
                             }
@@ -5716,9 +6191,7 @@ cc.Class({
                     }
                     else
                     {
-                        wx.showToast({
-                            title: "请分享到群"
-                        });
+                        self.showToast("请分享到群");
                     }
 
                     qianqista.share(true);
@@ -5736,6 +6209,61 @@ cc.Class({
             cardnum = parseInt(cardnum) + 1;
             self.setStorageCard(cardnum);
             self.node_card_num.getComponent("cc.Label").string = cardnum+"";
+        }
+    },
+
+    wxXuMing: function()
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var query = "channel=sharexumingmenu";
+            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            if(this.GAME.shares.cardmenu_txt1 && this.GAME.shares.cardmenu_pic1)
+            {
+                if(Math.random()>0.5)
+                {
+                    query = "channel=sharexumingmenu_1";
+                    title = this.GAME.shares.cardmenu_txt1;
+                    imageUrl = this.GAME.shares.cardmenu_pic1;
+                }
+                else
+                {
+                    query = "channel=sharexumingmenu_2";
+                    title = this.GAME.shares.cardmenu_txt2;
+                    imageUrl = this.GAME.shares.cardmenu_pic2;
+                }
+            }
+
+            wx.shareAppMessage({
+                query:query,
+                title: title,
+                imageUrl: imageUrl,
+                success: function(res)
+                {
+                    if(res.shareTickets && res.shareTickets.length>0)
+                    {
+                        self.showToast("续命成功");
+                        self.fuhuo(false,true,false);
+                    }
+                    else
+                    {
+                        self.showToast("请分享到群");
+                    }
+
+                    qianqista.share(true);
+                    cc.log(res);
+                },
+                fail: function()
+                {
+                    qianqista.share(false);
+                }
+            });
+        }
+        else
+        {
+            this.fuhuo(false,true,false);
         }
     },
 
@@ -5783,9 +6311,7 @@ cc.Class({
                 fail: function()
                 {
                     qianqista.share(false);
-                    wx.showToast({
-                        title: "分享失败！"
-                    });
+                    self.showToast("分享失败！");
                 }
             });
         }
@@ -5796,6 +6322,61 @@ cc.Class({
             self.setStorageCoin(cardnum);
             self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
             self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
+        }
+    },
+
+    wxGropShareLingGun: function()
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var query = "channel=sharegun&fromid="+qianqista.openid;
+            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            if(this.GAME.shares.coinmenu_txt1 && this.GAME.shares.coinmenu_pic1)
+            {
+                if(Math.random()>0.5)
+                {
+                    query = "channel=sharecoinmenu_1&fromid="+qianqista.openid;
+                    title = this.GAME.shares.coinmenu_txt1;
+                    imageUrl = this.GAME.shares.coinmenu_pic1;
+                }
+                else
+                {
+                    query = "channel=sharecoinmenu_2&fromid="+qianqista.openid;
+                    title = this.GAME.shares.coinmenu_txt2;
+                    imageUrl = this.GAME.shares.coinmenu_pic2;
+                }
+            }
+            wx.shareAppMessage({
+                query:query,
+                title: title,
+                imageUrl: imageUrl,
+                success: function(res)
+                {
+
+                    self.showToast("分享成功，等待好友上线吧");
+
+                    //var cardnum = self.getStorageCoin();
+                    //cardnum = parseInt(cardnum) + 100;
+                    //self.setStorageCoin(cardnum);
+                    //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
+                    //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
+                    //self.uploadData();
+                    qianqista.share(true);
+                    cc.log(res);
+                },
+                fail: function()
+                {
+                    qianqista.share(false);
+                    self.showToast("分享失败！");
+                }
+            });
+        }
+        else
+        {
+            var gunInviteNum = this.getStorageGunInviteNum();
+            this.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
         }
     },
 
@@ -5811,7 +6392,7 @@ cc.Class({
         }
         else
         {
-            this.showToast("金币不足！")
+            this.openCoinNode();
         }
     },
 
@@ -5838,9 +6419,19 @@ cc.Class({
 
                         self.node_main_lingqu.getComponent("cc.Button").interactable = false;
                         self.node_main_lingqu_time.active = true;
-                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:59";
-                        self.setStorageVideoTime(59);
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                        self.node_coin_vedio.getComponent("cc.Button").interactable = false;
+                        self.node_coin_time.active = true;
+                        self.node_coin_time.getComponent("cc.Label").string = "0:30";
+
+                        self.setStorageVideoTime(30);
                         self.showToast("金币+100");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        self.node_zhanshi_zhanshivedio.active = false;
+                        self.node_zhanshi_vediostart.active = true;
                     }
                 }
                 else {
@@ -5864,6 +6455,11 @@ cc.Class({
                         self.fuhuo(false,false,true);
                         self.showToast("复活成功");
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        self.node_zhanshi_zhanshivedio.active = false;
+                        self.node_zhanshi_vediostart.active = true;
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
@@ -5871,10 +6467,29 @@ cc.Class({
                     {
                         self.showToast("复活失败");
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        self.showToast("体验失败");
+                    }
 
                 }
                 self.resumeMusic();
             });
+
+
+            var openDataContext = wx.getOpenDataContext();
+            var sharedCanvas = openDataContext.canvas;
+            var sc = sharedCanvas.width/this.dsize.width;
+            var dpi = cc.view._devicePixelRatio;
+            this.bannerAd = wx.createBannerAd({
+                adUnitId: 'adunit-805ad9676746d8d2',
+                style: {
+                    left: 0,
+                    top: sharedCanvas.height/dpi-sharedCanvas.width/dpi/3,
+                    width: sharedCanvas.width/dpi
+                }
+            });
+
         }
     },
     wxVideoShow: function(type)
@@ -5913,15 +6528,37 @@ cc.Class({
 
                 this.node_main_lingqu.getComponent("cc.Button").interactable = false;
                 this.node_main_lingqu_time.active = true;
-                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:59";
-                this.setStorageVideoTime(59);
+                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                this.node_coin_vedio.getComponent("cc.Button").interactable = false;
+                this.node_coin_time.active = true;
+                this.node_coin_time.getComponent("cc.Label").string = "0:30";
+
+                this.setStorageVideoTime(30);
             }
-            else
+            else if(type == 2)
             {
                 this.fuhuo(false,false,true);
             }
+            else if(type == 3)
+            {
+                this.node_zhanshi_zhanshivedio.active = false;
+                this.node_zhanshi_vediostart.active = true;
+            }
             self.resumeMusic();
         }
+    },
+
+    wxBannerShow: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            this.bannerAd.show();
+    },
+
+    wxBannerHide: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            this.bannerAd.hide();
     },
 
     wxMore: function()

@@ -47,6 +47,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        player_10: {
+            default: null,
+            type: cc.Prefab
+        },
         gun_1: {
             default: null,
             type: cc.Prefab
@@ -148,7 +152,7 @@ cc.Class({
         this.dsize = cc.view.getDesignResolutionSize();
         this.GAME = {};
         this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
-            this.player_6,this.player_7,this.player_8,this.player_9];
+            this.player_6,this.player_7,this.player_8,this.player_9,this.player_10];
         this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
             this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
             this.gun_17,this.gun_18,this.gun_19];

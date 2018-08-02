@@ -105,6 +105,9 @@ module.exports = {
                     this.fromid = query.fromid;
                     console.log('fromid:', query.fromid);
                 }
+                var sto_channel = cc.sys.localStorage.getItem("channel");
+                if(!sto_channel)
+                    cc.sys.localStorage.setItem("channel",this.channel);
             }
 
             console.log('opts:', opts);

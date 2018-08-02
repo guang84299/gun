@@ -701,6 +701,7 @@ cc.Class({
         this.GAME = {};
         this.GAME.control = [];
         this.GAME.xuming = "00:30-00:30";
+        this.GAME.linghongbao = 0;
         this.GAME.state = "stop";
         this.GAME.enemys = [this.enemy_1, this.enemy_2, this.enemy_3, this.enemy_4, this.enemy_5,
             this.enemy_6, this.enemy_7, this.enemy_8, this.enemy_9, this.enemy_10, this.enemy_11,
@@ -1053,6 +1054,15 @@ cc.Class({
         this.node_main_bottom = cc.find("bottom",this.node_main);
         this.node_main_lingqu = cc.find("lingqu",this.node_main);
         this.node_main_lingqu_time = cc.find("lingqu/time",this.node_main);
+        this.node_main_start = cc.find("start",this.node_main);
+        this.node_main_more = cc.find("more",this.node_main);
+        this.node_main_more2 = cc.find("more2",this.node_main);
+        this.node_main_start.runAction(cc.repeatForever(cc.sequence(
+                cc.scaleTo(0.5,1.2).easing(cc.easeSineIn()),
+                cc.scaleTo(0.5,1).easing(cc.easeSineOut())
+            )));
+
+
 
         this.node_role = cc.find("Canvas/node_role");
         this.node_role_center = cc.find("center",this.node_role);
@@ -1091,11 +1101,14 @@ cc.Class({
         this.node_fuhuo_fu_coin = cc.find("fuhuo_coin",this.node_fuhuo_share);
         this.node_fuhuo_fu_video = cc.find("fuhuo_video",this.node_fuhuo_share);
         this.node_fuhuo_fu_xuming = cc.find("fuhuo_xuming",this.node_fuhuo_share);
+        this.node_fuhuo_guang = cc.find("zhanshibg/guang",this.node_fuhuo);
 
         this.node_over = cc.find("Canvas/node_over");
         this.node_over_coin = cc.find("coin/num",this.node_over);
         this.node_over_score = cc.find("bg/score",this.node_over);
         this.node_over_chaoyue = cc.find("bg/chaoyue",this.node_over);
+        this.node_over_more = cc.find("more",this.node_over);
+        this.node_over_more2 = cc.find("more2",this.node_over);
 
         this.node_quanxian = cc.find("Canvas/node_quanxian");
 
@@ -1156,97 +1169,97 @@ cc.Class({
                     [1,2,1],
                     [2,3,1],
                     [1,3,0],
-                    [2,4,1],
+                    [2,4,0],
                     [1,2,1],
                     [2,3,1],
                     [1,4,0],
-                    [2,5,-1],
-                    [1,2,2],
+                    [2,5,-2],
+                    [1,2,1],
                     [2,3,1],
+                    [1,5,-2],
+                    [2,3,1],
+                    [1,4,0],
+                    [2,4,-2],
                     [1,5,-1],
-                    [2,3,2],
-                    [1,4,2],
-                    [2,4,-1],
-                    [1,5,0],
+                    [2,3,0],
+                    [1,3,0],
+                    [2,2,3],
+                    [1,2,2],
+                    [2,4,0],
+                    [1,4,-1],
+                    [2,3,1],
+                    [1,2,1],
+                    [2,4,0],
+                    [1,5,-2],
                     [2,3,1],
                     [1,3,0],
-                    [2,2,4],
-                    [1,2,2],
                     [2,4,1],
-                    [1,4,2],
-                    [2,3,3],
-                    [1,2,1],
-                    [2,4,1],
-                    [1,5,-1],
-                    [2,3,2],
-                    [1,3,1],
-                    [2,4,2],
-                    [1,2,1],
+                    [1,2,0],
                     [2,3,0]
                 ],
                 [
                     [1,2,3],
                     [2,2,0],
                     [1,3,0],
-                    [2,4,2],
-                    [1,2,0],
-                    [2,3,1],
-                    [1,4,1],
-                    [2,3,0],
-                    [1,5,0],
-                    [2,4,2],
-                    [1,2,0],
-                    [2,4,2],
-                    [1,8,0],
-                    [2,5,0],
-                    [1,2,1],
-                    [2,3,2],
-                    [1,5,-1],
                     [2,4,0],
-                    [1,2,2],
-                    [2,4,3],
-                    [1,3,0],
-                    [2,2,2],
-                    [1,5,1],
-                    [2,6,1],
-                    [1,7,0],
+                    [1,2,0],
                     [2,3,1],
                     [1,4,-1],
-                    [2,5,2],
+                    [2,3,0],
+                    [1,5,-2],
+                    [2,4,0],
+                    [1,2,0],
+                    [2,4,2],
+                    [1,8,-2],
+                    [2,5,-2],
+                    [1,2,1],
+                    [2,3,2],
+                    [1,5,-2],
+                    [2,4,-1],
+                    [1,2,1],
+                    [2,4,2],
+                    [1,3,0],
+                    [2,2,2],
+                    [1,5,0],
+                    [2,6,-1],
+                    [1,7,-2],
+                    [2,3,1],
+                    [1,4,-1],
+                    [2,5,0],
                     [1,2,2],
                     [2,4,0],
-                    [1,4,1],
+                    [1,4,-1],
                     [2,3,0]
                 ],
                 [
                     [1,2,3],
-                    [2,3,1],
-                    [1,6,0],
+                    [2,3,0],
+                    [1,6,-2],
                     [2,4,-1],
                     [1,3,1],
-                    [2,5,1],
-                    [1,6,1],
-                    [2,8,-1],
-                    [1,4,0],
-                    [2,4,2],
+                    [2,5,0],
                     [1,6,-1],
+                    [2,8,-2],
+                    [1,4,0],
                     [2,4,1],
-                    [1,3,2],
+                    [1,6,-2],
+                    [2,4,0],
+                    [1,3,1],
                     [2,2,2],
                     [1,2,1],
-                    [2,5,1],
+                    [2,5,0],
                     [1,2,-1],
                     [2,3,0],
-                    [1,5,2],
-                    [2,3,2],
-                    [1,5,2],
+                    [1,5,0],
+                    [2,3,1],
+                    [1,5,0],
                     [2,2,1],
                     [1,3,2],
-                    [2,7,0],
-                    [1,5,0],
-                    [2,4,1],
-                    [1,3,2],
-                    [2,5,3],
+                    [2,7,-1],
+                    [1,5,-1],
+                    [2,4,0],
+                    [1,3,1],
+                    [2,5,1],
                     [1,2,1],
                     [2,3,3],
                     [1,2,2],
@@ -1255,63 +1268,63 @@ cc.Class({
                 [
                     [1,2,3],
                     [2,3,1],
-                    [1,5,2],
-                    [2,6,1],
-                    [1,4,2],
+                    [1,5,0],
+                    [2,6,-1],
+                    [1,4,0],
                     [2,4,1],
                     [1,3,2],
-                    [2,2,4],
-                    [1,7,0],
-                    [2,3,1],
+                    [2,2,3],
+                    [1,7,-1],
+                    [2,3,0],
+                    [1,4,0],
+                    [2,6,-1],
                     [1,4,1],
-                    [2,6,1],
-                    [1,4,2],
-                    [2,5,1],
-                    [1,2,3],
+                    [2,5,-1],
+                    [1,2,2],
                     [2,3,2],
-                    [1,6,0],
-                    [2,7,-1],
-                    [1,2,3],
+                    [1,6,-1],
+                    [2,7,-2],
+                    [1,2,2],
                     [2,5,1],
                     [1,6,-2],
-                    [2,8,-2],
+                    [2,8,-3],
                     [1,3,0],
                     [2,4,2],
                     [1,2,3],
                     [2,4,1],
-                    [1,5,0],
+                    [1,5,-1],
                     [2,3,2],
                     [1,4,2],
                     [2,6,-1],
-                    [1,4,1],
+                    [1,4,0],
                     [2,3,1]
                 ],
                 [
                     [1,2,3],
                     [2,4,0],
                     [1,2,1],
-                    [2,5,0],
+                    [2,5,-1],
                     [1,3,1],
                     [2,4,1],
-                    [1,5,0],
+                    [1,5,-1],
                     [2,2,2],
-                    [1,6,0],
-                    [2,3,2],
+                    [1,6,-1],
+                    [2,3,1],
                     [1,4,1],
-                    [2,6,0],
+                    [2,6,-1],
                     [1,3,1],
                     [2,4,1],
-                    [1,5,0],
+                    [1,5,-1],
                     [2,4,1],
-                    [1,6,0],
+                    [1,6,-1],
                     [2,2,3],
-                    [1,4,2],
-                    [2,5,1],
+                    [1,4,1],
+                    [2,5,0],
                     [1,2,2],
-                    [2,5,1],
-                    [1,6,1],
-                    [2,3,2],
+                    [2,5,0],
                     [1,6,0],
+                    [2,3,2],
+                    [1,6,-1],
                     [2,3,2],
                     [1,4,1],
                     [2,2,3],
@@ -1327,11 +1340,20 @@ cc.Class({
 
     updateUIControl: function()
     {
+        this.node_main_more.active = false;
+        this.node_main_more2.active = false;
+        this.node_over_more.active = false;
+        this.node_over_more2.active = false;
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
         cc.find("linggunbg",this.node_main).active = false;
         cc.find("roleyaoqing",this.node_role).active = false;
         cc.find("roleyaoqing",this.node_gun).active = false;
+
+        this.GAME.more = null;
+        this.GAME.more2 = null;
+        this.GAME.linghongbao = 0;
+        var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
         {
@@ -1355,9 +1377,30 @@ cc.Class({
                 {
                     this.GAME.xuming = con.value;
                 }
+                else if(con.id == "linghongbao")
+                {
+                    this.GAME.linghongbao = con.value;
+                }
                 else
                 {
-                    this.GAME.shares[con.id] = con.value;
+                    if(con.id.indexOf("channel") >= 0)
+                    {
+                        if(con.id == "channel_default" && this.GAME.more == null)
+                            this.GAME.more = con.value;
+                        else if(con.id == "channel_default_2" && this.GAME.more2 == null)
+                            this.GAME.more2 = con.value;
+                        if(sto_channel)
+                        {
+                            if(con.id == ("channel_"+sto_channel))
+                                this.GAME.more = con.value;
+                            else if(con.id == ("channel_"+sto_channel+"_2"))
+                                this.GAME.more2 = con.value;
+                        }
+                    }
+                    else
+                    {
+                        this.GAME.shares[con.id] = con.value;
+                    }
                 }
             }
         }
@@ -1367,7 +1410,39 @@ cc.Class({
             this.player.fangdanyi.active = true;
         }
 
+        if(this.GAME.more)
+        {
+            var pic = this.GAME.more.split("--")[0];
+            this.node_main_more.active = true;
+            this.node_over_more.active = true;
+            this.loadPic(this.node_main_more,pic);
+            this.loadPic(this.node_over_more,pic);
+        }
+        if(this.GAME.more2)
+        {
+            var pic = this.GAME.more2.split("--")[0];
+            this.node_main_more2.active = true;
+            this.node_over_more2.active = true;
+            this.loadPic(this.node_main_more2,pic);
+            this.loadPic(this.node_over_more2,pic);
+        }
+
         this.updateDian();
+    },
+
+    loadPic: function(sp,url)
+    {
+        cc.loader.load({url: url, type: 'png'}, function (err, tex) {
+            if(err)
+            {
+                cc.log(err);
+            }
+            else
+            {
+                var spriteFrame = new cc.SpriteFrame(tex);
+                sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
+            }
+        });
     },
 
     updateLocalData: function(data)
@@ -1811,6 +1886,7 @@ cc.Class({
         {
             this.wxQuanState(false);
             this.node_duihuan.active = true;
+            qianqista.event("btn_linghongbao");
         }
         else if(data == "rank")
         {
@@ -1908,7 +1984,7 @@ cc.Class({
         }
         else if(data == "more2")
         {
-            this.wxMore();
+            this.wxMore2();
             qianqista.event("btn_more_over");
         }
         else if(data == "yindao")
@@ -2033,6 +2109,11 @@ cc.Class({
         {
             this.wxVideoShow(1);
         }
+        else if(data == "kefu")
+        {
+            this.wxKefu();
+            qianqista.event("btn_linghongbao_kefu");
+        }
 
         cc.log(data);
     },
@@ -2108,6 +2189,13 @@ cc.Class({
 
     useZhanshiStart: function()
     {
+         if(parseInt(this.GAME.score) > this.getStorageScore())
+            this.setStorageScore(parseInt(this.GAME.score));
+        this.setStorageCoin(parseInt(this.getStorageCoin()) + parseInt(this.GAME.coin));
+        this.node_over.active = false;
+        this.node_fuhuo.active = false;
+        this.wxCloseFuhuo();
+
         this.GAME.currPlayerTmp = this.GAME.currPlayer;
         this.GAME.currPlayer = 9;
         this.GAME.useZhanShi = true;
@@ -3246,6 +3334,8 @@ cc.Class({
                 self.GAME.state = "start";
             })
         ));
+
+        this.wxBannerShow();
     },
 
     goMain: function()
@@ -4987,6 +5077,10 @@ cc.Class({
         this.node_fuhuo.active = true;
 
         this.node_game_ui.active = false;
+        this.node_fuhuo_guang.stopAllActions();
+        this.node_fuhuo_guang.runAction(cc.repeatForever(
+            cc.rotateBy(1,180)
+        ));
         this.node_fuhuo_coin.getComponent("cc.Label").string = Math.floor(this.GAME.coin);
         this.node_fuhuo_score.getComponent("cc.Label").string = parseInt(this.GAME.score);
         this.node_fuhuo_fu_coin.getComponent("cc.Button").interactable = this.GAME.playerfuhuo;
@@ -5070,7 +5164,7 @@ cc.Class({
             ));
         }
 
-        this.wxBannerHide();
+        this.wxBannerShow();
     },
 
     addCoin: function()
@@ -6477,25 +6571,6 @@ cc.Class({
             });
 
 
-            var openDataContext = wx.getOpenDataContext();
-            var sharedCanvas = openDataContext.canvas;
-            var sc = sharedCanvas.width/this.dsize.width;
-            var dpi = cc.view._devicePixelRatio;
-            this.bannerAd = wx.createBannerAd({
-                adUnitId: 'adunit-805ad9676746d8d2',
-                style: {
-                    left: 0,
-                    top: sharedCanvas.height/dpi-320/3.5,
-                    width: 320,
-                }
-            });
-            var bannerAd = this.bannerAd;
-            this.bannerAd.onResize(function(res){
-                // console.log(res.width, res.height)
-                // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
-                bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
-                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
-            });
 
         }
     },
@@ -6558,23 +6633,72 @@ cc.Class({
 
     wxBannerShow: function()
     {
+        this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var openDataContext = wx.getOpenDataContext();
+            var sharedCanvas = openDataContext.canvas;
+            var sc = sharedCanvas.width/this.dsize.width;
+            var dpi = cc.view._devicePixelRatio;
+            this.bannerAd = wx.createBannerAd({
+                adUnitId: 'adunit-805ad9676746d8d2',
+                style: {
+                    left: 0,
+                    top: sharedCanvas.height/dpi-300/3.5,
+                    width: 300,
+                }
+            });
+            var bannerAd = this.bannerAd;
+            this.bannerAd.onResize(function(res){
+                // console.log(res.width, res.height)
+                // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
+                bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
+                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
+            });
             this.bannerAd.show();
+        }
     },
 
     wxBannerHide: function()
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            this.bannerAd.hide();
+        {
+            if(this.bannerAd)
+                this.bannerAd.hide();
+        }
+    },
+
+    wxKefu: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            if(this.GAME.linghongbao == 1)
+            {
+                wx.openCustomerServiceConversation({});
+            }
+            else
+            {
+                this.showToast("今天活动已经结束，请明天再来");
+            }
+        }
     },
 
     wxMore: function()
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            var appIdstr = 'wx604f780b017da7df';
+            var pathstr = 'pages/main/main';
+            if(this.GAME.more)
+            {
+                var ss = this.GAME.more.split("--");
+                appIdstr = ss[1];
+                pathstr = ss[2];
+            }
+
             wx.navigateToMiniProgram({
-              appId: 'wx604f780b017da7df',
-              path: 'pages/main/main',
+              appId: appIdstr,
+              path: pathstr,
               extraData: {
                 foo: 'bar'
               },
@@ -6591,6 +6715,33 @@ cc.Class({
             //         return;
             //     }
             // });
+        }
+    },
+
+    wxMore2: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var appIdstr = 'wx604f780b017da7df';
+            var pathstr = 'pages/main/main';
+            if(this.GAME.more2)
+            {
+                var ss = this.GAME.more2.split("--");
+                appIdstr = ss[1];
+                pathstr = ss[2];
+            }
+
+            wx.navigateToMiniProgram({
+              appId: appIdstr,
+              path: pathstr,
+              extraData: {
+                foo: 'bar'
+              },
+              // envVersion: 'develop',
+              success(res) {
+                // 打开成功
+              }
+            });
         }
     },
 

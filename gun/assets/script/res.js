@@ -11,6 +11,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_chengjiu: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

@@ -229,12 +229,6 @@ cc.Class({
 
         this.node_quanxian = cc.find("Canvas/node_quanxian");
 
-        this.node_chengjiu = cc.find("Canvas/node_chengjiu");
-        this.node_chengjiu_center = cc.find("center",this.node_chengjiu);
-        this.node_chengjiu_top_player = cc.find("top/player",this.node_chengjiu);
-        this.node_chengjiu_score = cc.find("score",this.node_chengjiu);
-        this.node_chengjiu_coin = cc.find("coin/num",this.node_chengjiu);
-        this.node_chengjiu_scroll_content = cc.find("scroll/view/content",this.node_chengjiu);
 
         this.node_award = cc.find("Canvas/node_award");
         this.node_award_itembg = cc.find("bg/itembg",this.node_award);
@@ -598,7 +592,7 @@ cc.Class({
     {
         var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_setting,
             this.node_card,this.node_duihuan,this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
-            this.node_chengjiu,this.node_award,this.node_zhanshi];
+            this.node_award,this.node_zhanshi];
         for(var i=0;i<nodes.length;i++)
         {
             var items = nodes[i].children;
@@ -746,17 +740,6 @@ cc.Class({
         else if(data == "home")
         {
             this.goMain();
-        }
-        else if(data == "roleitem")
-        {
-            if(event.target.canset)
-            {
-                this.setJuese(event.target.playerId);
-            }
-        }
-        else if(data == "rolejiesuo")
-        {
-            this.rolejiesuo();
         }
         else if(data == "junhuo")
         {
@@ -938,13 +921,6 @@ cc.Class({
         {
             this.openQianDao();
             qianqista.event("btn_qiandao");
-        }
-        else if(data == "cjitem")
-        {
-            if(event.target.canset)
-            {
-                this.lingquChengjiu(event.target.cjid,event.target.coin);
-            }
         }
         else if(data == "lingjiang")
         {
@@ -1363,58 +1339,6 @@ cc.Class({
         }
     },
 
-    lingquChengjiu: function(id,coin)
-    {
-        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);
-        if(id == 1)
-        {
-            var awardnum = storage.getStorageHitEnemyAwardNum();
-            storage.setStorageHitEnemyAwardNum(parseInt(awardnum)+1);
-        }
-        else if(id == 2)
-        {
-            var awardnum = storage.getStorageHitHeadAwardNum();
-            storage.setStorageHitHeadAwardNum(parseInt(awardnum)+1);
-        }
-        else if(id == 3)
-        {
-            var awardnum = storage.getStorageHitBossAwardNum();
-            storage.setStorageHitBossAwardNum(parseInt(awardnum)+1);
-        }
-        else if(id == 4)
-        {
-            var awardnum = storage.getStorageGunJieSuoAwardNum();
-            storage.setStorageGunJieSuoAwardNum(parseInt(awardnum)+1);
-        }
-        else if(id == 5)
-        {
-            var awardnum = storage.getStorageRoleJieSuoAwardNum();
-            storage.setStorageRoleJieSuoAwardNum(parseInt(awardnum)+1);
-        }
-
-        this.uploadData();
-        this.res.showToast("金币+"+coin);
-        this.openChengjiu();
-        this.updateDian();
-        storage.playSound(this.res.audio_coin);
-
-        var awardnum = parseInt(storage.getStorageHitEnemyAwardNum());
-        awardnum += parseInt(storage.getStorageHitHeadAwardNum());
-        awardnum += parseInt(storage.getStorageHitBossAwardNum());
-        awardnum += parseInt(storage.getStorageGunJieSuoAwardNum());
-        awardnum += parseInt(storage.getStorageRoleJieSuoAwardNum());
-
-        if(awardnum == 1)
-            qianqista.event("chengjiu_lingqu_num_1");
-        else if(awardnum == 3)
-            qianqista.event("chengjiu_lingqu_num_3");
-        else if(awardnum == 5)
-            qianqista.event("chengjiu_lingqu_num_5");
-        else if(awardnum == 10)
-            qianqista.event("chengjiu_lingqu_num_10");
-        else if(awardnum == 20)
-            qianqista.event("chengjiu_lingqu_num_20");
-    },
 
     judgeChengjiuUI: function()
     {
@@ -1497,190 +1421,12 @@ cc.Class({
     openChengjiu: function()
     {
         this.wxQuanState(false);
-        var s = cc.winSize;
         this.node_main.active = false;
-        this.node_chengjiu.active = true;
-        this.node_chengjiu_center.height = s.height - 335;
-        this.node_chengjiu_center.color = this.ltcolor;
-
-        this.node_chengjiu_top_player.destroyAllChildren();
-        var player = cc.instantiate(this.res.players[this.GAME.currPlayer]);
-        this.node_chengjiu_top_player.addChild(player);
-
-        var gunConf = this.res.gunsconfig[this.GAME.currGun];
-        var gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
-        gun.y = player.height*0.3 + gunConf.y;
-        player.addChild(gun);
-
-        this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
-        this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
-
-        for(var i=1;i<=5;i++)
-        {
-            var item = cc.find("item_"+i,this.node_chengjiu_scroll_content);
-            var lnum = cc.find("num",item);
-            var box = cc.find("box",item);
-            var award = cc.find("award",box);
-            var curr = cc.find("curr",box);
-            box.cjid = i;
-            if(i == 1)
-            {
-                var num = storage.getStorageHitEnemyNum();
-                var awardnum = storage.getStorageHitEnemyAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.hitenemy.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.hitenemy[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
-            else if(i == 2)
-            {
-                var num = storage.getStorageHitHeadNum();
-                var awardnum = storage.getStorageHitHeadAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.hithead.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.hithead[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
-            else if(i == 3)
-            {
-                var num = storage.getStorageHitBossNum();
-                var awardnum = storage.getStorageHitBossAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.hitboss.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.hitboss[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
-            else if(i == 4)
-            {
-                var num = storage.getStorageGunJieSuoNum();
-                num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
-                var awardnum = storage.getStorageGunJieSuoAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.jiesuogun.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.jiesuogun[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
-            else if(i == 5)
-            {
-                var num = storage.getStorageRoleJieSuoNum();
-                var awardnum = storage.getStorageRoleJieSuoAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.jiesuorole.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.jiesuorole[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
-        }
-
+        
+        var chengjiu = cc.instantiate(this.res.node_chengjiu);
+        this.node.addChild(chengjiu);
+        this.node_chengjiu = chengjiu.getComponent("chengjiu");
+        this.node_chengjiu.show();
     },
 
     
@@ -1797,7 +1543,6 @@ cc.Class({
         this.node_qiandao.active = false;
         this.node_rank.active = false;
         this.node_over.active = false;
-        this.node_chengjiu.active = false;
         this.openover = false;
         this.wxQuanState(true);
         this.wxCloseOver();

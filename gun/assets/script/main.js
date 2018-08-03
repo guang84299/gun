@@ -1,619 +1,10 @@
 var qianqista = require("qianqista");
+var storage = require("storage");
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        louti_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        louti_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        aim_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_11: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_12: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_13: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_14: {
-            default: null,
-            type: cc.Prefab
-        },
-        enemy_15: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_11: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_12: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_13: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_14: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_15: {
-            default: null,
-            type: cc.Prefab
-        },
-        boss_16: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_11: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_12: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_13: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_14: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_15: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_16: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_17: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_18: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_19: {
-            default: null,
-            type: cc.Prefab
-        },
-        bullet_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        ebullet_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_11: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_12: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_13: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_14: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_15: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_16: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_17: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_18: {
-            default: null,
-            type: cc.Prefab
-        },
-        wujian_19: {
-            default: null,
-            type: cc.Prefab
-        },
-        hit: {
-            default: null,
-            type: cc.Prefab
-        },
-        coin: {
-            default: null,
-            type: cc.Prefab
-        },
-        blood: {
-            default: null,
-            type: cc.Prefab
-        },
-        bigblood: {
-            default: null,
-            type: cc.Prefab
-        },
-        toast: {
-            default: null,
-            type: cc.Prefab
-        },
-        toast_cj: {
-            default: null,
-            type: cc.Prefab
-        },
-        chukou: {
-            default: null,
-            type: cc.Prefab
-        },
-        smoke: {
-            default: null,
-            type: cc.Prefab
-        },
-        shell: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_fire: {
-            default: null,
-            type: cc.Prefab
-        },
-        fangdanyi: {
-            default: null,
-            type: cc.Prefab
-        },
-        audio_bgm: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_boss_chu: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_boss_hurt_1: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_boss_hurt_2: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_boss_hurt_3: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_coin: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_foot_1: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_foot_boss_1: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_foot_boss_land: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_1: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_2: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_3: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_4: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_5: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_6: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_7: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_8: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_9: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_10: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_11: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_12: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_13: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_14: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_15: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_16: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_17: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_18: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_gun_19: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_hit_head_yuyin: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_hit_head: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_hit_torso: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_ricco_1: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_ricco_2: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_jiesuo: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_rand: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_role_huan: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_role: {
-            url: cc.AudioClip,
-            default: null
-        },
-        audio_chengjiu: {
-            url: cc.AudioClip,
-            default: null
-        },
-
-        sp_over_player_1: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_2: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_3: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_4: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_5: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_6: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_7: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_8: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_9: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_10: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_11: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_12: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-        sp_over_player_13: {
-            type: cc.SpriteFrame,
-            default: null
-        },
-
         display: cc.Sprite,
         display_gray: cc.Node,
         display_gray_rank: cc.Node,
@@ -631,6 +22,9 @@ cc.Class({
          this.openover = false;
          this.openstore = false;
 
+         this.res = cc.find("Canvas").getComponent("res");
+         this.qianqista = qianqista;
+
          this.initPhysics();
          this.initData();
          this.initUI();
@@ -641,8 +35,8 @@ cc.Class({
          this.wxGetUserInfo();
          this.wxOpenQuan();
 
-         this.playMusic(this.audio_bgm);
-         this.preloadSound();
+         storage.playMusic(this.res.audio_bgm);
+         storage.preloadSound();
          this.wxVideoLoad();
 
          var self = this;
@@ -673,7 +67,7 @@ cc.Class({
              }
          });
 
-         cc.game.setFrameRate(50);
+         // cc.game.setFrameRate(50);
      },
 
     initPhysics: function()
@@ -703,93 +97,6 @@ cc.Class({
         this.GAME.xuming = "00:30-00:30";
         this.GAME.linghongbao = 0;
         this.GAME.state = "stop";
-        this.GAME.enemys = [this.enemy_1, this.enemy_2, this.enemy_3, this.enemy_4, this.enemy_5,
-            this.enemy_6, this.enemy_7, this.enemy_8, this.enemy_9, this.enemy_10, this.enemy_11,
-            this.enemy_12, this.enemy_13, this.enemy_14, this.enemy_15];
-        this.GAME.bosss = [this.boss_1, this.boss_2, this.boss_3, this.boss_4, this.boss_5, this.boss_6,
-            this.boss_7, this.boss_8, this.boss_9, this.boss_10, this.boss_11, this.boss_12,this.boss_13,
-            this.boss_14,this.boss_15,this.boss_16];
-        this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
-            this.player_6,this.player_7,this.player_8,this.player_9,this.player_10];
-        this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
-            this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
-            this.gun_17,this.gun_18,this.gun_19];
-        this.GAME.gunaudios = [this.audio_gun_1,this.audio_gun_2,this.audio_gun_3,this.audio_gun_4,this.audio_gun_5,
-            this.audio_gun_6,this.audio_gun_7,this.audio_gun_8,this.audio_gun_9,this.audio_gun_10,this.audio_gun_11,
-            this.audio_gun_12,this.audio_gun_13,this.audio_gun_14,this.audio_gun_15,this.audio_gun_16,this.audio_gun_17,
-            this.audio_gun_18,this.audio_gun_19];
-        this.GAME.wujians = [this.wujian_1,this.wujian_2,this.wujian_3,this.wujian_4,this.wujian_5,this.wujian_6,
-            this.wujian_7,this.wujian_8,this.wujian_9,this.wujian_10,this.wujian_11,this.wujian_12,this.wujian_13,
-            this.wujian_14,this.wujian_15,this.wujian_16,this.wujian_17,this.wujian_18,this.wujian_19];
-
-        this.GAME.enemysconfig = [
-            {type:1,color:cc.color(42,254,182)},
-            {type:1,color:cc.color(157,251,56)},
-            {type:1,color:cc.color(240,42,60)},
-            {type:1,color:cc.color(120,56,251)},
-            {type:1,color:cc.color(221,88,254)},
-            {type:2,color:cc.color(42,254,182)},
-            {type:2,color:cc.color(157,251,56)},
-            {type:2,color:cc.color(240,42,60)},
-            {type:2,color:cc.color(120,56,251)},
-            {type:2,color:cc.color(221,88,254)},
-            {type:3,color:cc.color(42,254,182)},
-            {type:3,color:cc.color(157,251,56)},
-            {type:3,color:cc.color(240,42,60)},
-            {type:3,color:cc.color(120,56,251)},
-            {type:3,color:cc.color(221,88,254)}
-        ];
-        this.GAME.playersconfig = [
-            {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.0},
-            {speed:1.5,coin:1,fire:0,aimLen:1,aimSpeed:1.0},
-            {speed:1,coin:1.2,fire:0,aimLen:1,aimSpeed:1.0},
-            {speed:1,coin:1.1,fire:0,aimLen:1,aimSpeed:1.0},
-            {speed:1,coin:1,fire:0,aimLen:1.2,aimSpeed:1.0},
-            {speed:1,coin:1,fire:1,aimLen:1,aimSpeed:1.0},
-            {speed:1,coin:1,fire:0,aimLen:1.1,aimSpeed:1.0},
-            {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.1},
-            {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2},
-            {speed:1.5,coin:1,fire:0,aimLen:1.2,aimSpeed:1.1}
-        ];
-        this.GAME.gunsconfig = [
-            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
-            {aimLen:1.2,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
-            {aimLen:0.6,type:2,fire:1,num:3,angle:8,y:15,speed:0.08,score:1,coin:1},
-            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
-            {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
-            {aimLen:1.6,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
-            {aimLen:0.5,type:3,fire:2,num:3,angle:8,y:15,speed:0.2,score:1,coin:1},
-            {aimLen:0.9,type:2,fire:3,num:3,angle:7,y:15,speed:0.18,score:1,coin:1},
-            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
-            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:2,coin:1.8},
-
-            {aimLen:1,type:3,fire:2,num:4,angle:8,y:15,speed:0,score:1.2,coin:1.2},
-            {aimLen:0.8,type:2,fire:2,num:4,angle:7,y:15,speed:0.06,score:1,coin:1},
-            {aimLen:1.2,type:3,fire:3,num:2,angle:7,y:15,speed:0,score:1.2,coin:1.2},
-            {aimLen:1,type:2,fire:2,num:4,angle:7,y:15,speed:0.15,score:1,coin:1},
-            {aimLen:0.5,type:3,fire:2,num:5,angle:15,y:15,speed:0,score:1,coin:1},
-            {aimLen:0.7,type:2,fire:1,num:5,angle:5,y:15,speed:0.06,score:1,coin:1},
-            {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:3,coin:2},
-            {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
-            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2}
-        ];
-
-        this.GAME.bgcolor = [cc.color(110,24,128),cc.color(25,112,133),cc.color(136,110,94),
-            cc.color(89,89,89),cc.color(132,131,172),cc.color(134,152,118),cc.color(149,149,149),
-            cc.color(24,128,93),cc.color(122,28,24),cc.color(24,95,128),cc.color(149,140,46),
-            cc.color(208,163,162),cc.color(107,133,148),cc.color(140,31,57),cc.color(86,127,22)];
-
-        this.GAME.qiandaoconfig = [20,20,30,30,40,50,100];
-
-        this.GAME.chengjiuconfig = {
-            hitenemy:[{num:100,coin:10},{num:200,coin:20},{num:500,coin:30},{num:1000,coin:50},{num:5000,coin:100},{num:10000,coin:200}],
-            hithead:[{num:50,coin:10},{num:100,coin:20},{num:200,coin:30},{num:500,coin:50},{num:1000,coin:100},{num:5000,coin:200}],
-            hitboss:[{num:20,coin:10},{num:50,coin:20},{num:100,coin:30},{num:200,coin:50},{num:500,coin:100},{num:1000,coin:200}],
-            jiesuogun:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100},{num:10,coin:200},{num:12,coin:300},{num:14,coin:300},{num:16,coin:300}],
-            jiesuorole:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}]
-        };
-
-        this.GAME.inviteconfig = [50,70,80,100,600];
 
         this.poolbullets = new cc.NodePool();
         this.poolhits = new cc.NodePool();
@@ -799,240 +106,66 @@ cc.Class({
         this.poolbigbloods = new cc.NodePool();
         for(var i=0;i<5;i++)
         {
-            var bullet_1 = cc.instantiate(this.bullet_1);
+            var bullet_1 = cc.instantiate(this.res.bullet_1);
             this.poolbullets.put(bullet_1);
 
-            var hit = cc.instantiate(this.hit);
+            var hit = cc.instantiate(this.res.hit);
             this.poolhits.put(hit);
 
-            var smoke = cc.instantiate(this.smoke);
+            var smoke = cc.instantiate(this.res.smoke);
             this.poolsmokes.put(smoke);
 
-            var shell = cc.instantiate(this.shell);
+            var shell = cc.instantiate(this.res.shell);
             this.poolshells.put(shell);
 
-            var blood = cc.instantiate(this.blood);
+            var blood = cc.instantiate(this.res.blood);
             this.poolbloods.put(blood);
 
-            var bigblood = cc.instantiate(this.bigblood);
+            var bigblood = cc.instantiate(this.res.bigblood);
             this.poolbigbloods.put(bigblood);
         }
         this.poolcoins = new cc.NodePool();
         for(var i=0;i<6;i++)
         {
-            var coin = cc.instantiate(this.coin);
+            var coin = cc.instantiate(this.res.coin);
             this.poolcoins.put(coin);
         }
 
 
 
-        this.GAME.loutis = [
-            [
-                [1,2,1],
-                [2,2,0],
-                [1,2,0],
-                [2,3,0],
-                [1,3,-1],
-                [2,2,0],
-                [1,2,0],
-                [2,3,0],
-                [1,4,-1],
-                [2,3,0],
-                [1,2,1],
-                [2,3,0],
-                [1,4,-1],
-                [2,3,0],
-                [1,4,-1],
-                [2,4,-1],
-                [1,4,-1],
-                [2,3,0],
-                [1,3,-1],
-                [2,2,1],
-                [1,2,1],
-                [2,4,2],
-                [1,4,-1],
-                [2,3,1],
-                [1,2,0],
-                [2,4,-1],
-                [1,3,0],
-                [2,3,0],
-                [1,3,0],
-                [2,4,1],
-                [1,2,0],
-                [2,2,0]
-            ],
-            [
-                [1,2,1],
-                [2,2,-1],
-                [1,3,-1],
-                [2,4,-1],
-                [1,2,0],
-                [2,3,0],
-                [1,4,0],
-                [2,3,-1],
-                [1,4,0],
-                [2,4,-1],
-                [1,2,1],
-                [2,4,-1],
-                [1,4,-2],
-                [2,3,-2],
-                [1,2,0],
-                [2,3,1],
-                [1,4,-1],
-                [2,3,-1],
-                [1,2,1],
-                [2,4,1],
-                [1,3,0],
-                [2,2,1],
-                [1,5,-2],
-                [2,4,0],
-                [1,5,-2],
-                [2,3,0],
-                [1,4,-1],
-                [2,5,-1],
-                [1,2,0],
-                [2,4,-1],
-                [1,4,-2],
-                [2,2,0]
-            ],
-            [
-                [1,2,1],
-                [2,2,0],
-                [1,5,-2],
-                [2,4,-2],
-                [1,3,0],
-                [2,4,0],
-                [1,5,-2],
-                [2,4,-2],
-                [1,3,1],
-                [2,3,1],
-                [1,5,-2],
-                [2,4,-1],
-                [1,2,1],
-                [2,3,1],
-                [1,2,0],
-                [2,4,-1],
-                [1,2,0],
-                [2,3,-1],
-                [1,5,-1],
-                [2,3,1],
-                [1,5,0],
-                [2,2,0],
-                [1,3,1],
-                [2,5,-1],
-                [1,5,-2],
-                [2,4,0],
-                [1,3,1],
-                [2,5,-1],
-                [1,2,1],
-                [2,3,1],
-                [1,2,1],
-                [2,2,0]
-            ],
-            [
-                [1,2,1],
-                [2,3,-1],
-                [1,5,-2],
-                [2,5,-2],
-                [1,4,0],
-                [2,4,-1],
-                [1,3,0],
-                [2,2,1],
-                [1,5,-2],
-                [2,3,0],
-                [1,4,-1],
-                [2,5,-1],
-                [1,4,0],
-                [2,5,-1],
-                [1,2,2],
-                [2,3,2],
-                [1,5,-2],
-                [2,5,-1],
-                [1,2,2],
-                [2,5,-1],
-                [1,6,-2],
-                [2,3,-1],
-                [1,4,0],
-                [2,3,0],
-                [1,2,1],
-                [2,4,0],
-                [1,3,-2],
-                [2,3,1],
-                [1,4,1],
-                [2,6,-2],
-                [1,4,0],
-                [2,2,0]
-            ],
-            [
-                [1,2,1],
-                [2,4,-1],
-                [1,2,1],
-                [2,5,-2],
-                [1,3,0],
-                [2,4,0],
-                [1,5,-2],
-                [2,2,1],
-                [1,4,-1],
-                [2,3,1],
-                [1,4,0],
-                [2,5,-1],
-                [1,3,0],
-                [2,4,0],
-                [1,5,-2],
-                [2,4,0],
-                [1,5,-1],
-                [2,2,2],
-                [1,4,0],
-                [2,5,-1],
-                [1,2,1],
-                [2,5,0],
-                [1,5,-2],
-                [2,3,1],
-                [1,5,-2],
-                [2,3,1],
-                [1,4,0],
-                [2,2,2],
-                [1,5,0],
-                [2,4,1],
-                [1,5,-1],
-                [2,2,0]
-            ]
-
-        ];
-
-        if(this.getStorageFirst() == 0)
+        if(storage.getStorageFirst() == 0)
         {
-            this.setStorageFirst(1);
-            this.setStorageMusic(1);
-            this.setStorageSound(1);
-            this.setStorageVibrate(1);
-            this.setStorageShareGroupList("groups:");
-            this.setStorageShareGroupTime(-1);
-            this.setStorageCard(2);
+            storage.setStorageFirst(1);
+            storage.setStorageMusic(1);
+            storage.setStorageSound(1);
+            storage.setStorageVibrate(1);
+            storage.setStorageShareGroupList("groups:");
+            storage.setStorageShareGroupTime(-1);
+            storage.setStorageCard(2);
         }
 
         //for(var i=1;i<=9;i++)
-        //    this.setStoragePlayer(i,0);
+        //    storage.setStoragePlayer(i,0);
         //for(var i=10;i<=19;i++)
-        //    this.setStorageGun(i,0);
-        this.setStoragePlayer(1);
-        this.setStorageGun(1);
-        //this.setStorageCoin(0);
+        //    storage.setStorageGun(i,0);
+        storage.setStoragePlayer(1);
+        storage.setStorageGun(1);
+        //storage.setStorageCoin(0);
 
-        //this.setStorageGun(10,0);
-        //this.setStorageCurrGun(1);
-        //this.setStorageQianDao(0);
-        //this.setStorageQianDaoTime(-1);
-        //this.setStorageYindao(0);
-        //this.setStorageGunJieSuoNum(1);
-        //this.setStorageRoleJieSuoNum(4);
+        //storage.setStorageGun(10,0);
+        //storage.setStorageCurrGun(1);
+        //storage.setStorageQianDao(0);
+        //storage.setStorageQianDaoTime(-1);
+        //storage.setStorageYindao(0);
+        //storage.setStorageGunJieSuoNum(1);
+        //storage.setStorageRoleJieSuoNum(4);
         //cc.sys.localStorage.setItem("playnum",0);
-        //this.setStorageInviteNum(4);
-        //this.setStorageInviteAwardNum(4);
+        //storage.setStorageInviteNum(4);
+        //storage.setStorageInviteAwardNum(4);
 
-        //this.setStorageGunInviteNum(1);
-        //this.setStorageGunInviteAwardNum(0);
-        //this.setStorageGun(16,0);
+        //storage.setStorageGunInviteNum(1);
+        //storage.setStorageGunInviteAwardNum(0);
+        //storage.setStorageGun(16,0);
     },
 
 
@@ -1062,14 +195,10 @@ cc.Class({
                 cc.scaleTo(0.5,1).easing(cc.easeSineOut())
             )));
 
+        // var role = cc.instantiate(this.res.node_role);
+        // this.node.addChild(role);
+        // this.node_role = role.getComponent("role");
 
-
-        this.node_role = cc.find("Canvas/node_role");
-        this.node_role_center = cc.find("center",this.node_role);
-        this.node_role_top_player = cc.find("top/player",this.node_role);
-        this.node_role_score = cc.find("score",this.node_role);
-        this.node_role_coin = cc.find("coin/num",this.node_role);
-        this.node_role_page1 = cc.find("page/view/content/page_1",this.node_role);
 
         this.node_gun = cc.find("Canvas/node_gun");
         this.node_gun_center = cc.find("center",this.node_gun);
@@ -1158,182 +287,11 @@ cc.Class({
 
     updateDitu: function()
     {
-        var num = this.getStorageGunJieSuoNum();
-        num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
+        var num = storage.getStorageGunJieSuoNum();
+        num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
         if(num>0)
         {
-            this.GAME.loutis = [
-                [
-                    [1,2,3],
-                    [2,3,1],
-                    [1,2,1],
-                    [2,3,1],
-                    [1,3,0],
-                    [2,4,0],
-                    [1,2,1],
-                    [2,3,1],
-                    [1,4,0],
-                    [2,5,-2],
-                    [1,2,1],
-                    [2,3,1],
-                    [1,5,-2],
-                    [2,3,1],
-                    [1,4,0],
-                    [2,4,-2],
-                    [1,5,-1],
-                    [2,3,0],
-                    [1,3,0],
-                    [2,2,3],
-                    [1,2,2],
-                    [2,4,0],
-                    [1,4,-1],
-                    [2,3,1],
-                    [1,2,1],
-                    [2,4,0],
-                    [1,5,-2],
-                    [2,3,1],
-                    [1,3,0],
-                    [2,4,1],
-                    [1,2,0],
-                    [2,3,0]
-                ],
-                [
-                    [1,2,3],
-                    [2,2,0],
-                    [1,3,0],
-                    [2,4,0],
-                    [1,2,0],
-                    [2,3,1],
-                    [1,4,-1],
-                    [2,3,0],
-                    [1,5,-2],
-                    [2,4,0],
-                    [1,2,0],
-                    [2,4,2],
-                    [1,8,-2],
-                    [2,5,-2],
-                    [1,2,1],
-                    [2,3,2],
-                    [1,5,-2],
-                    [2,4,-1],
-                    [1,2,1],
-                    [2,4,2],
-                    [1,3,0],
-                    [2,2,2],
-                    [1,5,0],
-                    [2,6,-1],
-                    [1,7,-2],
-                    [2,3,1],
-                    [1,4,-1],
-                    [2,5,0],
-                    [1,2,2],
-                    [2,4,0],
-                    [1,4,-1],
-                    [2,3,0]
-                ],
-                [
-                    [1,2,3],
-                    [2,3,0],
-                    [1,6,-2],
-                    [2,4,-1],
-                    [1,3,1],
-                    [2,5,0],
-                    [1,6,-1],
-                    [2,8,-2],
-                    [1,4,0],
-                    [2,4,1],
-                    [1,6,-2],
-                    [2,4,0],
-                    [1,3,1],
-                    [2,2,2],
-                    [1,2,1],
-                    [2,5,0],
-                    [1,2,-1],
-                    [2,3,0],
-                    [1,5,0],
-                    [2,3,1],
-                    [1,5,0],
-                    [2,2,1],
-                    [1,3,2],
-                    [2,7,-1],
-                    [1,5,-1],
-                    [2,4,0],
-                    [1,3,1],
-                    [2,5,1],
-                    [1,2,1],
-                    [2,3,3],
-                    [1,2,2],
-                    [2,3,0]
-                ],
-                [
-                    [1,2,3],
-                    [2,3,1],
-                    [1,5,0],
-                    [2,6,-1],
-                    [1,4,0],
-                    [2,4,1],
-                    [1,3,2],
-                    [2,2,3],
-                    [1,7,-1],
-                    [2,3,0],
-                    [1,4,0],
-                    [2,6,-1],
-                    [1,4,1],
-                    [2,5,-1],
-                    [1,2,2],
-                    [2,3,2],
-                    [1,6,-1],
-                    [2,7,-2],
-                    [1,2,2],
-                    [2,5,1],
-                    [1,6,-2],
-                    [2,8,-3],
-                    [1,3,0],
-                    [2,4,2],
-                    [1,2,3],
-                    [2,4,1],
-                    [1,5,-1],
-                    [2,3,2],
-                    [1,4,2],
-                    [2,6,-1],
-                    [1,4,0],
-                    [2,3,1]
-                ],
-                [
-                    [1,2,3],
-                    [2,4,0],
-                    [1,2,1],
-                    [2,5,-1],
-                    [1,3,1],
-                    [2,4,1],
-                    [1,5,-1],
-                    [2,2,2],
-                    [1,6,-1],
-                    [2,3,1],
-                    [1,4,1],
-                    [2,6,-1],
-                    [1,3,1],
-                    [2,4,1],
-                    [1,5,-1],
-                    [2,4,1],
-                    [1,6,-1],
-                    [2,2,3],
-                    [1,4,1],
-                    [2,5,0],
-                    [1,2,2],
-                    [2,5,0],
-                    [1,6,0],
-                    [2,3,2],
-                    [1,6,-1],
-                    [2,3,2],
-                    [1,4,1],
-                    [2,2,3],
-                    [1,5,1],
-                    [2,4,2],
-                    [1,5,0],
-                    [2,2,1]
-                ]
-            ];
+            this.res.updateDitu();
         }
 
     },
@@ -1347,12 +305,13 @@ cc.Class({
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
         cc.find("linggunbg",this.node_main).active = false;
-        cc.find("roleyaoqing",this.node_role).active = false;
         cc.find("roleyaoqing",this.node_gun).active = false;
+        
 
         this.GAME.more = null;
         this.GAME.more2 = null;
         this.GAME.linghongbao = 0;
+        this.GAME.sharecard = false;
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
@@ -1368,9 +327,9 @@ cc.Class({
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
                         cc.find("linggunbg",this.node_main).active = true;
-                        cc.find("roleyaoqing",this.node_role).active = true;
                         cc.find("roleyaoqing",this.node_gun).active = true;
                         this.GAME.fangdanyi = true;
+                        this.GAME.sharecard = true;
                     }
                 }
                 else if(con.id == "sharefuhuo")
@@ -1404,7 +363,7 @@ cc.Class({
                 }
             }
         }
-        var cardnum = this.getStorageCard();
+        var cardnum = storage.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
             this.player.fangdanyi.active = true;
@@ -1451,118 +410,118 @@ cc.Class({
         {
             var datas = JSON.parse(data);
             if(datas.first)
-                this.setStorageFirst(1);
+                storage.setStorageFirst(1);
             if(datas.coin)
-                this.setStorageCoin(parseInt(datas.coin));
+                storage.setStorageCoin(parseInt(datas.coin));
             if(datas.score)
-                this.setStorageScore(parseInt(datas.score));
+                storage.setStorageScore(parseInt(datas.score));
             if(datas.card)
-                this.setStorageCard(parseInt(datas.card));
+                storage.setStorageCard(parseInt(datas.card));
             if(datas.qiandao)
-                this.setStorageQianDao(parseInt(datas.qiandao));
+                storage.setStorageQianDao(parseInt(datas.qiandao));
             if(datas.player_1)
-                this.setStoragePlayer(1,parseInt(datas.player_1));
+                storage.setStoragePlayer(1,parseInt(datas.player_1));
             if(datas.player_2)
-                this.setStoragePlayer(2,parseInt(datas.player_2));
+                storage.setStoragePlayer(2,parseInt(datas.player_2));
             if(datas.player_3)
-                this.setStoragePlayer(3,parseInt(datas.player_3));
+                storage.setStoragePlayer(3,parseInt(datas.player_3));
             if(datas.player_4)
-                this.setStoragePlayer(4,parseInt(datas.player_4));
+                storage.setStoragePlayer(4,parseInt(datas.player_4));
             if(datas.player_5)
-                this.setStoragePlayer(5,parseInt(datas.player_5));
+                storage.setStoragePlayer(5,parseInt(datas.player_5));
             if(datas.player_6)
-                this.setStoragePlayer(6,parseInt(datas.player_6));
+                storage.setStoragePlayer(6,parseInt(datas.player_6));
             if(datas.player_7)
-                this.setStoragePlayer(7,parseInt(datas.player_7));
+                storage.setStoragePlayer(7,parseInt(datas.player_7));
             if(datas.player_8)
-                this.setStoragePlayer(8,parseInt(datas.player_8));
+                storage.setStoragePlayer(8,parseInt(datas.player_8));
             if(datas.player_9)
-                this.setStoragePlayer(9,parseInt(datas.player_9));
+                storage.setStoragePlayer(9,parseInt(datas.player_9));
 
             if(datas.gun_1)
-                this.setStorageGun(1,parseInt(datas.gun_1));
+                storage.setStorageGun(1,parseInt(datas.gun_1));
             if(datas.gun_2)
-                this.setStorageGun(2,parseInt(datas.gun_2));
+                storage.setStorageGun(2,parseInt(datas.gun_2));
             if(datas.gun_3)
-                this.setStorageGun(3,parseInt(datas.gun_3));
+                storage.setStorageGun(3,parseInt(datas.gun_3));
             if(datas.gun_4)
-                this.setStorageGun(4,parseInt(datas.gun_4));
+                storage.setStorageGun(4,parseInt(datas.gun_4));
             if(datas.gun_5)
-                this.setStorageGun(5,parseInt(datas.gun_5));
+                storage.setStorageGun(5,parseInt(datas.gun_5));
             if(datas.gun_6)
-                this.setStorageGun(6,parseInt(datas.gun_6));
+                storage.setStorageGun(6,parseInt(datas.gun_6));
             if(datas.gun_7)
-                this.setStorageGun(7,parseInt(datas.gun_7));
+                storage.setStorageGun(7,parseInt(datas.gun_7));
             if(datas.gun_8)
-                this.setStorageGun(8,parseInt(datas.gun_8));
+                storage.setStorageGun(8,parseInt(datas.gun_8));
             if(datas.gun_9)
-                this.setStorageGun(9,parseInt(datas.gun_9));
+                storage.setStorageGun(9,parseInt(datas.gun_9));
             if(datas.gun_10)
-                this.setStorageGun(10,parseInt(datas.gun_10));
+                storage.setStorageGun(10,parseInt(datas.gun_10));
             if(datas.gun_11)
-                this.setStorageGun(11,parseInt(datas.gun_11));
+                storage.setStorageGun(11,parseInt(datas.gun_11));
             if(datas.gun_12)
-                this.setStorageGun(12,parseInt(datas.gun_12));
+                storage.setStorageGun(12,parseInt(datas.gun_12));
             if(datas.gun_13)
-                this.setStorageGun(13,parseInt(datas.gun_13));
+                storage.setStorageGun(13,parseInt(datas.gun_13));
             if(datas.gun_14)
-                this.setStorageGun(14,parseInt(datas.gun_14));
+                storage.setStorageGun(14,parseInt(datas.gun_14));
             if(datas.gun_15)
-                this.setStorageGun(15,parseInt(datas.gun_15));
+                storage.setStorageGun(15,parseInt(datas.gun_15));
             if(datas.gun_16)
-                this.setStorageGun(16,parseInt(datas.gun_16));
+                storage.setStorageGun(16,parseInt(datas.gun_16));
             if(datas.gun_17)
-                this.setStorageGun(17,parseInt(datas.gun_17));
+                storage.setStorageGun(17,parseInt(datas.gun_17));
             if(datas.gun_18)
-                this.setStorageGun(18,parseInt(datas.gun_18));
+                storage.setStorageGun(18,parseInt(datas.gun_18));
             if(datas.gun_19)
-                this.setStorageGun(19,parseInt(datas.gun_19));
+                storage.setStorageGun(19,parseInt(datas.gun_19));
 
             if(datas.currGun)
-                this.setStorageCurrGun(parseInt(datas.currGun));
+                storage.setStorageCurrGun(parseInt(datas.currGun));
             if(datas.currPlayer)
-                this.setStorageCurrPlayer(parseInt(datas.currPlayer));
+                storage.setStorageCurrPlayer(parseInt(datas.currPlayer));
 
             if(datas.gunJiesuoNum)
-                this.setStorageGunJieSuoNum(parseInt(datas.gunJiesuoNum));
+                storage.setStorageGunJieSuoNum(parseInt(datas.gunJiesuoNum));
             if(datas.gunJiesuoNum2)
-                this.setStorageGunJieSuoNum2(parseInt(datas.gunJiesuoNum2));
+                storage.setStorageGunJieSuoNum2(parseInt(datas.gunJiesuoNum2));
             if(datas.gunJiesuoAwardNum)
-                this.setStorageGunJieSuoAwardNum(parseInt(datas.gunJiesuoAwardNum));
+                storage.setStorageGunJieSuoAwardNum(parseInt(datas.gunJiesuoAwardNum));
             if(datas.roleJiesuoNum)
-                this.setStorageRoleJieSuoNum(parseInt(datas.roleJiesuoNum));
+                storage.setStorageRoleJieSuoNum(parseInt(datas.roleJiesuoNum));
             if(datas.roleJiesuoAwardNum)
-                this.setStorageRoleJieSuoAwardNum(parseInt(datas.roleJiesuoAwardNum));
+                storage.setStorageRoleJieSuoAwardNum(parseInt(datas.roleJiesuoAwardNum));
             if(datas.hitEnemyNum)
-                this.setStorageHitEnemyNum(parseInt(datas.hitEnemyNum));
+                storage.setStorageHitEnemyNum(parseInt(datas.hitEnemyNum));
             if(datas.hitEnemyAwardNum)
-                this.setStorageHitEnemyAwardNum(parseInt(datas.hitEnemyAwardNum));
+                storage.setStorageHitEnemyAwardNum(parseInt(datas.hitEnemyAwardNum));
             if(datas.hitHeadNum)
-                this.setStorageHitHeadNum(parseInt(datas.hitHeadNum));
+                storage.setStorageHitHeadNum(parseInt(datas.hitHeadNum));
             if(datas.hitHeadAwardNum)
-                this.setStorageHitHeadAwardNum(parseInt(datas.hitHeadAwardNum));
+                storage.setStorageHitHeadAwardNum(parseInt(datas.hitHeadAwardNum));
             if(datas.hitBossNum)
-                this.setStorageHitBossNum(parseInt(datas.hitBossNum));
+                storage.setStorageHitBossNum(parseInt(datas.hitBossNum));
             if(datas.hitBossAwardNum)
-                this.setStorageHitBossAwardNum(parseInt(datas.hitBossAwardNum));
+                storage.setStorageHitBossAwardNum(parseInt(datas.hitBossAwardNum));
             if(datas.inviteNum)
-                this.setStorageInviteNum(parseInt(datas.inviteNum));
+                storage.setStorageInviteNum(parseInt(datas.inviteNum));
             if(datas.inviteAwardNum)
-                this.setStorageInviteAwardNum(parseInt(datas.inviteAwardNum));
+                storage.setStorageInviteAwardNum(parseInt(datas.inviteAwardNum));
             if(datas.invitelist)
-                this.setStorageInviteNum(datas.invitelist.length);
+                storage.setStorageInviteNum(datas.invitelist.length);
             if(datas.shareGroupList)
-                this.setStorageShareGroupList(datas.shareGroupList);
+                storage.setStorageShareGroupList(datas.shareGroupList);
             if(datas.shareGroupTime)
-                this.setStorageShareGroupTime(datas.shareGroupTime);
+                storage.setStorageShareGroupTime(datas.shareGroupTime);
             if(datas.gunInviteAwardNum)
-                this.setStorageGunInviteAwardNum(parseInt(datas.gunInviteAwardNum));
+                storage.setStorageGunInviteAwardNum(parseInt(datas.gunInviteAwardNum));
             if(datas.guninvitelist)
-                this.setStorageGunInviteNum(datas.guninvitelist.length);
+                storage.setStorageGunInviteNum(datas.guninvitelist.length);
 
 
-            this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
-            this.node_main_score.getComponent("cc.Label").string = this.getStorageScore();
+            this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
+            this.node_main_score.getComponent("cc.Label").string = storage.getStorageScore();
             this.updateDitu();
         }
         else
@@ -1586,58 +545,58 @@ cc.Class({
     uploadData: function()
     {
         var datas = {};
-        datas.first = this.getStorageFirst();
-        datas.coin = this.getStorageCoin();
-        datas.score = this.getStorageScore();
-        datas.card = this.getStorageCard();
-        datas.qiandao = this.getStorageQianDao();
-        datas.player_1 = this.getStoragePlayer(1);
-        datas.player_2 = this.getStoragePlayer(2);
-        datas.player_3 = this.getStoragePlayer(3);
-        datas.player_4 = this.getStoragePlayer(4);
-        datas.player_5 = this.getStoragePlayer(5);
-        datas.player_6 = this.getStoragePlayer(6);
-        datas.player_7 = this.getStoragePlayer(7);
-        datas.player_8 = this.getStoragePlayer(8);
-        datas.player_9 = this.getStoragePlayer(9);
-        datas.gun_1 = this.getStorageGun(1);
-        datas.gun_2 = this.getStorageGun(2);
-        datas.gun_3 = this.getStorageGun(3);
-        datas.gun_4 = this.getStorageGun(4);
-        datas.gun_5 = this.getStorageGun(5);
-        datas.gun_6 = this.getStorageGun(6);
-        datas.gun_7 = this.getStorageGun(7);
-        datas.gun_8 = this.getStorageGun(8);
-        datas.gun_9 = this.getStorageGun(9);
-        datas.gun_10 = this.getStorageGun(10);
-        datas.gun_11 = this.getStorageGun(11);
-        datas.gun_12 = this.getStorageGun(12);
-        datas.gun_13 = this.getStorageGun(13);
-        datas.gun_14 = this.getStorageGun(14);
-        datas.gun_15 = this.getStorageGun(15);
-        datas.gun_16 = this.getStorageGun(16);
-        datas.gun_17 = this.getStorageGun(17);
-        datas.gun_18 = this.getStorageGun(18);
-        datas.gun_19 = this.getStorageGun(19);
-        datas.currGun = this.getStorageCurrGun();
-        datas.currPlayer = this.getStorageCurrPlayer();
+        datas.first = storage.getStorageFirst();
+        datas.coin = storage.getStorageCoin();
+        datas.score = storage.getStorageScore();
+        datas.card = storage.getStorageCard();
+        datas.qiandao = storage.getStorageQianDao();
+        datas.player_1 = storage.getStoragePlayer(1);
+        datas.player_2 = storage.getStoragePlayer(2);
+        datas.player_3 = storage.getStoragePlayer(3);
+        datas.player_4 = storage.getStoragePlayer(4);
+        datas.player_5 = storage.getStoragePlayer(5);
+        datas.player_6 = storage.getStoragePlayer(6);
+        datas.player_7 = storage.getStoragePlayer(7);
+        datas.player_8 = storage.getStoragePlayer(8);
+        datas.player_9 = storage.getStoragePlayer(9);
+        datas.gun_1 = storage.getStorageGun(1);
+        datas.gun_2 = storage.getStorageGun(2);
+        datas.gun_3 = storage.getStorageGun(3);
+        datas.gun_4 = storage.getStorageGun(4);
+        datas.gun_5 = storage.getStorageGun(5);
+        datas.gun_6 = storage.getStorageGun(6);
+        datas.gun_7 = storage.getStorageGun(7);
+        datas.gun_8 = storage.getStorageGun(8);
+        datas.gun_9 = storage.getStorageGun(9);
+        datas.gun_10 = storage.getStorageGun(10);
+        datas.gun_11 = storage.getStorageGun(11);
+        datas.gun_12 = storage.getStorageGun(12);
+        datas.gun_13 = storage.getStorageGun(13);
+        datas.gun_14 = storage.getStorageGun(14);
+        datas.gun_15 = storage.getStorageGun(15);
+        datas.gun_16 = storage.getStorageGun(16);
+        datas.gun_17 = storage.getStorageGun(17);
+        datas.gun_18 = storage.getStorageGun(18);
+        datas.gun_19 = storage.getStorageGun(19);
+        datas.currGun = storage.getStorageCurrGun();
+        datas.currPlayer = storage.getStorageCurrPlayer();
 
-        datas.gunJiesuoNum = this.getStorageGunJieSuoNum();
-        datas.gunJiesuoNum2 = this.getStorageGunJieSuoNum2();
-        datas.gunJiesuoAwardNum = this.getStorageGunJieSuoAwardNum();
-        datas.roleJiesuoNum = this.getStorageRoleJieSuoNum();
-        datas.roleJiesuoAwardNum = this.getStorageRoleJieSuoAwardNum();
-        datas.hitEnemyNum = this.getStorageHitEnemyNum();
-        datas.hitEnemyAwardNum = this.getStorageHitEnemyAwardNum();
-        datas.hitHeadNum = this.getStorageHitHeadNum();
-        datas.hitHeadAwardNum = this.getStorageHitHeadAwardNum();
-        datas.hitBossNum = this.getStorageHitBossNum();
-        datas.hitBossAwardNum = this.getStorageHitBossAwardNum();
-        datas.inviteNum = this.getStorageInviteNum();
-        datas.inviteAwardNum = this.getStorageInviteAwardNum();
-        datas.shareGroupList = this.getStorageShareGroupList();
-        datas.shareGroupTime = this.getStorageShareGroupTime();
-        datas.gunInviteAwardNum = this.getStorageGunInviteAwardNum();
+        datas.gunJiesuoNum = storage.getStorageGunJieSuoNum();
+        datas.gunJiesuoNum2 = storage.getStorageGunJieSuoNum2();
+        datas.gunJiesuoAwardNum = storage.getStorageGunJieSuoAwardNum();
+        datas.roleJiesuoNum = storage.getStorageRoleJieSuoNum();
+        datas.roleJiesuoAwardNum = storage.getStorageRoleJieSuoAwardNum();
+        datas.hitEnemyNum = storage.getStorageHitEnemyNum();
+        datas.hitEnemyAwardNum = storage.getStorageHitEnemyAwardNum();
+        datas.hitHeadNum = storage.getStorageHitHeadNum();
+        datas.hitHeadAwardNum = storage.getStorageHitHeadAwardNum();
+        datas.hitBossNum = storage.getStorageHitBossNum();
+        datas.hitBossAwardNum = storage.getStorageHitBossAwardNum();
+        datas.inviteNum = storage.getStorageInviteNum();
+        datas.inviteAwardNum = storage.getStorageInviteAwardNum();
+        datas.shareGroupList = storage.getStorageShareGroupList();
+        datas.shareGroupTime = storage.getStorageShareGroupTime();
+        datas.gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
 
         var data = JSON.stringify(datas);
         var self = this;
@@ -1651,7 +610,7 @@ cc.Class({
 
     adapt: function()
     {
-        var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_role,this.node_gun,this.node_setting,
+        var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_gun,this.node_setting,
             this.node_card,this.node_duihuan,this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
             this.node_chengjiu,this.node_award,this.node_zhanshi];
         for(var i=0;i<nodes.length;i++)
@@ -1675,7 +634,7 @@ cc.Class({
 
     initGameData: function()
     {
-        var loutis = this.GAME.loutis[0];
+        var loutis = this.res.GAME.loutis[0];
         this.loutis = [];
         for(var i=0;i<loutis.length;i++)
         {
@@ -1683,7 +642,7 @@ cc.Class({
         }
         this.last_h = 0;
         this.ltzorder = 1000000;
-        this.ltcolor = this.GAME.bgcolor[0];
+        this.ltcolor = this.res.bgcolor[0];
         this.currLoutis = [];
         this.louticolls = [];
         this.GAME.state = "stop";
@@ -1693,16 +652,16 @@ cc.Class({
         this.GAME.killhead = 0;
         if(!this.GAME.useZhanShi)
         {
-            this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
+            this.GAME.currPlayer = storage.getStorageCurrPlayer()-1;
             this.GAME.currPlayerTmp = this.GAME.currPlayer;
         }
-        this.GAME.currGun = this.getStorageCurrGun()-1;
+        this.GAME.currGun = storage.getStorageCurrGun()-1;
         this.GAME.currGunTmp = this.GAME.currGun;
 
         this.GAME.playerfuhuo = true;//金币
         this.GAME.playerfangdanyi = true;
         this.GAME.playerfuhuovideo = true;//看视频
-        this.GAME.yindao = this.getStorageYindao();
+        this.GAME.yindao = storage.getStorageYindao();
     },
 
     initGmae: function()
@@ -1714,8 +673,8 @@ cc.Class({
         this.node_game_ui.active = false;
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
-        this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
-        this.node_main_score.getComponent("cc.Label").string = this.getStorageScore();
+        this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
+        this.node_main_score.getComponent("cc.Label").string = storage.getStorageScore();
         this.getScore(0);
         this.getCoin(0);
 
@@ -1726,7 +685,7 @@ cc.Class({
 
     nextLevel: function()
     {
-        var loutis = this.GAME.loutis[Math.floor(Math.random() * this.GAME.loutis.length)];
+        var loutis = this.res.GAME.loutis[Math.floor(Math.random() * this.res.GAME.loutis.length)];
         this.loutis = [];
         for(var i=0;i<loutis.length;i++)
         {
@@ -1734,7 +693,7 @@ cc.Class({
         }
         this.last_h = 0;
         this.ltzorder = 1000000;
-        this.ltcolor = this.GAME.bgcolor[Math.floor(Math.random()*this.GAME.bgcolor.length)];
+        this.ltcolor = this.res.bgcolor[Math.floor(Math.random()*this.res.bgcolor.length)];
         this.currLoutis = [];
         this.GAME.state = "stop";
         this.GAME.enemy_num = 3 + Math.floor(Math.random() * 3 + 1);
@@ -1848,29 +807,29 @@ cc.Class({
         }
         else if(data == "music")
         {
-            var m = this.getStorageMusic();
+            var m = storage.getStorageMusic();
             m = m == 0 ? 1 : 0;
-            this.setStorageMusic(m);
-            if(this.getStorageMusic() == 0)
+            storage.setStorageMusic(m);
+            if(storage.getStorageMusic() == 0)
             {
-                this.stopMusic();
+                storage.stopMusic();
             }
             else
             {
-                this.playMusic(this.audio_bgm);
+                storage.playMusic(this.res.audio_bgm);
             }
         }
         else if(data == "sound")
         {
-            var m = this.getStorageSound();
+            var m = storage.getStorageSound();
             m = m == 0 ? 1 : 0;
-            this.setStorageSound(m);
+            storage.setStorageSound(m);
         }
         else if(data == "vibrate")
         {
-            var m = this.getStorageVibrate();
+            var m = storage.getStorageVibrate();
             m = m == 0 ? 1 : 0;
-            this.setStorageVibrate(m);
+            storage.setStorageVibrate(m);
         }
         else if(data == "lingqu")
         {
@@ -1879,7 +838,7 @@ cc.Class({
                 this.wxCloseOver();
             this.node_card.active = true;
             this.node_over.active = false;
-            this.node_card_num.getComponent("cc.Label").string = this.getStorageCard();
+            this.node_card_num.getComponent("cc.Label").string = storage.getStorageCard();
             qianqista.event("btn_fangdanyi");
         }
         else if(data == "duihuan")
@@ -1991,7 +950,7 @@ cc.Class({
         {
             this.node_game_ui.yindao.active = false;
             this.playerFire();
-            this.setStorageYindao(1);
+            storage.setStorageYindao(1);
             this.GAME.yindao = 1;
         }
         else if(data == "roleyaoqing")
@@ -2125,27 +1084,27 @@ cc.Class({
 
     lingquGun: function()
     {
-        var gunInviteNum = this.getStorageGunInviteNum();
-        var gunInviteAwardNum = this.getStorageGunInviteAwardNum();
+        var gunInviteNum = storage.getStorageGunInviteNum();
+        var gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
         if(gunInviteNum>=4 && gunInviteAwardNum < 1)
         {
-            if(this.getStorageGun(16) == 1)
+            if(storage.getStorageGun(16) == 1)
             {
-                this.setStorageCoin(parseInt(this.getStorageCoin())+2000);
+                storage.setStorageCoin(parseInt(storage.getStorageCoin())+2000);
 
-                this.setStorageGunInviteAwardNum(1);
+                storage.setStorageGunInviteAwardNum(1);
                 this.uploadData();
-                this.showToast("金币+"+2000);
+                this.res.showToast("金币+"+2000);
                 this.openLingGun();
-                this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
-                this.playSound(this.audio_coin);
+                this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
+                storage.playSound(res.audio_coin);
             }
             else
             {
-                this.setStorageGun(16,1);
-                this.setStorageGunInviteAwardNum(1);
+                storage.setStorageGun(16,1);
+                storage.setStorageGunInviteAwardNum(1);
                 this.uploadData();
-                this.showToast("恭喜获取幻灭");
+                this.res.showToast("恭喜获取幻灭");
                 this.openLingGun();
             }
         }
@@ -2162,8 +1121,8 @@ cc.Class({
             cc.rotateBy(1,180)
         ));
 
-        var gunInviteNum = this.getStorageGunInviteNum();
-        var gunInviteAwardNum = this.getStorageGunInviteAwardNum();
+        var gunInviteNum = storage.getStorageGunInviteNum();
+        var gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
 
         for(var i=1;i<=4;i++)
         {
@@ -2189,9 +1148,9 @@ cc.Class({
 
     useZhanshiStart: function()
     {
-         if(parseInt(this.GAME.score) > this.getStorageScore())
-            this.setStorageScore(parseInt(this.GAME.score));
-        this.setStorageCoin(parseInt(this.getStorageCoin()) + parseInt(this.GAME.coin));
+         if(parseInt(this.GAME.score) > storage.getStorageScore())
+            storage.setStorageScore(parseInt(this.GAME.score));
+        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.GAME.coin));
         this.node_over.active = false;
         this.node_fuhuo.active = false;
         this.wxCloseFuhuo();
@@ -2219,9 +1178,9 @@ cc.Class({
     openSetting: function()
     {
         this.node_setting.active = true;
-        this.node_setting_music.getComponent("cc.Toggle").isChecked = (this.getStorageMusic() == 1 ? true : false);
-        this.node_setting_sound.getComponent("cc.Toggle").isChecked = (this.getStorageSound() == 1 ? true : false);
-        this.node_setting_vibrate.getComponent("cc.Toggle").isChecked = (this.getStorageVibrate() == 1 ? true : false);
+        this.node_setting_music.getComponent("cc.Toggle").isChecked = (storage.getStorageMusic() == 1 ? true : false);
+        this.node_setting_sound.getComponent("cc.Toggle").isChecked = (storage.getStorageSound() == 1 ? true : false);
+        this.node_setting_vibrate.getComponent("cc.Toggle").isChecked = (storage.getStorageVibrate() == 1 ? true : false);
     },
 
     pageScoll: function(num,target,data)
@@ -2238,11 +1197,11 @@ cc.Class({
                 cc.find("gunjiesuo",this.node_gun).active = true;
                 if(index == 0)
                 {
-                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
                 }
                 else if(index == 1)
                 {
-                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (this.getStorageGunJieSuoNum2()*50 + 750);
+                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*50 + 750);
                 }
             }
             else
@@ -2265,8 +1224,8 @@ cc.Class({
         chengjiu_dian.active = false;
         chengjiu_dian2.active = false;
 
-        var currQianDao = this.getStorageQianDao();
-        var currQianDaoTime = this.getStorageQianDaoTime();
+        var currQianDao = storage.getStorageQianDao();
+        var currQianDaoTime = storage.getStorageQianDaoTime();
         var now = new Date().getDate();
         currQianDao = parseInt(currQianDao)+1;
         for(var i=1;i<=7;i++)
@@ -2278,8 +1237,8 @@ cc.Class({
             }
         }
 
-        var inviteNum = this.getStorageInviteNum();
-        var inviteAwardNum = this.getStorageInviteAwardNum();
+        var inviteNum = storage.getStorageInviteNum();
+        var inviteAwardNum = storage.getStorageInviteAwardNum();
         if(inviteAwardNum<10 &&  parseInt(inviteAwardNum) <  parseInt(inviteNum))
         {
             lingjiang_dian.active = true;
@@ -2288,13 +1247,13 @@ cc.Class({
         var isshow = false;
         for(var i=1;i<=5;i++) {
             if (i == 1) {
-                var num = this.getStorageHitEnemyNum();
-                var awardnum = this.getStorageHitEnemyAwardNum();
-                if (awardnum >= this.GAME.chengjiuconfig.hitenemy.length) {
+                var num = storage.getStorageHitEnemyNum();
+                var awardnum = storage.getStorageHitEnemyAwardNum();
+                if (awardnum >= this.res.chengjiuconfig.hitenemy.length) {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hitenemy[awardnum];
+                var data = this.res.chengjiuconfig.hitenemy[awardnum];
 
                 if (!isend && num >= data.num) {
                     isshow = true;
@@ -2303,57 +1262,57 @@ cc.Class({
 
             }
             else if (i == 2) {
-                var num = this.getStorageHitHeadNum();
-                var awardnum = this.getStorageHitHeadAwardNum();
+                var num = storage.getStorageHitHeadNum();
+                var awardnum = storage.getStorageHitHeadAwardNum();
                 var isend = false;
-                if (awardnum >= this.GAME.chengjiuconfig.hithead.length) {
+                if (awardnum >= this.res.chengjiuconfig.hithead.length) {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hithead[awardnum];
+                var data = this.res.chengjiuconfig.hithead[awardnum];
                 if (!isend && num >= data.num) {
                     isshow = true;
                     break;
                 }
             }
             else if (i == 3) {
-                var num = this.getStorageHitBossNum();
-                var awardnum = this.getStorageHitBossAwardNum();
+                var num = storage.getStorageHitBossNum();
+                var awardnum = storage.getStorageHitBossAwardNum();
                 var isend = false;
-                if (awardnum >= this.GAME.chengjiuconfig.hitboss.length) {
+                if (awardnum >= this.res.chengjiuconfig.hitboss.length) {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hitboss[awardnum];
+                var data = this.res.chengjiuconfig.hitboss[awardnum];
                 if (!isend && num >= data.num) {
                     isshow = true;
                     break;
                 }
             }
             else if (i == 4) {
-                var num = this.getStorageGunJieSuoNum();
-                num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
-                var awardnum = this.getStorageGunJieSuoAwardNum();
+                var num = storage.getStorageGunJieSuoNum();
+                num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
+                var awardnum = storage.getStorageGunJieSuoAwardNum();
                 var isend = false;
-                if (awardnum >= this.GAME.chengjiuconfig.jiesuogun.length) {
+                if (awardnum >= this.res.chengjiuconfig.jiesuogun.length) {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.jiesuogun[awardnum];
+                var data = this.res.chengjiuconfig.jiesuogun[awardnum];
                 if (!isend && num >= data.num) {
                     isshow = true;
                     break;
                 }
             }
             else if (i == 5) {
-                var num = this.getStorageRoleJieSuoNum();
-                var awardnum = this.getStorageRoleJieSuoAwardNum();
+                var num = storage.getStorageRoleJieSuoNum();
+                var awardnum = storage.getStorageRoleJieSuoAwardNum();
                 var isend = false;
-                if (awardnum >= this.GAME.chengjiuconfig.jiesuorole.length) {
+                if (awardnum >= this.res.chengjiuconfig.jiesuorole.length) {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.jiesuorole[awardnum];
+                var data = this.res.chengjiuconfig.jiesuorole[awardnum];
                 if (!isend && num >= data.num) {
                     isshow = true;
                     break;
@@ -2370,20 +1329,20 @@ cc.Class({
 
     lingquAward: function(id)
     {
-        var inviteAwardNum = this.getStorageInviteAwardNum();
+        var inviteAwardNum = storage.getStorageInviteAwardNum();
 
-        var coin = this.GAME.inviteconfig[id-1];
+        var coin = this.res.inviteconfig[id-1];
         if(inviteAwardNum>=5)
             coin*=2;
-        this.setStorageCoin(parseInt(this.getStorageCoin())+coin);
+        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);
 
-        this.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
+        storage.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
         this.uploadData();
-        this.showToast("金币+"+coin);
+        this.res.showToast("金币+"+coin);
         this.openAward();
-        this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
+        this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
         this.updateDian();
-        this.playSound(this.audio_coin);
+        storage.playSound(this.res.audio_coin);
 
         var self = this;
         if(inviteAwardNum==4)
@@ -2391,7 +1350,7 @@ cc.Class({
             this.node.runAction(cc.sequence(
                 cc.delayTime(1),
                 cc.callFunc(function(){
-                    self.showToast("继续邀请，奖励翻倍");
+                    self.res.showToast("继续邀请，奖励翻倍");
                 })
             ));
         }
@@ -2402,8 +1361,8 @@ cc.Class({
     openAward: function()
     {
         this.node_award.active = true;
-        var inviteNum = this.getStorageInviteNum();
-        var inviteAwardNum = this.getStorageInviteAwardNum();
+        var inviteNum = storage.getStorageInviteNum();
+        var inviteAwardNum = storage.getStorageInviteAwardNum();
         if(inviteAwardNum<5)
         {
             for(var i=1;i<=5;i++)
@@ -2437,7 +1396,7 @@ cc.Class({
                 var item = cc.find("item_"+i,this.node_award_itembg);
                 var box = cc.find("box",item);
                 var coin = cc.find("coin",box);
-                coin.getComponent("cc.Label").string = this.GAME.inviteconfig[i-1]*2;
+                coin.getComponent("cc.Label").string = this.res.inviteconfig[i-1]*2;
                 box.awardid = i;
                 box.canset = false;
                 if(inviteAwardNum<i+5)
@@ -2462,44 +1421,44 @@ cc.Class({
 
     lingquChengjiu: function(id,coin)
     {
-        this.setStorageCoin(parseInt(this.getStorageCoin())+coin);
+        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);
         if(id == 1)
         {
-            var awardnum = this.getStorageHitEnemyAwardNum();
-            this.setStorageHitEnemyAwardNum(parseInt(awardnum)+1);
+            var awardnum = storage.getStorageHitEnemyAwardNum();
+            storage.setStorageHitEnemyAwardNum(parseInt(awardnum)+1);
         }
         else if(id == 2)
         {
-            var awardnum = this.getStorageHitHeadAwardNum();
-            this.setStorageHitHeadAwardNum(parseInt(awardnum)+1);
+            var awardnum = storage.getStorageHitHeadAwardNum();
+            storage.setStorageHitHeadAwardNum(parseInt(awardnum)+1);
         }
         else if(id == 3)
         {
-            var awardnum = this.getStorageHitBossAwardNum();
-            this.setStorageHitBossAwardNum(parseInt(awardnum)+1);
+            var awardnum = storage.getStorageHitBossAwardNum();
+            storage.setStorageHitBossAwardNum(parseInt(awardnum)+1);
         }
         else if(id == 4)
         {
-            var awardnum = this.getStorageGunJieSuoAwardNum();
-            this.setStorageGunJieSuoAwardNum(parseInt(awardnum)+1);
+            var awardnum = storage.getStorageGunJieSuoAwardNum();
+            storage.setStorageGunJieSuoAwardNum(parseInt(awardnum)+1);
         }
         else if(id == 5)
         {
-            var awardnum = this.getStorageRoleJieSuoAwardNum();
-            this.setStorageRoleJieSuoAwardNum(parseInt(awardnum)+1);
+            var awardnum = storage.getStorageRoleJieSuoAwardNum();
+            storage.setStorageRoleJieSuoAwardNum(parseInt(awardnum)+1);
         }
 
         this.uploadData();
-        this.showToast("金币+"+coin);
+        this.res.showToast("金币+"+coin);
         this.openChengjiu();
         this.updateDian();
-        this.playSound(this.audio_coin);
+        storage.playSound(this.res.audio_coin);
 
-        var awardnum = parseInt(this.getStorageHitEnemyAwardNum());
-        awardnum += parseInt(this.getStorageHitHeadAwardNum());
-        awardnum += parseInt(this.getStorageHitBossAwardNum());
-        awardnum += parseInt(this.getStorageGunJieSuoAwardNum());
-        awardnum += parseInt(this.getStorageRoleJieSuoAwardNum());
+        var awardnum = parseInt(storage.getStorageHitEnemyAwardNum());
+        awardnum += parseInt(storage.getStorageHitHeadAwardNum());
+        awardnum += parseInt(storage.getStorageHitBossAwardNum());
+        awardnum += parseInt(storage.getStorageGunJieSuoAwardNum());
+        awardnum += parseInt(storage.getStorageRoleJieSuoAwardNum());
 
         if(awardnum == 1)
             qianqista.event("chengjiu_lingqu_num_1");
@@ -2515,27 +1474,29 @@ cc.Class({
 
     judgeChengjiuUI: function()
     {
-        var awardnum = this.getStorageGunJieSuoAwardNum();
-        if(awardnum<this.GAME.chengjiuconfig.jiesuogun.length)
+        var awardnum = storage.getStorageGunJieSuoAwardNum();
+        if(awardnum<this.res.chengjiuconfig.jiesuogun.length)
         {
-            var num = this.getStorageGunJieSuoNum();
-            num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
-            var data = this.GAME.chengjiuconfig.jiesuogun[awardnum];
+            var num = storage.getStorageGunJieSuoNum();
+            num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
+            var data = this.res.chengjiuconfig.jiesuogun[awardnum];
             if(num >= data.num)
             {
-                this.showToastCJ();
+                this.res.showToastCJ();
+                storage.playSound(this.res.audio_chengjiu);
                 return;
             }
         }
 
-        var awardnum2 = this.getStorageRoleJieSuoAwardNum();
-        if(awardnum2<this.GAME.chengjiuconfig.jiesuorole.length)
+        var awardnum2 = storage.getStorageRoleJieSuoAwardNum();
+        if(awardnum2<this.res.chengjiuconfig.jiesuorole.length)
         {
-            var num = this.getStorageRoleJieSuoNum();
-            var data = this.GAME.chengjiuconfig.jiesuorole[awardnum2];
+            var num = storage.getStorageRoleJieSuoNum();
+            var data = this.res.chengjiuconfig.jiesuorole[awardnum2];
             if(num >= data.num)
             {
-                this.showToastCJ();
+                this.res.showToastCJ();
+                storage.playSound(this.res.audio_chengjiu);
                 return;
             }
         }
@@ -2543,44 +1504,47 @@ cc.Class({
 
     judgeChengjiuGame: function()
     {
-        var awardnum = this.getStorageHitEnemyAwardNum();
-        var toastnum = this.getStorageHitEnemyToastNum();
-        if(awardnum<this.GAME.chengjiuconfig.hitenemy.length && toastnum == awardnum)
+        var awardnum = storage.getStorageHitEnemyAwardNum();
+        var toastnum = storage.getStorageHitEnemyToastNum();
+        if(awardnum<this.res.chengjiuconfig.hitenemy.length && toastnum == awardnum)
         {
-            var num = this.getStorageHitEnemyNum();
-            var data = this.GAME.chengjiuconfig.hitenemy[awardnum];
+            var num = storage.getStorageHitEnemyNum();
+            var data = this.res.chengjiuconfig.hitenemy[awardnum];
             if(num >= data.num)
             {
-                this.setStorageHitEnemyToastNum(parseInt(toastnum)+1);
-                this.showToastCJ();
+                storage.setStorageHitEnemyToastNum(parseInt(toastnum)+1);
+                this.res.showToastCJ();
+                storage.playSound(this.res.audio_chengjiu);
                 return;
             }
         }
 
-        var awardnum2 = this.getStorageHitHeadAwardNum();
-        var toastnum2 = this.getStorageHitHeadToastNum();
-        if(awardnum2<this.GAME.chengjiuconfig.hithead.length && toastnum2 == awardnum2)
+        var awardnum2 = storage.getStorageHitHeadAwardNum();
+        var toastnum2 = storage.getStorageHitHeadToastNum();
+        if(awardnum2<this.res.chengjiuconfig.hithead.length && toastnum2 == awardnum2)
         {
-            var num = this.getStorageHitHeadNum();
-            var data = this.GAME.chengjiuconfig.hithead[awardnum2];
+            var num = storage.getStorageHitHeadNum();
+            var data = this.res.chengjiuconfig.hithead[awardnum2];
             if(num >= data.num)
             {
-                this.setStorageHitHeadToastNum(parseInt(toastnum2)+1);
-                this.showToastCJ();
+                storage.setStorageHitHeadToastNum(parseInt(toastnum2)+1);
+                this.res.showToastCJ();
+                storage.playSound(this.res.audio_chengjiu);
                 return;
             }
         }
 
-        var awardnum3 = this.getStorageHitBossAwardNum();
-        var toastnum3 = this.getStorageHitBossToastNum();
-        if(awardnum3<this.GAME.chengjiuconfig.hitboss.length && toastnum3 == awardnum3)
+        var awardnum3 = storage.getStorageHitBossAwardNum();
+        var toastnum3 = storage.getStorageHitBossToastNum();
+        if(awardnum3<this.res.chengjiuconfig.hitboss.length && toastnum3 == awardnum3)
         {
-            var num = this.getStorageHitBossNum();
-            var data = this.GAME.chengjiuconfig.hitboss[awardnum3];
+            var num = storage.getStorageHitBossNum();
+            var data = this.res.chengjiuconfig.hitboss[awardnum3];
             if(num >= data.num)
             {
-                this.setStorageHitBossToastNum(parseInt(toastnum3)+1);
-                this.showToastCJ();
+                storage.setStorageHitBossToastNum(parseInt(toastnum3)+1);
+                this.res.showToastCJ();
+                storage.playSound(this.res.audio_chengjiu);
                 return;
             }
         }
@@ -2596,16 +1560,16 @@ cc.Class({
         this.node_chengjiu_center.color = this.ltcolor;
 
         this.node_chengjiu_top_player.destroyAllChildren();
-        var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
+        var player = cc.instantiate(this.res.players[this.GAME.currPlayer]);
         this.node_chengjiu_top_player.addChild(player);
 
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
-        var gun = cc.instantiate(this.GAME.guns[this.GAME.currGun]);
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
+        var gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
         gun.y = player.height*0.3 + gunConf.y;
         player.addChild(gun);
 
-        this.node_chengjiu_score.getComponent("cc.Label").string = this.getStorageScore();
-        this.node_chengjiu_coin.getComponent("cc.Label").string = this.getStorageCoin();
+        this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
+        this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         for(var i=1;i<=5;i++)
         {
@@ -2617,15 +1581,15 @@ cc.Class({
             box.cjid = i;
             if(i == 1)
             {
-                var num = this.getStorageHitEnemyNum();
-                var awardnum = this.getStorageHitEnemyAwardNum();
+                var num = storage.getStorageHitEnemyNum();
+                var awardnum = storage.getStorageHitEnemyAwardNum();
                 var isend = false;
-                if(awardnum>=this.GAME.chengjiuconfig.hitenemy.length)
+                if(awardnum>=this.res.chengjiuconfig.hitenemy.length)
                 {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hitenemy[awardnum];
+                var data = this.res.chengjiuconfig.hitenemy[awardnum];
                 lnum.getComponent("cc.Label").string = "x"+data.num;
                 award.getComponent("cc.Label").string = data.coin;
                 curr.getComponent("cc.Label").string = num + "/"+ data.num;
@@ -2648,15 +1612,15 @@ cc.Class({
             }
             else if(i == 2)
             {
-                var num = this.getStorageHitHeadNum();
-                var awardnum = this.getStorageHitHeadAwardNum();
+                var num = storage.getStorageHitHeadNum();
+                var awardnum = storage.getStorageHitHeadAwardNum();
                 var isend = false;
-                if(awardnum>=this.GAME.chengjiuconfig.hithead.length)
+                if(awardnum>=this.res.chengjiuconfig.hithead.length)
                 {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hithead[awardnum];
+                var data = this.res.chengjiuconfig.hithead[awardnum];
                 lnum.getComponent("cc.Label").string = "x"+data.num;
                 award.getComponent("cc.Label").string = data.coin;
                 curr.getComponent("cc.Label").string = num + "/"+ data.num;
@@ -2679,15 +1643,15 @@ cc.Class({
             }
             else if(i == 3)
             {
-                var num = this.getStorageHitBossNum();
-                var awardnum = this.getStorageHitBossAwardNum();
+                var num = storage.getStorageHitBossNum();
+                var awardnum = storage.getStorageHitBossAwardNum();
                 var isend = false;
-                if(awardnum>=this.GAME.chengjiuconfig.hitboss.length)
+                if(awardnum>=this.res.chengjiuconfig.hitboss.length)
                 {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.hitboss[awardnum];
+                var data = this.res.chengjiuconfig.hitboss[awardnum];
                 lnum.getComponent("cc.Label").string = "x"+data.num;
                 award.getComponent("cc.Label").string = data.coin;
                 curr.getComponent("cc.Label").string = num + "/"+ data.num;
@@ -2710,16 +1674,16 @@ cc.Class({
             }
             else if(i == 4)
             {
-                var num = this.getStorageGunJieSuoNum();
-                num = parseInt(num) + parseInt(this.getStorageGunJieSuoNum2());
-                var awardnum = this.getStorageGunJieSuoAwardNum();
+                var num = storage.getStorageGunJieSuoNum();
+                num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
+                var awardnum = storage.getStorageGunJieSuoAwardNum();
                 var isend = false;
-                if(awardnum>=this.GAME.chengjiuconfig.jiesuogun.length)
+                if(awardnum>=this.res.chengjiuconfig.jiesuogun.length)
                 {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.jiesuogun[awardnum];
+                var data = this.res.chengjiuconfig.jiesuogun[awardnum];
                 lnum.getComponent("cc.Label").string = "x"+data.num;
                 award.getComponent("cc.Label").string = data.coin;
                 curr.getComponent("cc.Label").string = num + "/"+ data.num;
@@ -2742,15 +1706,15 @@ cc.Class({
             }
             else if(i == 5)
             {
-                var num = this.getStorageRoleJieSuoNum();
-                var awardnum = this.getStorageRoleJieSuoAwardNum();
+                var num = storage.getStorageRoleJieSuoNum();
+                var awardnum = storage.getStorageRoleJieSuoAwardNum();
                 var isend = false;
-                if(awardnum>=this.GAME.chengjiuconfig.jiesuorole.length)
+                if(awardnum>=this.res.chengjiuconfig.jiesuorole.length)
                 {
                     isend = true;
                     awardnum -= 1;
                 }
-                var data = this.GAME.chengjiuconfig.jiesuorole[awardnum];
+                var data = this.res.chengjiuconfig.jiesuorole[awardnum];
                 lnum.getComponent("cc.Label").string = "x"+data.num;
                 award.getComponent("cc.Label").string = data.coin;
                 curr.getComponent("cc.Label").string = num + "/"+ data.num;
@@ -2778,8 +1742,8 @@ cc.Class({
     gunjiesuo: function()
     {
         var self = this;
-        var needcoin = this.getStorageGunJieSuoNum()*50 + 200;
-        if(this.getStorageCoin()< needcoin)
+        var needcoin = storage.getStorageGunJieSuoNum()*50 + 200;
+        if(storage.getStorageCoin()< needcoin)
         {
             this.openCoinNode();
         }
@@ -2789,7 +1753,7 @@ cc.Class({
             var items = [];
             for(var i=1;i<=9;i++)
             {
-                if(this.getStorageGun(i) != 1)
+                if(storage.getStorageGun(i) != 1)
                 {
                     uopen.push(i);
                     var item = cc.find("item_" + i, this.node_gun_page1);
@@ -2799,7 +1763,7 @@ cc.Class({
             }
             if(uopen.length<=0)
             {
-                this.showToast("枪支已经全部开启");
+                this.res.showToast("枪支已经全部开启");
             }
             else
             {
@@ -2817,7 +1781,7 @@ cc.Class({
                             cc.delayTime(0.1+dt),
                             cc.tintTo(0,82,175,226),
                             cc.callFunc(function(){
-                                self.playSound(self.audio_rand);
+                                storage.playSound(self.res.audio_rand);
                             }),
                             cc.delayTime(0.1),
                             cc.tintTo(0,100,100,100)
@@ -2835,16 +1799,16 @@ cc.Class({
                 var seq = cc.sequence(
                     cc.delayTime(dt),
                     cc.callFunc(function(){
-                        self.playSound(self.audio_jiesuo);
-                        self.setStorageCoin(self.getStorageCoin() - needcoin);
-                        self.setStorageGun(id);
-                        self.setStorageGunJieSuoNum(parseInt(self.getStorageGunJieSuoNum())+1);
+                        storage.playSound(self.res.audio_jiesuo);
+                        storage.setStorageCoin(storage.getStorageCoin() - needcoin);
+                        storage.setStorageGun(id);
+                        storage.setStorageGunJieSuoNum(parseInt(storage.getStorageGunJieSuoNum())+1);
                         self.judgeChengjiuUI();
                         self.uploadData();
-                        //self.showToast("角色已经开启");
+                        //res.showToast("角色已经开启");
                         self.openGun();
                         self.updateDian();
-                        var jiesuonum = parseInt(self.getStorageGunJieSuoNum()) + parseInt(self.getStorageGunJieSuoNum2());
+                        var jiesuonum = parseInt(storage.getStorageGunJieSuoNum()) + parseInt(storage.getStorageGunJieSuoNum2());
                         if(jiesuonum >= 2)
                             qianqista.event("jiesuo_gun_num_"+jiesuonum);
                         self.updateDitu();
@@ -2860,8 +1824,8 @@ cc.Class({
     gunjiesuo2: function()
     {
         var self = this;
-        var needcoin = this.getStorageGunJieSuoNum2()*50 + 750;
-        if(this.getStorageCoin()< needcoin)
+        var needcoin = storage.getStorageGunJieSuoNum2()*50 + 750;
+        if(storage.getStorageCoin()< needcoin)
         {
             this.openCoinNode();
         }
@@ -2871,7 +1835,7 @@ cc.Class({
             var items = [];
             for(var i=1;i<=9;i++)
             {
-                if(this.getStorageGun(i+10) != 1)
+                if(storage.getStorageGun(i+10) != 1)
                 {
                     uopen.push(i);
                     var item = cc.find("item_" + i, this.node_gun_page2);
@@ -2881,7 +1845,7 @@ cc.Class({
             }
             if(uopen.length<=0)
             {
-                this.showToast("枪支已经全部开启");
+                this.res.showToast("枪支已经全部开启");
             }
             else
             {
@@ -2899,7 +1863,7 @@ cc.Class({
                             cc.delayTime(0.1+dt),
                             cc.tintTo(0,82,175,226),
                             cc.callFunc(function(){
-                                self.playSound(self.audio_rand);
+                                storage.playSound(self.res.audio_rand);
                             }),
                             cc.delayTime(0.1),
                             cc.tintTo(0,100,100,100)
@@ -2917,17 +1881,17 @@ cc.Class({
                 var seq = cc.sequence(
                     cc.delayTime(dt),
                     cc.callFunc(function(){
-                        self.playSound(self.audio_jiesuo);
-                        self.setStorageCoin(self.getStorageCoin() - needcoin);
-                        self.setStorageGun(id);
-                        self.setStorageGunJieSuoNum2(parseInt(self.getStorageGunJieSuoNum2())+1);
+                        storage.playSound(self.res.audio_jiesuo);
+                        storage.setStorageCoin(storage.getStorageCoin() - needcoin);
+                        storage.setStorageGun(id);
+                        storage.setStorageGunJieSuoNum2(parseInt(storage.getStorageGunJieSuoNum2())+1);
                         self.judgeChengjiuUI();
                         self.uploadData();
-                        //self.showToast("角色已经开启");
+                        //res.showToast("角色已经开启");
                         self.openGun();
                         self.updateDian();
 
-                        var jiesuonum = parseInt(self.getStorageGunJieSuoNum()) + parseInt(self.getStorageGunJieSuoNum2());
+                        var jiesuonum = parseInt(storage.getStorageGunJieSuoNum()) + parseInt(storage.getStorageGunJieSuoNum2());
                         if(jiesuonum >= 2)
                             qianqista.event("jiesuo_gun_num_"+jiesuonum);
                         self.updateDitu();
@@ -2942,12 +1906,12 @@ cc.Class({
 
     setGun: function(id)
     {
-        var currGun = this.getStorageCurrGun();
+        var currGun = storage.getStorageCurrGun();
         if(currGun != id)
         {
-            this.playSound(this.audio_role_huan);
-            this.setStorageCurrGun(id);
-            this.GAME.currGun = this.getStorageCurrGun()-1;
+            storage.playSound(this.res.audio_role_huan);
+            storage.setStorageCurrGun(id);
+            this.GAME.currGun = storage.getStorageCurrGun()-1;
             this.GAME.currGunTmp = this.GAME.currGun;
             this.openGun();
             this.uploadData();
@@ -2956,26 +1920,26 @@ cc.Class({
 
     setGunRiQi: function(id)
     {
-        this.setStorageQianDao(id);
-        //this.setStorageQianDaoTime(new Date().getTime());
-        this.setStorageQianDaoTime(new Date().getDate());
-        var currQianDao = this.getStorageQianDao();
+        storage.setStorageQianDao(id);
+        //storage.setStorageQianDaoTime(new Date().getTime());
+        storage.setStorageQianDaoTime(new Date().getDate());
+        var currQianDao = storage.getStorageQianDao();
         if(currQianDao == 7)
         {
-            this.setStorageGun(10);
+            storage.setStorageGun(10);
             qianqista.event("jiesuo_gun_baleite");
         }
 
         this.updateGunRiQi();
         this.openQianDao();
 
-        this.setStorageCoin(parseInt(this.getStorageCoin()) +  this.GAME.qiandaoconfig[id-1]);
-        this.showToast("金币+"+this.GAME.qiandaoconfig[id-1]);
-        this.node_main_coin.getComponent("cc.Label").string = this.getStorageCoin();
+        storage.setStorageCoin(parseInt(storage.getStorageCoin()) +  this.res.qiandaoconfig[id-1]);
+        this.res.showToast("金币+"+this.res.qiandaoconfig[id-1]);
+        this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         this.uploadData();
         this.updateDian();
-        this.playSound(this.audio_coin);
+        storage.playSound(this.res.audio_coin);
     },
 
     openQianDao: function()
@@ -2983,8 +1947,8 @@ cc.Class({
         this.node_qiandao.active = true;
         this.wxQuanState(false);
 
-        var currQianDao = this.getStorageQianDao();
-        var currQianDaoTime = this.getStorageQianDaoTime();
+        var currQianDao = storage.getStorageQianDao();
+        var currQianDaoTime = storage.getStorageQianDaoTime();
         var now = new Date().getDate();
 
         currQianDao = parseInt(currQianDao)+1;
@@ -3017,7 +1981,7 @@ cc.Class({
     updateGunRiQi: function()
     {
         //日期
-        var currQianDao = this.getStorageQianDao();
+        var currQianDao = storage.getStorageQianDao();
 
         for(var i=1;i<=7;i++)
         {
@@ -3035,7 +1999,7 @@ cc.Class({
             }
         }
 
-        var currGun = this.getStorageCurrGun();
+        var currGun = storage.getStorageCurrGun();
         var box1 = cc.find("box_1",this.node_gun_page3);
         var box2 = cc.find("box_2",this.node_gun_page3);
         this.node_gun_page3.gunId = 10;
@@ -3050,7 +2014,7 @@ cc.Class({
         {
             box1.active = true;
             box2.active = false;
-            if(this.getStorageGun(10) == 1)
+            if(storage.getStorageGun(10) == 1)
             {
                 box1.color = cc.color(243,180,69);
                 this.node_gun_page3.canset = true;
@@ -3074,16 +2038,16 @@ cc.Class({
         this.node_gun_center.color = this.ltcolor;
 
         this.node_gun_top_player.destroyAllChildren();
-        var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
+        var player = cc.instantiate(this.res.players[this.GAME.currPlayer]);
         this.node_gun_top_player.addChild(player);
 
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
-        var gun = cc.instantiate(this.GAME.guns[this.GAME.currGun]);
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
+        var gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
         gun.y = player.height*0.3 + gunConf.y;
         player.addChild(gun);
 
-        this.node_gun_score.getComponent("cc.Label").string = this.getStorageScore();
-        this.node_gun_coin.getComponent("cc.Label").string = this.getStorageCoin();
+        this.node_gun_score.getComponent("cc.Label").string = storage.getStorageScore();
+        this.node_gun_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         cc.find("gunjiesuo/coinbg",this.node_gun).color = this.ltcolor;
         cc.find("gunjiesuo/txt",this.node_gun).color = this.ltcolor;
@@ -3091,16 +2055,16 @@ cc.Class({
         jscoin.color = this.ltcolor;
         var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
         if(index == 0)
-            jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum()*50 + 200);
+            jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
         else
-            jscoin.getComponent("cc.Label").string = (this.getStorageGunJieSuoNum2()*50 + 750);
+            jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*50 + 750);
 
         cc.find("roleyaoqing/coinbg",this.node_gun).color = this.ltcolor;
         cc.find("roleyaoqing/txt",this.node_gun).color = this.ltcolor;
         cc.find("roleyaoqing/txt2",this.node_gun).color = this.ltcolor;
         cc.find("roleyaoqing/coin",this.node_gun).color = this.ltcolor;
 
-        var currGun = this.getStorageCurrGun();
+        var currGun = storage.getStorageCurrGun();
         for(var i=1;i<=19;i++)
         {
             if(i == 10)
@@ -3132,7 +2096,7 @@ cc.Class({
             {
                 box1.active = true;
                 box2.active = false;
-                if(this.getStorageGun(i) == 1)
+                if(storage.getStorageGun(i) == 1)
                 {
                     box1.color = cc.color(243,180,69);
                     item.canset = true;
@@ -3149,175 +2113,19 @@ cc.Class({
         }
         this.updateGunRiQi();
 
-        this.playSound(this.audio_role);
+        storage.playSound(this.res.audio_role);
     },
 
-    rolejiesuo: function()
-    {
-        var self = this;
-        if(this.getStorageCoin()<500)
-        {
-            this.openCoinNode();
-        }
-        else
-        {
-            var uopen = [];
-            var items = [];
-            for(var i=1;i<=9;i++)
-            {
-                if(this.getStoragePlayer(i) != 1)
-                {
-                    uopen.push(i);
-                    var item = cc.find("item_" + i, this.node_role_page1);
-                    var box1 = cc.find("box_1", item);
-                    items.push(box1);
-                }
-            }
-            if(uopen.length<=0)
-            {
-                this.showToast("角色已经全部开启");
-            }
-            else
-            {
-                var act = this.node_role_page1.getActionByTag(1);
-                if(act && !act.isDone())
-                    return;
-                var id = Math.floor(Math.random()*uopen.length);
-                var dt = 0;
-                for(var n=0;n<2;n++)
-                {
-                    for(var i=0;i<items.length;i++)
-                    {
-                        var box = items[i];
-                        var seq = cc.sequence(
-                            cc.delayTime(0.1+dt),
-                            cc.tintTo(0,82,175,226),
-                            cc.callFunc(function(){
-                                self.playSound(self.audio_rand);
-                            }),
-                            cc.delayTime(0.1),
-                            cc.tintTo(0,100,100,100)
-                        );
-                        dt += 0.2;
-                        box.runAction(seq);
-                        if(n == 1 && id == i)
-                        {
-                            id = uopen[id];
-                            break;
-                        }
-                    }
-                }
-                dt += 0.3;
-                var seq = cc.sequence(
-                    cc.delayTime(dt),
-                    cc.callFunc(function(){
-                        self.playSound(self.audio_jiesuo);
-                        self.setStorageCoin(self.getStorageCoin() - 500);
-                        self.setStoragePlayer(id);
-                        self.setStorageRoleJieSuoNum(parseInt(self.getStorageRoleJieSuoNum())+1);
-                        self.judgeChengjiuUI();
-                        self.uploadData();
-                        //self.showToast("角色已经开启");
-                        self.openJuese();
-                        self.updateDian();
-
-                        var jiesuonum = parseInt(self.getStorageRoleJieSuoNum());
-                        if(jiesuonum >= 2)
-                            qianqista.event("jiesuo_role_num_"+jiesuonum);
-                    })
-                );
-                seq.setTag(1);
-                this.node_role_page1.runAction(seq);
-
-            }
-        }
-    },
-
-    setJuese: function(id)
-    {
-        var currPlayer = this.getStorageCurrPlayer();
-        if(currPlayer != id)
-        {
-            this.playSound(this.audio_role_huan);
-            this.setStorageCurrPlayer(id);
-            this.GAME.currPlayer = this.getStorageCurrPlayer()-1;
-            this.GAME.currPlayerTmp = this.GAME.currPlayer;
-            this.openJuese();
-            this.uploadData();
-        }
-    },
 
     openJuese: function()
     {
-        var s = cc.winSize;
         this.node_main.active = false;
         this.node_over.active = false;
-        this.node_role.active = true;
-
-        this.node_role_center.height = s.height - 335;
-        this.node_role_center.color = this.ltcolor;
-
-        this.node_role_top_player.destroyAllChildren();
-        var player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
-        this.node_role_top_player.addChild(player);
-
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
-        var gun = cc.instantiate(this.GAME.guns[this.GAME.currGun]);
-        gun.y = player.height*0.3 + gunConf.y;
-        player.addChild(gun);
-
-        this.node_role_score.getComponent("cc.Label").string = this.getStorageScore();
-        this.node_role_coin.getComponent("cc.Label").string = this.getStorageCoin();
-        cc.find("rolejiesuo/coinbg",this.node_role).color = this.ltcolor;
-        cc.find("rolejiesuo/txt",this.node_role).color = this.ltcolor;
-        cc.find("rolejiesuo/coin",this.node_role).color = this.ltcolor;
-
-        cc.find("roleyaoqing/coinbg",this.node_role).color = this.ltcolor;
-        cc.find("roleyaoqing/txt",this.node_role).color = this.ltcolor;
-        cc.find("roleyaoqing/txt2",this.node_role).color = this.ltcolor;
-        cc.find("roleyaoqing/coin",this.node_role).color = this.ltcolor;
-
-        var currPlayer = this.getStorageCurrPlayer();
-        for(var i=1;i<=9;i++)
-        {
-            var item = cc.find("item_"+i,this.node_role_page1);
-            var box1 = cc.find("box_1",item);
-            var box2 = cc.find("box_2",item);
-            var txt1 = cc.find("txt1",item);
-            var txt2 = cc.find("txt2",item);
-
-            txt1.color = cc.color(255,255,255);
-            if(txt2)
-                txt2.color = cc.color(255,255,255);
-
-            item.playerId = i;
-            if(i == currPlayer)
-            {
-                box1.active = false;
-                box2.active = true;
-                box2.color = cc.color(82,175,226);
-            }
-            else
-            {
-                box1.active = true;
-                box2.active = false;
-                if(this.getStoragePlayer(i) == 1)
-                {
-                    box1.color = cc.color(82,175,226);
-                    item.canset = true;
-                }
-                else
-                {
-                    box1.color = cc.color(100,100,100);
-                    txt1.color = cc.color(100,100,100);
-                    if(txt2)
-                        txt2.color = cc.color(100,100,100);
-                    item.canset = false;
-                }
-            }
-        }
-
-        this.playSound(this.audio_role);
+        var role = cc.instantiate(this.res.node_role);
+        this.node.addChild(role);
+        this.node_role = role.getComponent("role");
+        this.node_role.show();
+        this.node_role.roleyaoqing(this.GAME.sharecard);
     },
 
     startGmae: function()
@@ -3340,7 +2148,6 @@ cc.Class({
 
     goMain: function()
     {
-        this.node_role.active = false;
         this.node_gun.active = false;
         this.node_setting.active = false;
         this.node_card.active = false;
@@ -3358,7 +2165,7 @@ cc.Class({
 
     getScore: function(score)
     {
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
         score = score * gunConf.score;
         this.GAME.score += score;
         this.node_game_ui.score.getComponent("cc.Label").string = Math.floor(this.GAME.score)+"";
@@ -3372,20 +2179,7 @@ cc.Class({
 
     getLouTi: function(type)
     {
-        if(type == 2)
-            return cc.instantiate(this.louti_2);
-        else if(type == 3)
-            return cc.instantiate(this.louti_3);
-        else if(type == 4)
-            return cc.instantiate(this.louti_4);
-        else if(type == 5)
-            return cc.instantiate(this.louti_5);
-        else if(type == 6)
-            return cc.instantiate(this.louti_6);
-        else if(type == 7)
-            return cc.instantiate(this.louti_7);
-        else if(type == 8)
-            return cc.instantiate(this.louti_8);
+        return cc.instantiate(this.res.loutis[type-1]);
     },
 
     initLouTis: function()
@@ -3426,7 +2220,7 @@ cc.Class({
                 var r = Math.random();
                 if(r>0.6)
                 {
-                    var wujian = cc.instantiate(this.GAME.wujians[Math.floor(Math.random()*this.GAME.wujians.length)]);
+                    var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
                     var ti = cc.find("ti"+item[1],louti);
                     wujian.x = (ti.width/2 - ti.x)/2;
                     wujian.y = this.tih;
@@ -3488,7 +2282,7 @@ cc.Class({
             var r = Math.random();
             if(r>0.6)
             {
-                var wujian = cc.instantiate(this.GAME.wujians[Math.floor(Math.random()*this.GAME.wujians.length)]);
+                var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
                 var ti = cc.find("ti"+item[1],louti);
                 wujian.x = (ti.width/2 - ti.x)/2;
                 wujian.y = this.tih;
@@ -3593,7 +2387,7 @@ cc.Class({
         }
         else
         {
-            var playerConf = this.GAME.playersconfig[this.GAME.currPlayer];
+            var playerConf = this.res.playersconfig[this.GAME.currPlayer];
 
             var ac = cc.repeatForever(cc.sequence(
                 cc.rotateBy(1.1*playerConf.aimSpeed,-60).easing(cc.easeIn(1.5)),
@@ -3635,30 +2429,30 @@ cc.Class({
     initPlayer: function()
     {
         var s = cc.winSize;
-        this.player = cc.instantiate(this.GAME.players[this.GAME.currPlayer]);
+        this.player = cc.instantiate(this.res.players[this.GAME.currPlayer]);
         this.player.x = s.width/2;
         this.player.y = 600;
         this.node_game.addChild(this.player,1000001);
 
-        this.player.fangdanyi = cc.instantiate(this.fangdanyi);
+        this.player.fangdanyi = cc.instantiate(this.res.fangdanyi);
         this.player.addChild(this.player.fangdanyi,1);
         this.player.fangdanyi.active = false;
-        var cardnum = this.getStorageCard();
+        var cardnum = storage.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
             this.player.fangdanyi.active = true;
         }
 
-        var playerConf = this.GAME.playersconfig[this.GAME.currPlayer];
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+        var playerConf = this.res.playersconfig[this.GAME.currPlayer];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
 
-        this.player.gun = cc.instantiate(this.GAME.guns[this.GAME.currGun]);
+        this.player.gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
         this.player.gun.y = this.player.height*0.3 + gunConf.y;
         this.player.addChild(this.player.gun,1);
         this.player.scaleX = -1;
         this.lastPlayerPos = this.node_game.convertToWorldSpace(this.player.position);
 
-        this.player.aim = cc.instantiate(this.aim_1);
+        this.player.aim = cc.instantiate(this.res.aim_1);
         this.player.aim.y = this.player.gun.y;
         this.player.aim.active = false;
         this.player.aim.line = cc.find("line",this.player.aim);
@@ -3668,7 +2462,7 @@ cc.Class({
         this.player.aim.line.rotation = 0;
         this.player.aim.getComponent("cc.ProgressBar").progress = 0;
 
-        this.player.gun_fire = cc.instantiate(this.gun_fire);
+        this.player.gun_fire = cc.instantiate(this.res.gun_fire);
         this.player.gun_fire.y = gunConf.y;
         this.player.gun_fire.x = this.player.gun.width*(1-this.player.gun.anchorX);
         this.player.gun_fire.active = false;
@@ -3679,19 +2473,19 @@ cc.Class({
     {
         if(this.GAME.enemy_num==0)
         {
-            this.enemy = cc.instantiate(this.GAME.bosss[Math.floor(Math.random()*this.GAME.bosss.length)]);
+            this.enemy = cc.instantiate(this.res.bosss[Math.floor(Math.random()*this.res.bosss.length)]);
             this.enemy.enemytype = 4;
-            this.enemy.enemycolor = this.GAME.enemysconfig[2].color;
+            this.enemy.enemycolor = this.res.enemysconfig[2].color;
             this.enemy.hp = Math.floor(Math.random()*10+15);
             this.enemy.zhp = this.enemy.hp;
             this.node_game.addChild(this.enemy,1000001);
 
-            var gunConf = this.GAME.gunsconfig[0];
-            this.enemy.gun = cc.instantiate(this.gun_1);
+            var gunConf = this.res.gunsconfig[0];
+            this.enemy.gun = cc.instantiate(this.res.guns[0]);
             this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
             this.enemy.addChild(this.enemy.gun);
 
-            this.enemy.gun_fire = cc.instantiate(this.gun_fire);
+            this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
             this.enemy.gun_fire.y = gunConf.y;
             this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
             this.enemy.gun_fire.active = false;
@@ -3700,23 +2494,23 @@ cc.Class({
             this.node_game_ui.boss.active = true;
             this.node_game_ui.boss.getComponent("cc.ProgressBar").progress = 1;
 
-            this.playSound(this.audio_boss_chu);
+            storage.playSound(this.res.audio_boss_chu);
         }
         else
         {
-            var index = Math.floor(Math.random()*this.GAME.enemys.length);
-            this.enemy = cc.instantiate(this.GAME.enemys[index]);
+            var index = Math.floor(Math.random()*this.res.enemys.length);
+            this.enemy = cc.instantiate(this.res.enemys[index]);
             this.enemy.enemyindex = index;
-            this.enemy.enemytype = this.GAME.enemysconfig[index].type;
-            this.enemy.enemycolor = this.GAME.enemysconfig[index].color;
+            this.enemy.enemytype = this.res.enemysconfig[index].type;
+            this.enemy.enemycolor = this.res.enemysconfig[index].color;
             this.node_game.addChild(this.enemy,1000001);
 
-            var gunConf = this.GAME.gunsconfig[0];
-            this.enemy.gun = cc.instantiate(this.gun_1);
+            var gunConf = this.res.gunsconfig[0];
+            this.enemy.gun = cc.instantiate(this.res.guns[0]);
             this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
             this.enemy.addChild(this.enemy.gun);
 
-            this.enemy.gun_fire = cc.instantiate(this.gun_fire);
+            this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
             this.enemy.gun_fire.y = gunConf.y;
             this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
             this.enemy.gun_fire.active = false;
@@ -3730,7 +2524,7 @@ cc.Class({
     copyEnemy: function()
     {
         var index = this.enemy.enemyindex;
-        var enemy = cc.instantiate(this.GAME.enemys[index]);
+        var enemy = cc.instantiate(this.res.enemys[index]);
         enemy.position = this.enemy.position;
         enemy.die = true;
         this.node_game.addChild(enemy,1000001);
@@ -3759,7 +2553,7 @@ cc.Class({
         if(louti)
         {
             var data = louti.data;
-            var speed = this.GAME.playersconfig[this.GAME.currPlayer].speed*700;
+            var speed = this.res.playersconfig[this.GAME.currPlayer].speed*700;
             var acs = [];
             var lastp = this.player.position;
             if(data[0] == 1)//left
@@ -3777,7 +2571,7 @@ cc.Class({
                         lastp = cc.v2(posx2,posy2);
 
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
                     }
                     else if(num == data[1])
@@ -3786,7 +2580,7 @@ cc.Class({
                         var posy = lastp.y + this.tih;
                         acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
 
                         if(isWin)
@@ -3806,7 +2600,7 @@ cc.Class({
                             acs.push(cc.callFunc(function(){
                                 self.player.scaleX = 1;
                                 self.updateLouTiPos();
-                                self.playSound(self.audio_foot_1);
+                                storage.playSound(self.res.audio_foot_1);
                             }));
                         }
 
@@ -3819,7 +2613,7 @@ cc.Class({
                         lastp = cc.v2(posx,posy);
 
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
                     }
                 }
@@ -3839,7 +2633,7 @@ cc.Class({
                         lastp = cc.v2(posx2,posy2);
 
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
                     }
                     else if(num == data[1])
@@ -3848,7 +2642,7 @@ cc.Class({
                         var posy = lastp.y + this.tih;
                         acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
 
                         if(isWin)
@@ -3868,7 +2662,7 @@ cc.Class({
                             acs.push(cc.callFunc(function(){
                                 self.player.scaleX = -1;
                                 self.updateLouTiPos();
-                                self.playSound(self.audio_foot_1);
+                                storage.playSound(self.res.audio_foot_1);
                             }));
                         }
 
@@ -3881,7 +2675,7 @@ cc.Class({
                         lastp = cc.v2(posx,posy);
 
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_1);
+                            storage.playSound(self.res.audio_foot_1);
                         }));
                     }
                 }
@@ -3929,7 +2723,7 @@ cc.Class({
 
                         acs.push(cc.spawn(cc.rotateBy(0.4,360),cc.jumpTo(0.6,posx,posy,this.tih*5,1)));
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_boss_land);
+                            storage.playSound(self.res.audio_foot_boss_land);
                             self.node_game.runAction(cc.sequence(
                                 cc.moveBy(0.05,cc.v2(0,20)).easing(cc.easeSineIn()),
                                 cc.moveBy(0.05,cc.v2(0,-20)).easing(cc.easeSineOut()),
@@ -3957,7 +2751,7 @@ cc.Class({
                                 lastp = cc.v2(posx2,posy2);
 
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                             else if(num == data[1])
@@ -3966,7 +2760,7 @@ cc.Class({
                                 var posy = lastp.y + this.tih;
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
 
                                 var posx2 = ti.x+ti.width/2 - this.enemy.width/2;
@@ -3974,7 +2768,7 @@ cc.Class({
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                                 acs.push(cc.callFunc(function(){
                                     self.enemy.scaleX = 1;
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                             else
@@ -3985,7 +2779,7 @@ cc.Class({
                                 lastp = cc.v2(posx,posy);
 
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                         }
@@ -4025,7 +2819,7 @@ cc.Class({
 
                         acs.push(cc.spawn(cc.rotateBy(0.4,-360),cc.jumpTo(0.6,posx,posy,this.tih*5,1)));
                         acs.push(cc.callFunc(function(){
-                            self.playSound(self.audio_foot_boss_land);
+                            storage.playSound(self.res.audio_foot_boss_land);
                             self.node_game.runAction(cc.sequence(
                                 cc.moveBy(0.05,cc.v2(0,20)).easing(cc.easeSineIn()),
                                 cc.moveBy(0.05,cc.v2(0,-20)).easing(cc.easeSineOut()),
@@ -4053,7 +2847,7 @@ cc.Class({
                                 lastp = cc.v2(posx2,posy2);
 
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                             else if(num == data[1])
@@ -4062,7 +2856,7 @@ cc.Class({
                                 var posy = lastp.y + this.tih;
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
 
                                 var posx2 = (ti.x-ti.width/2) + this.enemy.width/2;
@@ -4070,7 +2864,7 @@ cc.Class({
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                                 acs.push(cc.callFunc(function(){
                                     self.enemy.scaleX = -1;
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                             else
@@ -4081,7 +2875,7 @@ cc.Class({
                                 lastp = cc.v2(posx,posy);
 
                                 acs.push(cc.callFunc(function(){
-                                    self.playSound(self.audio_foot_boss_1);
+                                    storage.playSound(self.res.audio_foot_boss_1);
                                 }));
                             }
                         }
@@ -4154,7 +2948,7 @@ cc.Class({
             this.player.gun.hitheadnum = 0;
             this.player.gun.hitbodynum = 0;
             this.player.gun.firenum = 0;
-            var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+            var gunConf = this.res.gunsconfig[this.GAME.currGun];
             var dis = 1584;
             var bulletspeed = 2200;
             if(cc.sys.os == cc.sys.OS_ANDROID)
@@ -4168,13 +2962,13 @@ cc.Class({
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
-                        self.playSound(self.GAME.gunaudios[self.GAME.currGun]);
+                        storage.playSound(self.res.gunaudios[self.GAME.currGun]);
                         var smoke = null;
                         if (self.poolsmokes.size() > 0) {
                             smoke = self.poolsmokes.get();
                             smoke.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            smoke = cc.instantiate(self.smoke);
+                            smoke = cc.instantiate(self.res.smoke);
                         }
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
@@ -4192,7 +2986,7 @@ cc.Class({
                             shell = self.poolshells.get();
                             shell.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            shell = cc.instantiate(self.shell);
+                            shell = cc.instantiate(self.res.shell);
                         }
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
@@ -4227,7 +3021,7 @@ cc.Class({
                     bullet.collnum = 0;
                     bullet.stopAllActions();
                 } else {
-                    bullet = cc.instantiate(this.bullet_1);
+                    bullet = cc.instantiate(this.res.bullet_1);
                 }
                 bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                 bullet.position = cc.pAdd(cc.pMult(dir,gw),bullet.position);
@@ -4273,13 +3067,13 @@ cc.Class({
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
-                        self.playSound(self.GAME.gunaudios[self.GAME.currGun]);
+                        storage.playSound(self.res.gunaudios[self.GAME.currGun]);
                         var smoke = null;
                         if (self.poolsmokes.size() > 0) {
                             smoke = self.poolsmokes.get();
                             smoke.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            smoke = cc.instantiate(self.smoke);
+                            smoke = cc.instantiate(self.res.smoke);
                         }
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
@@ -4297,7 +3091,7 @@ cc.Class({
                             shell = self.poolshells.get();
                             shell.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            shell = cc.instantiate(self.shell);
+                            shell = cc.instantiate(self.res.shell);
                         }
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
@@ -4350,7 +3144,7 @@ cc.Class({
                         bullet.collnum = 0;
                         bullet.stopAllActions();
                     } else {
-                        bullet = cc.instantiate(this.bullet_1);
+                        bullet = cc.instantiate(this.res.bullet_1);
                     }
                     bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                     bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
@@ -4395,13 +3189,13 @@ cc.Class({
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
-                        self.playSound(self.GAME.gunaudios[self.GAME.currGun]);
+                        storage.playSound(self.res.gunaudios[self.GAME.currGun]);
                         var smoke = null;
                         if (self.poolsmokes.size() > 0) {
                             smoke = self.poolsmokes.get();
                             smoke.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            smoke = cc.instantiate(self.smoke);
+                            smoke = cc.instantiate(self.res.smoke);
                         }
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
@@ -4419,7 +3213,7 @@ cc.Class({
                             shell = self.poolshells.get();
                             shell.getComponent("cc.ParticleSystem").resetSystem();
                         } else {
-                            shell = cc.instantiate(self.shell);
+                            shell = cc.instantiate(self.res.shell);
                         }
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
@@ -4466,7 +3260,7 @@ cc.Class({
                         bullet.collnum = 0;
                         bullet.stopAllActions();
                     } else {
-                        bullet = cc.instantiate(this.bullet_1);
+                        bullet = cc.instantiate(this.res.bullet_1);
                     }
                     bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                     bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
@@ -4518,14 +3312,14 @@ cc.Class({
     judgeEnemyFire: function()
     {
         this.player.gun.firenum ++;
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
         if(gunConf.num == this.player.gun.firenum)
         {
             var b = false;
             if(this.player.gun.hitheadnum>0)
             {
                 b = true;
-                this.playSound(this.audio_hit_head_yuyin);
+                storage.playSound(this.res.audio_hit_head_yuyin);
             }
             else
             {
@@ -4584,7 +3378,7 @@ cc.Class({
         var gw = this.enemy.gun.width*(1-this.enemy.gun.anchorX) + 10;
         var pos = cc.pMult(dir,cc.winSize.height);
 
-        var bullet = cc.instantiate(this.ebullet_1);
+        var bullet = cc.instantiate(this.res.ebullet_1);
         bullet.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
         bullet.position = cc.pAdd(cc.pMult(dir,gw),bullet.position);
         this.node_game.addChild(bullet,1000001);
@@ -4616,14 +3410,14 @@ cc.Class({
         );
         bullet.runAction(seq);
 
-        this.playSound(this.audio_gun_1);
+        storage.playSound(this.res.gunaudios[0]);
 
         var smoke = null;
         if (this.poolsmokes.size() > 0) {
             smoke = this.poolsmokes.get();
             smoke.getComponent("cc.ParticleSystem").resetSystem();
         } else {
-            smoke = cc.instantiate(this.smoke);
+            smoke = cc.instantiate(this.res.smoke);
         }
         smoke.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
@@ -4641,7 +3435,7 @@ cc.Class({
             shell = this.poolshells.get();
             shell.getComponent("cc.ParticleSystem").resetSystem();
         } else {
-            shell = cc.instantiate(this.shell);
+            shell = cc.instantiate(this.res.shell);
         }
         shell.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
         shell.scaleX = -this.enemy.scaleX;
@@ -4692,7 +3486,7 @@ cc.Class({
             hit = this.poolhits.get();
             hit.stopAllActions();
         } else {
-            hit = cc.instantiate(this.hit);
+            hit = cc.instantiate(this.res.hit);
         }
         hit.scale = 0;
         hit.color = this.enemy.enemycolor;
@@ -4726,7 +3520,7 @@ cc.Class({
             ));
 
             this.vibrate();
-            //this.playSound(this.audio_hit_head);
+            //this.playSound(this.res.audio_hit_head);
 
 
             var par = null;
@@ -4748,7 +3542,7 @@ cc.Class({
                 })
             ));
 
-            this.setStorageHitHeadNum(parseInt(this.getStorageHitHeadNum())+1);
+            storage.setStorageHitHeadNum(parseInt(storage.getStorageHitHeadNum())+1);
         }
         else
         {
@@ -4759,14 +3553,14 @@ cc.Class({
                 killhscore += 5*this.GAME.killhead;
             this.getScore(killhscore);
             this.GAME.killhead = 0;
-            //this.playSound(this.audio_hit_torso);
+            //this.playSound(this.res.audio_hit_torso);
 
             var par = null;
             if (this.poolbloods.size() > 0) {
                 par = this.poolbloods.get();
                 par.getComponent("cc.ParticleSystem").resetSystem();
             } else {
-                par = cc.instantiate(this.blood);
+                par = cc.instantiate(this.res.blood);
             }
             par.getComponent("cc.ParticleSystem").startColor = this.enemy.enemycolor;
             par.getComponent("cc.ParticleSystem").endColor = this.enemy.enemycolor;
@@ -4790,23 +3584,23 @@ cc.Class({
         hit.runAction(seq);
 
 
-        this.setStorageHitEnemyNum(parseInt(this.getStorageHitEnemyNum())+1);
+        storage.setStorageHitEnemyNum(parseInt(storage.getStorageHitEnemyNum())+1);
 
         if(this.enemy.enemytype == 4)
         {
             if(!this.enemy.ismove)
             this.enemy.stopAllActions();
 
-            var playerConf = this.GAME.playersconfig[this.GAME.currPlayer];
-            var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+            var playerConf = this.res.playersconfig[this.GAME.currPlayer];
+            var gunConf = this.res.gunsconfig[this.GAME.currGun];
             if(this.enemy.hp > 0)
             {
                 //if(this.enemy.hp%3 == 0)
-                //    this.playSound(this.audio_boss_hurt_1);
+                //    storage.playSound(this.res.audio_boss_hurt_1);
                 //else if(this.enemy.hp%3 == 1)
-                //    this.playSound(this.audio_boss_hurt_2);
+                //    storage.playSound(this.res.audio_boss_hurt_2);
                 //else
-                //    this.playSound(this.audio_boss_hurt_3);
+                //    storage.playSound(this.res.audio_boss_hurt_3);
                 var hhp = (gunConf.fire+playerConf.fire);
                 if(isHead)
                     hhp *= 2;
@@ -4883,7 +3677,7 @@ cc.Class({
 
                 this.showChuKou();
 
-                this.setStorageHitBossNum(parseInt(this.getStorageHitBossNum())+1);
+                storage.setStorageHitBossNum(parseInt(storage.getStorageHitBossNum())+1);
             }
         }
         else
@@ -4922,7 +3716,7 @@ cc.Class({
     {
         var data = this.enemy.louti.data;
 
-        var chukou = cc.instantiate(this.chukou);
+        var chukou = cc.instantiate(this.res.chukou);
         chukou.y = this.enemy.louti.y+600 + data[1]*this.tih;
         if(data[0] == 2)
         {
@@ -4993,7 +3787,7 @@ cc.Class({
                 }),
                 cc.removeSelf()
             );
-            var fangdanyi = cc.instantiate(this.fangdanyi);
+            var fangdanyi = cc.instantiate(this.res.fangdanyi);
             fangdanyi.position = this.player.position;
             this.node_game.addChild(fangdanyi,this.player.zIndex);
 
@@ -5019,8 +3813,8 @@ cc.Class({
     {
         if(isWin)
         {
-            if(Math.floor(this.GAME.score) > this.getStorageScore())
-                this.setStorageScore(Math.floor(this.GAME.score));
+            if(Math.floor(this.GAME.score) > storage.getStorageScore())
+                storage.setStorageScore(Math.floor(this.GAME.score));
             this.nextLevel();
         }
         else
@@ -5036,9 +3830,9 @@ cc.Class({
 
     gameResult: function()
     {
-        if(parseInt(this.GAME.score) > this.getStorageScore())
-            this.setStorageScore(parseInt(this.GAME.score));
-        this.setStorageCoin(parseInt(this.getStorageCoin()) + parseInt(this.GAME.coin));
+        if(parseInt(this.GAME.score) > storage.getStorageScore())
+            storage.setStorageScore(parseInt(this.GAME.score));
+        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.GAME.coin));
         //this.initGmae();
         this.node_game_ui.active = false;
         this.node_over.active = true;
@@ -5140,7 +3934,7 @@ cc.Class({
         if(isCard)
         {
             this.GAME.playerfangdanyi = false;
-            this.setStorageCard(this.getStorageCard()-1);
+            storage.setStorageCard(storage.getStorageCard()-1);
             this.uploadData();
             this.GAME.state = "start";
         }
@@ -5175,14 +3969,14 @@ cc.Class({
             coin = this.poolcoins.get();
             coin.stopAllActions();
         } else {
-            coin = cc.instantiate(this.coin);
+            coin = cc.instantiate(this.res.coin);
         }
         coin.position = this.node_game.convertToWorldSpace(this.enemy.position);
         coin.y += this.enemy.height;
         this.node_game_ui.addChild(coin);
 
-        var playerConf = this.GAME.playersconfig[this.GAME.currPlayer];
-        var gunConf = this.GAME.gunsconfig[this.GAME.currGun];
+        var playerConf = this.res.playersconfig[this.GAME.currPlayer];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
         var coinNum = 1*(playerConf.coin+gunConf.coin-1);
 
 
@@ -5194,7 +3988,7 @@ cc.Class({
                 cc.v2(x,coin.y+Math.random()*200),this.node_game_ui.coinicon.position]),
             cc.callFunc(function(){
                 self.getCoin(coinNum);
-                self.playSound(self.audio_coin);
+                storage.playSound(self.res.audio_coin);
             }),
             cc.removeSelf()
         );
@@ -5222,16 +4016,16 @@ cc.Class({
                 this.judgeEnemyFire();
                 var r = Math.floor(Math.random()*10+1);
                 if(r<=5)
-                    this.playSound(this.audio_ricco_1);
+                    storage.playSound(this.res.audio_ricco_1);
                 else
-                    this.playSound(this.audio_ricco_2);
+                    storage.playSound(this.res.audio_ricco_2);
 
                 var par = null;
                 if (this.poolbloods.size() > 0) {
                     par = this.poolbloods.get();
                     par.getComponent("cc.ParticleSystem").resetSystem();
                 } else {
-                    par = cc.instantiate(this.blood);
+                    par = cc.instantiate(this.res.blood);
                 }
                 par.getComponent("cc.ParticleSystem").startColor = this.ltcolor;
                 par.getComponent("cc.ParticleSystem").endColor = this.ltcolor;
@@ -5326,7 +4120,7 @@ cc.Class({
         if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
         {
             this.videoTimeDt = 0;
-            var videoTime = this.getStorageVideoTime();
+            var videoTime = storage.getStorageVideoTime();
             if(videoTime<0)
             {
                 this.node_main_lingqu_time.active = false;
@@ -5339,7 +4133,7 @@ cc.Class({
             {
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
                 this.node_coin_time.getComponent("cc.Label").string = "0:"+videoTime;
-                this.setStorageVideoTime(videoTime-1);
+                storage.setStorageVideoTime(videoTime-1);
             }
         }
 
@@ -5347,7 +4141,7 @@ cc.Class({
 
     vibrate: function(isLong)
     {
-        if(this.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
+        if(storage.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
         {
             if(isLong)
             {
@@ -5360,476 +4154,7 @@ cc.Class({
         }
     },
 
-    showToast: function(str)
-    {
-        var toast = cc.instantiate(this.toast);
-        cc.find("label",toast).getComponent("cc.Label").string = str;
-        toast.opacity = 0;
-        this.node.addChild(toast,1000);
-
-        var seq = cc.sequence(
-            cc.fadeIn(0.5),
-            cc.delayTime(2),
-            cc.fadeOut(0.5),
-            cc.removeSelf()
-        );
-        toast.runAction(seq);
-    },
-
-    showToastCJ: function()
-    {
-        var toast = cc.instantiate(this.toast_cj);
-        toast.opacity = 0;
-        toast.y = cc.winSize.height/2 - 50;
-        this.node.addChild(toast,1000);
-
-        var seq = cc.sequence(
-            cc.fadeIn(0.5),
-            cc.delayTime(2),
-            cc.fadeOut(0.5),
-            cc.removeSelf()
-        );
-        toast.runAction(seq);
-        this.playSound(this.audio_chengjiu);
-    },
-
-    playMusic: function(music)
-    {
-        if(this.getStorageMusic() == 1)
-            cc.audioEngine.play(music,true,0.6);
-    },
-
-    pauseMusic: function()
-    {
-        if(this.getStorageMusic() == 1)
-            cc.audioEngine.pauseAll();
-    },
-
-    resumeMusic: function()
-    {
-        if(this.getStorageMusic() == 1)
-            cc.audioEngine.resumeAll();
-    },
-
-    stopMusic: function()
-    {
-        cc.audioEngine.stopAll();
-    },
-
-    playSound: function(sound)
-    {
-        if(this.getStorageSound() == 1)
-            cc.audioEngine.play(sound,false,1);
-    },
-
-    preloadSound: function()
-    {
-        cc.audioEngine.preload(this.audio_coin);
-        cc.audioEngine.preload(this.audio_gun_1);
-        cc.audioEngine.preload(this.audio_hit_head);
-        cc.audioEngine.preload(this.audio_hit_torso);
-    },
-
-    setStorageCoin: function(coin)
-    {
-        cc.sys.localStorage.setItem("coin",coin);
-    },
-    getStorageCoin: function()
-    {
-        var coin = cc.sys.localStorage.getItem("coin");
-        coin = coin ? coin : 0;
-        return coin;
-    },
-
-    setStorageScore: function(score)
-    {
-        cc.sys.localStorage.setItem("highscore",score);
-    },
-    getStorageScore: function()
-    {
-        var currscore = cc.sys.localStorage.getItem("highscore");
-        currscore = currscore ? currscore : 0;
-        return currscore;
-    },
-
-    setStorageCurrPlayer: function(id)
-    {
-        cc.sys.localStorage.setItem("currPlayer",id);
-    },
-    getStorageCurrPlayer: function()
-    {
-        var currPlayer = cc.sys.localStorage.getItem("currPlayer");
-        currPlayer = currPlayer ? currPlayer : 1;
-        return currPlayer;
-    },
-
-    setStoragePlayer: function(id,val)
-    {
-        cc.sys.localStorage.setItem("player_"+id,val == 0 ? 0 : 1);
-    },
-    getStoragePlayer: function(id)
-    {
-        var player = cc.sys.localStorage.getItem("player_"+id);
-        player = player ? player : 0;
-        return player;
-    },
-
-    setStorageCurrGun: function(id)
-    {
-        cc.sys.localStorage.setItem("currGun",id);
-    },
-    getStorageCurrGun: function()
-    {
-        var currGun = cc.sys.localStorage.getItem("currGun");
-        currGun = currGun ? currGun : 1;
-        return currGun;
-    },
-
-    setStorageGun: function(id,val)
-    {
-        cc.sys.localStorage.setItem("gun_"+id,val == 0 ? 0 : 1);
-    },
-    getStorageGun: function(id)
-    {
-        var gun = cc.sys.localStorage.getItem("gun_"+id);
-        gun = gun ? gun : 0;
-        return gun;
-    },
-
-    setStorageQianDao: function(day)
-    {
-        cc.sys.localStorage.setItem("qiandao",day);
-    },
-    getStorageQianDao: function()
-    {
-        var day = cc.sys.localStorage.getItem("qiandao");
-        day = day ? day : 0;
-        return day;
-    },
-    setStorageQianDaoTime: function(time)
-    {
-        cc.sys.localStorage.setItem("qiandaotime",time);
-    },
-    getStorageQianDaoTime: function()
-    {
-        var time = cc.sys.localStorage.getItem("qiandaotime");
-        time = time ? time : 0;
-        return time;
-    },
-
-    setStorageMusic: function(music)
-    {
-        cc.sys.localStorage.setItem("music",music);
-    },
-    getStorageMusic: function()
-    {
-        var music = cc.sys.localStorage.getItem("music");
-        music = music ? music : 0;
-        return music;
-    },
-
-    setStorageSound: function(sound)
-    {
-        cc.sys.localStorage.setItem("sound",sound);
-    },
-    getStorageSound: function()
-    {
-        var sound = cc.sys.localStorage.getItem("sound");
-        sound = sound ? sound : 0;
-        return sound;
-    },
-
-    setStorageVibrate: function(vibrate)
-    {
-        cc.sys.localStorage.setItem("vibrate",vibrate);
-    },
-    getStorageVibrate: function()
-    {
-        var vibrate = cc.sys.localStorage.getItem("vibrate");
-        vibrate = vibrate ? vibrate : 0;
-        return vibrate;
-    },
-
-    setStorageFirst: function(first)
-    {
-        cc.sys.localStorage.setItem("first",first);
-    },
-    getStorageFirst: function()
-    {
-        var vibrate = cc.sys.localStorage.getItem("first");
-        vibrate = vibrate ? vibrate : 0;
-        return vibrate;
-    },
-
-    setStorageCard: function(card)
-    {
-        cc.sys.localStorage.setItem("card",card);
-    },
-    getStorageCard: function()
-    {
-        var card = cc.sys.localStorage.getItem("card");
-        card = card ? card : 0;
-        return card;
-    },
-
-    setStorageYindao: function(yindao)
-    {
-        cc.sys.localStorage.setItem("yindao",yindao);
-    },
-    getStorageYindao: function()
-    {
-        var yindao = cc.sys.localStorage.getItem("yindao");
-        yindao = yindao ? yindao : 0;
-        return yindao;
-    },
-
-    setStorageGunJieSuoNum: function(num)
-    {
-        cc.sys.localStorage.setItem("gun_jiesuo_num",num);
-    },
-    getStorageGunJieSuoNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("gun_jiesuo_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageGunJieSuoNum2: function(num)
-    {
-        cc.sys.localStorage.setItem("gun_jiesuo_num2",num);
-    },
-    getStorageGunJieSuoNum2: function()
-    {
-        var num = cc.sys.localStorage.getItem("gun_jiesuo_num2");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageGunJieSuoAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("gun_jiesuo_award_num",num);
-    },
-    getStorageGunJieSuoAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("gun_jiesuo_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageRoleJieSuoNum: function(num)
-    {
-        cc.sys.localStorage.setItem("role_jiesuo_num",num);
-    },
-    getStorageRoleJieSuoNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("role_jiesuo_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageRoleJieSuoAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("role_jiesuo_award_num",num);
-    },
-    getStorageRoleJieSuoAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("role_jiesuo_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageHitEnemyNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_enemy_num",num);
-    },
-    getStorageHitEnemyNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_enemy_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitEnemyAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_enemy_award_num",num);
-    },
-    getStorageHitEnemyAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_enemy_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitEnemyToastNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_enemy_toast_num",num);
-    },
-    getStorageHitEnemyToastNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_enemy_toast_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageHitHeadNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_head_num",num);
-    },
-    getStorageHitHeadNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_head_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitHeadAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_head_award_num",num);
-    },
-    getStorageHitHeadAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_head_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitHeadToastNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_head_toast_num",num);
-    },
-    getStorageHitHeadToastNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_head_toast_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageHitBossNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_boss_num",num);
-    },
-    getStorageHitBossNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_boss_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitBossAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_boss_award_num",num);
-    },
-    getStorageHitBossAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_boss_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageHitBossToastNum: function(num)
-    {
-        cc.sys.localStorage.setItem("hit_boss_toast_num",num);
-    },
-    getStorageHitBossToastNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("hit_boss_toast_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageInviteNum: function(num)
-    {
-        cc.sys.localStorage.setItem("invite_num",num);
-    },
-    getStorageInviteNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("invite_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageInviteAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("invite_award_num",num);
-    },
-    getStorageInviteAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("invite_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageGunInviteNum: function(num)
-    {
-        cc.sys.localStorage.setItem("gun_invite_num",num);
-    },
-    getStorageGunInviteNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("gun_invite_num");
-        num = num ? num : 0;
-        return num;
-    },
-    setStorageGunInviteAwardNum: function(num)
-    {
-        cc.sys.localStorage.setItem("gun_invite_award_num",num);
-    },
-    getStorageGunInviteAwardNum: function()
-    {
-        var num = cc.sys.localStorage.getItem("gun_invite_award_num");
-        num = num ? num : 0;
-        return num;
-    },
-
-    setStorageShareGroupList: function(item)
-    {
-        cc.sys.localStorage.setItem("shareGroupList",item);
-    },
-    getStorageShareGroupList: function()
-    {
-        var shareGroupList = cc.sys.localStorage.getItem("shareGroupList");
-        return shareGroupList;
-    },
-    setStorageShareGroupTime: function(time)
-    {
-        cc.sys.localStorage.setItem("shareGroupTime",time);
-    },
-    getStorageShareGroupTime: function()
-    {
-        var time = cc.sys.localStorage.getItem("shareGroupTime");
-        return time;
-    },
-
-    setStorageVideoTime: function(time)
-    {
-        cc.sys.localStorage.setItem("VideoTime",time);
-    },
-    getStorageVideoTime: function()
-    {
-        var time = cc.sys.localStorage.getItem("VideoTime");
-        time = time ? time : 0;
-        return time;
-    },
-
-    judgeShareGroupState: function(openGId,timestamp)
-    {
-        var shareGroupList = this.getStorageShareGroupList();
-        if(!shareGroupList || shareGroupList=="" || shareGroupList == null)
-        {
-            this.setStorageShareGroupList(openGId);
-            this.setStorageShareGroupTime(timestamp);
-            return true;
-        }
-        else
-        {
-            if(new Date(timestamp).getDate() != new Date(this.getStorageShareGroupTime()).getDate())
-            {
-                this.setStorageShareGroupList(openGId);
-                this.setStorageShareGroupTime(timestamp);
-                return true;
-            }
-            else
-            {
-                if(shareGroupList.indexOf(openGId) == -1)
-                {
-                    this.setStorageShareGroupList(shareGroupList+","+openGId);
-                    this.setStorageShareGroupTime(timestamp);
-                    return true;
-                }
-            }
-        }
-        return false;
-    },
-
+    
 
     getChaoyue: function()
     {
@@ -5899,11 +4224,7 @@ cc.Class({
     },
     getChaoyue4: function()
     {
-        var per = [this.sp_over_player_1,this.sp_over_player_2,this.sp_over_player_3,this.sp_over_player_4,
-            this.sp_over_player_5,this.sp_over_player_6,this.sp_over_player_7,this.sp_over_player_8,
-            this.sp_over_player_9,this.sp_over_player_10,this.sp_over_player_11,this.sp_over_player_12,
-            this.sp_over_player_13];
-        return per[this.getChaoyue()-1];
+        return this.res.sp_over_players[this.getChaoyue()-1];
     },
 
 
@@ -6265,19 +4586,19 @@ cc.Class({
                             {
                                 console.log("------",res);
                                 qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
-                                    if(b==true && self.judgeShareGroupState(openGId,timestamp))
+                                    if(b==true && storage.judgeShareGroupState(openGId,timestamp))
                                     {
-                                        self.showToast("获取到一个防弹衣");
+                                        self.res.showToast("获取到一个防弹衣");
 
-                                        var cardnum = self.getStorageCard();
+                                        var cardnum = storage.getStorageCard();
                                         cardnum = parseInt(cardnum) + 1;
-                                        self.setStorageCard(cardnum);
+                                        storage.setStorageCard(cardnum);
                                         self.node_card_num.getComponent("cc.Label").string = cardnum+"";
                                         self.uploadData();
                                     }
                                     else
                                     {
-                                        self.showToast("每个群每天只能转发一次");
+                                        self.res.showToast("每个群每天只能转发一次");
                                     }
                                 });
                             }
@@ -6285,7 +4606,7 @@ cc.Class({
                     }
                     else
                     {
-                        self.showToast("请分享到群");
+                        self.res.showToast("请分享到群");
                     }
 
                     qianqista.share(true);
@@ -6299,9 +4620,9 @@ cc.Class({
         }
         else
         {
-            var cardnum = self.getStorageCard();
+            var cardnum = storage.getStorageCard();
             cardnum = parseInt(cardnum) + 1;
-            self.setStorageCard(cardnum);
+            storage.setStorageCard(cardnum);
             self.node_card_num.getComponent("cc.Label").string = cardnum+"";
         }
     },
@@ -6338,12 +4659,12 @@ cc.Class({
                 {
                     if(res.shareTickets && res.shareTickets.length>0)
                     {
-                        self.showToast("续命成功");
+                        self.res.showToast("续命成功");
                         self.fuhuo(false,true,false);
                     }
                     else
                     {
-                        self.showToast("请分享到群");
+                        self.res.showToast("请分享到群");
                     }
 
                     qianqista.share(true);
@@ -6391,7 +4712,7 @@ cc.Class({
                 success: function(res)
                 {
 
-                    self.showToast("分享成功，等待好友上线吧");
+                    self.res.showToast("分享成功，等待好友上线吧");
 
                     //var cardnum = self.getStorageCoin();
                     //cardnum = parseInt(cardnum) + 100;
@@ -6405,16 +4726,16 @@ cc.Class({
                 fail: function()
                 {
                     qianqista.share(false);
-                    self.showToast("分享失败！");
+                    self.res.showToast("分享失败！");
                 }
             });
         }
         else
         {
-            var cardnum = self.getStorageCoin();
+            var cardnum = storage.getStorageCoin();
             cardnum = parseInt(cardnum) + 100;
-            self.setStorageCoin(cardnum);
-            self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
+            storage.setStorageCoin(cardnum);
+            self.node_role.updateCoin(cardnum);
             self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
         }
     },
@@ -6449,7 +4770,7 @@ cc.Class({
                 success: function(res)
                 {
 
-                    self.showToast("分享成功，等待好友上线吧");
+                    self.res.showToast("分享成功，等待好友上线吧");
 
                     //var cardnum = self.getStorageCoin();
                     //cardnum = parseInt(cardnum) + 100;
@@ -6463,24 +4784,24 @@ cc.Class({
                 fail: function()
                 {
                     qianqista.share(false);
-                    self.showToast("分享失败！");
+                    self.res.showToast("分享失败！");
                 }
             });
         }
         else
         {
-            var gunInviteNum = this.getStorageGunInviteNum();
-            this.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
+            var gunInviteNum = storage.getStorageGunInviteNum();
+            storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
         }
     },
 
     wxGropShareFuhuo: function()
     {
-        var coinnum = this.getStorageCoin();
+        var coinnum = storage.getStorageCoin();
         if(coinnum>=100)
         {
             coinnum = parseInt(coinnum) - 100;
-            this.setStorageCoin(coinnum);
+            storage.setStorageCoin(coinnum);
             this.fuhuo(false,true,false);
             this.uploadData();
         }
@@ -6505,9 +4826,9 @@ cc.Class({
                 if (res && res.isEnded || res === undefined) {
                     if(self.GAME.VIDEOAD_TYPE == 1)
                     {
-                        var coin = self.getStorageCoin();
+                        var coin = storage.getStorageCoin();
                         coin = parseInt(coin) + 100;
-                        self.setStorageCoin(coin);
+                        storage.setStorageCoin(coin);
                         self.node_main_coin.getComponent("cc.Label").string = coin+"";
                         self.uploadData();
 
@@ -6519,8 +4840,8 @@ cc.Class({
                         self.node_coin_time.active = true;
                         self.node_coin_time.getComponent("cc.Label").string = "0:30";
 
-                        self.setStorageVideoTime(30);
-                        self.showToast("金币+100");
+                        storage.setStorageVideoTime(30);
+                        self.res.showToast("金币+100");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
@@ -6531,9 +4852,9 @@ cc.Class({
                 else {
                     // 播放中途退出，不下发游戏奖励
                     if(self.GAME.VIDEOAD_TYPE == 1)
-                        self.showToast("金币获取失败");
+                        self.res.showToast("金币获取失败");
                 }
-                self.resumeMusic();
+                storage.resumeMusic();
             });
 
             this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
@@ -6547,7 +4868,7 @@ cc.Class({
                     if(self.GAME.VIDEOAD_TYPE == 2)
                     {
                         self.fuhuo(false,false,true);
-                        self.showToast("复活成功");
+                        self.res.showToast("复活成功");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
@@ -6559,15 +4880,15 @@ cc.Class({
                     // 播放中途退出，不下发游戏奖励
                     if(self.GAME.VIDEOAD_TYPE == 2)
                     {
-                        self.showToast("复活失败");
+                        self.res.showToast("复活失败");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        self.showToast("体验失败");
+                        self.res.showToast("体验失败");
                     }
 
                 }
-                self.resumeMusic();
+                storage.resumeMusic();
             });
 
 
@@ -6577,7 +4898,7 @@ cc.Class({
     wxVideoShow: function(type)
     {
         var self = this;
-        self.pauseMusic();
+        storage.pauseMusic();
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -6602,9 +4923,9 @@ cc.Class({
         {
             if(type == 1)
             {
-                var coin = self.getStorageCoin();
+                var coin = storage.getStorageCoin();
                 coin = parseInt(coin) + 100;
-                self.setStorageCoin(coin);
+                storage.setStorageCoin(coin);
                 self.node_main_coin.getComponent("cc.Label").string = coin+"";
                 self.uploadData();
 
@@ -6616,7 +4937,7 @@ cc.Class({
                 this.node_coin_time.active = true;
                 this.node_coin_time.getComponent("cc.Label").string = "0:30";
 
-                this.setStorageVideoTime(30);
+                storage.setStorageVideoTime(30);
             }
             else if(type == 2)
             {
@@ -6627,7 +4948,7 @@ cc.Class({
                 this.node_zhanshi_zhanshivedio.active = false;
                 this.node_zhanshi_vediostart.active = true;
             }
-            self.resumeMusic();
+            storage.resumeMusic();
         }
     },
 
@@ -6678,7 +4999,7 @@ cc.Class({
             }
             else
             {
-                this.showToast("今天活动已经结束，请明天再来");
+                this.res.showToast("今天活动已经结束，请明天再来");
             }
         }
     },
@@ -6809,7 +5130,7 @@ cc.Class({
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,
                     success: function(){
-                        self.showToast("保存成功");
+                        self.res.showToast("保存成功");
                     }
                 });
                 //wx.shareAppMessage({

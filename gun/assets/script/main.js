@@ -1361,7 +1361,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard")
+                if(con.id == "sharecard2")
                 {
                     if(con.value == "1")
                     {

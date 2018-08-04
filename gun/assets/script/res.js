@@ -15,6 +15,18 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_setting: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_card: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_duihuan: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

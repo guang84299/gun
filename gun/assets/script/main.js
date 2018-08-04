@@ -198,15 +198,7 @@ cc.Class({
 
         
 
-        this.node_setting = cc.find("Canvas/node_setting");
-        this.node_setting_music = cc.find("bg/music",this.node_setting);
-        this.node_setting_sound = cc.find("bg/sound",this.node_setting);
-        this.node_setting_vibrate = cc.find("bg/vibrate",this.node_setting);
-
-        this.node_card = cc.find("Canvas/node_card");
-        this.node_card_num = cc.find("bg/cardnum",this.node_card);
-
-        this.node_duihuan = cc.find("Canvas/node_duihuan");
+        
 
         this.node_qiandao = cc.find("Canvas/node_qiandao");
         this.node_rank = cc.find("Canvas/node_rank");
@@ -303,7 +295,7 @@ cc.Class({
                 var con = this.GAME.control[i];
                 if(con.id == "sharecard")
                 {
-                    if(con.value == "1")
+                    if(con.value == "0")
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
@@ -590,8 +582,8 @@ cc.Class({
 
     adapt: function()
     {
-        var nodes = [this.node_main,this.node_game_ui,this.node_tishi,this.node_setting,
-            this.node_card,this.node_duihuan,this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
+        var nodes = [this.node_main,this.node_game_ui,this.node_tishi,
+            this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
             this.node_award,this.node_zhanshi];
         for(var i=0;i<nodes.length;i++)
         {
@@ -759,47 +751,17 @@ cc.Class({
             this.wxQuanState(false);
             this.openSetting();
         }
-        else if(data == "music")
-        {
-            var m = storage.getStorageMusic();
-            m = m == 0 ? 1 : 0;
-            storage.setStorageMusic(m);
-            if(storage.getStorageMusic() == 0)
-            {
-                storage.stopMusic();
-            }
-            else
-            {
-                storage.playMusic(this.res.audio_bgm);
-            }
-        }
-        else if(data == "sound")
-        {
-            var m = storage.getStorageSound();
-            m = m == 0 ? 1 : 0;
-            storage.setStorageSound(m);
-        }
-        else if(data == "vibrate")
-        {
-            var m = storage.getStorageVibrate();
-            m = m == 0 ? 1 : 0;
-            storage.setStorageVibrate(m);
-        }
         else if(data == "lingqu")
         {
             this.wxQuanState(false);
             if(this.openover)
                 this.wxCloseOver();
-            this.node_card.active = true;
-            this.node_over.active = false;
-            this.node_card_num.getComponent("cc.Label").string = storage.getStorageCard();
-            qianqista.event("btn_fangdanyi");
+           this.openCard();
         }
         else if(data == "duihuan")
         {
             this.wxQuanState(false);
-            this.node_duihuan.active = true;
-            qianqista.event("btn_linghongbao");
+            this.openDuihuan();
         }
         else if(data == "rank")
         {
@@ -837,29 +799,6 @@ cc.Class({
             this.node_rank.active = true;
             this.node_over.active = false;
         }
-        else if(data == "close_setting")
-        {
-            this.wxQuanState(true);
-            this.node_setting.active = false;
-        }
-        else if(data == "close_duihuan")
-        {
-            this.wxQuanState(true);
-            this.node_duihuan.active = false;
-        }
-        else if(data == "close_card")
-        {
-            this.node_card.active = false;
-            if(this.openover)
-            {
-                this.node_over.active = true;
-                this.wxOverRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
-            }
-            else
-            {
-                this.wxQuanState(true);
-            }
-        }
         else if(data == "close_qiandao")
         {
             this.node_qiandao.active = false;
@@ -884,11 +823,6 @@ cc.Class({
         {
             this.wxGropShare();
             qianqista.event("btn_grouprank");
-        }
-        else if(data == "sendcard")
-        {
-            this.wxGropShareCard();
-            qianqista.event("btn_fangdanyi_qiuzu");
         }
         else if(data == "more")
         {
@@ -1015,13 +949,30 @@ cc.Class({
         {
             this.wxVideoShow(1);
         }
-        else if(data == "kefu")
-        {
-            this.wxKefu();
-            qianqista.event("btn_linghongbao_kefu");
-        }
+        
 
         cc.log(data);
+    },
+
+    openDuihuan: function()
+    {
+        var duihuan = cc.instantiate(this.res.node_duihuan);
+        this.node.addChild(duihuan);
+        this.node_duihuan = duihuan.getComponent("duihuan");
+        this.node_duihuan.show();
+        qianqista.event("btn_linghongbao");
+    },
+
+    openCard: function()
+    {
+        this.node_over.active = false;
+
+        var card = cc.instantiate(this.res.node_card);
+        this.node.addChild(card);
+        this.node_card = card.getComponent("card");
+        this.node_card.show();
+
+        qianqista.event("btn_fangdanyi");
     },
 
     openCoinNode: function()
@@ -1124,10 +1075,10 @@ cc.Class({
 
     openSetting: function()
     {
-        this.node_setting.active = true;
-        this.node_setting_music.getComponent("cc.Toggle").isChecked = (storage.getStorageMusic() == 1 ? true : false);
-        this.node_setting_sound.getComponent("cc.Toggle").isChecked = (storage.getStorageSound() == 1 ? true : false);
-        this.node_setting_vibrate.getComponent("cc.Toggle").isChecked = (storage.getStorageVibrate() == 1 ? true : false);
+        var setting = cc.instantiate(this.res.node_setting);
+        this.node.addChild(setting);
+        this.node_setting = setting.getComponent("setting");
+        this.node_setting.show();
     },
 
     
@@ -1537,9 +1488,6 @@ cc.Class({
 
     goMain: function()
     {
-        this.node_setting.active = false;
-        this.node_card.active = false;
-        this.node_duihuan.active = false;
         this.node_qiandao.active = false;
         this.node_rank.active = false;
         this.node_over.active = false;
@@ -3980,7 +3928,7 @@ cc.Class({
                                         var cardnum = storage.getStorageCard();
                                         cardnum = parseInt(cardnum) + 1;
                                         storage.setStorageCard(cardnum);
-                                        self.node_card_num.getComponent("cc.Label").string = cardnum+"";
+                                        self.node_card.updateUI();
                                         self.uploadData();
                                     }
                                     else
@@ -4010,7 +3958,7 @@ cc.Class({
             var cardnum = storage.getStorageCard();
             cardnum = parseInt(cardnum) + 1;
             storage.setStorageCard(cardnum);
-            self.node_card_num.getComponent("cc.Label").string = cardnum+"";
+            self.node_card.updateUI();
         }
     },
 
@@ -4376,20 +4324,7 @@ cc.Class({
         }
     },
 
-    wxKefu: function()
-    {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            if(this.GAME.linghongbao == 1)
-            {
-                wx.openCustomerServiceConversation({});
-            }
-            else
-            {
-                this.res.showToast("今天活动已经结束，请明天再来");
-            }
-        }
-    },
+    
 
     wxMore: function()
     {

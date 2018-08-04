@@ -154,8 +154,8 @@ cc.Class({
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
-        //storage.setStorageQianDao(0);
-        //storage.setStorageQianDaoTime(-1);
+        // storage.setStorageQianDao(0);
+        // storage.setStorageQianDaoTime(-1);
         //storage.setStorageYindao(0);
         //storage.setStorageGunJieSuoNum(1);
         //storage.setStorageRoleJieSuoNum(4);
@@ -195,13 +195,6 @@ cc.Class({
                 cc.scaleTo(0.5,1).easing(cc.easeSineOut())
             )));
 
-
-        
-
-        
-
-        this.node_qiandao = cc.find("Canvas/node_qiandao");
-        this.node_rank = cc.find("Canvas/node_rank");
 
         this.node_fuhuo = cc.find("Canvas/node_fuhuo");
         this.node_fuhuo_share = cc.find("fuhuo_share",this.node_fuhuo);
@@ -583,7 +576,7 @@ cc.Class({
     adapt: function()
     {
         var nodes = [this.node_main,this.node_game_ui,this.node_tishi,
-            this.node_qiandao,this.node_rank,this.node_fuhuo,this.node_over,
+            this.node_fuhuo,this.node_over,
             this.node_award,this.node_zhanshi];
         for(var i=0;i<nodes.length;i++)
         {
@@ -738,14 +731,6 @@ cc.Class({
             this.wxQuanState(false);
             this.openGun();
         }
-        else if(data == "riqi")
-        {
-            if(event.target.canset)
-            {
-                this.setGunRiQi(event.target.riqiId);
-                this.openQianDao();
-            }
-        }
         else if(data == "setting")
         {
             this.wxQuanState(false);
@@ -766,8 +751,7 @@ cc.Class({
         else if(data == "rank")
         {
             this.wxQuanState(false);
-            this.wxRank();
-            this.node_rank.active = true;
+            this.openRank();
         }
         else if(data == "fuhuo_card")
         {
@@ -798,26 +782,6 @@ cc.Class({
             this.wxCloseOver();
             this.node_rank.active = true;
             this.node_over.active = false;
-        }
-        else if(data == "close_qiandao")
-        {
-            this.node_qiandao.active = false;
-            this.wxQuanState(true);
-        }
-        else if(data == "close_rank")
-        {
-            this.wxCloseRank();
-            this.node_rank.active = false;
-            if(this.openover)
-            {
-                this.node_over.active = true;
-                this.wxOverRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
-            }
-            else
-            {
-                this.wxQuanState(true);
-            }
-
         }
         else if(data == "grouprank")
         {
@@ -952,6 +916,15 @@ cc.Class({
         
 
         cc.log(data);
+    },
+
+    openRank: function()
+    {
+        this.wxRank();
+        var rank = cc.instantiate(this.res.node_rank);
+        this.node.addChild(rank);
+        this.node_rank = rank.getComponent("rank");
+        this.node_rank.show();
     },
 
     openDuihuan: function()
@@ -1380,69 +1353,16 @@ cc.Class({
         this.node_chengjiu.show();
     },
 
-    
-
-    setGunRiQi: function(id)
-    {
-        storage.setStorageQianDao(id);
-        //storage.setStorageQianDaoTime(new Date().getTime());
-        storage.setStorageQianDaoTime(new Date().getDate());
-        var currQianDao = storage.getStorageQianDao();
-        if(currQianDao == 7)
-        {
-            storage.setStorageGun(10);
-            qianqista.event("jiesuo_gun_baleite");
-        }
-
-        this.updateGunRiQi();
-        this.openQianDao();
-
-        storage.setStorageCoin(parseInt(storage.getStorageCoin()) +  this.res.qiandaoconfig[id-1]);
-        this.res.showToast("金币+"+this.res.qiandaoconfig[id-1]);
-        this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
-
-        this.uploadData();
-        this.updateDian();
-        storage.playSound(this.res.audio_coin);
-    },
-
     openQianDao: function()
     {
-        this.node_qiandao.active = true;
         this.wxQuanState(false);
 
-        var currQianDao = storage.getStorageQianDao();
-        var currQianDaoTime = storage.getStorageQianDaoTime();
-        var now = new Date().getDate();
-
-        currQianDao = parseInt(currQianDao)+1;
-        for(var i=1;i<=7;i++)
-        {
-            var item = cc.find("bg/item_" + i, this.node_qiandao);
-            var state = cc.find("state",item);
-            item.riqiId = i;
-            item.canset = false;
-
-            if(i<currQianDao)
-            {
-                item.color = cc.color(100,100,100);
-                state.getComponent("cc.Label").string = "已领取";
-            }
-            else if(i==currQianDao && now != currQianDaoTime)
-            {
-                item.color = cc.color(243,180,69);
-                state.getComponent("cc.Label").string = "待领取";
-                item.canset = true;
-            }
-            else
-            {
-                state.getComponent("cc.Label").string = "未领取";
-            }
-        }
+        var qiandao = cc.instantiate(this.res.node_qiandao);
+        this.node.addChild(qiandao);
+        this.node_qiandao = qiandao.getComponent("qiandao");
+        this.node_qiandao.show();
 
     },
-
-    
 
     openGun: function()
     {
@@ -1455,7 +1375,6 @@ cc.Class({
         this.node_gun.show();
         this.node_gun.roleyaoqing(this.GAME.sharecard);
     },
-
 
     openJuese: function()
     {
@@ -1488,8 +1407,6 @@ cc.Class({
 
     goMain: function()
     {
-        this.node_qiandao.active = false;
-        this.node_rank.active = false;
         this.node_over.active = false;
         this.openover = false;
         this.wxQuanState(true);
@@ -3759,7 +3676,6 @@ cc.Class({
 
     wxCloseRank: function()
     {
-        this.node_rank.active = false;
         this.display_gray_rank.active = false;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "closeRank" });
@@ -3775,7 +3691,6 @@ cc.Class({
 
     wxRank: function()
     {
-        this.node_rank.active = true;
         this.display_gray_rank.active = true;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "friendRank" });

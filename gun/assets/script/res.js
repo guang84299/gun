@@ -27,6 +27,14 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_qiandao: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_rank: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

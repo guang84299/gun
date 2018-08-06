@@ -408,6 +408,17 @@ module.exports = {
         return Number(time);
     },
 
+    setStorageHasZhanShi: function(has)
+    {
+        cc.sys.localStorage.setItem("HasZhanShi",has);
+    },
+    getStorageHasZhanShi: function()
+    {
+        var has = cc.sys.localStorage.getItem("HasZhanShi");
+        has = has ? has : 0;
+        return Number(has);
+    },
+
     judgeShareGroupState: function(openGId,timestamp)
     {
         var shareGroupList = this.getStorageShareGroupList();

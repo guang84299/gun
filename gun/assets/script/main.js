@@ -160,8 +160,8 @@ cc.Class({
         //storage.setStorageGunJieSuoNum(1);
         //storage.setStorageRoleJieSuoNum(4);
         //cc.sys.localStorage.setItem("playnum",0);
-        //storage.setStorageInviteNum(4);
-        //storage.setStorageInviteAwardNum(4);
+        // storage.setStorageInviteNum(5);
+        // storage.setStorageInviteAwardNum(4);
 
         // storage.setStorageGunInviteNum(1);
         // storage.setStorageGunInviteAwardNum(0);
@@ -215,8 +215,7 @@ cc.Class({
         this.node_quanxian = cc.find("Canvas/node_quanxian");
 
 
-        this.node_award = cc.find("Canvas/node_award");
-        this.node_award_itembg = cc.find("bg/itembg",this.node_award);
+        
 
         this.node_tishi =  cc.find("Canvas/node_tishi");
         this.node_tishi.hand =  cc.find("hand",this.node_tishi);
@@ -226,10 +225,7 @@ cc.Class({
             this.node_tishi.ios.getComponent("cc.Label").string = "2、点击下方【添加到我的小程序】。";
         }
 
-        this.node_zhanshi = cc.find("Canvas/node_zhanshi");
-        this.node_zhanshi_guang = cc.find("bg/guang",this.node_zhanshi);
-        this.node_zhanshi_zhanshivedio = cc.find("bg/zhanshivedio",this.node_zhanshi);
-        this.node_zhanshi_vediostart = cc.find("bg/vediostart",this.node_zhanshi);
+        
 
         
 
@@ -575,8 +571,7 @@ cc.Class({
     adapt: function()
     {
         var nodes = [this.node_main,this.node_game_ui,this.node_tishi,
-            this.node_fuhuo,this.node_over,
-            this.node_award,this.node_zhanshi];
+            this.node_fuhuo,this.node_over];
         for(var i=0;i<nodes.length;i++)
         {
             var items = nodes[i].children;
@@ -825,28 +820,6 @@ cc.Class({
             this.wxQuanState(false);
             qianqista.event("btn_lingjiang");
         }
-        else if(data == "close_award")
-        {
-            this.node_award.active = false;
-            if(this.openstore)
-            {
-                this.openstore = false;
-            }
-            else
-            this.wxQuanState(true);
-        }
-        else if(data == "item_award")
-        {
-            if(event.target.canset)
-            {
-                this.lingquAward(event.target.awardid);
-            }
-        }
-        else if(data == "lijiyaoqing")
-        {
-            this.wxGropShareCoin();
-            qianqista.event("btn_lingjaing_yaoqing");
-        }
         else if(data == "adlingqu")
         {
             this.wxVideoShow(1);
@@ -864,19 +837,6 @@ cc.Class({
         else if(data == "zhanshi")
         {
             this.openzhanshi();
-        }
-        else if(data == "zhanshivedio")
-        {
-            this.wxVideoShow(3);
-        }
-        else if(data == "vediostart")
-        {
-            this.useZhanshiStart();
-        }
-        else if(data == "close_zhanshi")
-        {
-            this.node_zhanshi.active = false;
-            this.wxQuanState(true);
         }
         else if(data == "linggun")
         {
@@ -953,33 +913,15 @@ cc.Class({
         this.node_linggun.show();
     },
 
-    useZhanshiStart: function()
-    {
-         if(parseInt(this.GAME.score) > storage.getStorageScore())
-            storage.setStorageScore(parseInt(this.GAME.score));
-        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.GAME.coin));
-        this.node_over.active = false;
-        this.node_fuhuo.active = false;
-        this.wxCloseFuhuo();
-
-        this.GAME.currPlayerTmp = this.GAME.currPlayer;
-        this.GAME.currPlayer = 9;
-        this.GAME.useZhanShi = true;
-        this.node_zhanshi_vediostart.active = false;
-        this.node_zhanshi_zhanshivedio.active = true;
-        this.node_zhanshi.active = false;
-        this.wxQuanState(false);
-        this.again();
-    },
+    
 
     openzhanshi: function()
     {
         this.wxQuanState(false);
-        this.node_zhanshi.active = true;
-        this.node_zhanshi_guang.stopAllActions();
-        this.node_zhanshi_guang.runAction(cc.repeatForever(
-            cc.rotateBy(1,180)
-        ));
+        var zhanshi = cc.instantiate(this.res.node_zhanshi);
+        this.node.addChild(zhanshi);
+        this.node_zhanshi = zhanshi.getComponent("zhanshi");
+        this.node_zhanshi.show();
     },
 
     openSetting: function()
@@ -1107,96 +1049,14 @@ cc.Class({
         }
     },
 
-    lingquAward: function(id)
-    {
-        var inviteAwardNum = storage.getStorageInviteAwardNum();
-
-        var coin = this.res.inviteconfig[id-1];
-        if(inviteAwardNum>=5)
-            coin*=2;
-        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);
-
-        storage.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
-        this.uploadData();
-        this.res.showToast("金币+"+coin);
-        this.openAward();
-        this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
-        this.updateDian();
-        storage.playSound(this.res.audio_coin);
-
-        var self = this;
-        if(inviteAwardNum==4)
-        {
-            this.node.runAction(cc.sequence(
-                cc.delayTime(1),
-                cc.callFunc(function(){
-                    self.res.showToast("继续邀请，奖励翻倍");
-                })
-            ));
-        }
-
-        qianqista.event("invite_num_"+(parseInt(inviteAwardNum)+1));
-    },
+    
 
     openAward: function()
     {
-        this.node_award.active = true;
-        var inviteNum = storage.getStorageInviteNum();
-        var inviteAwardNum = storage.getStorageInviteAwardNum();
-        if(inviteAwardNum<5)
-        {
-            for(var i=1;i<=5;i++)
-            {
-                var item = cc.find("item_"+i,this.node_award_itembg);
-                var box = cc.find("box",item);
-                box.awardid = i;
-                box.canset = false;
-                if(inviteAwardNum<i)
-                {
-                    if(inviteNum>=i)
-                    {
-                        box.color = cc.color(137,87,161);
-                        box.canset = true;
-                    }
-                    else
-                    {
-                        box.color = cc.color(255,255,255);
-                    }
-                }
-                else
-                {
-                    box.color = cc.color(181,181,181);
-                }
-            }
-        }
-        else
-        {
-            for(var i=1;i<=5;i++)
-            {
-                var item = cc.find("item_"+i,this.node_award_itembg);
-                var box = cc.find("box",item);
-                var coin = cc.find("coin",box);
-                coin.getComponent("cc.Label").string = this.res.inviteconfig[i-1]*2;
-                box.awardid = i;
-                box.canset = false;
-                if(inviteAwardNum<i+5)
-                {
-                    if(inviteNum>=i+5)
-                    {
-                        box.color = cc.color(137,87,161);
-                        box.canset = true;
-                    }
-                    else
-                    {
-                        box.color = cc.color(255,255,255);
-                    }
-                }
-                else
-                {
-                    box.color = cc.color(181,181,181);
-                }
-            }
-        }
+        var award = cc.instantiate(this.res.node_award);
+        this.node.addChild(award);
+        this.node_award = award.getComponent("award");
+        this.node_award.show();
     },
 
 
@@ -3868,65 +3728,6 @@ cc.Class({
         }
     },
 
-    wxGropShareCoin: function()
-    {
-        var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            var query = "channel=sharecoinmenu&fromid="+qianqista.openid;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.GAME.shares.coinmenu_txt1 && this.GAME.shares.coinmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharecoinmenu_1&fromid="+qianqista.openid;
-                    title = this.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.GAME.shares.coinmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharecoinmenu_2&fromid="+qianqista.openid;
-                    title = this.GAME.shares.coinmenu_txt2;
-                    imageUrl = this.GAME.shares.coinmenu_pic2;
-                }
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-
-                    self.res.showToast("分享成功，等待好友上线吧");
-
-                    //var cardnum = self.getStorageCoin();
-                    //cardnum = parseInt(cardnum) + 100;
-                    //self.setStorageCoin(cardnum);
-                    //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.uploadData();
-                    qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
-                    qianqista.share(false);
-                    self.res.showToast("分享失败！");
-                }
-            });
-        }
-        else
-        {
-            var cardnum = storage.getStorageCoin();
-            cardnum = parseInt(cardnum) + 100;
-            storage.setStorageCoin(cardnum);
-            self.node_role.updateCoin(cardnum);
-            self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
-        }
-    },
-
-    
 
     wxGropShareFuhuo: function()
     {
@@ -3978,8 +3779,8 @@ cc.Class({
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        self.node_zhanshi_zhanshivedio.active = false;
-                        self.node_zhanshi_vediostart.active = true;
+                        storage.setStorageHasZhanShi(1);
+                        self.node_zhanshi.updateUI();
                     }
                 }
                 else {
@@ -4005,8 +3806,8 @@ cc.Class({
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        self.node_zhanshi_zhanshivedio.active = false;
-                        self.node_zhanshi_vediostart.active = true;
+                        storage.setStorageHasZhanShi(1);
+                        self.node_zhanshi.updateUI();
                     }
                 }
                 else {
@@ -4078,8 +3879,8 @@ cc.Class({
             }
             else if(type == 3)
             {
-                this.node_zhanshi_zhanshivedio.active = false;
-                this.node_zhanshi_vediostart.active = true;
+                storage.setStorageHasZhanShi(1);
+                this.node_zhanshi.updateUI();
             }
             storage.resumeMusic();
         }

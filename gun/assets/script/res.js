@@ -39,6 +39,14 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_award: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_zhanshi: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

@@ -47,7 +47,10 @@ cc.Class({
     updateUI: function()
     {
         var s = cc.winSize;
-        this.node_roleyaoqing.active = this.node_roleyaoqing_active;
+        if(this.main.GAME.sharecard == 1)
+            this.node_roleyaoqing.active = true;
+        else
+            his.node_roleyaoqing.active = false;
         this.node_role_center.height = s.height - 335;
         this.node_role_center.color = this.main.ltcolor;
 
@@ -129,6 +132,7 @@ cc.Class({
     {
         if(data == "home")
         {
+            this.main.openstore = false;
             this.main.goMain();
             this.hide();
         }
@@ -143,9 +147,10 @@ cc.Class({
                 this.setJuese(event.target.playerId);
             }
         }
-        else if(data == "yaoqing")
+        else if(data == "roleyaoqing")
         {
-            
+            this.main.openstore = true;
+            this.main.openAward();
         }
         cc.log(data);
     },
@@ -243,11 +248,6 @@ cc.Class({
             this.updateUI();
             this.main.uploadData();
         }
-    },
-
-    roleyaoqing: function(visible)
-    {
-        this.node_roleyaoqing_active = visible;
     },
 
     updateCoin: function(num)

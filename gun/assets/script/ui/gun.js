@@ -50,7 +50,10 @@ cc.Class({
     updateUI: function()
     {
         var s = cc.winSize;
-        this.node_roleyaoqing.active = this.node_roleyaoqing_active;
+        if(this.main.GAME.sharecard == 1)
+            this.node_roleyaoqing.active = true;
+        else
+            this.node_roleyaoqing.active = false;
         this.node_gun_center.height = s.height - 335;
         this.node_gun_center.color = this.main.ltcolor;
 
@@ -148,6 +151,7 @@ cc.Class({
     {
         if(data == "home")
         {
+            this.main.openstore = false;
             this.main.goMain();
             this.hide();
         }
@@ -166,9 +170,10 @@ cc.Class({
                 this.setGun(event.target.gunId);
             }
         }
-        else if(data == "yaoqing")
+        else if(data == "roleyaoqing")
         {
-            
+            this.main.openstore = true;
+            this.main.openAward();
         }
         cc.log(data);
     },
@@ -428,11 +433,6 @@ cc.Class({
                 this.node_gun_page3.canset = false;
             }
         }
-    },
-
-    roleyaoqing: function(visible)
-    {
-        this.node_roleyaoqing_active = visible;
     },
 
     updateCoin: function(num)

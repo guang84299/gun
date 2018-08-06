@@ -74,7 +74,8 @@ cc.Class({
     {
         if(data == "close_zhanshi")
         {
-            this.main.wxQuanState(true);
+            if(!this.main.openfuhuo)
+                this.main.wxQuanState(true);
             this.hide();
         }
         else if(data == "vediostart")

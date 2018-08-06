@@ -709,11 +709,6 @@ cc.Class({
             storage.setStorageYindao(1);
             this.GAME.yindao = 1;
         }
-        else if(data == "roleyaoqing")
-        {
-            this.openstore = true;
-            this.openAward();
-        }
         else if(data == "chengjiu")
         {
             this.openChengjiu();
@@ -1077,7 +1072,6 @@ cc.Class({
         this.node.addChild(gun);
         this.node_gun = gun.getComponent("gun");
         this.node_gun.show();
-        this.node_gun.roleyaoqing(this.GAME.sharecard);
     },
 
     openJuese: function()
@@ -1090,7 +1084,6 @@ cc.Class({
         this.node.addChild(role);
         this.node_role = role.getComponent("role");
         this.node_role.show();
-        this.node_role.roleyaoqing(this.GAME.sharecard);
     },
 
     startGmae: function()

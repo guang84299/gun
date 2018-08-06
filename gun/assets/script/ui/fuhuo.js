@@ -95,11 +95,13 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.openfuhuo = true;
     },
 
     hide: function()
     {
         this.node.destroy();
+        this.main.openfuhuo = false;
     },
 
     click: function(event,data)

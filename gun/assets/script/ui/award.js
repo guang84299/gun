@@ -114,11 +114,7 @@ cc.Class({
     {
         if(data == "close_award")
         {
-            if(this.main.openstore)
-            {
-                this.main.openstore = false;
-            }
-            else
+            if(!this.main.openstore)
                 this.main.wxQuanState(true);
             this.hide();
         }

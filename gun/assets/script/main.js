@@ -196,15 +196,6 @@ cc.Class({
             )));
 
 
-        
-
-        this.node_over = cc.find("Canvas/node_over");
-        this.node_over_coin = cc.find("coin/num",this.node_over);
-        this.node_over_score = cc.find("bg/score",this.node_over);
-        this.node_over_chaoyue = cc.find("bg/chaoyue",this.node_over);
-        this.node_over_more = cc.find("more",this.node_over);
-        this.node_over_more2 = cc.find("more2",this.node_over);
-
         this.node_quanxian = cc.find("Canvas/node_quanxian");
 
         //var stringTime = "2018-07-05 17:01:00";
@@ -233,8 +224,7 @@ cc.Class({
     {
         this.node_main_more.active = false;
         this.node_main_more2.active = false;
-        this.node_over_more.active = false;
-        this.node_over_more2.active = false;
+        
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
         cc.find("linggunbg",this.node_main).active = false;
@@ -304,17 +294,13 @@ cc.Class({
         {
             var pic = this.GAME.more.split("--")[0];
             this.node_main_more.active = true;
-            this.node_over_more.active = true;
             this.loadPic(this.node_main_more,pic);
-            this.loadPic(this.node_over_more,pic);
         }
         if(this.GAME.more2)
         {
             var pic = this.GAME.more2.split("--")[0];
             this.node_main_more2.active = true;
-            this.node_over_more2.active = true;
             this.loadPic(this.node_main_more2,pic);
-            this.loadPic(this.node_over_more2,pic);
         }
 
         this.updateDian();
@@ -541,8 +527,7 @@ cc.Class({
 
     adapt: function()
     {
-        var nodes = [this.node_main,this.node_game_ui,
-            this.node_over];
+        var nodes = [this.node_main,this.node_game_ui];
         for(var i=0;i<nodes.length;i++)
         {
             var items = nodes[i].children;
@@ -641,7 +626,8 @@ cc.Class({
 
     again: function()
     {
-        this.node_over.active = false;
+        if(cc.isValid(this.node_over))
+            this.node_over.hide();
         this.openover = false;
         this.initGameData();
 
@@ -668,7 +654,6 @@ cc.Class({
         }
         else if(data == "juese")
         {
-            this.wxQuanState(false);
             this.openJuese();
         }
         else if(data == "home")
@@ -677,7 +662,6 @@ cc.Class({
         }
         else if(data == "junhuo")
         {
-            this.wxQuanState(false);
             this.openGun();
         }
         else if(data == "setting")
@@ -705,23 +689,6 @@ cc.Class({
         else if(data == "fuhuo_card")
         {
             this.fuhuo(true);
-        }
-        else if(data == "again")
-        {
-            this.wxCloseOver();
-            this.again();
-        }
-        else if(data == "change")
-        {
-            this.wxGropShareChange();
-            qianqista.event("btn_pk");
-        }
-        else if(data == "over_rank")
-        {
-            this.wxRank();
-            this.wxCloseOver();
-            this.node_rank.active = true;
-            this.node_over.active = false;
         }
         else if(data == "grouprank")
         {
@@ -770,10 +737,6 @@ cc.Class({
         {
             this.wxVideoShow(1);
             qianqista.event("main_video");
-        }
-        else if(data == "savepic")
-        {
-            this.wxtoTempFilePath();
         }
         else if(data == "zhanshi")
         {
@@ -831,8 +794,6 @@ cc.Class({
 
     openCard: function()
     {
-        this.node_over.active = false;
-
         var card = cc.instantiate(this.res.node_card);
         this.node.addChild(card);
         this.node_card = card.getComponent("card");
@@ -885,12 +846,13 @@ cc.Class({
         var qiandao_dian = cc.find("qiandao/dian",this.node_main);
         var lingjiang_dian = cc.find("lingjiang/dian",this.node_main);
         var chengjiu_dian = cc.find("bottom/chengjiu/dian",this.node_main);
-        var chengjiu_dian2 = cc.find("home/dian",this.node_over);
+        
 
         qiandao_dian.active = false;
         lingjiang_dian.active = false;
         chengjiu_dian.active = false;
-        chengjiu_dian2.active = false;
+        if(cc.isValid(this.node_over))
+            this.node_over.updateDian(false);
 
         var currQianDao = storage.getStorageQianDao();
         var currQianDaoTime = storage.getStorageQianDaoTime();
@@ -991,7 +953,8 @@ cc.Class({
         if(isshow)
         {
             chengjiu_dian.active = true;
-            chengjiu_dian2.active = true;
+            if(cc.isValid(this.node_over))
+                this.node_over.updateDian(true);
         }
     },
 
@@ -1108,8 +1071,10 @@ cc.Class({
 
     openGun: function()
     {
+        this.wxQuanState(false);
         this.node_main.active = false;
-        this.node_over.active = false;
+        if(cc.isValid(this.node_over))
+            this.node_over.hide();
 
         var gun = cc.instantiate(this.res.node_gun);
         this.node.addChild(gun);
@@ -1120,8 +1085,10 @@ cc.Class({
 
     openJuese: function()
     {
+        this.wxQuanState(false);
         this.node_main.active = false;
-        this.node_over.active = false;
+        if(cc.isValid(this.node_over))
+            this.node_over.hide();
         var role = cc.instantiate(this.res.node_role);
         this.node.addChild(role);
         this.node_role = role.getComponent("role");
@@ -1149,7 +1116,6 @@ cc.Class({
 
     goMain: function()
     {
-        this.node_over.active = false;
         this.openover = false;
         this.wxQuanState(true);
         this.wxCloseOver();
@@ -2824,34 +2790,10 @@ cc.Class({
 
     gameResult: function()
     {
-        if(parseInt(this.GAME.score) > storage.getStorageScore())
-            storage.setStorageScore(parseInt(this.GAME.score));
-        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.GAME.coin));
-        //this.initGmae();
-        this.node_game_ui.active = false;
-        this.node_over.active = true;
-        this.openover = true;
-        this.node_over_coin.getComponent("cc.Label").string = parseInt(this.GAME.coin);
-        this.node_over_score.getComponent("cc.Label").string = parseInt(this.GAME.score);
-        this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.getChaoyue2() +"的用户";
-        cc.find("change/sp",this.node_over).color = this.ltcolor;
-        cc.find("change/txt",this.node_over).color = this.ltcolor;
-        cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.getChaoyue3();
-        cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.getChaoyue();
-        cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.getChaoyue4();
-        this.wxOverRank(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
-
-
-        if(this.GAME.useZhanShi)
-        {
-            this.GAME.useZhanShi = false;
-            this.GAME.currPlayer = this.GAME.currPlayerTmp;
-        }
-        this.uploadData();
-        this.updateDian();
-        this.wxBannerHide();
-        qianqista.event("ui_jiesuan");
-
+        var over = cc.instantiate(this.res.node_over);
+        this.node.addChild(over);
+        this.node_over = over.getComponent("over");
+        this.node_over.show();
     },
 
     judgeFuHuo: function()
@@ -3369,7 +3311,8 @@ cc.Class({
 
     wxCloseOver: function()
     {
-        this.node_over.active = false;
+        if(cc.isValid(this.node_over))
+            this.node_over.hide();
         this.display_gray.active = false;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -3400,7 +3343,6 @@ cc.Class({
 
     wxOverRank: function(score,playerId,gunId)
     {
-        this.node_over.active = true;
         this.display_gray.active = true;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
@@ -3458,46 +3400,7 @@ cc.Class({
         }
 
     },
-    wxGropShareChange: function()
-    {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            var query = "channel=sharechangemenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.GAME.shares.changemenu_txt1 && this.GAME.shares.changemenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharechangemenu_1";
-                    title = this.GAME.shares.changemenu_txt1;
-                    imageUrl = this.GAME.shares.changemenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharechangemenu_2";
-                    title = this.GAME.shares.changemenu_txt2;
-                    imageUrl = this.GAME.shares.changemenu_pic2;
-                }
-            }
-
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
-                    qianqista.share(false);
-                }
-            });
-        }
-
-    },
+    
 
     wxGropShareCard: function()
     {
@@ -3817,80 +3720,7 @@ cc.Class({
               }
             });
         }
-    },
-
-    wxtoTempFilePath: function()
-    {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            var self = this;
-
-            var bg = cc.find("bg",this.node_over);
-            var more = cc.find("more",this.node_over);
-            var savepic = cc.find("savepic",bg);
-            var ma = cc.find("ma",bg);
-            savepic.active = false;
-            ma.active = true;
-            more.active = false;
-            this.node_game_ui.active = false;
-
-
-
-            this.node.runAction(cc.sequence(
-                cc.delayTime(0.1),
-                cc.callFunc(function(){
-                    self.wxtoTempFilePath2();
-                })
-            ));
-
-
-        }
-    },
-
-    wxtoTempFilePath2: function()
-    {
-        var self = this;
-
-        var canvas = cc.game.canvas;
-
-        var openDataContext = wx.getOpenDataContext();
-        var sharedCanvas = openDataContext.canvas;
-        var sc = canvas.width/this.dsize.width;
-
-        var bg = cc.find("bg",this.node_over);
-        var more = cc.find("more",this.node_over);
-        var savepic = cc.find("savepic",bg);
-        var ma = cc.find("ma",bg);
-
-        var w = bg.width;
-        var h = bg.height;
-
-        var pos = cc.v2((bg.x-w/2)*sc,(sharedCanvas.height-(bg.y-this.node_main_bottom.y)*sc) - h*sc/2);
-
-        canvas.toTempFilePath({
-            x: pos.x,
-            y: pos.y,
-            width: w*sc,
-            height: h*sc,
-            destWidth: w*1.5,
-            destHeight: h*1.5,
-            fileType: "png",
-            success: function(res){
-                savepic.active = true;
-                ma.active = false;
-                more.active = true;
-                self.node_game_ui.active = true;
-                wx.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success: function(){
-                        self.res.showToast("保存成功");
-                    }
-                });
-                //wx.shareAppMessage({
-                //    title: "自从玩了这个游戏，每把吃鸡都能拿98K",
-                //    imageUrl: res.tempFilePath
-                //})
-            }
-        });
     }
+
+    
 });

@@ -62,8 +62,7 @@ cc.Class({
             this.main.wxCloseRank();
             if(this.main.openover)
             {
-                // this.node_over.active = true;
-                this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
+                this.main.gameResult();
             }
             else
             {

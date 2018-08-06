@@ -63,6 +63,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_over: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

@@ -35,6 +35,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_linggun: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

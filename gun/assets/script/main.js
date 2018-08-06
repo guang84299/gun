@@ -163,8 +163,8 @@ cc.Class({
         //storage.setStorageInviteNum(4);
         //storage.setStorageInviteAwardNum(4);
 
-        //storage.setStorageGunInviteNum(1);
-        //storage.setStorageGunInviteAwardNum(0);
+        // storage.setStorageGunInviteNum(1);
+        // storage.setStorageGunInviteAwardNum(0);
         //storage.setStorageGun(16,0);
     },
 
@@ -231,8 +231,7 @@ cc.Class({
         this.node_zhanshi_zhanshivedio = cc.find("bg/zhanshivedio",this.node_zhanshi);
         this.node_zhanshi_vediostart = cc.find("bg/vediostart",this.node_zhanshi);
 
-        this.node_linggun = cc.find("Canvas/node_linggun");
-        this.node_linggun_guang = cc.find("bg/guang",this.node_linggun);
+        
 
         this.node_xuming = cc.find("Canvas/node_xuming");
 
@@ -288,7 +287,7 @@ cc.Class({
                 var con = this.GAME.control[i];
                 if(con.id == "sharecard")
                 {
-                    if(con.value == "0")
+                    if(con.value == "1")
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
@@ -883,15 +882,6 @@ cc.Class({
         {
             this.openLingGun();
         }
-        else if(data == "linggunshare")
-        {
-            this.lingquGun();
-        }
-        else if(data == "close_linggun")
-        {
-            this.node_linggun.active = false;
-            this.wxQuanState(true);
-        }
         else if(data == "fuhuo_xuming")
         {
             this.node_xuming.active = true;
@@ -953,68 +943,14 @@ cc.Class({
         this.node_coin.active = true;
     },
 
-    lingquGun: function()
-    {
-        var gunInviteNum = storage.getStorageGunInviteNum();
-        var gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
-        if(gunInviteNum>=4 && gunInviteAwardNum < 1)
-        {
-            if(storage.getStorageGun(16) == 1)
-            {
-                storage.setStorageCoin(parseInt(storage.getStorageCoin())+2000);
-
-                storage.setStorageGunInviteAwardNum(1);
-                this.uploadData();
-                this.res.showToast("金币+"+2000);
-                this.openLingGun();
-                this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
-                storage.playSound(res.audio_coin);
-            }
-            else
-            {
-                storage.setStorageGun(16,1);
-                storage.setStorageGunInviteAwardNum(1);
-                this.uploadData();
-                this.res.showToast("恭喜获取幻灭");
-                this.openLingGun();
-            }
-        }
-        else
-            this.wxGropShareLingGun();
-    },
-
     openLingGun: function()
     {
         this.wxQuanState(false);
-        this.node_linggun.active = true;
-        this.node_linggun_guang.stopAllActions();
-        this.node_linggun_guang.runAction(cc.repeatForever(
-            cc.rotateBy(1,180)
-        ));
-
-        var gunInviteNum = storage.getStorageGunInviteNum();
-        var gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
-
-        for(var i=1;i<=4;i++)
-        {
-            var xiaolian = cc.find("bg/xiaolian_"+i,this.node_linggun);
-            if(gunInviteNum>=i)
-            {
-                xiaolian.color = cc.color(243,152,0);
-            }
-            else
-            {
-                xiaolian.color = cc.color(160,160,160);
-            }
-        }
-        if(gunInviteNum>=4 && gunInviteAwardNum < 1)
-        {
-            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "领取";
-        }
-        else
-        {
-            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "邀请好友";
-        }
+        
+        var linggun = cc.instantiate(this.res.node_linggun);
+        this.node.addChild(linggun);
+        this.node_linggun = linggun.getComponent("linggun");
+        this.node_linggun.show();
     },
 
     useZhanshiStart: function()
@@ -3990,60 +3926,7 @@ cc.Class({
         }
     },
 
-    wxGropShareLingGun: function()
-    {
-        var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            var query = "channel=sharegun&fromid="+qianqista.openid;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.GAME.shares.coinmenu_txt1 && this.GAME.shares.coinmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharegun&fromid="+qianqista.openid;
-                    title = this.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.GAME.shares.coinmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharegun&fromid="+qianqista.openid;
-                    title = this.GAME.shares.coinmenu_txt2;
-                    imageUrl = this.GAME.shares.coinmenu_pic2;
-                }
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-
-                    self.res.showToast("分享成功，等待好友上线吧");
-
-                    //var cardnum = self.getStorageCoin();
-                    //cardnum = parseInt(cardnum) + 100;
-                    //self.setStorageCoin(cardnum);
-                    //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.uploadData();
-                    qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
-                    qianqista.share(false);
-                    self.res.showToast("分享失败！");
-                }
-            });
-        }
-        else
-        {
-            var gunInviteNum = storage.getStorageGunInviteNum();
-            storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
-        }
-    },
+    
 
     wxGropShareFuhuo: function()
     {

@@ -67,6 +67,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_quanxian: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

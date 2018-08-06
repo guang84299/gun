@@ -195,9 +195,6 @@ cc.Class({
                 cc.scaleTo(0.5,1).easing(cc.easeSineOut())
             )));
 
-
-        this.node_quanxian = cc.find("Canvas/node_quanxian");
-
         //var stringTime = "2018-07-05 17:01:00";
         //var timestamp2 = (new Date(Date.parse(stringTime.replace(/-/g,"/")))).getTime();
         //if(new Date().getTime() < timestamp2)
@@ -3190,13 +3187,21 @@ cc.Class({
         }
     },
 
+    openQuanxian: function()
+    {
+        var quanxian = cc.instantiate(this.res.node_quanxian);
+        this.node.addChild(quanxian);
+        this.node_quanxian = quanxian.getComponent("quanxian");
+        this.node_quanxian.show();
+    },
+
     wxOpenSetting: function()
     {
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            self.node_quanxian.active = true;
-            var quan = cc.find("bg",self.node_quanxian);
+            self.openQuanxian();
+            var quan = self.node_quanxian.quan;
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
             var sc = sharedCanvas.width/this.dsize.width;
@@ -3224,7 +3229,8 @@ cc.Class({
                     success: function (res) {
                         var authSetting = res.authSetting;
                         button.destroy();
-                        self.node_quanxian.active = false;
+                        if(cc.isValid(self.node_quanxian))
+                            self.node_quanxian.hide();
                         if (authSetting['scope.userInfo'] === true) {
                             wx.getUserInfo({
                                 openIdList:['selfOpenId'],

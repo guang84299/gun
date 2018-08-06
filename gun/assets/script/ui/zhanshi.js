@@ -94,7 +94,9 @@ cc.Class({
             storage.setStorageScore(parseInt(this.main.GAME.score));
         storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));
         this.main.node_over.active = false;
-        this.main.node_fuhuo.active = false;
+        if(cc.isValid(this.main.node_fuhuo))
+            this.main.node_fuhuo.hide();
+
         this.main.wxCloseFuhuo();
 
         this.main.GAME.currPlayerTmp = this.main.GAME.currPlayer;

@@ -47,6 +47,22 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_xuming: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_coin: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_fuhuo: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_tishi: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

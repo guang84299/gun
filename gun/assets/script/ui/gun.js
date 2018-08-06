@@ -50,7 +50,9 @@ cc.Class({
     updateUI: function()
     {
         var s = cc.winSize;
-        if(this.main.GAME.sharecard == 1)
+        var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
+
+        if(this.main.GAME.sharecard == 1 && index != 2)
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
@@ -73,7 +75,7 @@ cc.Class({
         cc.find("gunjiesuo/txt",this.node_gun).color = this.main.ltcolor;
         var jscoin = cc.find("gunjiesuo/coin",this.node_gun);
         jscoin.color = this.main.ltcolor;
-        var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
+        
         if(index == 0)
             jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
         else

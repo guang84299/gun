@@ -62,7 +62,6 @@ cc.Class({
         }
         else if(data == "xuming")
         {
-            this.hide();
             this.wxXuMing();
         }
         cc.log(data);
@@ -109,17 +108,20 @@ cc.Class({
                     }
 
                     self.main.qianqista.share(true);
+                    self.hide();
                     cc.log(res);
                 },
                 fail: function()
                 {
                     self.main.qianqista.share(false);
+                    self.hide();
                 }
             });
         }
         else
         {
             this.main.fuhuo(false,true,false);
+            this.hide();
         }
     }
     

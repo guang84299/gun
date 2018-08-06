@@ -240,7 +240,7 @@ cc.Class({
         var w = bg.width;
         var h = bg.height;
 
-        var pos = cc.v2((bg.x-w/2)*sc,(sharedCanvas.height-(bg.y-this.node_main_bottom.y)*sc) - h*sc/2);
+        var pos = cc.v2((bg.x-w/2)*sc,(sharedCanvas.height-(bg.y-this.main.node_main_bottom.y)*sc) - h*sc/2);
 
         canvas.toTempFilePath({
             x: pos.x,

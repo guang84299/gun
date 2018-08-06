@@ -105,8 +105,8 @@ cc.Class({
         this.main.GAME.useZhanShi = true;
         storage.setStorageHasZhanShi(0);
         this.main.wxQuanState(false);
-        this.hide();
         this.main.again();
+        this.hide();
     },
     
 });

@@ -40,7 +40,7 @@ cc.Class({
          this.wxVideoLoad();
 
          var self = this;
-         qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
+         qianqista.init("wx3256b6b014a0d069","8ca1f3a153a7906ca0ad9058d5c492a9","王牌枪手",function(){
              qianqista.datas(function(res){
                  console.log('my datas:', res);
                  if(res.state == 200)
@@ -88,6 +88,7 @@ cc.Class({
         //manager.enabledDebugDraw = true;
         //manager.enabledDrawBoundingBox = true;
     },
+
 
     initData: function() {
         this.tih = 36;
@@ -160,8 +161,8 @@ cc.Class({
         //storage.setStorageGunJieSuoNum(1);
         // storage.setStorageRoleJieSuoNum(10);
         // cc.sys.localStorage.setItem("playnum",0);
-        storage.setStorageInviteNum(0);
-        storage.setStorageInviteAwardNum(0);
+        // storage.setStorageInviteNum(0);
+        // storage.setStorageInviteAwardNum(0);
 
         // storage.setStorageGunInviteNum(1);
         // storage.setStorageGunInviteAwardNum(0);
@@ -287,18 +288,18 @@ cc.Class({
             this.player.fangdanyi.active = true;
         }
 
-        if(this.GAME.more)
-        {
-            var pic = this.GAME.more.split("--")[0];
-            this.node_main_more.active = true;
-            this.loadPic(this.node_main_more,pic);
-        }
-        if(this.GAME.more2)
-        {
-            var pic = this.GAME.more2.split("--")[0];
-            this.node_main_more2.active = true;
-            this.loadPic(this.node_main_more2,pic);
-        }
+        // if(this.GAME.more)
+        // {
+        //     var pic = this.GAME.more.split("--")[0];
+        //     this.node_main_more.active = true;
+        //     this.loadPic(this.node_main_more,pic);
+        // }
+        // if(this.GAME.more2)
+        // {
+        //     var pic = this.GAME.more2.split("--")[0];
+        //     this.node_main_more2.active = true;
+        //     this.loadPic(this.node_main_more2,pic);
+        // }
 
         this.updateDian();
     },
@@ -1168,27 +1169,27 @@ cc.Class({
                 this.currLoutis.push(louti);
 
                 //添加物品
-                var r = Math.random();
-                if(r>0.6)
-                {
-                    var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
-                    var ti = cc.find("ti"+item[1],louti);
-                    wujian.x = (ti.width/2 - ti.x)/2;
-                    wujian.y = this.tih;
-                    wujian.color = this.ltcolor;
-                    //wujian.opacity = 100;
-                    if(item[0]==2)
-                    {
-                        wujian.scaleX = -1;
-                    }
-                    ti.addChild(wujian);
-                }
+                // var r = Math.random();
+                // if(r>0.6)
+                // {
+                //     var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
+                //     var ti = cc.find("ti"+item[1],louti);
+                //     wujian.x = (ti.width/2 - ti.x)/2;
+                //     wujian.y = this.tih;
+                //     wujian.color = this.ltcolor;
+                //     //wujian.opacity = 100;
+                //     if(item[0]==2)
+                //     {
+                //         wujian.scaleX = -1;
+                //     }
+                //     ti.addChild(wujian);
+                // }
 
 
                 this.last_h = this.last_h + item[1]*this.tih;
                 this.ltzorder--;
                 index = i;
-                if(currH > s.height*0.8)
+                if(currH > s.height*1.0)
                 {
                     currH += item[1]*this.tih;
                     break;
@@ -1230,21 +1231,21 @@ cc.Class({
             this.currLoutis.push(louti);
 
             //添加物品
-            var r = Math.random();
-            if(r>0.6)
-            {
-                var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
-                var ti = cc.find("ti"+item[1],louti);
-                wujian.x = (ti.width/2 - ti.x)/2;
-                wujian.y = this.tih;
-                wujian.color = this.ltcolor;
-                //wujian.opacity = 100;
-                if(item[0]==2)
-                {
-                    wujian.scaleX = -1;
-                }
-                ti.addChild(wujian);
-            }
+            // var r = Math.random();
+            // if(r>0.6)
+            // {
+            //     var wujian = cc.instantiate(this.res.wujians[Math.floor(Math.random()*this.res.wujians.length)]);
+            //     var ti = cc.find("ti"+item[1],louti);
+            //     wujian.x = (ti.width/2 - ti.x)/2;
+            //     wujian.y = this.tih;
+            //     wujian.color = this.ltcolor;
+            //     //wujian.opacity = 100;
+            //     if(item[0]==2)
+            //     {
+            //         wujian.scaleX = -1;
+            //     }
+            //     ti.addChild(wujian);
+            // }
 
             this.last_h = this.last_h + item[1]*this.tih;
             this.ltzorder--;
@@ -3281,11 +3282,11 @@ cc.Class({
         {
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
-            var quan = cc.find("quan",this.node_main_bottom);
+            var quan = cc.find("quan",this.node_main);
             var sc = sharedCanvas.width/this.dsize.width;
             var dpi = cc.view._devicePixelRatio;
-            //var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
-            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
+            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
+            // var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
             this.quan_button = wx.createGameClubButton({
                 icon: 'white',
                 style: {
@@ -3487,80 +3488,80 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-b9e3b716f84a52de'});
-            this.rewardedVideoAd.onLoad(function(){
-                console.log('激励视频 广告加载成功')
-            });
-            this.rewardedVideoAd.onClose(function(res){
-                // 用户点击了【关闭广告】按钮
-                // 小于 2.1.0 的基础库版本，res 是一个 undefined
-                if (res && res.isEnded || res === undefined) {
-                    if(self.GAME.VIDEOAD_TYPE == 1)
-                    {
-                        var coin = storage.getStorageCoin();
-                        coin = parseInt(coin) + 100;
-                        storage.setStorageCoin(coin);
-                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                        self.uploadData();
+            // this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-b9e3b716f84a52de'});
+            // this.rewardedVideoAd.onLoad(function(){
+            //     console.log('激励视频 广告加载成功')
+            // });
+            // this.rewardedVideoAd.onClose(function(res){
+            //     // 用户点击了【关闭广告】按钮
+            //     // 小于 2.1.0 的基础库版本，res 是一个 undefined
+            //     if (res && res.isEnded || res === undefined) {
+            //         if(self.GAME.VIDEOAD_TYPE == 1)
+            //         {
+            //             var coin = storage.getStorageCoin();
+            //             coin = parseInt(coin) + 100;
+            //             storage.setStorageCoin(coin);
+            //             self.node_main_coin.getComponent("cc.Label").string = coin+"";
+            //             self.uploadData();
 
-                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                        self.node_main_lingqu_time.active = true;
-                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+            //             self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+            //             self.node_main_lingqu_time.active = true;
+            //             self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                        storage.setStorageVideoTime(30);
+            //             storage.setStorageVideoTime(30);
 
-                        if(cc.isValid(self.node_coin))
-                            self.node_coin.updateUI();
+            //             if(cc.isValid(self.node_coin))
+            //                 self.node_coin.updateUI();
 
-                        self.res.showToast("金币+100");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 3)
-                    {
-                        storage.setStorageHasZhanShi(1);
-                        self.node_zhanshi.updateUI();
-                    }
-                }
-                else {
-                    // 播放中途退出，不下发游戏奖励
-                    if(self.GAME.VIDEOAD_TYPE == 1)
-                        self.res.showToast("金币获取失败");
-                }
-                storage.resumeMusic();
-            });
+            //             self.res.showToast("金币+100");
+            //         }
+            //         else if(self.GAME.VIDEOAD_TYPE == 3)
+            //         {
+            //             storage.setStorageHasZhanShi(1);
+            //             self.node_zhanshi.updateUI();
+            //         }
+            //     }
+            //     else {
+            //         // 播放中途退出，不下发游戏奖励
+            //         if(self.GAME.VIDEOAD_TYPE == 1)
+            //             self.res.showToast("金币获取失败");
+            //     }
+            //     storage.resumeMusic();
+            // });
 
-            this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
-            this.rewardedVideoAd2.onLoad(function(){
-                console.log('激励视频 广告加载成功')
-            });
-            this.rewardedVideoAd2.onClose(function(res){
-                // 用户点击了【关闭广告】按钮
-                // 小于 2.1.0 的基础库版本，res 是一个 undefined
-                if (res && res.isEnded || res === undefined) {
-                    if(self.GAME.VIDEOAD_TYPE == 2)
-                    {
-                        self.fuhuo(false,false,true);
-                        self.res.showToast("复活成功");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 3)
-                    {
-                        storage.setStorageHasZhanShi(1);
-                        self.node_zhanshi.updateUI();
-                    }
-                }
-                else {
-                    // 播放中途退出，不下发游戏奖励
-                    if(self.GAME.VIDEOAD_TYPE == 2)
-                    {
-                        self.res.showToast("复活失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 3)
-                    {
-                        self.res.showToast("体验失败");
-                    }
+            // this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
+            // this.rewardedVideoAd2.onLoad(function(){
+            //     console.log('激励视频 广告加载成功')
+            // });
+            // this.rewardedVideoAd2.onClose(function(res){
+            //     // 用户点击了【关闭广告】按钮
+            //     // 小于 2.1.0 的基础库版本，res 是一个 undefined
+            //     if (res && res.isEnded || res === undefined) {
+            //         if(self.GAME.VIDEOAD_TYPE == 2)
+            //         {
+            //             self.fuhuo(false,false,true);
+            //             self.res.showToast("复活成功");
+            //         }
+            //         else if(self.GAME.VIDEOAD_TYPE == 3)
+            //         {
+            //             storage.setStorageHasZhanShi(1);
+            //             self.node_zhanshi.updateUI();
+            //         }
+            //     }
+            //     else {
+            //         // 播放中途退出，不下发游戏奖励
+            //         if(self.GAME.VIDEOAD_TYPE == 2)
+            //         {
+            //             self.res.showToast("复活失败");
+            //         }
+            //         else if(self.GAME.VIDEOAD_TYPE == 3)
+            //         {
+            //             self.res.showToast("体验失败");
+            //         }
 
-                }
-                storage.resumeMusic();
-            });
+            //     }
+            //     storage.resumeMusic();
+            // });
 
 
 
@@ -3573,22 +3574,22 @@ cc.Class({
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(type == 1)
-            {
-                this.rewardedVideoAd.show().catch(function(err){
-                    self.rewardedVideoAd.load().then(function(){
-                        self.rewardedVideoAd.show();
-                    });
-                });
-            }
-            else
-            {
-                this.rewardedVideoAd2.show().catch(function(err){
-                    self.rewardedVideoAd2.load().then(function(){
-                        self.rewardedVideoAd2.show();
-                    });
-                });
-            }
+            // if(type == 1)
+            // {
+            //     this.rewardedVideoAd.show().catch(function(err){
+            //         self.rewardedVideoAd.load().then(function(){
+            //             self.rewardedVideoAd.show();
+            //         });
+            //     });
+            // }
+            // else
+            // {
+            //     this.rewardedVideoAd2.show().catch(function(err){
+            //         self.rewardedVideoAd2.load().then(function(){
+            //             self.rewardedVideoAd2.show();
+            //         });
+            //     });
+            // }
         }
         else
         {
@@ -3623,6 +3624,8 @@ cc.Class({
 
     wxBannerShow: function()
     {
+        return;
+
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -3651,6 +3654,7 @@ cc.Class({
 
     wxBannerHide: function()
     {
+        return;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             if(this.bannerAd)

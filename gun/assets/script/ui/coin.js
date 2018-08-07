@@ -75,7 +75,8 @@ cc.Class({
         }
         else if(data == "vediocoin")
         {
-            this.main.wxVideoShow(1);
+            this.res.showToast("该功能还未开启!");
+            // this.main.wxVideoShow(1);
         }
         cc.log(data);
     }

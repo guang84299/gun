@@ -114,12 +114,13 @@ cc.Class({
         {
             this.wxGropShareFuhuo();
             this.main.qianqista.event("fuhuo_coin");
-            this.hide();
+            
         }
         else if(data == "fuhuo_video")
         {
-            this.main.wxVideoShow(2);
-            this.main.qianqista.event("fuhuo_video");
+            this.res.showToast("该功能还未开启！");
+            // this.main.wxVideoShow(2);
+            // this.main.qianqista.event("fuhuo_video");
         }
         else if(data == "fuhuo_xuming")
         {
@@ -142,6 +143,7 @@ cc.Class({
             storage.setStorageCoin(coinnum);
             this.main.fuhuo(false,true,false);
             this.main.uploadData();
+            this.hide();
         }
         else
         {

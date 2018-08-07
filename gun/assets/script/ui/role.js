@@ -50,7 +50,7 @@ cc.Class({
         if(this.main.GAME.sharecard == 1)
             this.node_roleyaoqing.active = true;
         else
-            his.node_roleyaoqing.active = false;
+            this.node_roleyaoqing.active = false;
         this.node_role_center.height = s.height - 335;
         this.node_role_center.color = this.main.ltcolor;
 

@@ -40,7 +40,7 @@ cc.Class({
         this.node_over_more = cc.find("more",this.node_over);
         this.node_over_more2 = cc.find("more2",this.node_over);
 
-        this.updateControl();
+        // this.updateControl();
         // this.updateUI();
     },
 

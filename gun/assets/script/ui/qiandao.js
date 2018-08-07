@@ -49,23 +49,33 @@ cc.Class({
         {
             var item = cc.find("bg/item_" + i, this.node_qiandao);
             var state = cc.find("state",item);
+            var sp = cc.find("sp",item);
+            var num = cc.find("num",item);
             item.riqiId = i;
             item.canset = false;
 
+            state.active = false;
+            sp.active = false;
+            num.active = false;
             if(i<currQianDao)
             {
-                item.color = cc.color(100,100,100);
-                state.getComponent("cc.Label").string = "已领取";
+                state.active = true;
+                // item.color = cc.color(100,100,100);
+                // state.getComponent("cc.Label").string = "已领取";
             }
             else if(i==currQianDao && now != currQianDaoTime)
             {
+                sp.active = true;
+                num.active = true;
                 item.color = cc.color(243,180,69);
-                state.getComponent("cc.Label").string = "待领取";
+                // state.getComponent("cc.Label").string = "待领取";
                 item.canset = true;
             }
             else
             {
-                state.getComponent("cc.Label").string = "未领取";
+                sp.active = true;
+                num.active = true;
+                // state.getComponent("cc.Label").string = "未领取";
             }
         }
     },

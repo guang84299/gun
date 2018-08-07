@@ -52,7 +52,7 @@ cc.Class({
         var s = cc.winSize;
         var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
 
-        if(this.main.GAME.sharecard == 1 && index != 2)
+        if(this.main.GAME.sharecard == 1 && index != 1)
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
@@ -71,23 +71,15 @@ cc.Class({
         this.node_gun_score.getComponent("cc.Label").string = storage.getStorageScore();
         this.node_gun_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
-        cc.find("gunjiesuo/coinbg",this.node_gun).color = this.main.ltcolor;
-        cc.find("gunjiesuo/txt",this.node_gun).color = this.main.ltcolor;
         var jscoin = cc.find("gunjiesuo/coin",this.node_gun);
-        jscoin.color = this.main.ltcolor;
         
         if(index == 0)
             jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
         else
             jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*50 + 750);
 
-        cc.find("roleyaoqing/coinbg",this.node_gun).color = this.main.ltcolor;
-        cc.find("roleyaoqing/txt",this.node_gun).color = this.main.ltcolor;
-        cc.find("roleyaoqing/txt2",this.node_gun).color = this.main.ltcolor;
-        cc.find("roleyaoqing/coin",this.node_gun).color = this.main.ltcolor;
-
         var currGun = storage.getStorageCurrGun();
-        for(var i=1;i<=19;i++)
+        for(var i=1;i<=10;i++)
         {
             if(i == 10)
                 continue;
@@ -100,35 +92,39 @@ cc.Class({
             }
             var box1 = cc.find("box_1",item);
             var box2 = cc.find("box_2",item);
+            var box3 = cc.find("box_3",item);
             var txt1 = cc.find("txt1",item);
             var txt2 = cc.find("txt2",item);
             item.gunId = i;
 
-            txt1.color = cc.color(255,255,255);
-            if(txt2)
-                txt2.color = cc.color(255,255,255);
+            box1.active = false;
+            box2.active = false;
+            box3.active = false;
+            // txt1.color = cc.color(255,255,255);
+            // if(txt2)
+            //     txt2.color = cc.color(255,255,255);
 
             if(i == currGun)
             {
-                box1.active = false;
                 box2.active = true;
-                box2.color = cc.color(243,180,69);
+                // box2.color = cc.color(243,180,69);
             }
             else
             {
-                box1.active = true;
-                box2.active = false;
+                
                 if(storage.getStorageGun(i) == 1)
                 {
-                    box1.color = cc.color(243,180,69);
+                    box3.active = true;
+                    // box1.color = cc.color(243,180,69);
                     item.canset = true;
                 }
                 else
                 {
-                    box1.color = cc.color(100,100,100);
-                    txt1.color = cc.color(100,100,100);
-                    if(txt2)
-                        txt2.color = cc.color(100,100,100);
+                    box1.active = true;
+                    // box1.color = cc.color(100,100,100);
+                    // txt1.color = cc.color(100,100,100);
+                    // if(txt2)
+                    //     txt2.color = cc.color(100,100,100);
                     item.canset = false;
                 }
             }
@@ -162,8 +158,8 @@ cc.Class({
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
             if(index == 0)
                 this.gunjiesuo();
-            else if(index == 1)
-                this.gunjiesuo2();
+            // else if(index == 1)
+            //     this.gunjiesuo2();
         }
         else if(data == "gunitem")
         {
@@ -185,7 +181,7 @@ cc.Class({
         if(data == "page_gun")
         {
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
-            if(index != 2)
+            if(index != 1)
             {
                 if(this.main.GAME.fangdanyi)
                 {
@@ -254,7 +250,7 @@ cc.Class({
                                 storage.playSound(self.res.audio_rand);
                             }),
                             cc.delayTime(0.1),
-                            cc.tintTo(0,100,100,100)
+                            cc.tintTo(0,255,255,255)
                         );
                         dt += 0.2;
                         box.runAction(seq);
@@ -336,7 +332,7 @@ cc.Class({
                                 storage.playSound(self.res.audio_rand);
                             }),
                             cc.delayTime(0.1),
-                            cc.tintTo(0,100,100,100)
+                            cc.tintTo(0,255,255,255)
                         );
                         dt += 0.2;
                         box.runAction(seq);
@@ -396,11 +392,15 @@ cc.Class({
         for(var i=1;i<=7;i++)
         {
             var item = cc.find("riqi/riqi"+i,this.node_gun_page3);
+            var gou = cc.find("gou",item);
             item.riqiId = i;
             item.canset = false;
+
+            gou.active = false;
             if(i<currQianDao)
             {
-                item.color = cc.color(100,100,100);
+                // item.color = cc.color(100,100,100);
+                gou.active = true;
             }
             else if(i==currQianDao)
             {
@@ -412,26 +412,30 @@ cc.Class({
         var currGun = storage.getStorageCurrGun();
         var box1 = cc.find("box_1",this.node_gun_page3);
         var box2 = cc.find("box_2",this.node_gun_page3);
+        var box3 = cc.find("box_3",this.node_gun_page3);
         this.node_gun_page3.gunId = 10;
+
+        box1.active = false;
+        box2.active = false;
+        box3.active = false;
 
         if(10 == currGun)
         {
-            box1.active = false;
             box2.active = true;
-            box2.color = cc.color(243,180,69);
+            // box2.color = cc.color(243,180,69);
         }
         else
         {
-            box1.active = true;
-            box2.active = false;
             if(storage.getStorageGun(10) == 1)
             {
-                box1.color = cc.color(243,180,69);
+                box3.active = true;
+                // box1.color = cc.color(243,180,69);
                 this.node_gun_page3.canset = true;
             }
             else
             {
-                box1.color = cc.color(100,100,100);
+                box1.active = true;
+                // box1.color = cc.color(100,100,100);
                 this.node_gun_page3.canset = false;
             }
         }

@@ -66,9 +66,14 @@ cc.Class({
             var item = cc.find("item_"+i,this.node_chengjiu_scroll_content);
             var lnum = cc.find("num",item);
             var box = cc.find("box",item);
+            var box2 = cc.find("box2",box);
+            var box3 = cc.find("box3",box);
             var award = cc.find("award",box);
             var curr = cc.find("curr",box);
             box.cjid = i;
+
+            box2.active = false;
+            box3.active = false;
             if(i == 1)
             {
                 var num = storage.getStorageHitEnemyNum();
@@ -88,16 +93,12 @@ cc.Class({
                 box.canset = false;
                 if(isend)
                 {
-                    box.color = cc.color(181,181,181);
+                    box2.active = true;
                 }
                 else if(num >= data.num)
                 {
-                    box.color = cc.color(143,195,31);
+                    box3.active = true;
                     box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
                 }
             }
             else if(i == 2)
@@ -119,17 +120,14 @@ cc.Class({
                 box.canset = false;
                 if(isend)
                 {
-                    box.color = cc.color(181,181,181);
+                    box2.active = true;
                 }
                 else if(num >= data.num)
                 {
-                    box.color = cc.color(143,195,31);
+                    box3.active = true;
                     box.canset = true;
                 }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
+  
             }
             else if(i == 3)
             {
@@ -150,16 +148,12 @@ cc.Class({
                 box.canset = false;
                 if(isend)
                 {
-                    box.color = cc.color(181,181,181);
+                    box2.active = true;
                 }
                 else if(num >= data.num)
                 {
-                    box.color = cc.color(143,195,31);
+                    box3.active = true;
                     box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
                 }
             }
             else if(i == 4)
@@ -182,16 +176,12 @@ cc.Class({
                 box.canset = false;
                 if(isend)
                 {
-                    box.color = cc.color(181,181,181);
+                    box2.active = true;
                 }
                 else if(num >= data.num)
                 {
-                    box.color = cc.color(143,195,31);
+                    box3.active = true;
                     box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
                 }
             }
             else if(i == 5)
@@ -213,16 +203,12 @@ cc.Class({
                 box.canset = false;
                 if(isend)
                 {
-                    box.color = cc.color(181,181,181);
+                    box2.active = true;
                 }
                 else if(num >= data.num)
                 {
-                    box.color = cc.color(143,195,31);
+                    box3.active = true;
                     box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
                 }
             }
         }

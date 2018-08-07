@@ -65,14 +65,7 @@ cc.Class({
 
         this.node_role_score.getComponent("cc.Label").string = storage.getStorageScore();
         this.node_role_coin.getComponent("cc.Label").string = storage.getStorageCoin();
-        cc.find("rolejiesuo/coinbg",this.node_role).color = this.main.ltcolor;
-        cc.find("rolejiesuo/txt",this.node_role).color = this.main.ltcolor;
-        cc.find("rolejiesuo/coin",this.node_role).color = this.main.ltcolor;
 
-        cc.find("roleyaoqing/coinbg",this.node_role).color = this.main.ltcolor;
-        cc.find("roleyaoqing/txt",this.node_role).color = this.main.ltcolor;
-        cc.find("roleyaoqing/txt2",this.node_role).color = this.main.ltcolor;
-        cc.find("roleyaoqing/coin",this.node_role).color = this.main.ltcolor;
 
         var currPlayer = storage.getStorageCurrPlayer();
         for(var i=1;i<=9;i++)
@@ -80,35 +73,38 @@ cc.Class({
             var item = cc.find("item_"+i,this.node_role_page1);
             var box1 = cc.find("box_1",item);
             var box2 = cc.find("box_2",item);
+            var box3 = cc.find("box_3",item);
             var txt1 = cc.find("txt1",item);
             var txt2 = cc.find("txt2",item);
 
-            txt1.color = cc.color(255,255,255);
-            if(txt2)
-                txt2.color = cc.color(255,255,255);
+            box1.active = false;
+            box2.active = false;
+            box3.active = false;
+            // txt1.color = cc.color(255,255,255);
+            // if(txt2)
+            //     txt2.color = cc.color(255,255,255);
 
             item.playerId = i;
             if(i == currPlayer)
             {
-                box1.active = false;
                 box2.active = true;
-                box2.color = cc.color(82,175,226);
+                // box2.color = cc.color(82,175,226);
             }
             else
             {
-                box1.active = true;
-                box2.active = false;
                 if(storage.getStoragePlayer(i) == 1)
                 {
-                    box1.color = cc.color(82,175,226);
+                    // box1.color = cc.color(82,175,226);
+                    box3.active = true;
                     item.canset = true;
                 }
                 else
                 {
-                    box1.color = cc.color(100,100,100);
-                    txt1.color = cc.color(100,100,100);
-                    if(txt2)
-                        txt2.color = cc.color(100,100,100);
+                    box1.active = true;
+                    // box1.color = cc.color(100,100,100);
+                    // txt1.color = cc.color(100,100,100);
+                    // if(txt2)
+                    //     txt2.color = cc.color(100,100,100);
                     item.canset = false;
                 }
             }
@@ -199,7 +195,7 @@ cc.Class({
                                 storage.playSound(self.res.audio_rand);
                             }),
                             cc.delayTime(0.1),
-                            cc.tintTo(0,100,100,100)
+                            cc.tintTo(0,255,255,255)
                         );
                         dt += 0.2;
                         box.runAction(seq);

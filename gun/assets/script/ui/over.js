@@ -55,8 +55,6 @@ cc.Class({
         this.node_over_coin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);
         this.node_over_score.getComponent("cc.Label").string = parseInt(this.main.GAME.score);
         this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";
-        cc.find("change/sp",this.node_over).color = this.main.ltcolor;
-        cc.find("change/txt",this.node_over).color = this.main.ltcolor;
         cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
         cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
         cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();

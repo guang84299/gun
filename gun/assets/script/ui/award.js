@@ -49,23 +49,30 @@ cc.Class({
             {
                 var item = cc.find("item_"+i,this.node_award_itembg);
                 var box = cc.find("box",item);
+                var box2 = cc.find("box2",box);
+                var box3 = cc.find("box3",box);
                 box.awardid = i;
                 box.canset = false;
+
+                box2.active = false;
+                box3.active = false;
                 if(inviteAwardNum<i)
                 {
                     if(inviteNum>=i)
                     {
-                        box.color = cc.color(137,87,161);
+                        // box.color = cc.color(137,87,161);
+                        box2.active = true;
                         box.canset = true;
                     }
                     else
                     {
-                        box.color = cc.color(255,255,255);
+                        // box.color = cc.color(255,255,255);
                     }
                 }
                 else
                 {
-                    box.color = cc.color(181,181,181);
+                    box3.active = true;
+                    // box.color = cc.color(181,181,181);
                 }
             }
         }
@@ -76,24 +83,31 @@ cc.Class({
                 var item = cc.find("item_"+i,this.node_award_itembg);
                 var box = cc.find("box",item);
                 var coin = cc.find("coin",box);
+                var box2 = cc.find("box2",box);
+                var box3 = cc.find("box3",box);
                 coin.getComponent("cc.Label").string = this.res.inviteconfig[i-1]*2;
                 box.awardid = i;
                 box.canset = false;
+
+                box2.active = false;
+                box3.active = false;
                 if(inviteAwardNum<i+5)
                 {
                     if(inviteNum>=i+5)
                     {
-                        box.color = cc.color(137,87,161);
+                        box2.active = true;
+                        // box.color = cc.color(137,87,161);
                         box.canset = true;
                     }
                     else
                     {
-                        box.color = cc.color(255,255,255);
+                        // box.color = cc.color(255,255,255);
                     }
                 }
                 else
                 {
-                    box.color = cc.color(181,181,181);
+                    box3.active = true;
+                    // box.color = cc.color(181,181,181);
                 }
             }
         }
@@ -214,9 +228,12 @@ cc.Class({
         }
         else
         {
-            var cardnum = storage.getStorageCoin();
-            cardnum = parseInt(cardnum) + 100;
-            storage.setStorageCoin(cardnum);
+             var inviteNum = storage.getStorageInviteNum();
+             storage.setStorageInviteNum(inviteNum+1);
+             this.updateUI();
+            // var cardnum = storage.getStorageCoin();
+            // cardnum = parseInt(cardnum) + 100;
+            // storage.setStorageCoin(cardnum);
             // self.node_role.updateCoin(cardnum);
             // self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
         }

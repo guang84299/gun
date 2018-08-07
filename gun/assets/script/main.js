@@ -144,24 +144,24 @@ cc.Class({
             storage.setStorageCard(2);
         }
 
-        //for(var i=1;i<=9;i++)
+        // for(var i=1;i<=9;i++)
         //    storage.setStoragePlayer(i,0);
-        //for(var i=10;i<=19;i++)
+        // for(var i=1;i<=19;i++)
         //    storage.setStorageGun(i,0);
         storage.setStoragePlayer(1);
         storage.setStorageGun(1);
-        //storage.setStorageCoin(0);
+        // storage.setStorageCoin(1000);
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
-        // storage.setStorageQianDao(0);
+        // storage.setStorageQianDao(6);
         // storage.setStorageQianDaoTime(-1);
         //storage.setStorageYindao(0);
         //storage.setStorageGunJieSuoNum(1);
-        //storage.setStorageRoleJieSuoNum(4);
+        // storage.setStorageRoleJieSuoNum(10);
         // cc.sys.localStorage.setItem("playnum",0);
-        // storage.setStorageInviteNum(5);
-        // storage.setStorageInviteAwardNum(4);
+        storage.setStorageInviteNum(0);
+        storage.setStorageInviteAwardNum(0);
 
         // storage.setStorageGunInviteNum(1);
         // storage.setStorageGunInviteAwardNum(0);
@@ -245,7 +245,7 @@ cc.Class({
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
-                        cc.find("linggunbg",this.node_main).active = true;
+                        // cc.find("linggunbg",this.node_main).active = true;
                         this.GAME.fangdanyi = true;
                         this.GAME.sharecard = true;
                     }
@@ -727,8 +727,9 @@ cc.Class({
         }
         else if(data == "adlingqu")
         {
-            this.wxVideoShow(1);
-            qianqista.event("main_video");
+            this.res.showToast("敬请期待！");
+            // this.wxVideoShow(1);
+            // qianqista.event("main_video");
         }
         else if(data == "zhanshi")
         {
@@ -837,7 +838,7 @@ cc.Class({
     {
         var qiandao_dian = cc.find("qiandao/dian",this.node_main);
         var lingjiang_dian = cc.find("lingjiang/dian",this.node_main);
-        var chengjiu_dian = cc.find("bottom/chengjiu/dian",this.node_main);
+        var chengjiu_dian = cc.find("chengjiu/dian",this.node_main);
         
 
         qiandao_dian.active = false;

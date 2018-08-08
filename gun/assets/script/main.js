@@ -74,6 +74,7 @@ cc.Class({
              }
          });
          cc.winSize.width;
+         
          // cc.game.setFrameRate(50);
      },
 

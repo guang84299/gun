@@ -73,10 +73,10 @@ module.exports = {
         this.secret = secret;
         this.gameName = gameName;
         this.initcallback = initcallback;
-        var self = this;
+        var self = this;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var opts = wx.getLaunchOptionsSync();
+            var opts = wx.getLaunchOptionsSync();cc.winSize.width;
             if(opts)
             {
                 var path = opts.path;
@@ -102,7 +102,7 @@ module.exports = {
 
                 if(query && query.fromid && query.fromid.length > 0)
                 {
-                    this.fromid = query.fromid;
+                    this.fromid = query.fromid;cc.winSize.width;
                     console.log('fromid:', query.fromid);
                 }
                 var sto_channel = cc.sys.localStorage.getItem("channel");
@@ -110,12 +110,12 @@ module.exports = {
                     cc.sys.localStorage.setItem("channel",this.channel);
             }
 
-            console.log('opts:', opts);
-            console.log('channel:', this.channel);
+            console.log('opts:', opts);cc.winSize.width;
+            console.log('channel:', this.channel);cc.winSize.width;
 
             wx.onShow(function(res){
-                self.open();
-                console.log('onShow:', res);
+                self.open();cc.winSize.width;
+                console.log('onShow:', res);cc.winSize.width;
             });
         }
 
@@ -126,21 +126,21 @@ module.exports = {
         if(isSuccess)
         {
             if(!userInfo)
-                console.error("--------","userInfo is null");
+                console.error("--------","userInfo is null");cc.winSize.width;
             this.userName = userInfo.nickName;
             this.power = 1;
-            console.log('userName:', this.userName);
-            console.log('power:', this.power);
+            console.log('userName:', this.userName);cc.winSize.width;
+            console.log('power:', this.power);cc.winSize.width;
         }
         else
         {
-            this.updatePower = true;
+            this.updatePower = true;cc.winSize.width;
         }
 
         var self = this;
         this.getOpenId(function(){
             self.state = 1;
-            self.initdata();
+            self.initdata();cc.winSize.width;
             console.log('----init end ----');
         });
     },
@@ -152,9 +152,9 @@ module.exports = {
             var self = this;
             this.sendRequest("init",{gameId:this.gameId,gameName:this.gameName,
                 channel:this.channel,openid:this.openid,userName:this.userName,power:this.power},function(res){
-                console.log("init:",res);
+                console.log("init:",res);cc.winSize.width;
                 if(self.initcallback)
-                    self.initcallback();
+                    self.initcallback();cc.winSize.width;
 
                 //初始化成功上传分享来源获取金币
                 if(self.fromid && self.fromid.length>1)
@@ -167,17 +167,17 @@ module.exports = {
 
                     var datas = JSON.stringify(data);
                     self.sendRequest("uploaddatas",{gameId:self.gameId,openid:self.fromid,datas:datas},function(res){
-                        console.log("upload invitelist:",res);
+                        console.log("upload invitelist:",res);cc.winSize.width;
                     });
                 }
 
             });
             if(this.updatePower && this.power == 1)
             {
-                this.updatePower = false;
+                this.updatePower = false;cc.winSize.width;
                 this.sendRequest("power",{gameId:this.gameId,
                     channel:this.channel,openid:this.openid,power:this.power},function(res){
-                    console.log("power:",res);
+                    console.log("power:",res);cc.winSize.width;
                 });
             }
         }
@@ -188,7 +188,7 @@ module.exports = {
         if(this.state == 1)
         {
             this.sendRequest("open",{gameId:this.gameId,channel:this.channel},function(res){
-                console.log("open:",res);
+                console.log("open:",res);cc.winSize.width;
             });
         }
     },
@@ -199,7 +199,7 @@ module.exports = {
         {
             this.sendRequest("pay",{gameId:this.gameId,channel:this.channel,
                 openid:this.openid,money:money},function(res){
-                console.log("pay:",res);
+                console.log("pay:",res);cc.winSize.width;
             });
         }
     },
@@ -209,12 +209,12 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            var shareNum = 0;
+            var shareNum = 0;cc.winSize.width;
             if(isSuccess)
                 shareNum = 1;
             this.sendRequest("share",{gameId:this.gameId,channel:this.channel,
                 openid:this.openid,share:shareNum},function(res){
-                console.log("share:",res);
+                console.log("share:",res);cc.winSize.width;
             });
         }
     },
@@ -226,7 +226,7 @@ module.exports = {
         {
             this.sendRequest("event",{gameId:this.gameId,channel:this.channel,
                 openid:this.openid,eventId:eventId},function(res){
-                console.log("event:",res);
+                console.log("event:",res);cc.winSize.width;
             });
         }
     },
@@ -235,7 +235,7 @@ module.exports = {
     control: function(callback)
     {
         this.sendRequest("control",{gameId:this.gameId},function(res){
-            console.log("control:",res);
+            console.log("control:",res);cc.winSize.width;
             if(callback)
                 callback(res);
         });
@@ -247,7 +247,7 @@ module.exports = {
         if(this.state == 1)
         {
             this.sendRequest("datas",{gameId:this.gameId,openid:this.openid},function(res){
-                console.log("datas:",res);
+                console.log("datas:",res);cc.winSize.width;
                 if(callback)
                     callback(res);
             });
@@ -260,7 +260,7 @@ module.exports = {
         if(this.state == 1)
         {
             this.httpPost("uploaddatas",{gameId:this.gameId,openid:this.openid,datas:datas},function(res){
-                console.log("uploaddatas:",res);
+                console.log("uploaddatas:",res);cc.winSize.width;
                 if(callback)
                     callback(res);
             });
@@ -275,19 +275,19 @@ module.exports = {
             wx.login({
                 success: function(res)
                 {
-                    console.log('login:', res);
+                    console.log('login:', res);cc.winSize.width;
                     self.sendRequest("jscode2session",{gameId:self.gameId,gameSecret:self.secret,jsCode:res.code},function(r){
                         if(r.state == 200)
                         {
                             var msg = JSON.parse(r.msg);
                             self.session_key = msg.session_key;
-                            self.openid = msg.openid;
+                            self.openid = msg.openid;cc.winSize.width;
 
                             console.log('openid:', self.openid);
                             if(callback)
                                 callback();
                         }
-                        console.log('jscode2session:', r);
+                        console.log('jscode2session:', r);cc.winSize.width;
                     });
                 }
             });
@@ -312,16 +312,16 @@ module.exports = {
                         {
                             if(b == true)
                             {
-                                callback(b,msg.openGId,msg.watermark.timestamp*1000);
+                                callback(b,msg.openGId,msg.watermark.timestamp*1000);cc.winSize.width;
                             }
                             else
                             {
-                                callback(b);
+                                callback(b);cc.winSize.width;
                             }
                         }
 
                     }
-                    console.log('groupid:', r);
+                    console.log('groupid:', r);cc.winSize.width;
                 });
             }
         }
@@ -338,16 +338,16 @@ module.exports = {
             params += k + "=" + data[k];
         }
         var requestURL = this.url + path + encodeURI(params);
-        console.log("RequestURL:" + requestURL);
+        console.log("RequestURL:" + requestURL);cc.winSize.width;
 
-        xhr.open("GET", requestURL, true);
+        xhr.open("GET", requestURL, true);cc.winSize.width;
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
                 try {
                     var ret = JSON.parse(xhr.responseText);
                     if (handler !== null) {
-                        handler(ret);
+                        handler(ret);cc.winSize.width;
                     }
                 } catch (e) {
                     console.log("sendRequest Err:" + e);
@@ -359,11 +359,11 @@ module.exports = {
         xhr.timeout = 5000; // 5 seconds for timeout
         // var btoa = btoa("test:test");
         var btoa = require('buffer').Buffer.from('test:test').toString('base64');
-        xhr.setRequestHeader("Authorization", "Basic " + btoa);
+        xhr.setRequestHeader("Authorization", "Basic " + btoa);cc.winSize.width;
         if (cc.sys.isNative) {
             xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
         }
-        xhr.send();
+        xhr.send();cc.winSize.width;
         return xhr;
     },
 
@@ -376,21 +376,21 @@ module.exports = {
                 try {
                     var ret = JSON.parse(xhr.responseText);
                     if (handler !== null) {
-                        handler(ret);
+                        handler(ret);cc.winSize.width;
                     }
                 } catch (e) {
                     console.log("sendRequest Err:" + e);
                 } finally {}
             }
         };
-        xhr.open("POST", requestURL, true);
+        xhr.open("POST", requestURL, true);cc.winSize.width;
         if (cc.sys.isNative) {
             xhr.setRequestHeader("Accept-Encoding", "gzip,deflate");
         }
 
         // note: In Internet Explorer, the timeout property may be set only after calling the open()
         // method and before calling the send() method.
-        xhr.timeout = 5000;// 5 seconds for timeout
+        xhr.timeout = 5000;cc.winSize.width;// 5 seconds for timeout
 
         xhr.send(params);
     }

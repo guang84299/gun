@@ -250,7 +250,7 @@ cc.Class({
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.1},
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2},
             {speed:1.5,coin:1,fire:0,aimLen:1.2,aimSpeed:1.1}
-        ];
+        ];cc.winSize.width;
 
         this.enemysconfig = [
             {type:1,color:cc.color(42,254,182)},
@@ -268,7 +268,7 @@ cc.Class({
             {type:3,color:cc.color(240,42,60)},
             {type:3,color:cc.color(120,56,251)},
             {type:3,color:cc.color(221,88,254)}
-        ];
+        ];cc.winSize.width;
 
         this.gunsconfig = [
             {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
@@ -291,14 +291,14 @@ cc.Class({
             {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:3,coin:2},
             {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
             {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2}
-        ];
+        ];cc.winSize.width;
 
         this.bgcolor = [cc.color(140,31,57),cc.color(110,24,128),cc.color(25,112,133),cc.color(136,110,94),
             cc.color(89,89,89),cc.color(132,131,172),cc.color(134,152,118),cc.color(149,149,149),
             cc.color(24,128,93),cc.color(122,28,24),cc.color(24,95,128),cc.color(149,140,46),
-            cc.color(208,163,162),cc.color(107,133,148),cc.color(86,127,22)];
+            cc.color(208,163,162),cc.color(107,133,148),cc.color(86,127,22)];cc.winSize.width;
 
-        this.qiandaoconfig = [20,20,30,30,40,50,100];
+        this.qiandaoconfig = [20,20,30,30,40,50,100];cc.winSize.width;
 
         this.chengjiuconfig = {
             hitenemy:[{num:100,coin:10},{num:200,coin:20},{num:500,coin:30},{num:1000,coin:50},{num:5000,coin:100},{num:10000,coin:200}],
@@ -306,11 +306,11 @@ cc.Class({
             hitboss:[{num:20,coin:10},{num:50,coin:20},{num:100,coin:30},{num:200,coin:50},{num:500,coin:100},{num:1000,coin:200}],
             jiesuogun:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100},{num:10,coin:200},{num:12,coin:300},{num:14,coin:300},{num:16,coin:300}],
             jiesuorole:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}]
-        };
+        };cc.winSize.width;
 
-        this.inviteconfig = [50,70,80,100,600];
+        this.inviteconfig = [50,70,80,100,600];cc.winSize.width;
 
-        this.GAME = {};
+        this.GAME = {};cc.winSize.width;
 
         this.GAME.loutis = [
             [
@@ -484,7 +484,7 @@ cc.Class({
                 [2,2,0]
             ]
 
-        ];
+        ];cc.winSize.width;
     
     },
 
@@ -661,39 +661,39 @@ cc.Class({
                     [1,5,0],
                     [2,2,1]
                 ]
-            ];
+            ];cc.winSize.width;
     },
 
     showToast: function(str)
     {
-        var toast = cc.instantiate(this.toast);
-        cc.find("label",toast).getComponent("cc.Label").string = str;
-        toast.opacity = 0;
-        this.node.addChild(toast,1000);
+        var toast = cc.instantiate(this.toast);cc.winSize.width;
+        cc.find("label",toast).getComponent("cc.Label").string = str;cc.winSize.width;
+        toast.opacity = 0;cc.winSize.width;
+        this.node.addChild(toast,1000);cc.winSize.width;
 
         var seq = cc.sequence(
             cc.fadeIn(0.5),
             cc.delayTime(2),
             cc.fadeOut(0.5),
             cc.removeSelf()
-        );
-        toast.runAction(seq);
+        );cc.winSize.width;
+        toast.runAction(seq);cc.winSize.width;
     },
 
     showToastCJ: function()
     {
-        var toast = cc.instantiate(this.toast_cj);
-        toast.opacity = 0;
-        toast.y = cc.winSize.height/2 - 50;
-        this.node.addChild(toast,1000);
+        var toast = cc.instantiate(this.toast_cj);cc.winSize.width;
+        toast.opacity = 0;cc.winSize.width;
+        toast.y = cc.winSize.height/2 - 50;cc.winSize.width;
+        this.node.addChild(toast,1000);cc.winSize.width;
 
         var seq = cc.sequence(
             cc.fadeIn(0.5),
             cc.delayTime(2),
             cc.fadeOut(0.5),
             cc.removeSelf()
-        );
-        toast.runAction(seq);
+        );cc.winSize.width;
+        toast.runAction(seq);cc.winSize.width;
     }
 
 });

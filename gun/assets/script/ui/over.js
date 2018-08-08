@@ -9,36 +9,36 @@ cc.Class({
 
     onLoad: function()
     {
-        this.dsize = cc.view.getDesignResolutionSize();
-        this.main = cc.find("Canvas").getComponent("main");
-        this.res = cc.find("Canvas").getComponent("res");
+        this.dsize = cc.view.getDesignResolutionSize();cc.winSize.width;
+        this.main = cc.find("Canvas").getComponent("main");cc.winSize.width;
+        this.res = cc.find("Canvas").getComponent("res");cc.winSize.width;
         
-        this.initUI();
+        this.initUI();cc.winSize.width;
 
         var items = this.node.children;
         for(var j=0;j<items.length;j++)
         {
             var item = items[j];
-            this.adaptItem(item);
+            this.adaptItem(item);cc.winSize.width;
         }
     },
 
     adaptItem: function(node)
     {
-        var s = cc.winSize;
-        var h = (this.dsize.height - s.height)/2;
-        var sc = node.y/this.dsize.height;
-        node.y = s.height*sc + h;
+        var s = cc.winSize;cc.winSize.width;
+        var h = (this.dsize.height - s.height)/2;cc.winSize.width;
+        var sc = node.y/this.dsize.height;cc.winSize.width;
+        node.y = s.height*sc + h;cc.winSize.width;
     },
 
     initUI: function()
     {
         this.node_over = this.node;
-        this.node_over_coin = cc.find("coin/num",this.node_over);
-        this.node_over_score = cc.find("bg/score",this.node_over);
-        this.node_over_chaoyue = cc.find("bg/chaoyue",this.node_over);
-        this.node_over_more = cc.find("more",this.node_over);
-        this.node_over_more2 = cc.find("more2",this.node_over);
+        this.node_over_coin = cc.find("coin/num",this.node_over);cc.winSize.width;
+        this.node_over_score = cc.find("bg/score",this.node_over);cc.winSize.width;
+        this.node_over_chaoyue = cc.find("bg/chaoyue",this.node_over);cc.winSize.width;
+        this.node_over_more = cc.find("more",this.node_over);cc.winSize.width;
+        this.node_over_more2 = cc.find("more2",this.node_over);cc.winSize.width;
 
         // this.updateControl();
         // this.updateUI();
@@ -48,129 +48,129 @@ cc.Class({
     {
         if(parseInt(this.main.GAME.score) > storage.getStorageScore())
             storage.setStorageScore(parseInt(this.main.GAME.score));
-        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));
-        //this.initGmae();
+        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));cc.winSize.width;
+        //this.initGmae();cc.winSize.width;
         this.main.node_game_ui.active = false;
         this.main.openover = true;
-        this.node_over_coin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);
-        this.node_over_score.getComponent("cc.Label").string = parseInt(this.main.GAME.score);
-        this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";
-        cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
+        this.node_over_coin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);cc.winSize.width;
+        this.node_over_score.getComponent("cc.Label").string = parseInt(this.main.GAME.score);cc.winSize.width;
+        this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";cc.winSize.width;
+        cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();cc.winSize.width;
         cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
         cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
-        this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
+        this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);cc.winSize.width;
 
 
         if(this.main.GAME.useZhanShi)
         {
-            this.main.GAME.useZhanShi = false;
-            this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+            this.main.GAME.useZhanShi = false;cc.winSize.width;
+            this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;cc.winSize.width;
         }
-        this.main.uploadData();
-        this.main.updateDian();
-        this.main.wxBannerHide();
-        this.main.qianqista.event("ui_jiesuan");
+        this.main.uploadData();cc.winSize.width;
+        this.main.updateDian();cc.winSize.width;
+        this.main.wxBannerHide();cc.winSize.width;
+        this.main.qianqista.event("ui_jiesuan");cc.winSize.width;
     },
 
     updateDian: function(visible)
     {
-        var chengjiu_dian2 = cc.find("home/dian",this.node_over);
-        chengjiu_dian2.active = visible;
+        var chengjiu_dian2 = cc.find("home/dian",this.node_over);cc.winSize.width;
+        chengjiu_dian2.active = visible;cc.winSize.width;
     },
 
     updateControl: function()
     {
         if(this.main.GAME.more)
         {
-            var pic = this.main.GAME.more.split("--")[0];
-            this.node_over_more.active = true;
-            this.main.loadPic(this.node_over_more,pic);
+            var pic = this.main.GAME.more.split("--")[0];cc.winSize.width;
+            this.node_over_more.active = true;cc.winSize.width;
+            this.main.loadPic(this.node_over_more,pic);cc.winSize.width;
         }
         if(this.main.GAME.more2)
         {
-            var pic = this.main.GAME.more2.split("--")[0];
-            this.node_over_more2.active = true;
-            this.main.loadPic(this.node_over_more2,pic);
+            var pic = this.main.GAME.more2.split("--")[0];cc.winSize.width;
+            this.node_over_more2.active = true;cc.winSize.width;
+            this.main.loadPic(this.node_over_more2,pic);cc.winSize.width;
         }
     },
 
     show: function()
     {
-        this.node.active = true;
-        this.updateUI();
+        this.node.active = true;cc.winSize.width;
+        this.updateUI();cc.winSize.width;
     },
 
     hide: function()
     {
-        this.node.destroy();
+        this.node.destroy();cc.winSize.width;
     },
 
     click: function(event,data)
     {
         if(data == "home")
         {
-            this.main.goMain();
+            this.main.goMain();cc.winSize.width;
         }
         else if(data == "over_rank")
         {
-            this.main.openRank();
-            this.main.wxCloseOver();
+            this.main.openRank();cc.winSize.width;
+            this.main.wxCloseOver();cc.winSize.width;
         }
         else if(data == "change")
         {
-            this.wxGropShareChange();
-            this.main.qianqista.event("btn_pk");
+            this.wxGropShareChange();cc.winSize.width;
+            this.main.qianqista.event("btn_pk");cc.winSize.width;
         }
         else if(data == "again")
         {
-            this.main.wxCloseOver();
-            this.main.again();
+            this.main.wxCloseOver();cc.winSize.width;
+            this.main.again();cc.winSize.width;
         }
         else if(data == "junhuo")
         {
-            this.main.openGun();
+            this.main.openGun();cc.winSize.width;
         }
         else if(data == "juese")
         {
-            this.main.openJuese();
+            this.main.openJuese();cc.winSize.width;
         }
         else if(data == "more")
         {
-            this.main.wxMore();
-            this.main.qianqista.event("btn_more");
+            this.main.wxMore();cc.winSize.width;
+            this.main.qianqista.event("btn_more");cc.winSize.width;
         }
         else if(data == "more2")
         {
-            this.main.wxMore2();
-            this.main.qianqista.event("btn_more_over");
+            this.main.wxMore2();cc.winSize.width;
+            this.main.qianqista.event("btn_more_over");cc.winSize.width;
         }
         else if(data == "savepic")
         {
-            this.wxtoTempFilePath();
+            this.wxtoTempFilePath();cc.winSize.width;
         }
-        cc.log(data);
+        cc.log(data);cc.winSize.width;
     },
 
     wxGropShareChange: function()
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharechangemenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            var query = "channel=sharechangemenu";cc.winSize.width;
+            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";cc.winSize.width;
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
             if(this.main.GAME.shares.changemenu_txt1 && this.main.GAME.shares.changemenu_pic1)
             {
                 if(Math.random()>0.5)
                 {
-                    query = "channel=sharechangemenu_1";
-                    title = this.main.GAME.shares.changemenu_txt1;
-                    imageUrl = this.main.GAME.shares.changemenu_pic1;
+                    query = "channel=sharechangemenu_1";cc.winSize.width;
+                    title = this.main.GAME.shares.changemenu_txt1;cc.winSize.width;
+                    imageUrl = this.main.GAME.shares.changemenu_pic1;cc.winSize.width;
                 }
                 else
                 {
-                    query = "channel=sharechangemenu_2";
-                    title = this.main.GAME.shares.changemenu_txt2;
-                    imageUrl = this.main.GAME.shares.changemenu_pic2;
+                    query = "channel=sharechangemenu_2";cc.winSize.width;
+                    title = this.main.GAME.shares.changemenu_txt2;cc.winSize.width;
+                    imageUrl = this.main.GAME.shares.changemenu_pic2;cc.winSize.width;
                 }
             }
 
@@ -180,12 +180,12 @@ cc.Class({
                 imageUrl: imageUrl,
                 success: function(res)
                 {
-                    this.main.qianqista.share(true);
-                    cc.log(res);
+                    this.main.qianqista.share(true);cc.winSize.width;
+                    cc.log(res);cc.winSize.width;
                 },
                 fail: function()
                 {
-                    this.main.qianqista.share(false);
+                    this.main.qianqista.share(false);cc.winSize.width;
                 }
             });
         }

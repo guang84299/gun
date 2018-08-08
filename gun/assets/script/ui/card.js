@@ -9,17 +9,17 @@ cc.Class({
 
     onLoad: function()
     {
-        this.dsize = cc.view.getDesignResolutionSize();
-        this.main = cc.find("Canvas").getComponent("main");
-        this.res = cc.find("Canvas").getComponent("res");
+        this.dsize = cc.view.getDesignResolutionSize();cc.winSize.width;
+        this.main = cc.find("Canvas").getComponent("main");cc.winSize.width;
+        this.res = cc.find("Canvas").getComponent("res");cc.winSize.width;
         
-        this.initUI();
+        this.initUI();cc.winSize.width;
 
         var items = this.node.children;
         for(var j=0;j<items.length;j++)
         {
             var item = items[j];
-            this.adaptItem(item);
+            this.adaptItem(item);cc.winSize.width;
         }
     },
 
@@ -33,26 +33,26 @@ cc.Class({
 
     initUI: function()
     {
-        this.node_card = this.node;
-        this.node_card_num = cc.find("bg/cardnum",this.node_card);
+        this.node_card = this.node;cc.winSize.width;
+        this.node_card_num = cc.find("bg/cardnum",this.node_card);cc.winSize.width;
 
-        this.updateUI();
+        this.updateUI();cc.winSize.width;
     },
 
     updateUI: function()
     {
-        this.node_card_num.getComponent("cc.Label").string = storage.getStorageCard();
+        this.node_card_num.getComponent("cc.Label").string = storage.getStorageCard();cc.winSize.width;
     },
 
     show: function()
     {
-        this.node.active = true;
-        this.updateUI();
+        this.node.active = true;cc.winSize.width;
+        this.updateUI();cc.winSize.width;
     },
 
     hide: function()
     {
-        this.node.destroy();
+        this.node.destroy();cc.winSize.width;
     },
 
     click: function(event,data)
@@ -68,16 +68,16 @@ cc.Class({
             // {
                 
             // }
-            this.main.wxQuanState(true);
-            this.hide();
+            this.main.wxQuanState(true);cc.winSize.width;
+            this.hide();cc.winSize.width;
         }
         else if(data == "sendcard")
         {
-            this.main.wxGropShareCard();
-            this.main.qianqista.event("btn_fangdanyi_qiuzu");
+            this.main.wxGropShareCard();cc.winSize.width;
+            this.main.qianqista.event("btn_fangdanyi_qiuzu");cc.winSize.width;
         }
        
-        cc.log(data);
+        cc.log(data);cc.winSize.width;
     }
     
 });

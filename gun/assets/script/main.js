@@ -14,41 +14,48 @@ cc.Class({
 
      onLoad: function() {
          this.dsize = cc.view.getDesignResolutionSize();
+         cc.winSize.width;
          this.tex = new cc.Texture2D();
+         cc.winSize.width;
          this.subdt = 0;
          this.userInfo = {};
          this.uploadScoreDt = 0;
+         cc.winSize.width;
          this.videoTimeDt = 0;
          this.openover = false;
          this.openstore = false;
+         cc.winSize.width;
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
+         cc.winSize.width;
 
          this.initPhysics();
          this.initData();
+         cc.winSize.width;
          this.initUI();
          this.addListener();
 
          this.adapt();
-
+            cc.winSize.width;
          this.wxGetUserInfo();
          this.wxOpenQuan();
-
+         cc.winSize.width;
          storage.playMusic(this.res.audio_bgm);
          storage.preloadSound();
          this.wxVideoLoad();
-
+        cc.winSize.width;
          var self = this;
          qianqista.init("wx3256b6b014a0d069","8ca1f3a153a7906ca0ad9058d5c492a9","王牌枪手",function(){
              qianqista.datas(function(res){
-                 console.log('my datas:', res);
+                 console.log('my datas:', res);cc.winSize.width;
                  if(res.state == 200)
                  {
                      self.updateLocalData(res.data);
                  }
              });
          });
+         cc.winSize.width;
          //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
          //    qianqista.datas(function(res){
          //        console.log('my datas:', res);
@@ -62,11 +69,11 @@ cc.Class({
              console.log('my control:', res);
              if(res.state == 200)
              {
-                 self.GAME.control = res.data;
+                 self.GAME.control = res.data;cc.winSize.width;
                  self.updateUIControl();
              }
          });
-
+         cc.winSize.width;
          // cc.game.setFrameRate(50);
      },
 
@@ -85,6 +92,7 @@ cc.Class({
         //cc.director.getPhysicsManager().attachDebugDrawToCamera(this.GAME.camera);
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
+        cc.winSize.width;
         //manager.enabledDebugDraw = true;
         //manager.enabledDrawBoundingBox = true;
     },
@@ -94,54 +102,64 @@ cc.Class({
         this.tih = 36;
         this.op = [255, 242, 216, 191, 165, 140, 114, 89, 63, 38, 12, 5, 3, 1, 0];
         this.GAME = {};
+        cc.winSize.width;
         this.GAME.control = [];
         this.GAME.xuming = "00:30-00:30";
+        cc.winSize.width;
         this.GAME.linghongbao = 0;
         this.GAME.state = "stop";
+        cc.winSize.width;
 
         this.poolbullets = new cc.NodePool();
         this.poolhits = new cc.NodePool();
+        cc.winSize.width;
         this.poolsmokes = new cc.NodePool();
         this.poolshells = new cc.NodePool();
+        cc.winSize.width;
         this.poolbloods = new cc.NodePool();
         this.poolbigbloods = new cc.NodePool();
         for(var i=0;i<5;i++)
         {
             var bullet_1 = cc.instantiate(this.res.bullet_1);
             this.poolbullets.put(bullet_1);
-
+            cc.winSize.width;
             var hit = cc.instantiate(this.res.hit);
             this.poolhits.put(hit);
-
+            cc.winSize.width;
             var smoke = cc.instantiate(this.res.smoke);
             this.poolsmokes.put(smoke);
-
+cc.winSize.width;
             var shell = cc.instantiate(this.res.shell);
             this.poolshells.put(shell);
-
+            cc.winSize.width;
             var blood = cc.instantiate(this.res.blood);
             this.poolbloods.put(blood);
-
+            cc.winSize.width;
             var bigblood = cc.instantiate(this.res.bigblood);
             this.poolbigbloods.put(bigblood);
+            cc.winSize.width;
         }
         this.poolcoins = new cc.NodePool();
+        cc.winSize.width;
         for(var i=0;i<6;i++)
         {
             var coin = cc.instantiate(this.res.coin);
             this.poolcoins.put(coin);
         }
-
+        cc.winSize.width;
 
 
         if(storage.getStorageFirst() == 0)
         {
             storage.setStorageFirst(1);
             storage.setStorageMusic(1);
+            cc.winSize.width;
             storage.setStorageSound(1);
             storage.setStorageVibrate(1);
+            cc.winSize.width;
             storage.setStorageShareGroupList("groups:");
             storage.setStorageShareGroupTime(-1);
+            cc.winSize.width;
             storage.setStorageCard(2);
         }
 
@@ -151,6 +169,7 @@ cc.Class({
         //    storage.setStorageGun(i,0);
         storage.setStoragePlayer(1);
         storage.setStorageGun(1);
+        cc.winSize.width;
         // storage.setStorageCoin(1000);
 
         //storage.setStorageGun(10,0);
@@ -175,27 +194,36 @@ cc.Class({
         var s = cc.winSize;
         this.node_game = cc.find("Canvas/node_game");
         this.node_game_ui = cc.find("Canvas/node_game_ui");
+        cc.winSize.width;
         this.node_game_ui.score = cc.find("score",this.node_game_ui);
         this.node_game_ui.coinicon = cc.find("coin",this.node_game_ui);
+        cc.winSize.width;
         this.node_game_ui.coin = cc.find("coin/num",this.node_game_ui);
         this.node_game_ui.killhead =  cc.find("killhead",this.node_game_ui);
+        cc.winSize.width;
         this.node_game_ui.boss =  cc.find("boss",this.node_game_ui);
         this.node_game_ui.hitbg =  cc.find("hitbg",this.node_game_ui);
+        cc.winSize.width;
         this.node_game_ui.yindao =  cc.find("yindao",this.node_game_ui);
         this.node_main = cc.find("Canvas/node_main");
+        cc.winSize.width;
         this.node_main_coin = cc.find("coin/num",this.node_main);
         this.node_main_score = cc.find("score",this.node_main);
+        cc.winSize.width;
         this.node_main_bottom = cc.find("bottom",this.node_main);
         this.node_main_lingqu = cc.find("lingqu",this.node_main);
+        cc.winSize.width;
         this.node_main_lingqu_time = cc.find("lingqu/time",this.node_main);
         this.node_main_start = cc.find("start",this.node_main);
+        cc.winSize.width;
         this.node_main_more = cc.find("more",this.node_main);
         this.node_main_more2 = cc.find("more2",this.node_main);
+        cc.winSize.width;
         this.node_main_start.runAction(cc.repeatForever(cc.sequence(
                 cc.scaleTo(0.5,1.2).easing(cc.easeSineIn()),
                 cc.scaleTo(0.5,1).easing(cc.easeSineOut())
             )));
-
+        cc.winSize.width;
         //var stringTime = "2018-07-05 17:01:00";
         //var timestamp2 = (new Date(Date.parse(stringTime.replace(/-/g,"/")))).getTime();
         //if(new Date().getTime() < timestamp2)
@@ -203,7 +231,9 @@ cc.Class({
         //
         //}
         this.initGmae();
+        cc.winSize.width;
         this.updateUIControl();
+        cc.winSize.width;
         this.updateDitu();
     },
 
@@ -211,6 +241,7 @@ cc.Class({
     {
         var num = storage.getStorageGunJieSuoNum();
         num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
+        cc.winSize.width;
         if(num>0)
         {
             this.res.updateDitu();
@@ -222,21 +253,24 @@ cc.Class({
     {
         this.node_main_more.active = false;
         this.node_main_more2.active = false;
-        
+        cc.winSize.width;
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("lingjiang",this.node_main).active = false;
         cc.find("linggunbg",this.node_main).active = false;
-        
+        cc.winSize.width;
 
         this.GAME.more = null;
         this.GAME.more2 = null;
+        cc.winSize.width;
         this.GAME.linghongbao = 0;
         this.GAME.sharecard = false;
+        cc.winSize.width;
         var sto_channel = cc.sys.localStorage.getItem("channel");
-
+        cc.winSize.width;
         if(this.GAME.control.length>0)
         {
             this.GAME.shares = {};
+            cc.winSize.width;
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
@@ -246,6 +280,7 @@ cc.Class({
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("lingjiang",this.node_main).active = true;
+                        cc.winSize.width;
                         // cc.find("linggunbg",this.node_main).active = true;
                         this.GAME.fangdanyi = true;
                         this.GAME.sharecard = true;
@@ -254,10 +289,12 @@ cc.Class({
                 else if(con.id == "sharefuhuo")
                 {
                     this.GAME.xuming = con.value;
+                    cc.winSize.width;
                 }
                 else if(con.id == "linghongbao")
                 {
                     this.GAME.linghongbao = con.value;
+                    cc.winSize.width;
                 }
                 else
                 {
@@ -274,18 +311,22 @@ cc.Class({
                             else if(con.id == ("channel_"+sto_channel+"_2"))
                                 this.GAME.more2 = con.value;
                         }
+                        cc.winSize.width;
                     }
                     else
                     {
                         this.GAME.shares[con.id] = con.value;
+                        cc.winSize.width;
                     }
                 }
             }
         }
         var cardnum = storage.getStorageCard();
+        cc.winSize.width;
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
             this.player.fangdanyi.active = true;
+            cc.winSize.width;
         }
 
         // if(this.GAME.more)
@@ -315,6 +356,7 @@ cc.Class({
             {
                 var spriteFrame = new cc.SpriteFrame(tex);
                 sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
+                cc.winSize.width;
             }
         });
     },
@@ -352,6 +394,8 @@ cc.Class({
                 storage.setStoragePlayer(8,parseInt(datas.player_8));
             if(datas.player_9)
                 storage.setStoragePlayer(9,parseInt(datas.player_9));
+
+            cc.winSize.width;
 
             if(datas.gun_1)
                 storage.setStorageGun(1,parseInt(datas.gun_1));
@@ -392,10 +436,14 @@ cc.Class({
             if(datas.gun_19)
                 storage.setStorageGun(19,parseInt(datas.gun_19));
 
+            cc.winSize.width;
+
             if(datas.currGun)
                 storage.setStorageCurrGun(parseInt(datas.currGun));
             if(datas.currPlayer)
                 storage.setStorageCurrPlayer(parseInt(datas.currPlayer));
+
+            cc.winSize.width;
 
             if(datas.gunJiesuoNum)
                 storage.setStorageGunJieSuoNum(parseInt(datas.gunJiesuoNum));
@@ -434,14 +482,20 @@ cc.Class({
             if(datas.guninvitelist)
                 storage.setStorageGunInviteNum(datas.guninvitelist.length);
 
+            cc.winSize.width;
+
 
             this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
             this.node_main_score.getComponent("cc.Label").string = storage.getStorageScore();
             this.updateDitu();
+
+            cc.winSize.width;
         }
         else
         {
             this.uploadData();
+
+            cc.winSize.width;
         }
     },
 
@@ -455,6 +509,7 @@ cc.Class({
                 self.updateLocalData(res.data);
             }
         });
+        cc.winSize.width;
     },
 
     uploadData: function()
@@ -496,6 +551,8 @@ cc.Class({
         datas.currGun = storage.getStorageCurrGun();
         datas.currPlayer = storage.getStorageCurrPlayer();
 
+        cc.winSize.width;
+
         datas.gunJiesuoNum = storage.getStorageGunJieSuoNum();
         datas.gunJiesuoNum2 = storage.getStorageGunJieSuoNum2();
         datas.gunJiesuoAwardNum = storage.getStorageGunJieSuoAwardNum();
@@ -513,6 +570,8 @@ cc.Class({
         datas.shareGroupTime = storage.getStorageShareGroupTime();
         datas.gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
 
+        cc.winSize.width;
+
         var data = JSON.stringify(datas);
         var self = this;
         qianqista.uploaddatas(data,function(res){
@@ -520,6 +579,8 @@ cc.Class({
             if(res && res.state == 200)
                 self.updateData();
         });
+
+        cc.winSize.width;
     },
 
 
@@ -533,6 +594,7 @@ cc.Class({
             {
                 var item = items[j];
                 this.adaptItem(item);
+                cc.winSize.width;
             }
         }
     },
@@ -543,6 +605,8 @@ cc.Class({
         var h = (this.dsize.height - s.height)/2;
         var sc = node.y/this.dsize.height;
         node.y = s.height*sc + h;
+
+        cc.winSize.width;
     },
 
     initGameData: function()
@@ -553,28 +617,49 @@ cc.Class({
         {
             this.loutis.push(loutis[i]);
         }
+
+        cc.winSize.width;
+
         this.last_h = 0;
         this.ltzorder = 1000000;
         this.ltcolor = this.res.bgcolor[0];
+
+        cc.winSize.width;
+
+
         this.currLoutis = [];
         this.louticolls = [];
+
+        cc.winSize.width;
+
         this.GAME.state = "stop";
         this.GAME.enemy_num = 9 + Math.floor(Math.random() * 3 + 1);
         this.GAME.score = 0;
         this.GAME.coin = 0;
+
+        cc.winSize.width;
+
         this.GAME.killhead = 0;
         if(!this.GAME.useZhanShi)
         {
             this.GAME.currPlayer = storage.getStorageCurrPlayer()-1;
             this.GAME.currPlayerTmp = this.GAME.currPlayer;
+            cc.winSize.width;
         }
         this.GAME.currGun = storage.getStorageCurrGun()-1;
         this.GAME.currGunTmp = this.GAME.currGun;
 
+        cc.winSize.width;
+
         this.GAME.playerfuhuo = true;//金币
         this.GAME.playerfangdanyi = true;
+
+        cc.winSize.width;
+
         this.GAME.playerfuhuovideo = true;//看视频
         this.GAME.yindao = storage.getStorageYindao();
+
+        cc.winSize.width;
     },
 
     initGmae: function()
@@ -583,16 +668,30 @@ cc.Class({
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
         this.node_main.active = true;
+
+        cc.winSize.width;
+
         this.node_game_ui.active = false;
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
+
+        cc.winSize.width;
+
         this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
         this.node_main_score.getComponent("cc.Label").string = storage.getStorageScore();
+
+        cc.winSize.width;
+
         this.getScore(0);
         this.getCoin(0);
 
+        cc.winSize.width;
+
         this.initLouTis();
         this.initPlayer();
+
+        cc.winSize.width;
+
         this.updateLouTiOpa(0);
     },
 
@@ -600,46 +699,83 @@ cc.Class({
     {
         var loutis = this.res.GAME.loutis[Math.floor(Math.random() * this.res.GAME.loutis.length)];
         this.loutis = [];
+        cc.winSize.width;
         for(var i=0;i<loutis.length;i++)
         {
             this.loutis.push(loutis[i]);
         }
+        cc.winSize.width;
         this.last_h = 0;
         this.ltzorder = 1000000;
+
+        cc.winSize.width;
+
         this.ltcolor = this.res.bgcolor[Math.floor(Math.random()*this.res.bgcolor.length)];
         this.currLoutis = [];
+
+        cc.winSize.width;
+
         this.GAME.state = "stop";
         this.GAME.enemy_num = 3 + Math.floor(Math.random() * 3 + 1);
+
+        cc.winSize.width;
+
         this.GAME.killhead = 0;
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
+
+        cc.winSize.width;
+
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
 
         this.initLouTis();
         this.initPlayer();
+
+        cc.winSize.width;
+
         this.updateLouTiOpa(0);
         this.startGmae();
+
+        cc.winSize.width;
     },
 
     again: function()
     {
         if(cc.isValid(this.node_over))
             this.node_over.hide();
+
+        cc.winSize.width;
+
         this.openover = false;
         this.initGameData();
 
+        cc.winSize.width;
+
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
+
+        cc.winSize.width;
+
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
+
+        cc.winSize.width;
+
         this.getScore(0);
         this.getCoin(0);
 
+        cc.winSize.width;
+
         this.initLouTis();
         this.initPlayer();
+
+        cc.winSize.width;
+
         this.updateLouTiOpa(0);
         this.startGmae();
+
+        cc.winSize.width;
     },
 
     click: function(event,data,page)
@@ -648,24 +784,29 @@ cc.Class({
         {
             this.wxQuanState(false);
             this.startGmae();
+            cc.winSize.width;
             this.openTishi();
         }
         else if(data == "juese")
         {
             this.openJuese();
+            cc.winSize.width;
         }
         else if(data == "home")
         {
             this.goMain();
+            cc.winSize.width;
         }
         else if(data == "junhuo")
         {
             this.openGun();
+            cc.winSize.width;
         }
         else if(data == "setting")
         {
             this.wxQuanState(false);
             this.openSetting();
+            cc.winSize.width;
         }
         else if(data == "lingqu")
         {
@@ -673,35 +814,49 @@ cc.Class({
             if(this.openover)
                 this.wxCloseOver();
            this.openCard();
+
+           cc.winSize.width;
         }
         else if(data == "duihuan")
         {
             this.wxQuanState(false);
             this.openDuihuan();
+
+            cc.winSize.width;
         }
         else if(data == "rank")
         {
             this.wxQuanState(false);
             this.openRank();
+
+            cc.winSize.width;
         }
         else if(data == "fuhuo_card")
         {
             this.fuhuo(true);
+
+            cc.winSize.width;
         }
         else if(data == "grouprank")
         {
             this.wxGropShare();
             qianqista.event("btn_grouprank");
+
+            cc.winSize.width;
         }
         else if(data == "more")
         {
             this.wxMore();
             qianqista.event("btn_more");
+
+            cc.winSize.width;
         }
         else if(data == "more2")
         {
             this.wxMore2();
             qianqista.event("btn_more_over");
+
+            cc.winSize.width;
         }
         else if(data == "yindao")
         {
@@ -709,36 +864,50 @@ cc.Class({
             this.playerFire();
             storage.setStorageYindao(1);
             this.GAME.yindao = 1;
+
+            cc.winSize.width;
         }
         else if(data == "chengjiu")
         {
             this.openChengjiu();
             qianqista.event("btn_chengjiu");
+
+            cc.winSize.width;
         }
         else if(data == "qiandao")
         {
             this.openQianDao();
             qianqista.event("btn_qiandao");
+
+            cc.winSize.width;
         }
         else if(data == "lingjiang")
         {
             this.openAward();
             this.wxQuanState(false);
             qianqista.event("btn_lingjiang");
+
+            cc.winSize.width;
         }
         else if(data == "adlingqu")
         {
             this.res.showToast("敬请期待！");
             // this.wxVideoShow(1);
             // qianqista.event("main_video");
+
+            cc.winSize.width;
         }
         else if(data == "zhanshi")
         {
             this.openzhanshi();
+
+            cc.winSize.width;
         }
         else if(data == "linggun")
         {
             this.openLingGun();
+
+            cc.winSize.width;
         }
  
 
@@ -749,6 +918,9 @@ cc.Class({
     {
         var playnum = cc.sys.localStorage.getItem("playnum");
         playnum = playnum ? playnum : 0;
+
+        cc.winSize.width;
+
         if(playnum == 1)
         {
             var tishi = cc.instantiate(this.res.node_tishi);
@@ -756,6 +928,9 @@ cc.Class({
             this.node_tishi = tishi.getComponent("tishi");
             this.node_tishi.show();
         }
+
+        cc.winSize.width;
+
         playnum ++;
         cc.sys.localStorage.setItem("playnum",playnum);
     },
@@ -764,6 +939,9 @@ cc.Class({
     {
         var xuming = cc.instantiate(this.res.node_xuming);
         this.node.addChild(xuming);
+
+        cc.winSize.width;
+
         this.node_xuming = xuming.getComponent("xuming");
         this.node_xuming.show();
     },
@@ -773,6 +951,9 @@ cc.Class({
         this.wxRank();
         var rank = cc.instantiate(this.res.node_rank);
         this.node.addChild(rank);
+
+        cc.winSize.width;
+
         this.node_rank = rank.getComponent("rank");
         this.node_rank.show();
     },
@@ -781,6 +962,9 @@ cc.Class({
     {
         var duihuan = cc.instantiate(this.res.node_duihuan);
         this.node.addChild(duihuan);
+
+        cc.winSize.width;
+
         this.node_duihuan = duihuan.getComponent("duihuan");
         this.node_duihuan.show();
         qianqista.event("btn_linghongbao");
@@ -790,6 +974,9 @@ cc.Class({
     {
         var card = cc.instantiate(this.res.node_card);
         this.node.addChild(card);
+
+        cc.winSize.width;
+
         this.node_card = card.getComponent("card");
         this.node_card.show();
 
@@ -800,6 +987,9 @@ cc.Class({
     {
         var coin = cc.instantiate(this.res.node_coin);
         this.node.addChild(coin);
+
+        cc.winSize.width;
+
         this.node_coin = coin.getComponent("coin");
         this.node_coin.show();
     },
@@ -810,6 +1000,9 @@ cc.Class({
         
         var linggun = cc.instantiate(this.res.node_linggun);
         this.node.addChild(linggun);
+
+        cc.winSize.width;
+
         this.node_linggun = linggun.getComponent("linggun");
         this.node_linggun.show();
     },
@@ -821,6 +1014,9 @@ cc.Class({
         this.wxQuanState(false);
         var zhanshi = cc.instantiate(this.res.node_zhanshi);
         this.node.addChild(zhanshi);
+
+        cc.winSize.width;
+
         this.node_zhanshi = zhanshi.getComponent("zhanshi");
         this.node_zhanshi.show();
     },
@@ -829,6 +1025,9 @@ cc.Class({
     {
         var setting = cc.instantiate(this.res.node_setting);
         this.node.addChild(setting);
+
+        cc.winSize.width;
+
         this.node_setting = setting.getComponent("setting");
         this.node_setting.show();
     },
@@ -841,17 +1040,26 @@ cc.Class({
         var lingjiang_dian = cc.find("lingjiang/dian",this.node_main);
         var chengjiu_dian = cc.find("chengjiu/dian",this.node_main);
         
+        cc.winSize.width;
 
         qiandao_dian.active = false;
         lingjiang_dian.active = false;
         chengjiu_dian.active = false;
+
+        cc.winSize.width;
+
         if(cc.isValid(this.node_over))
             this.node_over.updateDian(false);
+
+        cc.winSize.width;
 
         var currQianDao = storage.getStorageQianDao();
         var currQianDaoTime = storage.getStorageQianDaoTime();
         var now = new Date().getDate();
         currQianDao = parseInt(currQianDao)+1;
+
+        cc.winSize.width;
+
         for(var i=1;i<=7;i++)
         {
             if(i==currQianDao && now != currQianDaoTime)
@@ -861,12 +1069,17 @@ cc.Class({
             }
         }
 
+        cc.winSize.width;
+
+
         var inviteNum = storage.getStorageInviteNum();
         var inviteAwardNum = storage.getStorageInviteAwardNum();
         if(inviteAwardNum<10 &&  parseInt(inviteAwardNum) <  parseInt(inviteNum))
         {
             lingjiang_dian.active = true;
         }
+
+        cc.winSize.width;
 
         var isshow = false;
         for(var i=1;i<=5;i++) {
@@ -949,6 +1162,8 @@ cc.Class({
             chengjiu_dian.active = true;
             if(cc.isValid(this.node_over))
                 this.node_over.updateDian(true);
+
+            cc.winSize.width;
         }
     },
 
@@ -958,6 +1173,9 @@ cc.Class({
     {
         var award = cc.instantiate(this.res.node_award);
         this.node.addChild(award);
+
+        cc.winSize.width;
+
         this.node_award = award.getComponent("award");
         this.node_award.show();
     },
@@ -971,6 +1189,9 @@ cc.Class({
             var num = storage.getStorageGunJieSuoNum();
             num = parseInt(num) + parseInt(storage.getStorageGunJieSuoNum2());
             var data = this.res.chengjiuconfig.jiesuogun[awardnum];
+
+            cc.winSize.width;
+
             if(num >= data.num)
             {
                 this.res.showToastCJ();
@@ -984,6 +1205,9 @@ cc.Class({
         {
             var num = storage.getStorageRoleJieSuoNum();
             var data = this.res.chengjiuconfig.jiesuorole[awardnum2];
+
+            cc.winSize.width;
+
             if(num >= data.num)
             {
                 this.res.showToastCJ();
@@ -1001,6 +1225,9 @@ cc.Class({
         {
             var num = storage.getStorageHitEnemyNum();
             var data = this.res.chengjiuconfig.hitenemy[awardnum];
+
+            cc.winSize.width;
+
             if(num >= data.num)
             {
                 storage.setStorageHitEnemyToastNum(parseInt(toastnum)+1);
@@ -1016,6 +1243,9 @@ cc.Class({
         {
             var num = storage.getStorageHitHeadNum();
             var data = this.res.chengjiuconfig.hithead[awardnum2];
+
+            cc.winSize.width;
+
             if(num >= data.num)
             {
                 storage.setStorageHitHeadToastNum(parseInt(toastnum2)+1);
@@ -1031,6 +1261,9 @@ cc.Class({
         {
             var num = storage.getStorageHitBossNum();
             var data = this.res.chengjiuconfig.hitboss[awardnum3];
+
+            cc.winSize.width;
+
             if(num >= data.num)
             {
                 storage.setStorageHitBossToastNum(parseInt(toastnum3)+1);
@@ -1045,6 +1278,8 @@ cc.Class({
     {
         this.wxQuanState(false);
         this.node_main.active = false;
+
+        cc.winSize.width;
         
         var chengjiu = cc.instantiate(this.res.node_chengjiu);
         this.node.addChild(chengjiu);
@@ -1058,6 +1293,9 @@ cc.Class({
 
         var qiandao = cc.instantiate(this.res.node_qiandao);
         this.node.addChild(qiandao);
+
+        cc.winSize.width;
+
         this.node_qiandao = qiandao.getComponent("qiandao");
         this.node_qiandao.show();
 
@@ -1069,6 +1307,8 @@ cc.Class({
         this.node_main.active = false;
         if(cc.isValid(this.node_over))
             this.node_over.hide();
+
+        cc.winSize.width;
 
         var gun = cc.instantiate(this.res.node_gun);
         this.node.addChild(gun);
@@ -1082,6 +1322,9 @@ cc.Class({
         this.node_main.active = false;
         if(cc.isValid(this.node_over))
             this.node_over.hide();
+
+        cc.winSize.width;
+
         var role = cc.instantiate(this.res.node_role);
         this.node.addChild(role);
         this.node_role = role.getComponent("role");
@@ -1096,12 +1339,16 @@ cc.Class({
         this.movenum = 0;
         this.playerMove(false);
 
+        cc.winSize.width;
+
         this.node.runAction(cc.sequence(
             cc.delayTime(0.3),
             cc.callFunc(function(){
                 self.GAME.state = "start";
             })
         ));
+
+        cc.winSize.width;
 
         this.wxBannerShow();
     },
@@ -1110,9 +1357,14 @@ cc.Class({
     {
         this.openover = false;
         this.wxQuanState(true);
+
+        cc.winSize.width;
+
         this.wxCloseOver();
         this.wxCloseRank();
         this.initGmae();
+
+        cc.winSize.width;
     },
 
     getScore: function(score)
@@ -1131,6 +1383,7 @@ cc.Class({
 
     getLouTi: function(type)
     {
+        cc.winSize.width;
         return cc.instantiate(this.res.loutis[type-1]);
     },
 
@@ -1141,6 +1394,7 @@ cc.Class({
         if(currH < s.height)
         {
             var index = 0;
+            cc.winSize.width;
             for(var i=0;i<this.loutis.length;i++)
             {
                 var item = this.loutis[i];
@@ -1159,6 +1413,9 @@ cc.Class({
                         ti.x = s.width + item[2]*this.tih + this.tih*num;
                     }
                 }
+
+                cc.winSize.width;
+
                 louti.opacity = 0;
                 louti.color = this.ltcolor;
                 louti.y = this.last_h;
@@ -1167,6 +1424,8 @@ cc.Class({
                 louti.data = item;
                 this.node_game.addChild(louti,this.ltzorder);
                 this.currLoutis.push(louti);
+
+                cc.winSize.width;
 
                 //添加物品
                 // var r = Math.random();
@@ -1195,9 +1454,13 @@ cc.Class({
                     break;
                 }
                 currH += item[1]*this.tih;
+
+                cc.winSize.width;
             }
 
             this.loutis.splice(0,index+1);
+
+            cc.winSize.width;
         }
     },
     addLouTis: function()
@@ -1208,6 +1471,9 @@ cc.Class({
             var item = this.loutis[0];
             var louti = this.getLouTi(item[1]);
             var b = cc.find("b",louti);
+
+            cc.winSize.width;
+
             for(var num=1;num<=item[1];num++)
             {
                 var ti = cc.find("ti"+num,louti);
@@ -1230,6 +1496,8 @@ cc.Class({
             this.node_game.addChild(louti,this.ltzorder);
             this.currLoutis.push(louti);
 
+            cc.winSize.width;
+
             //添加物品
             // var r = Math.random();
             // if(r>0.6)
@@ -1251,12 +1519,17 @@ cc.Class({
             this.ltzorder--;
 
             this.loutis.splice(0,1);
+
+            cc.winSize.width;
         }
 
         for(var i=0;i<this.currLoutis.length;i++)
         {
             var louti = this.currLoutis[i];
             var pos = this.node_game.convertToWorldSpace(louti.position);
+
+            cc.winSize.width;
+
             if(pos.y+600 < 0)
             {
                 louti.destroy();
@@ -1274,6 +1547,8 @@ cc.Class({
         var ac = cc.moveBy(dis/100,0,-dis).easing(cc.easeSineInOut());
         this.node_game.runAction(ac.clone());
 
+        cc.winSize.width;
+
         //this.enemy.runAction(ac.clone());
         //
         //for(var i=0;i<this.louticolls.length;i++)
@@ -1288,6 +1563,8 @@ cc.Class({
         this.addLouTis();
         this.updateLouTiOpa(dis/100);
         this.rotateGun();
+
+        cc.winSize.width;
     },
 
     createYindao: function()
@@ -1296,25 +1573,37 @@ cc.Class({
         var mask = cc.find("mask",this.node_game_ui.yindao);
         var hand = cc.find("hand",this.node_game_ui.yindao);
         var txt = cc.find("txt",this.node_game_ui.yindao);
+
+        cc.winSize.width;
+
         var w = this.player.gun.width + 150;
         if(this.player.height > w)
             w = this.player.height + 150;
+
+        cc.winSize.width;
+
         mask.width = w;
         mask.height = w;
         mask.x = this.player.x - this.player.height/2;
         var pos = this.node_game.convertToWorldSpaceAR(this.player.position);
         mask.y = pos.y-50;
 
+        cc.winSize.width;
+
+
         hand.x += mask.x;
         hand.y += mask.y;
         txt.x += mask.x;
         txt.y += mask.y;
+
+        cc.winSize.width;
 
         hand.runAction(cc.repeatForever(cc.sequence(
             cc.moveBy(0.5,0,50).easing(cc.easeSineIn()),
             cc.moveBy(0.5,0,-50).easing(cc.easeSineIn())
         )));
 
+        cc.winSize.width;
     },
 
     rotateGun: function()
@@ -1324,10 +1613,15 @@ cc.Class({
         this.player.aim.active = true;
         this.player.ismove = false;
 
+        cc.winSize.width;
+
         if(this.GAME.yindao == 0)
         {
             var self = this;
             var ang = cc.pAngle(this.enemy.position,this.player.position);
+
+            cc.winSize.width;
+
             ang = cc.radiansToDegrees(ang)/2;
             ac = cc.sequence(
                 cc.rotateBy(ang/20/2,-ang).easing(cc.easeIn(1.5)),
@@ -1335,6 +1629,9 @@ cc.Class({
                     self.createYindao();
                 })
             );
+
+            cc.winSize.width;
+
             this.player.gun.runAction(ac);
         }
         else
@@ -1346,6 +1643,8 @@ cc.Class({
                 cc.rotateBy(1.1*playerConf.aimSpeed,60).easing(cc.easeOut(1.5))
             ));
 
+            cc.winSize.width;
+
             this.player.gun.runAction(ac);
         }
     },
@@ -1354,6 +1653,9 @@ cc.Class({
     {
         if(dt>0 && this.movenum<2)
             return;
+
+        cc.winSize.width;
+
         for(var i=0;i<this.currLoutis.length;i++)
         {
             var louti = this.currLoutis[i];
@@ -1366,6 +1668,8 @@ cc.Class({
                     louti.opindex = this.currLoutis[i-1].opindex + 1;
                     if(louti.opindex>=this.op.length)
                         louti.opindex = this.op.length-1;
+
+                    cc.winSize.width;
                 }
             }
             else
@@ -1373,9 +1677,13 @@ cc.Class({
                 louti.opindex --;
                 if(louti.opindex < 0)
                     louti.opindex = 0;
+
+                cc.winSize.width;
             }
             louti.runAction(cc.fadeTo(dt,this.op[louti.opindex]));
         }
+
+        cc.winSize.width;
     },
 
     initPlayer: function()
@@ -1386,9 +1694,14 @@ cc.Class({
         this.player.y = 600;
         this.node_game.addChild(this.player,1000001);
 
+        cc.winSize.width;
+
         this.player.fangdanyi = cc.instantiate(this.res.fangdanyi);
         this.player.addChild(this.player.fangdanyi,1);
         this.player.fangdanyi.active = false;
+
+        cc.winSize.width;
+
         var cardnum = storage.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
@@ -1398,11 +1711,15 @@ cc.Class({
         var playerConf = this.res.playersconfig[this.GAME.currPlayer];
         var gunConf = this.res.gunsconfig[this.GAME.currGun];
 
+        cc.winSize.width;
+
         this.player.gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
         this.player.gun.y = this.player.height*0.3 + gunConf.y;
         this.player.addChild(this.player.gun,1);
         this.player.scaleX = -1;
         this.lastPlayerPos = this.node_game.convertToWorldSpace(this.player.position);
+
+        cc.winSize.width;
 
         this.player.aim = cc.instantiate(this.res.aim_1);
         this.player.aim.y = this.player.gun.y;
@@ -1411,14 +1728,20 @@ cc.Class({
         this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
         this.player.addChild(this.player.aim,0);
 
+        cc.winSize.width;
+
         this.player.aim.line.rotation = 0;
         this.player.aim.getComponent("cc.ProgressBar").progress = 0;
+
+        cc.winSize.width;
 
         this.player.gun_fire = cc.instantiate(this.res.gun_fire);
         this.player.gun_fire.y = gunConf.y;
         this.player.gun_fire.x = this.player.gun.width*(1-this.player.gun.anchorX);
         this.player.gun_fire.active = false;
         this.player.gun.addChild(this.player.gun_fire,0);
+
+        cc.winSize.width;
     },
 
     createEnemy: function()
@@ -1432,10 +1755,14 @@ cc.Class({
             this.enemy.zhp = this.enemy.hp;
             this.node_game.addChild(this.enemy,1000001);
 
+            cc.winSize.width;
+
             var gunConf = this.res.gunsconfig[0];
             this.enemy.gun = cc.instantiate(this.res.guns[0]);
             this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
             this.enemy.addChild(this.enemy.gun);
+
+            cc.winSize.width;
 
             this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
             this.enemy.gun_fire.y = gunConf.y;
@@ -1443,10 +1770,14 @@ cc.Class({
             this.enemy.gun_fire.active = false;
             this.enemy.gun.addChild(this.enemy.gun_fire,0);
 
+            cc.winSize.width;
+
             this.node_game_ui.boss.active = true;
             this.node_game_ui.boss.getComponent("cc.ProgressBar").progress = 1;
 
             storage.playSound(this.res.audio_boss_chu);
+
+            cc.winSize.width;
         }
         else
         {
@@ -1457,16 +1788,22 @@ cc.Class({
             this.enemy.enemycolor = this.res.enemysconfig[index].color;
             this.node_game.addChild(this.enemy,1000001);
 
+            cc.winSize.width;
+
             var gunConf = this.res.gunsconfig[0];
             this.enemy.gun = cc.instantiate(this.res.guns[0]);
             this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
             this.enemy.addChild(this.enemy.gun);
+
+            cc.winSize.width;
 
             this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
             this.enemy.gun_fire.y = gunConf.y;
             this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
             this.enemy.gun_fire.active = false;
             this.enemy.gun.addChild(this.enemy.gun_fire,0);
+
+            cc.winSize.width;
         }
         this.GAME.enemy_num --;
         this.enemy.ismove = false;
@@ -1478,6 +1815,9 @@ cc.Class({
         var index = this.enemy.enemyindex;
         var enemy = cc.instantiate(this.res.enemys[index]);
         enemy.position = this.enemy.position;
+
+        cc.winSize.width;
+
         enemy.die = true;
         this.node_game.addChild(enemy,1000001);
         return enemy;
@@ -1492,6 +1832,9 @@ cc.Class({
         this.player.isfire = false;
         var self = this;
         var louti = null;
+
+        cc.winSize.width;
+
         for(var i=0;i<this.currLoutis.length;i++)
         {
             var l = this.currLoutis[i];
@@ -1502,12 +1845,18 @@ cc.Class({
                 break;
             }
         }
+
+        cc.winSize.width;
+
         if(louti)
         {
             var data = louti.data;
             var speed = this.res.playersconfig[this.GAME.currPlayer].speed*700;
             var acs = [];
             var lastp = this.player.position;
+
+            cc.winSize.width;
+
             if(data[0] == 1)//left
             {
                 for(var num=1;num<=data[1];num++) {
@@ -1522,9 +1871,13 @@ cc.Class({
                         acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                         lastp = cc.v2(posx2,posy2);
 
+                        cc.winSize.width;
+
                         acs.push(cc.callFunc(function(){
                             storage.playSound(self.res.audio_foot_1);
                         }));
+
+                        cc.winSize.width;
                     }
                     else if(num == data[1])
                     {
@@ -1535,6 +1888,8 @@ cc.Class({
                             storage.playSound(self.res.audio_foot_1);
                         }));
 
+                        cc.winSize.width;
+
                         if(isWin)
                         {
                             var posx2 = -self.player.width;
@@ -1543,6 +1898,8 @@ cc.Class({
                             acs.push(cc.callFunc(function(){
                                 self.gameOver(isWin);
                             }));
+
+                            cc.winSize.width;
                         }
                         else
                         {
@@ -1554,6 +1911,8 @@ cc.Class({
                                 self.updateLouTiPos();
                                 storage.playSound(self.res.audio_foot_1);
                             }));
+
+                            cc.winSize.width;
                         }
 
                     }
@@ -1563,6 +1922,8 @@ cc.Class({
                         var posy = lastp.y + this.tih;
                         acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                         lastp = cc.v2(posx,posy);
+
+                        cc.winSize.width;
 
                         acs.push(cc.callFunc(function(){
                             storage.playSound(self.res.audio_foot_1);
@@ -1574,6 +1935,9 @@ cc.Class({
             {
                 for(var num=1;num<=data[1];num++) {
                     var ti = cc.find("ti" + num, louti);
+
+                    cc.winSize.width;
+
                     if(num == 1)
                     {
                         var posx = ti.x-ti.width/2 - this.tih;
@@ -1584,9 +1948,13 @@ cc.Class({
                         acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                         lastp = cc.v2(posx2,posy2);
 
+                        cc.winSize.width;
+
                         acs.push(cc.callFunc(function(){
                             storage.playSound(self.res.audio_foot_1);
                         }));
+
+                        cc.winSize.width;
                     }
                     else if(num == data[1])
                     {
@@ -1597,6 +1965,8 @@ cc.Class({
                             storage.playSound(self.res.audio_foot_1);
                         }));
 
+                        cc.winSize.width;
+
                         if(isWin)
                         {
                             var posx2 = cc.winSize.width+self.player.width;
@@ -1605,6 +1975,8 @@ cc.Class({
                             acs.push(cc.callFunc(function(){
                                 self.gameOver(isWin);
                             }));
+
+                            cc.winSize.width;
                         }
                         else
                         {
@@ -1616,6 +1988,8 @@ cc.Class({
                                 self.updateLouTiPos();
                                 storage.playSound(self.res.audio_foot_1);
                             }));
+
+                            cc.winSize.width;
                         }
 
                     }
@@ -1626,6 +2000,8 @@ cc.Class({
                         acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                         lastp = cc.v2(posx,posy);
 
+                        cc.winSize.width;
+
                         acs.push(cc.callFunc(function(){
                             storage.playSound(self.res.audio_foot_1);
                         }));
@@ -1635,7 +2011,11 @@ cc.Class({
             this.player.runAction(cc.sequence(acs));
         }
 
+        cc.winSize.width;
+
         this.enemyMove();
+
+        cc.winSize.width;
     },
 
     enemyMove: function()
@@ -1645,6 +2025,9 @@ cc.Class({
         this.enemy.judgeboss = false;
         var self = this;
         var louti = null;
+
+        cc.winSize.width;
+
         for(var i=0;i<this.currLoutis.length;i++)
         {
             var l = this.currLoutis[i];
@@ -1654,12 +2037,18 @@ cc.Class({
                 break;
             }
         }
+
+        cc.winSize.width;
+
         if(louti)
         {
             var data = louti.data;
             var acs = [];
             var ti = cc.find("ti" + data[1], louti);
             var speed = 700;
+
+            cc.winSize.width;
+
             if(data[0] == 1)//left
             {
                 if(this.enemy.enemytype == 4)
@@ -1669,6 +2058,8 @@ cc.Class({
                         this.enemy.scaleX = 1;
                         this.enemy.x = -this.enemy.width-20;
                         this.enemy.y = louti.y+600 + data[1]*this.tih;
+
+                        cc.winSize.width;
 
                         var posx = ti.x+ti.width/2 - this.tih/2;
                         var posy = this.enemy.y;
@@ -1685,6 +2076,8 @@ cc.Class({
                             //self.enemy.die = false;
                             self.vibrate();
                         }));
+
+                        cc.winSize.width;
                     }
                     else
                     {
@@ -1702,9 +2095,13 @@ cc.Class({
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                                 lastp = cc.v2(posx2,posy2);
 
+                                cc.winSize.width;
+
                                 acs.push(cc.callFunc(function(){
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                             else if(num == data[1])
                             {
@@ -1715,6 +2112,8 @@ cc.Class({
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
 
+                                cc.winSize.width;
+
                                 var posx2 = ti.x+ti.width/2 - this.enemy.width/2;
                                 var posy2 = posy;
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
@@ -1722,6 +2121,8 @@ cc.Class({
                                     self.enemy.scaleX = 1;
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                             else
                             {
@@ -1730,9 +2131,13 @@ cc.Class({
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx,posy,this.tih,1));
                                 lastp = cc.v2(posx,posy);
 
+                                cc.winSize.width;
+
                                 acs.push(cc.callFunc(function(){
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                         }
                     }
@@ -1743,6 +2148,8 @@ cc.Class({
                     this.enemy.x = -this.enemy.width-20;
                     this.enemy.y = louti.y+600 + data[1]*this.tih;
 
+                    cc.winSize.width;
+
                     var posx = ti.x+ti.width/2 - this.tih/2;
                     var posy = this.enemy.y;
 
@@ -1751,6 +2158,8 @@ cc.Class({
                         cc.repeat(cc.sequence(cc.rotateBy(0.1,-10),cc.rotateBy(0.1,10)),5),
                         cc.moveTo(0.8,posx,posy)
                     ));
+
+                    cc.winSize.width;
                     //acs.push(cc.callFunc(function(){
                     //    self.enemy.die = false;
                     //}));
@@ -1769,6 +2178,8 @@ cc.Class({
                         var posx = ti.x-ti.width/2 + this.tih/2;
                         var posy = this.enemy.y;
 
+                        cc.winSize.width;
+
                         acs.push(cc.spawn(cc.rotateBy(0.4,-360),cc.jumpTo(0.6,posx,posy,this.tih*5,1)));
                         acs.push(cc.callFunc(function(){
                             storage.playSound(self.res.audio_foot_boss_land);
@@ -1781,6 +2192,8 @@ cc.Class({
                             //self.enemy.die = false;
                             self.vibrate();
                         }));
+
+                        cc.winSize.width;
                     }
                     else
                     {
@@ -1798,9 +2211,13 @@ cc.Class({
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
                                 lastp = cc.v2(posx2,posy2);
 
+                                cc.winSize.width;
+
                                 acs.push(cc.callFunc(function(){
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                             else if(num == data[1])
                             {
@@ -1811,6 +2228,8 @@ cc.Class({
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
 
+                                cc.winSize.width;
+
                                 var posx2 = (ti.x-ti.width/2) + this.enemy.width/2;
                                 var posy2 = posy;
                                 acs.push(cc.jumpTo(this.tih*3/speed,posx2,posy2,this.tih,1));
@@ -1818,6 +2237,8 @@ cc.Class({
                                     self.enemy.scaleX = -1;
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                             else
                             {
@@ -1829,6 +2250,8 @@ cc.Class({
                                 acs.push(cc.callFunc(function(){
                                     storage.playSound(self.res.audio_foot_boss_1);
                                 }));
+
+                                cc.winSize.width;
                             }
                         }
                     }
@@ -1842,6 +2265,8 @@ cc.Class({
                     var posx = ti.x-ti.width/2 + this.tih/2;
                     var posy = this.enemy.y;
 
+                    cc.winSize.width;
+
                     acs.push(cc.spawn(
                         cc.repeat(cc.sequence(cc.rotateBy(0.1,10),cc.rotateBy(0.1,-10)),5),
                         cc.moveTo(0.8,posx,posy)
@@ -1849,12 +2274,17 @@ cc.Class({
                     //acs.push(cc.callFunc(function(){
                     //    self.enemy.die = false;
                     //}));
+
+                    cc.winSize.width;
                 }
 
             }
             acs.push(cc.callFunc(function(){
                 self.enemy.ismove = false;
             }));
+
+            cc.winSize.width;
+
             this.enemy.louti = louti;
             this.enemy.runAction(cc.sequence(acs));
 
@@ -1875,7 +2305,11 @@ cc.Class({
                 //this.louticolls.push(coll);
             }
 
+            cc.winSize.width;
+
         }
+
+        cc.winSize.width;
     },
 
     playerFire: function()
@@ -1887,6 +2321,8 @@ cc.Class({
             this.player.kill = false;
             this.player.isfire = true;
 
+            cc.winSize.width;
+
             var rota = -this.player.gun.rotation;
             var v = cc.v2(1,0);
 
@@ -1895,22 +2331,33 @@ cc.Class({
                 rota = -rota;
                 v = cc.v2(-1,0);
             }
+
+            cc.winSize.width;
+
             var rad = cc.degreesToRadians(rota);
             this.player.gun.stopAllActions();
             this.player.gun.hitheadnum = 0;
             this.player.gun.hitbodynum = 0;
             this.player.gun.firenum = 0;
+
+            cc.winSize.width;
+
             var gunConf = this.res.gunsconfig[this.GAME.currGun];
             var dis = 1584;
             var bulletspeed = 2200;
             if(cc.sys.os == cc.sys.OS_ANDROID)
                 bulletspeed = 1200;
+
+            cc.winSize.width;
+
             if(gunConf.type == 1)
             {
                 var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
                 var pos = cc.pMult(dir,1584);
 
                 var gw = this.player.gun.width*(1-this.player.gun.anchorX) + 10;
+
+                cc.winSize.width;
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
@@ -1919,9 +2366,14 @@ cc.Class({
                         if (self.poolsmokes.size() > 0) {
                             smoke = self.poolsmokes.get();
                             smoke.getComponent("cc.ParticleSystem").resetSystem();
+
+                            cc.winSize.width;
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
+
+                        cc.winSize.width;
+
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
                         smoke.scaleX = -self.player.scaleX;
@@ -1933,6 +2385,8 @@ cc.Class({
                             })
                         ));
 
+                        cc.winSize.width;
+
                         var shell = null;
                         if (self.poolshells.size() > 0) {
                             shell = self.poolshells.get();
@@ -1940,6 +2394,9 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
+
+                        cc.winSize.width;
+
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
                         self.node_game.addChild(shell,1000001);
@@ -1949,6 +2406,8 @@ cc.Class({
                                 self.poolshells.put(shell);
                             })
                         ));
+
+                        cc.winSize.width;
 
                         self.player.gun_fire.active = true;
                     }),
@@ -1960,11 +2419,16 @@ cc.Class({
                         self.playerFireEnd();
                     })
                 );
+
+                cc.winSize.width;
+
                 this.player.gun.runAction(cc.sequence(cc.delayTime(0.05),
                     cc.callFunc(function(){
                         self.player.gun_fire.active = false;
                     })));
                 this.player.gun.runAction(ac);
+
+                cc.winSize.width;
 
 
                 var bullet = null;
@@ -1975,11 +2439,16 @@ cc.Class({
                 } else {
                     bullet = cc.instantiate(this.res.bullet_1);
                 }
+
+                cc.winSize.width;
+
                 bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                 bullet.position = cc.pAdd(cc.pMult(dir,gw),bullet.position);
                 bullet.opacity = 255;
                 this.node_game.addChild(bullet,1000001);
                 bullet.diedir = dir;
+
+                cc.winSize.width;
 
                 pos = cc.pAdd(pos,bullet.position);
 
@@ -2010,12 +2479,16 @@ cc.Class({
                     cc.removeSelf()
                 );
                 bullet.runAction(seq);
+
+                cc.winSize.width;
             }
             else if(gunConf.type == 2)
             {
                 var gw = this.player.gun.width*(1-this.player.gun.anchorX) + 10;
 
                 var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
+
+                cc.winSize.width;
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
@@ -2027,6 +2500,9 @@ cc.Class({
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
+
+                        cc.winSize.width;
+
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
                         smoke.scaleX = -self.player.scaleX;
@@ -2038,6 +2514,8 @@ cc.Class({
                             })
                         ));
 
+                        cc.winSize.width;
+
                         var shell = null;
                         if (self.poolshells.size() > 0) {
                             shell = self.poolshells.get();
@@ -2045,6 +2523,9 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
+
+                        cc.winSize.width;
+
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
                         self.node_game.addChild(shell,1000001);
@@ -2054,6 +2535,8 @@ cc.Class({
                                 self.poolshells.put(shell);
                             })
                         ));
+
+                        cc.winSize.width;
 
                         self.player.gun_fire.active = true;
                     }),
@@ -2067,6 +2550,9 @@ cc.Class({
                             }))
                     )
                 );
+
+                cc.winSize.width;
+
                 var ac2 = cc.sequence(
                     cc.repeat(ac,gunConf.num),
                     cc.delayTime(0.2),
@@ -2075,6 +2561,9 @@ cc.Class({
                         self.playerFireEnd();
                     })
                 );
+
+                cc.winSize.width;
+
                 this.player.gun.runAction(ac2);
 
                 for(var i=0;i<gunConf.num;i++)
@@ -2087,6 +2576,8 @@ cc.Class({
                     else if(i > 2)
                         r = cc.randomMinus1To1()*gunConf.angle;
 
+                    cc.winSize.width;
+
                     var dir2 = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
                     var pos = cc.pMult(dir2,1584);
 
@@ -2098,11 +2589,16 @@ cc.Class({
                     } else {
                         bullet = cc.instantiate(this.res.bullet_1);
                     }
+
+                    cc.winSize.width;
+
                     bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                     bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
                     bullet.opacity = 0;
                     this.node_game.addChild(bullet,1000001);
                     bullet.diedir = dir2;
+
+                    cc.winSize.width;
 
                     pos = cc.pAdd(pos,bullet.position);
 
@@ -2132,6 +2628,8 @@ cc.Class({
                         cc.removeSelf()
                     );
                     bullet.runAction(seq);
+
+                    cc.winSize.width;
                 }
             }
             else if(gunConf.type == 3)
@@ -2149,6 +2647,9 @@ cc.Class({
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
+
+                        cc.winSize.width;
+
                         smoke.position = cc.pAdd(self.player.position,self.player.aim.position);
                         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
                         smoke.scaleX = -self.player.scaleX;
@@ -2160,6 +2661,8 @@ cc.Class({
                             })
                         ));
 
+                        cc.winSize.width;
+
                         var shell = null;
                         if (self.poolshells.size() > 0) {
                             shell = self.poolshells.get();
@@ -2167,6 +2670,10 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
+
+                        cc.winSize.width;
+
+
                         shell.position = cc.pAdd(self.player.position,self.player.aim.position);
                         shell.scaleX = -self.player.scaleX;
                         self.node_game.addChild(shell,1000001);
@@ -2176,6 +2683,8 @@ cc.Class({
                                 self.poolshells.put(shell);
                             })
                         ));
+
+                        cc.winSize.width;
 
                         self.player.gun_fire.active = true;
                     }),
@@ -2193,6 +2702,8 @@ cc.Class({
                     })));
                 this.player.gun.runAction(ac);
 
+                cc.winSize.width;
+
                 for(var i=0;i<gunConf.num;i++)
                 {
                     var r = 0;
@@ -2202,6 +2713,9 @@ cc.Class({
                         r = -cc.random0To1()*gunConf.angle;
                     else if(i > 2)
                         r = cc.randomMinus1To1()*gunConf.angle;
+
+
+                    cc.winSize.width;
 
                     var dir2 = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
                     var pos = cc.pMult(dir2,1584);
@@ -2214,6 +2728,10 @@ cc.Class({
                     } else {
                         bullet = cc.instantiate(this.res.bullet_1);
                     }
+
+                    cc.winSize.width;
+
+
                     bullet.position = cc.pAdd(this.player.position,this.player.aim.position);
                     bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
                     //bullet.opacity = 0;
@@ -2221,6 +2739,8 @@ cc.Class({
                     bullet.diedir = dir2;
 
                     pos = cc.pAdd(pos,bullet.position);
+
+                    cc.winSize.width;
 
                     //var colls = this.enemy.getComponents("cc.BoxCollider");
                     //for(var j=0;j<colls.length;j++)
@@ -2249,6 +2769,8 @@ cc.Class({
                         cc.removeSelf()
                     );
                     bullet.runAction(seq);
+
+                    cc.winSize.width;
                 }
             }
         }
@@ -2256,7 +2778,7 @@ cc.Class({
 
     playerFireEnd: function()
     {
-        this.player.gun.rotation = 0;
+        this.player.gun.rotation = 0;cc.winSize.width;
         this.player.aim.line.rotation = 0;
         this.player.aim.getComponent("cc.ProgressBar").progress = 0;
     },
@@ -2264,7 +2786,7 @@ cc.Class({
     judgeEnemyFire: function()
     {
         this.player.gun.firenum ++;
-        var gunConf = this.res.gunsconfig[this.GAME.currGun];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];cc.winSize.width;
         if(gunConf.num == this.player.gun.firenum)
         {
             var b = false;
@@ -2282,14 +2804,14 @@ cc.Class({
             }
             if(b && this.enemy.judgeboss && !this.enemy.die)
             {
-                var self = this;
+                var self = this;cc.winSize.width;
                 var ac = cc.sequence(
                     cc.delayTime(0.2),
                     cc.callFunc(function(){
                         self.judgeBossMove();
                     })
                 );
-                this.node.runAction(ac);
+                this.node.runAction(ac);cc.winSize.width;
             }
         }
     },
@@ -2298,7 +2820,7 @@ cc.Class({
     {
         var self = this;
         var ang = cc.pAngle(this.player.position,this.enemy.position);
-        ang = cc.radiansToDegrees(ang);
+        ang = cc.radiansToDegrees(ang);cc.winSize.width;
 
         var ac = cc.sequence(
             cc.rotateTo(ang/20*0.2,ang),
@@ -2309,7 +2831,7 @@ cc.Class({
             }),
             cc.delayTime(0.05),
             cc.callFunc(function(){
-                self.enemy.gun_fire.active = false;
+                self.enemy.gun_fire.active = false;cc.winSize.width;
             })
         );
         this.enemy.gun.runAction(ac);
@@ -2325,7 +2847,7 @@ cc.Class({
             bulletspeed = 1200;
 
         var dir = cc.pSub(this.player.position,this.enemy.position);
-        dir = cc.pNormalize(dir);
+        dir = cc.pNormalize(dir);cc.winSize.width;
 
         var gw = this.enemy.gun.width*(1-this.enemy.gun.anchorX) + 10;
         var pos = cc.pMult(dir,cc.winSize.height);
@@ -2333,7 +2855,7 @@ cc.Class({
         var bullet = cc.instantiate(this.res.ebullet_1);
         bullet.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
         bullet.position = cc.pAdd(cc.pMult(dir,gw),bullet.position);
-        this.node_game.addChild(bullet,1000001);
+        this.node_game.addChild(bullet,1000001);cc.winSize.width;
         this.player.diedir = dir;
 
         pos = cc.pAdd(pos,bullet.position);
@@ -2360,7 +2882,7 @@ cc.Class({
             }),
             cc.removeSelf()
         );
-        bullet.runAction(seq);
+        bullet.runAction(seq);cc.winSize.width;
 
         storage.playSound(this.res.gunaudios[0]);
 
@@ -2369,7 +2891,7 @@ cc.Class({
             smoke = this.poolsmokes.get();
             smoke.getComponent("cc.ParticleSystem").resetSystem();
         } else {
-            smoke = cc.instantiate(this.res.smoke);
+            smoke = cc.instantiate(this.res.smoke);cc.winSize.width;
         }
         smoke.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
         smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
@@ -2382,7 +2904,7 @@ cc.Class({
             })
         ));
 
-        var shell = null;
+        var shell = null;cc.winSize.width;
         if (this.poolshells.size() > 0) {
             shell = this.poolshells.get();
             shell.getComponent("cc.ParticleSystem").resetSystem();
@@ -2390,7 +2912,7 @@ cc.Class({
             shell = cc.instantiate(this.res.shell);
         }
         shell.position = cc.pAdd(this.enemy.position,this.enemy.gun.position);
-        shell.scaleX = -this.enemy.scaleX;
+        shell.scaleX = -this.enemy.scaleX;cc.winSize.width;
         this.node_game.addChild(shell,1000001);
         shell.runAction(cc.sequence(
             cc.delayTime(1),
@@ -2399,7 +2921,7 @@ cc.Class({
             })
         ));
 
-        this.enemy.gun_fire.active = true;
+        this.enemy.gun_fire.active = true;cc.winSize.width;
     },
 
     updateAim: function()
@@ -2409,7 +2931,7 @@ cc.Class({
             var ang = -this.player.gun.rotation;
             var zpro = 60/360;
             var pro = ang/60*zpro;
-            this.player.aim.line.rotation = -ang;
+            this.player.aim.line.rotation = -ang;cc.winSize.width;
             this.player.aim.getComponent("cc.ProgressBar").progress = pro;
         }
     },
@@ -2426,11 +2948,11 @@ cc.Class({
             score = 10;
         var disnum = Math.abs(this.enemy.x - this.player.x)/this.tih;
         if(disnum>5)
-            score *= 2;
+            score *= 2;cc.winSize.width;
         if(isHead)
             score *= 2;
 
-        this.getScore(score);
+        this.getScore(score);cc.winSize.width;
 
 
         var hit = null;
@@ -2441,11 +2963,11 @@ cc.Class({
             hit = cc.instantiate(this.res.hit);
         }
         hit.scale = 0;
-        hit.color = this.enemy.enemycolor;
+        hit.color = this.enemy.enemycolor;cc.winSize.width;
         hit.position = this.enemy.position;
         hit.y += this.enemy.height/2;
         this.node_game.addChild(hit,1000001);
-        var sct = 0.5;
+        var sct = 0.5;cc.winSize.width;
         if(isHead)
         {
             this.player.gun.hitheadnum++;
@@ -2454,7 +2976,7 @@ cc.Class({
             if(this.GAME.killhead>=2)
                 killhscore += 5*this.GAME.killhead;
             this.node_game_ui.killhead.getComponent("cc.Label").string = "爆头x"+this.GAME.killhead+" 得分"+killhscore;
-            this.node_game_ui.killhead.active = true;
+            this.node_game_ui.killhead.active = true;cc.winSize.width;
             sct = 1;
             this.addCoin();
             if(disnum>7)
@@ -2471,7 +2993,7 @@ cc.Class({
                 cc.moveBy(0.05,cc.v2(0,-10)).easing(cc.easeSineOut())
             ));
 
-            this.vibrate();
+            this.vibrate();cc.winSize.width;
             //this.playSound(this.res.audio_hit_head);
 
 
@@ -2482,7 +3004,7 @@ cc.Class({
             } else {
                 par = cc.instantiate(this.bigblood);
             }
-            par.getComponent("cc.ParticleSystem").startColor = this.enemy.enemycolor;
+            par.getComponent("cc.ParticleSystem").startColor = this.enemy.enemycolor;cc.winSize.width;
             par.getComponent("cc.ParticleSystem").endColor = this.enemy.enemycolor;
             par.position = hit.position;
             par.scaleX = -this.enemy.scaleX;
@@ -2494,7 +3016,7 @@ cc.Class({
                 })
             ));
 
-            storage.setStorageHitHeadNum(parseInt(storage.getStorageHitHeadNum())+1);
+            storage.setStorageHitHeadNum(parseInt(storage.getStorageHitHeadNum())+1);cc.winSize.width;
         }
         else
         {
@@ -2503,21 +3025,21 @@ cc.Class({
             var killhscore = this.GAME.killhead*10;
             if(this.GAME.killhead>=2)
                 killhscore += 5*this.GAME.killhead;
-            this.getScore(killhscore);
+            this.getScore(killhscore);cc.winSize.width;
             this.GAME.killhead = 0;
             //this.playSound(this.res.audio_hit_torso);
 
             var par = null;
             if (this.poolbloods.size() > 0) {
                 par = this.poolbloods.get();
-                par.getComponent("cc.ParticleSystem").resetSystem();
+                par.getComponent("cc.ParticleSystem").resetSystem();cc.winSize.width;
             } else {
                 par = cc.instantiate(this.res.blood);
             }
             par.getComponent("cc.ParticleSystem").startColor = this.enemy.enemycolor;
             par.getComponent("cc.ParticleSystem").endColor = this.enemy.enemycolor;
             par.position = hit.position;
-            par.scaleX = -this.enemy.scaleX;
+            par.scaleX = -this.enemy.scaleX;cc.winSize.width;
             this.node_game.addChild(par,1000001);
 
             par.runAction(cc.sequence(
@@ -2530,7 +3052,7 @@ cc.Class({
         var seq = cc.sequence(
             cc.scaleTo(0.3,sct,sct).easing(cc.easeSineIn()),
             cc.callFunc(function(){
-                self.poolhits.put(hit);
+                self.poolhits.put(hit);cc.winSize.width;
             })
         );
         hit.runAction(seq);
@@ -2561,12 +3083,12 @@ cc.Class({
                     this.enemy.hp = 0;
                 this.node_game_ui.boss.getComponent("cc.ProgressBar").progress = this.enemy.hp/this.enemy.zhp;
 
-                var hpbg = new cc.Node();
+                var hpbg = new cc.Node();cc.winSize.width;
                 var hp = hpbg.addComponent("cc.Label");
                 hp.string = "-"+hhp;
                 hpbg.position = this.enemy.position;
                 hpbg.y += this.enemy.height;
-                this.node_game.addChild(hpbg,1000000000);
+                this.node_game.addChild(hpbg,1000000000);cc.winSize.width;
 
                 hpbg.runAction(cc.sequence(
                     cc.spawn(
@@ -2588,7 +3110,7 @@ cc.Class({
                     cc.delayTime(0.3),
                     cc.callFunc(function(){
                         self.removeColl();
-                        self.playerMove(false);
+                        self.playerMove(false);cc.winSize.width;
                     })
                 );
                 if(!this.enemy.ismove && !this.enemy.judgeboss)
@@ -2598,14 +3120,14 @@ cc.Class({
             }
             else
             {
-                this.enemy.judgeboss = false;
+                this.enemy.judgeboss = false;cc.winSize.width;
                 this.node.stopActionByTag(1000);
                 this.removeColl();
                 var roang = 180;
                 var dis = cc.winSize.width - this.enemy.x;
                 if(this.enemy.scaleX == 1)
                 {
-                    roang = -roang;
+                    roang = -roang;cc.winSize.width;
                     dis = this.enemy.x;
                 }
                 dis += 100;
@@ -2616,7 +3138,7 @@ cc.Class({
                         cc.rotateBy(dis/900,roang)
                     ),
                     cc.callFunc(function(){
-                        self.playerMove(true);
+                        self.playerMove(true);cc.winSize.width;
                     }),
                     cc.removeSelf()
                 );
@@ -2624,7 +3146,7 @@ cc.Class({
                 this.enemy.die = true;
 
                 this.node_game_ui.killhead.active = false;
-                this.getScore(10*this.GAME.killhead);
+                this.getScore(10*this.GAME.killhead);cc.winSize.width;
                 this.GAME.killhead = 0;
 
                 this.showChuKou();
@@ -2635,7 +3157,7 @@ cc.Class({
         else
         {
             this.removeColl();
-            var roang = 180;
+            var roang = 180;cc.winSize.width;
             var dis = cc.winSize.width - this.enemy.x;
             if(this.enemy.scaleX == 1)
             {
@@ -2643,7 +3165,7 @@ cc.Class({
                 dis = this.enemy.x;
             }
             dis += 100;
-            var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, dis));
+            var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, dis));cc.winSize.width;
 
             var ac = cc.sequence(
                 cc.spawn(
@@ -2659,7 +3181,7 @@ cc.Class({
             //enemy.runAction(ac);
 
             this.enemy.die = true;
-            this.enemy.runAction(ac);
+            this.enemy.runAction(ac);cc.winSize.width;
         }
         this.judgeChengjiuGame();
     },
@@ -2676,7 +3198,7 @@ cc.Class({
         }
         else
         {
-            chukou.x = chukou.width;
+            chukou.x = chukou.width;cc.winSize.width;
             chukou.scaleX = -1;
         }
         this.node_game.addChild(chukou,this.enemy.louti.zOrder);
@@ -2685,11 +3207,11 @@ cc.Class({
     removeColl: function()
     {
         //移除碰撞组件
-        var data = this.enemy.louti.data;
+        var data = this.enemy.louti.data;cc.winSize.width;
         for(var i=1;i<=data[1];i++)
         {
             var ti = cc.find("ti" + i, this.enemy.louti);
-            ti.removeComponent('cc.BoxCollider');
+            ti.removeComponent('cc.BoxCollider');cc.winSize.width;
             //ti.removeComponent('cc.RigidBody');
         }
     },
@@ -2699,7 +3221,7 @@ cc.Class({
         var self = this;
         if(!this.enemy.ismove && this.enemy.judgeboss)
         {
-            this.enemy.judgeboss = false;
+            this.enemy.judgeboss = false;cc.winSize.width;
             self.removeColl();
             self.playerMove(false);
         }
@@ -2708,7 +3230,7 @@ cc.Class({
             var ac = cc.sequence(
                 cc.delayTime(0.2),
                 cc.callFunc(function(){
-                    self.judgeBossMove();
+                    self.judgeBossMove();cc.winSize.width;
                 })
             );
             ac.setTag(1000);
@@ -2720,7 +3242,7 @@ cc.Class({
     {
         var self = this;
         this.GAME.lastplayerpos = this.player.position;
-        this.GAME.state = "over";
+        this.GAME.state = "over";cc.winSize.width;
         var pos = cc.pAdd(this.player.position,cc.pMult(this.player.diedir, cc.winSize.width));
         var roang = 360;
         if(this.player.scaleX == 1)
@@ -2735,7 +3257,7 @@ cc.Class({
                     cc.rotateBy(0.8,roang)
                 ),
                 cc.callFunc(function(){
-                    self.fuhuo(true);
+                    self.fuhuo(true);cc.winSize.width;
                 }),
                 cc.removeSelf()
             );
@@ -2753,7 +3275,7 @@ cc.Class({
                     cc.rotateBy(0.8,roang)
                 ),
                 cc.callFunc(function(){
-                    self.gameOver(false);
+                    self.gameOver(false);cc.winSize.width;
                 })
             );
             this.player.runAction(ac);
@@ -2767,7 +3289,7 @@ cc.Class({
         {
             if(Math.floor(this.GAME.score) > storage.getStorageScore())
                 storage.setStorageScore(Math.floor(this.GAME.score));
-            this.nextLevel();
+            this.nextLevel();cc.winSize.width;
         }
         else
         {
@@ -2783,7 +3305,7 @@ cc.Class({
     gameResult: function()
     {
         var over = cc.instantiate(this.res.node_over);
-        this.node.addChild(over);
+        this.node.addChild(over);cc.winSize.width;
         this.node_over = over.getComponent("over");
         this.node_over.show();
     },
@@ -2797,27 +3319,27 @@ cc.Class({
         //}
 
         var fuhuo = cc.instantiate(this.res.node_fuhuo);
-        this.node.addChild(fuhuo);
+        this.node.addChild(fuhuo);cc.winSize.width;
         this.node_fuhuo = fuhuo.getComponent("fuhuo");
-        this.node_fuhuo.show();
+        this.node_fuhuo.show();cc.winSize.width;
 
     },
 
     skip: function()
     {
         this.wxCloseFuhuo();
-        this.gameResult();
+        this.gameResult();cc.winSize.width;
     },
 
     fuhuo: function(isCard,isCoin,isVideo)
     {
         var self = this;
-        this.node_game_ui.active = true;
+        this.node_game_ui.active = true;cc.winSize.width;
         if(cc.isValid(this.node_fuhuo))
             this.node_fuhuo.hide();
 
         this.player.position = this.GAME.lastplayerpos;
-        this.rotateGun();
+        this.rotateGun();cc.winSize.width;
 
         if(isCard)
         {
@@ -2832,7 +3354,7 @@ cc.Class({
         }
         else if(isVideo)
         {
-            this.GAME.playerfuhuovideo = false;
+            this.GAME.playerfuhuovideo = false;cc.winSize.width;
         }
 
         if(!isCard)
@@ -2846,7 +3368,7 @@ cc.Class({
             ));
         }
 
-        this.wxBannerShow();
+        this.wxBannerShow();cc.winSize.width;
     },
 
     addCoin: function()
@@ -2857,14 +3379,14 @@ cc.Class({
             coin = this.poolcoins.get();
             coin.stopAllActions();
         } else {
-            coin = cc.instantiate(this.res.coin);
+            coin = cc.instantiate(this.res.coin);cc.winSize.width;
         }
         coin.position = this.node_game.convertToWorldSpace(this.enemy.position);
         coin.y += this.enemy.height;
         this.node_game_ui.addChild(coin);
 
         var playerConf = this.res.playersconfig[this.GAME.currPlayer];
-        var gunConf = this.res.gunsconfig[this.GAME.currGun];
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];cc.winSize.width;
         var coinNum = 1*(playerConf.coin+gunConf.coin-1);
 
 
@@ -2875,7 +3397,7 @@ cc.Class({
             cc.bezierTo(1.5,[cc.v2(coin.x,coin.y-Math.random()*200),
                 cc.v2(x,coin.y+Math.random()*200),this.node_game_ui.coinicon.position]),
             cc.callFunc(function(){
-                self.getCoin(coinNum);
+                self.getCoin(coinNum);cc.winSize.width;
                 storage.playSound(self.res.audio_coin);
             }),
             cc.removeSelf()
@@ -2896,7 +3418,7 @@ cc.Class({
             if(other.node.group == "enemy")
             {
                 this.enemy.diedir = self.node.diedir;
-                this.killEnemy(other.tag);
+                this.killEnemy(other.tag);cc.winSize.width;
                 this.judgeEnemyFire();
             }
             else if(other.node.group == "wall")
@@ -2910,21 +3432,21 @@ cc.Class({
 
                 var par = null;
                 if (this.poolbloods.size() > 0) {
-                    par = this.poolbloods.get();
+                    par = this.poolbloods.get();cc.winSize.width;
                     par.getComponent("cc.ParticleSystem").resetSystem();
                 } else {
                     par = cc.instantiate(this.res.blood);
                 }
                 par.getComponent("cc.ParticleSystem").startColor = this.ltcolor;
                 par.getComponent("cc.ParticleSystem").endColor = this.ltcolor;
-                par.position = self.node.position;
+                par.position = self.node.position;cc.winSize.width;
                 par.scaleX = -this.enemy.scaleX;
                 this.node_game.addChild(par,1000001);
                 var se = this;
                 par.runAction(cc.sequence(
                     cc.delayTime(1),
                     cc.callFunc(function(){
-                        se.poolbloods.put(par);
+                        se.poolbloods.put(par);cc.winSize.width;
                     })
                 ));
             }
@@ -2953,7 +3475,7 @@ cc.Class({
 
     addListener: function()
     {
-        var self = this;
+        var self = this;cc.winSize.width;
         var s = cc.winSize;
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
 
@@ -2963,7 +3485,7 @@ cc.Class({
         }, this);
         this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
             if(this.GAME.yindao == 1)
-                this.playerFire();
+                this.playerFire();cc.winSize.width;
         }, this);
     },
 
@@ -2971,7 +3493,7 @@ cc.Class({
     update: function(dt) {
         if(this.GAME.state == "start")
         {
-            this.updateAim();
+            this.updateAim();cc.winSize.width;
 
             this.uploadScoreDt += dt;
             if(this.uploadScoreDt > 10)
@@ -2985,7 +3507,7 @@ cc.Class({
 
         if(this.GAME.state == "start")
         {
-            sdd = 0.5;
+            sdd = 0.5;cc.winSize.width;
             if(this.player.ismove)
             {
                 if(this.subdt > sdd)
@@ -2999,7 +3521,7 @@ cc.Class({
         {
             if(this.subdt > sdd)
             {
-                this.subdt = 0;
+                this.subdt = 0;cc.winSize.width;
                 this._updaetSubDomainCanvas();
             }
         }
@@ -3007,22 +3529,22 @@ cc.Class({
         this.videoTimeDt += dt;
         if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
         {
-            this.videoTimeDt = 0;
+            this.videoTimeDt = 0;cc.winSize.width;
             var videoTime = storage.getStorageVideoTime();
             if(videoTime<0)
             {
-                this.node_main_lingqu_time.active = false;
+                this.node_main_lingqu_time.active = false;cc.winSize.width;
                 this.node_main_lingqu.getComponent("cc.Button").interactable = true;
 
                 if(cc.isValid(this.node_coin))
-                    this.node_coin.updateUI();
+                    this.node_coin.updateUI();cc.winSize.width;
             }
             else
             {
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
                 if(cc.isValid(this.node_coin))
                     this.node_coin.updateUI();
-                storage.setStorageVideoTime(videoTime-1);
+                storage.setStorageVideoTime(videoTime-1);cc.winSize.width;
             }
         }
 
@@ -3049,7 +3571,7 @@ cc.Class({
     {
         if(this.GAME.score < 10)
         {
-            return 1;
+            return 1;cc.winSize.width;
         }
         else if(this.GAME.score < 50 && this.GAME.score >= 10)
         {
@@ -3057,7 +3579,7 @@ cc.Class({
         }
         else if(this.GAME.score < 100 && this.GAME.score >= 50)
         {
-            return 3;
+            return 3;cc.winSize.width;
         }
         else if(this.GAME.score < 300 && this.GAME.score >=100)
         {
@@ -3065,7 +3587,7 @@ cc.Class({
         }
         else if(this.GAME.score < 500 && this.GAME.score >=300)
         {
-            return 5;
+            return 5;cc.winSize.width;
         }
         else if(this.GAME.score < 1000 && this.GAME.score >=500)
         {
@@ -3073,7 +3595,7 @@ cc.Class({
         }
         else if(this.GAME.score < 2000 && this.GAME.score >=1000)
         {
-            return 7;
+            return 7;cc.winSize.width;
         }
         else if(this.GAME.score < 3000 && this.GAME.score >= 2000)
         {
@@ -3081,7 +3603,7 @@ cc.Class({
         }
         else if(this.GAME.score < 4000 && this.GAME.score >= 3000)
         {
-            return 9;
+            return 9;cc.winSize.width;
         }
         else if(this.GAME.score < 5000 && this.GAME.score >= 4000)
         {
@@ -3089,7 +3611,7 @@ cc.Class({
         }
         else if(this.GAME.score < 6000 && this.GAME.score >= 5000)
         {
-            return 11;
+            return 11;cc.winSize.width;
         }
         else if(this.GAME.score < 10000 && this.GAME.score >= 6000)
         {
@@ -3097,19 +3619,19 @@ cc.Class({
         }
         else if(this.GAME.score >= 10000)
         {
-            return 13;
+            return 13;cc.winSize.width;
         }
     },
     getChaoyue2: function()
     {
         var per = ["3%","9%","12%","18%","32%","45%","66%","72%","81%","86%","90%","95%","99%"];
-        return per[this.getChaoyue()-1];
+        return per[this.getChaoyue()-1];cc.winSize.width;
     },
     getChaoyue3: function()
     {
         var per = ["盲人也玩游戏？","和瞎了差不多","斜眼","超级近视眼","近视眼","多练练，会好的","见习枪手",
             "实习枪手","轻松吃鸡","英雄枪手","超级神枪手","无敌神枪手","神一样的枪手"];
-        return per[this.getChaoyue()-1];
+        return per[this.getChaoyue()-1];cc.winSize.width;
     },
     getChaoyue4: function()
     {
@@ -3119,7 +3641,7 @@ cc.Class({
 
     wxGetUserInfo: function()
     {
-        var self = this;
+        var self = this;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             wx.login({
@@ -3132,15 +3654,15 @@ cc.Class({
                             if (res.errMsg.indexOf('auth deny') > -1 ||     res.errMsg.indexOf('auth denied') > -1 ) {
                                 // 处理用户拒绝授权的情况
                                 cc.log(res.errMsg);
-                                self.wxOpenSetting();
+                                self.wxOpenSetting();cc.winSize.width;
                                 qianqista.login(false);
                             }
                         },
                         success: function(res)
                         {
-                            cc.log(res.userInfo);
+                            cc.log(res.userInfo);cc.winSize.width;
                             self.userInfo = res.userInfo;
-                            qianqista.login(true,res.userInfo);
+                            qianqista.login(true,res.userInfo);cc.winSize.width;
                             wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
                         }
                     });
@@ -3151,7 +3673,7 @@ cc.Class({
                 withShareTicket: true,
                 success: function (res) {
                     // 分享成功
-                    qianqista.share(true);
+                    qianqista.share(true);cc.winSize.width;
                 },
                 fail: function (res) {
                     // 分享失败
@@ -3172,7 +3694,7 @@ cc.Class({
                 withShareTicket: true,
                 success: function (res) {
                     // 分享成功
-                    qianqista.share(true);
+                    qianqista.share(true);cc.winSize.width;
                 },
                 fail: function (res) {
                     // 分享失败
@@ -3184,9 +3706,9 @@ cc.Class({
 
     openQuanxian: function()
     {
-        var quanxian = cc.instantiate(this.res.node_quanxian);
+        var quanxian = cc.instantiate(this.res.node_quanxian);cc.winSize.width;
         this.node.addChild(quanxian);
-        this.node_quanxian = quanxian.getComponent("quanxian");
+        this.node_quanxian = quanxian.getComponent("quanxian");cc.winSize.width;
         this.node_quanxian.show();
     },
 
@@ -3195,11 +3717,11 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            self.openQuanxian();
+            self.openQuanxian();cc.winSize.width;
             var quan = self.node_quanxian.quan;
-            var openDataContext = wx.getOpenDataContext();
+            var openDataContext = wx.getOpenDataContext();cc.winSize.width;
             var sharedCanvas = openDataContext.canvas;
-            var sc = sharedCanvas.width/this.dsize.width;
+            var sc = sharedCanvas.width/this.dsize.width;cc.winSize.width;
             var dpi = cc.view._devicePixelRatio;
             var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
 
@@ -3223,7 +3745,7 @@ cc.Class({
                 wx.getSetting({
                     success: function (res) {
                         var authSetting = res.authSetting;
-                        button.destroy();
+                        button.destroy();cc.winSize.width;
                         if(cc.isValid(self.node_quanxian))
                             self.node_quanxian.hide();
                         if (authSetting['scope.userInfo'] === true) {
@@ -3234,23 +3756,23 @@ cc.Class({
                                     // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
                                     if (res.errMsg.indexOf('auth deny') > -1 ||     res.errMsg.indexOf('auth denied') > -1 ) {
                                         // 处理用户拒绝授权的情况
-                                        cc.log(res.errMsg);
+                                        cc.log(res.errMsg);cc.winSize.width;
                                         qianqista.login(false);
-                                        self.wxOpenSetting();
+                                        self.wxOpenSetting();cc.winSize.width;
                                     }
 
                                 },
                                 success: function(res)
                                 {
                                     cc.log(res.userInfo);
-                                    self.userInfo = res.userInfo;
+                                    self.userInfo = res.userInfo;cc.winSize.width;
                                     qianqista.login(true,res.userInfo);
-                                    wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
+                                    wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });cc.winSize.width;
                                 }
                             });
                         } else if (authSetting['scope.userInfo'] === false){
                             // 用户已拒绝授权，再调用相关 API 或者 wx.authorize 会失败，需要引导用户到设置页面打开授权开关
-                            self.wxOpenSetting();
+                            self.wxOpenSetting();cc.winSize.width;
                         } else {
                             // 未询问过用户授权，调用相关 API 或者 wx.authorize 会弹窗询问用户
                         }
@@ -3281,9 +3803,9 @@ cc.Class({
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             var openDataContext = wx.getOpenDataContext();
-            var sharedCanvas = openDataContext.canvas;
+            var sharedCanvas = openDataContext.canvas;cc.winSize.width;
             var quan = cc.find("quan",this.node_main);
-            var sc = sharedCanvas.width/this.dsize.width;
+            var sc = sharedCanvas.width/this.dsize.width;cc.winSize.width;
             var dpi = cc.view._devicePixelRatio;
             var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
             // var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
@@ -3314,7 +3836,7 @@ cc.Class({
     {
         if(cc.isValid(this.node_over))
             this.node_over.hide();
-        this.display_gray.active = false;
+        this.display_gray.active = false;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             wx.postMessage({ message: "closeOver" });
@@ -3323,35 +3845,35 @@ cc.Class({
 
     wxCloseRank: function()
     {
-        this.display_gray_rank.active = false;
+        this.display_gray_rank.active = false;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "closeRank" });
     },
 
     wxCloseFuhuo: function()
     {
-        this.display_gray.active = false;
+        this.display_gray.active = false;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "closeFuhuo" });
     },
 
     wxRank: function()
     {
-        this.display_gray_rank.active = true;
+        this.display_gray_rank.active = true;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "friendRank" });
     },
 
     wxOverRank: function(score,playerId,gunId)
     {
-        this.display_gray.active = true;
+        this.display_gray.active = true;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxFuhuoRank: function(score,playerId,gunId)
     {
-        this.display_gray.active = true;
+        this.display_gray.active = true;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
     },
@@ -3359,7 +3881,7 @@ cc.Class({
     wxUploadScore: function(score,playerId,gunId)
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
+        wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });cc.winSize.width;
     },
 
     wxGropShare: function()
@@ -3368,19 +3890,19 @@ cc.Class({
         {
             var query = "channel=groupsharemenu";
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
             if(this.GAME.shares.groupsharemenu_txt1 && this.GAME.shares.groupsharemenu_pic1)
             {
                 if(Math.random()>0.5)
                 {
                     query = "channel=groupsharemenu_1";
-                    title = this.GAME.shares.groupsharemenu_txt1;
+                    title = this.GAME.shares.groupsharemenu_txt1;cc.winSize.width;
                     imageUrl = this.GAME.shares.groupsharemenu_pic1;
                 }
                 else
                 {
                     query = "channel=groupsharemenu_2";
-                    title = this.GAME.shares.groupsharemenu_txt2;
+                    title = this.GAME.shares.groupsharemenu_txt2;cc.winSize.width;
                     imageUrl = this.GAME.shares.groupsharemenu_pic2;
                 }
             }
@@ -3390,12 +3912,12 @@ cc.Class({
                 imageUrl: imageUrl,
                 success: function(res)
                 {
-                    qianqista.share(true);
+                    qianqista.share(true);cc.winSize.width;
                     cc.log(res);
                 },
                 fail: function()
                 {
-                    qianqista.share(false);
+                    qianqista.share(false);cc.winSize.width;
                 }
             });
         }
@@ -3408,21 +3930,21 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharecardmenu";
+            var query = "channel=sharecardmenu";cc.winSize.width;
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
             if(this.GAME.shares.cardmenu_txt1 && this.GAME.shares.cardmenu_pic1)
             {
                 if(Math.random()>0.5)
                 {
                     query = "channel=sharecardmenu_1";
-                    title = this.GAME.shares.cardmenu_txt1;
+                    title = this.GAME.shares.cardmenu_txt1;cc.winSize.width;
                     imageUrl = this.GAME.shares.cardmenu_pic1;
                 }
                 else
                 {
                     query = "channel=sharecardmenu_2";
-                    title = this.GAME.shares.cardmenu_txt2;
+                    title = this.GAME.shares.cardmenu_txt2;cc.winSize.width;
                     imageUrl = this.GAME.shares.cardmenu_pic2;
                 }
             }
@@ -3439,45 +3961,45 @@ cc.Class({
                             shareTicket: res.shareTickets[0],
                             success: function(res)
                             {
-                                console.log("------",res);
+                                console.log("------",res);cc.winSize.width;
                                 qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
                                     if(b==true && storage.judgeShareGroupState(openGId,timestamp))
                                     {
                                         self.res.showToast("获取到一个防弹衣");
 
-                                        var cardnum = storage.getStorageCard();
+                                        var cardnum = storage.getStorageCard();cc.winSize.width;
                                         cardnum = parseInt(cardnum) + 1;
-                                        storage.setStorageCard(cardnum);
+                                        storage.setStorageCard(cardnum);cc.winSize.width;
                                         self.node_card.updateUI();
-                                        self.uploadData();
+                                        self.uploadData();cc.winSize.width;
                                     }
                                     else
                                     {
                                         self.res.showToast("每个群每天只能转发一次");
                                     }
-                                });
+                                });cc.winSize.width;
                             }
                         });
                     }
                     else
                     {
-                        self.res.showToast("请分享到群");
+                        self.res.showToast("请分享到群");cc.winSize.width;
                     }
 
                     qianqista.share(true);
-                    cc.log(res);
+                    cc.log(res);cc.winSize.width;
                 },
                 fail: function()
                 {
-                    qianqista.share(false);
+                    qianqista.share(false);cc.winSize.width;
                 }
             });
         }
         else
         {
-            var cardnum = storage.getStorageCard();
+            var cardnum = storage.getStorageCard();cc.winSize.width;
             cardnum = parseInt(cardnum) + 1;
-            storage.setStorageCard(cardnum);
+            storage.setStorageCard(cardnum);cc.winSize.width;
             self.node_card.updateUI();
         }
     },
@@ -3570,7 +4092,7 @@ cc.Class({
     wxVideoShow: function(type)
     {
         var self = this;
-        storage.pauseMusic();
+        storage.pauseMusic();cc.winSize.width;
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -3595,14 +4117,14 @@ cc.Class({
         {
             if(type == 1)
             {
-                var coin = storage.getStorageCoin();
+                var coin = storage.getStorageCoin();cc.winSize.width;
                 coin = parseInt(coin) + 100;
-                storage.setStorageCoin(coin);
+                storage.setStorageCoin(coin);cc.winSize.width;
                 self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                self.uploadData();
+                self.uploadData();cc.winSize.width;
 
                 this.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                this.node_main_lingqu_time.active = true;
+                this.node_main_lingqu_time.active = true;cc.winSize.width;
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
                 storage.setStorageVideoTime(30);
@@ -3611,14 +4133,14 @@ cc.Class({
             }
             else if(type == 2)
             {
-                this.fuhuo(false,false,true);
+                this.fuhuo(false,false,true);cc.winSize.width;
             }
             else if(type == 3)
             {
                 storage.setStorageHasZhanShi(1);
-                this.node_zhanshi.updateUI();
+                this.node_zhanshi.updateUI();cc.winSize.width;
             }
-            storage.resumeMusic();
+            storage.resumeMusic();cc.winSize.width;
         }
     },
 
@@ -3632,7 +4154,7 @@ cc.Class({
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
             var sc = sharedCanvas.width/this.dsize.width;
-            var dpi = cc.view._devicePixelRatio;
+            var dpi = cc.view._devicePixelRatio;cc.winSize.width;
             this.bannerAd = wx.createBannerAd({
                 adUnitId: 'adunit-805ad9676746d8d2',
                 style: {
@@ -3641,12 +4163,12 @@ cc.Class({
                     width: 300,
                 }
             });
-            var bannerAd = this.bannerAd;
+            var bannerAd = this.bannerAd;cc.winSize.width;
             this.bannerAd.onResize(function(res){
                 // console.log(res.width, res.height)
                 // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
                 bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
-                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
+                bannerAd.style.top = sharedCanvas.height/dpi-res.height;cc.winSize.width;
             });
             this.bannerAd.show();
         }
@@ -3673,7 +4195,7 @@ cc.Class({
             if(this.GAME.more)
             {
                 var ss = this.GAME.more.split("--");
-                appIdstr = ss[1];
+                appIdstr = ss[1];cc.winSize.width;
                 pathstr = ss[2];
             }
 
@@ -3687,7 +4209,7 @@ cc.Class({
               success(res) {
                 // 打开成功
               }
-            });
+            });cc.winSize.width;
             // wx.previewImage({
             //     urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
             //     success: function (res) {
@@ -3707,9 +4229,9 @@ cc.Class({
             var pathstr = 'pages/main/main';
             if(this.GAME.more2)
             {
-                var ss = this.GAME.more2.split("--");
+                var ss = this.GAME.more2.split("--");cc.winSize.width;
                 appIdstr = ss[1];
-                pathstr = ss[2];
+                pathstr = ss[2];cc.winSize.width;
             }
 
             wx.navigateToMiniProgram({
@@ -3722,7 +4244,7 @@ cc.Class({
               success(res) {
                 // 打开成功
               }
-            });
+            });cc.winSize.width;
         }
     }
 

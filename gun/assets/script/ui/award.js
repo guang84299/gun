@@ -9,16 +9,16 @@ cc.Class({
 
     onLoad: function()
     {
-        this.dsize = cc.view.getDesignResolutionSize();
+        this.dsize = cc.view.getDesignResolutionSize();cc.winSize.width;
         this.main = cc.find("Canvas").getComponent("main");
-        this.res = cc.find("Canvas").getComponent("res");
+        this.res = cc.find("Canvas").getComponent("res");cc.winSize.width;
         
         this.initUI();
 
         var items = this.node.children;
         for(var j=0;j<items.length;j++)
         {
-            var item = items[j];
+            var item = items[j];cc.winSize.width;
             this.adaptItem(item);
         }
     },
@@ -26,35 +26,35 @@ cc.Class({
     adaptItem: function(node)
     {
         var s = cc.winSize;
-        var h = (this.dsize.height - s.height)/2;
+        var h = (this.dsize.height - s.height)/2;cc.winSize.width;
         var sc = node.y/this.dsize.height;
-        node.y = s.height*sc + h;
+        node.y = s.height*sc + h;cc.winSize.width;
     },
 
     initUI: function()
     {
         this.node_award = this.node;
-        this.node_award_itembg = cc.find("bg/itembg",this.node_award);
+        this.node_award_itembg = cc.find("bg/itembg",this.node_award);cc.winSize.width;
 
-        this.updateUI();
+        this.updateUI();cc.winSize.width;
     },
 
     updateUI: function()
     {
-        var inviteNum = storage.getStorageInviteNum();
+        var inviteNum = storage.getStorageInviteNum();cc.winSize.width;
         var inviteAwardNum = storage.getStorageInviteAwardNum();
         if(inviteAwardNum<5)
         {
             for(var i=1;i<=5;i++)
             {
-                var item = cc.find("item_"+i,this.node_award_itembg);
-                var box = cc.find("box",item);
-                var box2 = cc.find("box2",box);
+                var item = cc.find("item_"+i,this.node_award_itembg);cc.winSize.width;
+                var box = cc.find("box",item);cc.winSize.width;
+                var box2 = cc.find("box2",box);cc.winSize.width;
                 var box3 = cc.find("box3",box);
                 box.awardid = i;
                 box.canset = false;
 
-                box2.active = false;
+                box2.active = false;cc.winSize.width;
                 box3.active = false;
                 if(inviteAwardNum<i)
                 {
@@ -62,7 +62,7 @@ cc.Class({
                     {
                         // box.color = cc.color(137,87,161);
                         box2.active = true;
-                        box.canset = true;
+                        box.canset = true;cc.winSize.width;
                     }
                     else
                     {
@@ -81,23 +81,23 @@ cc.Class({
             for(var i=1;i<=5;i++)
             {
                 var item = cc.find("item_"+i,this.node_award_itembg);
-                var box = cc.find("box",item);
+                var box = cc.find("box",item);cc.winSize.width;
                 var coin = cc.find("coin",box);
-                var box2 = cc.find("box2",box);
+                var box2 = cc.find("box2",box);cc.winSize.width;
                 var box3 = cc.find("box3",box);
                 coin.getComponent("cc.Label").string = this.res.inviteconfig[i-1]*2;
-                box.awardid = i;
+                box.awardid = i;cc.winSize.width;
                 box.canset = false;
 
                 box2.active = false;
-                box3.active = false;
+                box3.active = false;cc.winSize.width;
                 if(inviteAwardNum<i+5)
                 {
                     if(inviteNum>=i+5)
                     {
                         box2.active = true;
                         // box.color = cc.color(137,87,161);
-                        box.canset = true;
+                        box.canset = true;cc.winSize.width;
                     }
                     else
                     {
@@ -106,7 +106,7 @@ cc.Class({
                 }
                 else
                 {
-                    box3.active = true;
+                    box3.active = true;cc.winSize.width;
                     // box.color = cc.color(181,181,181);
                 }
             }
@@ -115,13 +115,13 @@ cc.Class({
 
     show: function()
     {
-        this.node.active = true;
-        this.updateUI();
+        this.node.active = true;cc.winSize.width;
+        this.updateUI();cc.winSize.width;
     },
 
     hide: function()
     {
-        this.node.destroy();
+        this.node.destroy();cc.winSize.width;
     },
 
     click: function(event,data)
@@ -130,39 +130,39 @@ cc.Class({
         {
             if(!this.main.openstore)
                 this.main.wxQuanState(true);
-            this.hide();
+            this.hide();cc.winSize.width;
         }
         else if(data == "item_award")
         {
             if(event.target.canset)
             {
-                this.lingquAward(event.target.awardid);
+                this.lingquAward(event.target.awardid);cc.winSize.width;
             }
         }
         else if(data == "lijiyaoqing")
         {
-            this.wxGropShareCoin();
-            this.main.qianqista.event("btn_lingjaing_yaoqing");
+            this.wxGropShareCoin();cc.winSize.width;
+            this.main.qianqista.event("btn_lingjaing_yaoqing");cc.winSize.width;
         }
-        cc.log(data);
+        cc.log(data);cc.winSize.width;
     },
 
     lingquAward: function(id)
     {
-        var inviteAwardNum = storage.getStorageInviteAwardNum();
+        var inviteAwardNum = storage.getStorageInviteAwardNum();cc.winSize.width;
 
         var coin = this.res.inviteconfig[id-1];
         if(inviteAwardNum>=5)
             coin*=2;
-        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);
+        storage.setStorageCoin(parseInt(storage.getStorageCoin())+coin);cc.winSize.width;
 
         storage.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
-        this.main.uploadData();
+        this.main.uploadData();cc.winSize.width;
         this.res.showToast("金币+"+coin);
         this.updateUI();
-        this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
+        this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();cc.winSize.width;
         this.main.updateDian();
-        storage.playSound(this.res.audio_coin);
+        storage.playSound(this.res.audio_coin);cc.winSize.width;
 
         var self = this;
         if(inviteAwardNum==4)
@@ -175,7 +175,7 @@ cc.Class({
             ));
         }
 
-        this.main.qianqista.event("invite_num_"+(parseInt(inviteAwardNum)+1));
+        this.main.qianqista.event("invite_num_"+(parseInt(inviteAwardNum)+1));cc.winSize.width;
     },
     
     wxGropShareCoin: function()
@@ -190,14 +190,14 @@ cc.Class({
             {
                 if(Math.random()>0.5)
                 {
-                    query = "channel=sharecoinmenu_1&fromid="+this.main.qianqista.openid;
+                    query = "channel=sharecoinmenu_1&fromid="+this.main.qianqista.openid;cc.winSize.width;
                     title = this.main.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic1;
+                    imageUrl = this.main.GAME.shares.coinmenu_pic1;cc.winSize.width;
                 }
                 else
                 {
                     query = "channel=sharecoinmenu_2&fromid="+this.main.qianqista.openid;
-                    title = this.main.GAME.shares.coinmenu_txt2;
+                    title = this.main.GAME.shares.coinmenu_txt2;cc.winSize.width;
                     imageUrl = this.main.GAME.shares.coinmenu_pic2;
                 }
             }
@@ -208,7 +208,7 @@ cc.Class({
                 success: function(res)
                 {
 
-                    self.res.showToast("分享成功，等待好友上线吧");
+                    self.res.showToast("分享成功，等待好友上线吧");cc.winSize.width;
 
                     //var cardnum = self.getStorageCoin();
                     //cardnum = parseInt(cardnum) + 100;
@@ -216,12 +216,12 @@ cc.Class({
                     //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
                     //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
                     //self.uploadData();
-                    self.main.qianqista.share(true);
+                    self.main.qianqista.share(true);cc.winSize.width;
                     cc.log(res);
                 },
                 fail: function()
                 {
-                    self.main.qianqista.share(false);
+                    self.main.qianqista.share(false);cc.winSize.width;
                     self.res.showToast("分享失败！");
                 }
             });
@@ -229,7 +229,7 @@ cc.Class({
         else
         {
              var inviteNum = storage.getStorageInviteNum();
-             storage.setStorageInviteNum(inviteNum+1);
+             storage.setStorageInviteNum(inviteNum+1);cc.winSize.width;
              this.updateUI();
             // var cardnum = storage.getStorageCoin();
             // cardnum = parseInt(cardnum) + 100;

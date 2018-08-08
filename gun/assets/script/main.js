@@ -68,6 +68,7 @@ cc.Class({
          });
 
          // cc.game.setFrameRate(50);
+         
      },
 
     initPhysics: function()

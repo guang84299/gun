@@ -63,16 +63,20 @@ module.exports = {
     session_key: "",
     power: 0,//授权状态
     url: "https://77qqup.com:442/sta/",
+    avatarUrl: "",//头像
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
     initcallback: null,
+    logincallback: null,
+    showcallback: null,
     fromid:"",
-    init: function(gameId,secret,gameName,initcallback)
+    init: function(gameId,secret,gameName,initcallback,showcallback)
     {
         this.gameId = gameId;
         this.secret = secret;
         this.gameName = gameName;
         this.initcallback = initcallback;
+        this.showcallback = showcallback;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -115,22 +119,52 @@ module.exports = {
 
             wx.onShow(function(res){
                 self.open();
+                var query = res.query;
+                if(query && query.channel && query.channel.length > 0)
+                    self.channel = query.channel;
+                if(query && query.fromid && query.fromid.length > 0)
+                {
+                    self.fromid = query.fromid;
+                }
+                if(self.power == 1 && self.channel == "shareonline")
+                {
+                    if(self.showcallback)
+                        self.showcallback();
+                }
                 console.log('onShow:', res);
+                console.log('power:', self.power);
             });
         }
-
+        else
+        {
+            if(cc.sys.browserType == "chrome")
+            {
+                this.openid = "test001";
+                this.userName = "test001";
+                this.avatarUrl = "https://77qqup.com:442/img/wxgame/49234a872c294891aa98877d51679180.png";
+                this.fromid = "test002";
+            }
+            else
+            {
+                this.openid = "test002";
+                this.userName = "test002";
+                this.avatarUrl = "https://77qqup.com:442/img/wxgame/1b6474f6563845c4a5afd5b9a797c017.png";
+                this.fromid = "test001";
+            }
+        }
     },
 
-    login: function(isSuccess, userInfo)
+    login: function(isSuccess, userInfo,callback)
     {
+        this.logincallback = callback;
         if(isSuccess)
         {
             if(!userInfo)
                 console.error("--------","userInfo is null");
             this.userName = userInfo.nickName;
             this.power = 1;
-            console.log('userName:', this.userName);
-            console.log('power:', this.power);
+            this.avatarUrl = userInfo.avatarUrl;
+            console.log('userInfo:', userInfo);
         }
         else
         {
@@ -179,6 +213,12 @@ module.exports = {
                     channel:this.channel,openid:this.openid,power:this.power},function(res){
                     console.log("power:",res);
                 });
+            }
+
+            if(this.power == 1 && self.channel == "shareonline")
+            {
+                if(this.logincallback)
+                    this.logincallback();
             }
         }
     },

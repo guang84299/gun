@@ -71,6 +71,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_duizhan: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

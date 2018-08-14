@@ -21,6 +21,7 @@ cc.Class({
          this.videoTimeDt = 0;
          this.openover = false;
          this.openstore = false;
+         this.openduizhan = false;
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
@@ -48,6 +49,8 @@ cc.Class({
                      self.updateLocalData(res.data);
                  }
              });
+         },function(){
+             self.startDuizhan();
          });
          //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
          //    qianqista.datas(function(res){
@@ -64,9 +67,11 @@ cc.Class({
              {
                  self.GAME.control = res.data;
                  self.updateUIControl();
+
              }
          });
 
+         // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
          
      },
@@ -100,6 +105,7 @@ cc.Class({
         this.GAME.state = "stop";
 
         this.poolbullets = new cc.NodePool();
+        this.poolebullets = new cc.NodePool();
         this.poolhits = new cc.NodePool();
         this.poolsmokes = new cc.NodePool();
         this.poolshells = new cc.NodePool();
@@ -109,6 +115,9 @@ cc.Class({
         {
             var bullet_1 = cc.instantiate(this.res.bullet_1);
             this.poolbullets.put(bullet_1);
+
+            var ebullet_1 = cc.instantiate(this.res.ebullet_1);
+            this.poolebullets.put(ebullet_1);
 
             var hit = cc.instantiate(this.res.hit);
             this.poolhits.put(hit);
@@ -151,7 +160,7 @@ cc.Class({
         //    storage.setStorageGun(i,0);
         storage.setStoragePlayer(1);
         storage.setStorageGun(1);
-        //storage.setStorageCoin(0);
+        //storage.setStorageCoin(3000);
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
@@ -582,6 +591,7 @@ cc.Class({
         this.initGameData();
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
+        this.node_game.active = true;
         this.node_main.active = true;
         this.node_game_ui.active = false;
         this.node_game_ui.boss.active = false;
@@ -739,9 +749,42 @@ cc.Class({
         {
             this.openLingGun();
         }
- 
+        else if(data == "duizhan")
+        {
+            this.openDuizhan();
+        }
 
         cc.log(data);
+    },
+
+    openDuizhan: function()
+    {
+        if(this.openduizhan && this.node_duizhan)
+            this.node_duizhan.hide();
+
+        this.wxQuanState(false);
+        this.openduizhan = true;
+        this.node_game.active = false;
+        this.node_game_ui.active = false;
+        this.node_main.active = false;
+
+        var duizhan = cc.instantiate(this.res.node_duizhan);
+        this.node.addChild(duizhan);
+        this.node_duizhan = duizhan.getComponent("pk");
+        this.node_duizhan.show();
+    },
+
+    startDuizhan: function()
+    {
+        this.openDuizhan();
+        var self = this;
+        this.node.runAction(cc.sequence(
+            cc.delayTime(1),
+            cc.callFunc(function(){
+                self.node_duizhan.sharePk();
+            })
+        ));
+
     },
 
     openTishi: function()
@@ -2885,6 +2928,11 @@ cc.Class({
      * 当碰撞产生的时候调用
      */
     onCollisionEnter: function (other, self) {
+        if(this.openduizhan)
+        {
+            this.node_duizhan.onCollisionEnter(other,self);
+            return;
+        }
         if(!self.node.collnum)
             self.node.collnum = 1;
         else
@@ -2968,24 +3016,36 @@ cc.Class({
 
 
     update: function(dt) {
-        if(this.GAME.state == "start")
-        {
-            this.updateAim();
 
-            this.uploadScoreDt += dt;
-            if(this.uploadScoreDt > 10)
+        if(this.openduizhan == false)
+        {
+            if(this.GAME.state == "start")
             {
-                this.uploadScoreDt = 0;
-                this.wxUploadScore(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
-            }
-        }
-        this.subdt += dt;
-        var sdd = 0.02;
+                this.updateAim();
 
-        if(this.GAME.state == "start")
-        {
-            sdd = 0.5;
-            if(this.player.ismove)
+                this.uploadScoreDt += dt;
+                if(this.uploadScoreDt > 10)
+                {
+                    this.uploadScoreDt = 0;
+                    this.wxUploadScore(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
+                }
+            }
+            this.subdt += dt;
+            var sdd = 0.02;
+
+            if(this.GAME.state == "start")
+            {
+                sdd = 0.5;
+                if(this.player.ismove)
+                {
+                    if(this.subdt > sdd)
+                    {
+                        this.subdt = 0;
+                        this._updaetSubDomainCanvas();
+                    }
+                }
+            }
+            else
             {
                 if(this.subdt > sdd)
                 {
@@ -2993,38 +3053,29 @@ cc.Class({
                     this._updaetSubDomainCanvas();
                 }
             }
-        }
-        else
-        {
-            if(this.subdt > sdd)
+
+            this.videoTimeDt += dt;
+            if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
             {
-                this.subdt = 0;
-                this._updaetSubDomainCanvas();
+                this.videoTimeDt = 0;
+                var videoTime = storage.getStorageVideoTime();
+                if(videoTime<0)
+                {
+                    this.node_main_lingqu_time.active = false;
+                    this.node_main_lingqu.getComponent("cc.Button").interactable = true;
+
+                    if(cc.isValid(this.node_coin))
+                        this.node_coin.updateUI();
+                }
+                else
+                {
+                    this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
+                    if(cc.isValid(this.node_coin))
+                        this.node_coin.updateUI();
+                    storage.setStorageVideoTime(videoTime-1);
+                }
             }
         }
-
-        this.videoTimeDt += dt;
-        if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
-        {
-            this.videoTimeDt = 0;
-            var videoTime = storage.getStorageVideoTime();
-            if(videoTime<0)
-            {
-                this.node_main_lingqu_time.active = false;
-                this.node_main_lingqu.getComponent("cc.Button").interactable = true;
-
-                if(cc.isValid(this.node_coin))
-                    this.node_coin.updateUI();
-            }
-            else
-            {
-                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
-                if(cc.isValid(this.node_coin))
-                    this.node_coin.updateUI();
-                storage.setStorageVideoTime(videoTime-1);
-            }
-        }
-
     },
 
     vibrate: function(isLong)
@@ -3139,7 +3190,9 @@ cc.Class({
                         {
                             cc.log(res.userInfo);
                             self.userInfo = res.userInfo;
-                            qianqista.login(true,res.userInfo);
+                            qianqista.login(true,res.userInfo,function(){
+                                self.startDuizhan();
+                            });
                             wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
                         }
                     });
@@ -3243,7 +3296,9 @@ cc.Class({
                                 {
                                     cc.log(res.userInfo);
                                     self.userInfo = res.userInfo;
-                                    qianqista.login(true,res.userInfo);
+                                    qianqista.login(true,res.userInfo,function(){
+                                        self.startDuizhan();
+                                    });
                                     wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
                                 }
                             });

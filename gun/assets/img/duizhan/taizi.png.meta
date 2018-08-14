@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "2f766c2d-02fe-4227-988c-d54d47a32725",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "taizi": {
+      "ver": "1.0.3",
+      "uuid": "969e6593-da27-4d3b-9157-170734304cac",
+      "rawTextureUuid": "2f766c2d-02fe-4227-988c-d54d47a32725",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 151,
+      "height": 110,
+      "rawWidth": 151,
+      "rawHeight": 110,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -54,6 +54,7 @@ cc.Class({
         this.GAME.coin = 0;
         this.GAME.isWin = false;
         this.isBgScroll = false;
+        this.lastroomType = 1;
         var self = this;
 
         websocket.init(this,function(){
@@ -108,6 +109,10 @@ cc.Class({
         this.node_sel_duizhan = cc.find("duizhan",this.node_sel);
         this.node_sel_home = cc.find("home",this.node_sel);
         this.node_sel_willstart = cc.find("bg/willstart",this.node_sel).getComponent("cc.Label");
+        this.node_sel_coin = cc.find("coin",this.node_sel);
+        this.node_sel_coin_num = cc.find("coin/num",this.node_sel).getComponent("cc.Label");
+
+
 
         this.node_over = cc.find("node_over",this.node);
         this.node_over_title = cc.find("bg/title",this.node_over).getComponent("cc.Label");
@@ -143,6 +148,7 @@ cc.Class({
         this.GAME.coin += coin;
         this.coin_num.string = Math.floor(this.GAME.coin)+"";
         this.node_over_coin_num.string = Math.floor(this.GAME.coin)+"";
+        this.node_sel_coin_num.string = Math.floor(this.GAME.coin)+"";
     },
 
 
@@ -167,6 +173,7 @@ cc.Class({
             {
                 //this.res.showToast("金币不足");
                 var coin = cc.instantiate(this.res.node_coin);
+                coin.position = cc.v2(0,0);
                 this.node.addChild(coin);
                 this.node_coin = coin.getComponent("coin");
                 this.node_coin.show();
@@ -380,11 +387,12 @@ cc.Class({
             })
         ),3));
 
-        if(data.roomType == 1)
+        if(this.playerData.roomType == 1)
         {
             storage.setStorageCoin(storage.getStorageCoin()-20);
-            this.getCoin(0);
+            this.getCoin(-20);
         }
+        this.lastroomType = this.playerData.roomType;
     },
 
     pipeiFail: function()
@@ -511,6 +519,12 @@ cc.Class({
                             {
                                 cc.log("start game");
                                 websocket.startGame();
+
+                                if(self.lastroomType == 1)
+                                {
+                                    storage.setStorageCoin(storage.getStorageCoin()-20);
+                                    self.getCoin(-20);
+                                }
                             }
 
                         }
@@ -544,6 +558,14 @@ cc.Class({
                     })
                 ),8));
             }
+
+            if(this.lastroomType == 1 && storage.getStorageCoin() < 20)
+            {
+                this.selfPlayer.leave = true;
+                this.state = "stop";
+                websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
+                this.node.stopAllActions();
+            }
         }
         else if(data.againType == 4)//溜了
         {
@@ -558,6 +580,12 @@ cc.Class({
             this.node.stopAllActions();
             this.state = "stop";
             websocket.startGame();
+
+            if(this.lastroomType == 1)
+            {
+                storage.setStorageCoin(storage.getStorageCoin()-20);
+                this.getCoin(-20);
+            }
         }
     },
 
@@ -755,6 +783,7 @@ cc.Class({
         this.enemy.aim.line = cc.find("line",this.enemy.aim);
         this.enemy.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
         this.enemy.addChild(this.enemy.aim,0);
+        this.enemy.aim.opacity = 0;
 
         this.enemy.aim.line.rotation = 0;
         this.enemy.aim.getComponent("cc.ProgressBar").progress = 0;

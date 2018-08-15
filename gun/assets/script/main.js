@@ -160,7 +160,7 @@ cc.Class({
         //    storage.setStorageGun(i,0);
         storage.setStoragePlayer(1);
         storage.setStorageGun(1);
-        //storage.setStorageCoin(3000);
+        //storage.setStorageCoin(20);
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
@@ -197,14 +197,21 @@ cc.Class({
         this.node_main_bottom = cc.find("bottom",this.node_main);
         this.node_main_lingqu = cc.find("lingqu",this.node_main);
         this.node_main_lingqu_time = cc.find("lingqu/time",this.node_main);
-        this.node_main_start = cc.find("start",this.node_main);
+        //this.node_main_start = cc.find("start",this.node_main);
         this.node_main_more = cc.find("more",this.node_main);
-        this.node_main_more2 = cc.find("more2",this.node_main);
-        this.node_main_start.runAction(cc.repeatForever(cc.sequence(
-                cc.scaleTo(0.5,1.2).easing(cc.easeSineIn()),
-                cc.scaleTo(0.5,1).easing(cc.easeSineOut())
-            )));
+        //this.node_main_more2 = cc.find("more2",this.node_main);
+        //this.node_main_start.runAction(cc.repeatForever(cc.sequence(
+        //        cc.scaleTo(0.5,1.2).easing(cc.easeSineIn()),
+        //        cc.scaleTo(0.5,1).easing(cc.easeSineOut())
+        //    )));
 
+        this.node_main_zhanshibg_guang = cc.find("zhanshibg/guang",this.node_main);
+        this.node_main_fangdanyi_guang = cc.find("fangdanyi/guang",this.node_main);
+        this.node_main_linggunbg_guang = cc.find("linggunbg/guang",this.node_main);
+
+        this.node_main_zhanshibg_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
+        this.node_main_fangdanyi_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
+        this.node_main_linggunbg_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
         //var stringTime = "2018-07-05 17:01:00";
         //var timestamp2 = (new Date(Date.parse(stringTime.replace(/-/g,"/")))).getTime();
         //if(new Date().getTime() < timestamp2)
@@ -230,10 +237,10 @@ cc.Class({
     updateUIControl: function()
     {
         this.node_main_more.active = false;
-        this.node_main_more2.active = false;
+        //this.node_main_more2.active = false;
         
         cc.find("fangdanyi",this.node_main).active = false;
-        cc.find("lingjiang",this.node_main).active = false;
+        cc.find("bottom/lingjiang",this.node_main).active = false;
         cc.find("linggunbg",this.node_main).active = false;
         
 
@@ -254,7 +261,7 @@ cc.Class({
                     if(con.value == "1")
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
-                        cc.find("lingjiang",this.node_main).active = true;
+                        cc.find("bottom/lingjiang",this.node_main).active = true;
                         cc.find("linggunbg",this.node_main).active = true;
                         this.GAME.fangdanyi = true;
                         this.GAME.sharecard = true;
@@ -303,12 +310,12 @@ cc.Class({
             this.node_main_more.active = true;
             this.loadPic(this.node_main_more,pic);
         }
-        if(this.GAME.more2)
-        {
-            var pic = this.GAME.more2.split("--")[0];
-            this.node_main_more2.active = true;
-            this.loadPic(this.node_main_more2,pic);
-        }
+        //if(this.GAME.more2)
+        //{
+        //    var pic = this.GAME.more2.split("--")[0];
+        //    this.node_main_more2.active = true;
+        //    this.loadPic(this.node_main_more2,pic);
+        //}
 
         this.updateDian();
     },
@@ -753,7 +760,10 @@ cc.Class({
         {
             this.openDuizhan();
         }
-
+        else if(data == "tiaozhan")
+        {
+            this.res.showToast("敬请期待！");
+        }
         cc.log(data);
     },
 
@@ -880,7 +890,7 @@ cc.Class({
     updateDian: function()
     {
         var qiandao_dian = cc.find("qiandao/dian",this.node_main);
-        var lingjiang_dian = cc.find("lingjiang/dian",this.node_main);
+        var lingjiang_dian = cc.find("bottom/lingjiang/dian",this.node_main);
         var chengjiu_dian = cc.find("bottom/chengjiu/dian",this.node_main);
         
 
@@ -3336,11 +3346,11 @@ cc.Class({
         {
             var openDataContext = wx.getOpenDataContext();
             var sharedCanvas = openDataContext.canvas;
-            var quan = cc.find("quan",this.node_main_bottom);
+            var quan = cc.find("quan",this.node_main);
             var sc = sharedCanvas.width/this.dsize.width;
             var dpi = cc.view._devicePixelRatio;
-            //var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
-            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
+            var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - (quan.y-this.node_main_bottom.y)*sc/dpi);
+            //var pos = cc.v2(quan.x*sc/dpi,sharedCanvas.height/dpi - quan.y*sc/dpi);
             this.quan_button = wx.createGameClubButton({
                 icon: 'white',
                 style: {

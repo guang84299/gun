@@ -69,14 +69,16 @@ module.exports = {
     initcallback: null,
     logincallback: null,
     showcallback: null,
+    hidecallback: null,
     fromid:"",
-    init: function(gameId,secret,gameName,initcallback,showcallback)
+    init: function(gameId,secret,gameName,initcallback,showcallback,hidecallback)
     {
         this.gameId = gameId;
         this.secret = secret;
         this.gameName = gameName;
         this.initcallback = initcallback;
         this.showcallback = showcallback;
+        this.hidecallback = hidecallback;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -133,6 +135,11 @@ module.exports = {
                 }
                 console.log('onShow:', res);
                 console.log('power:', self.power);
+            });
+
+            wx.onHide(function(){
+                if(self.hidecallback)
+                    self.hidecallback();
             });
         }
         else

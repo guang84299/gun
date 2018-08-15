@@ -164,6 +164,15 @@ cc.Class({
         this.node.destroy();
     },
 
+    goHome: function()
+    {
+        this.node.stopAllActions();
+        this.main.wxQuanState(true);
+        websocket.close();
+        this.main.goMain();
+        this.hide();
+    },
+
     click: function(event,data)
     {
         if(data == "suiji")
@@ -1633,7 +1642,7 @@ cc.Class({
 
         var x = coin.x+Math.random()*100-50;
         var seq = cc.sequence(
-            cc.bezierTo(1.5,[cc.v2(coin.x,coin.y-Math.random()*100),
+            cc.bezierTo(1.5,[cc.v2(coin.x-Math.random()*100,coin.y),
                 cc.v2(x+Math.random()*100-50,coin.y+Math.random()*100),this.coin.position]),
             cc.callFunc(function(){
                 self.getCoin(coinNum);
@@ -1678,11 +1687,18 @@ cc.Class({
             storage.setStorageCoin(storage.getStorageCoin()+50);
 
             this.node.runAction(cc.repeat(cc.sequence(
-                cc.delayTime(0.1),
+                cc.delayTime(0.05),
                 cc.callFunc(function(){
                     self.addCoin();
                 })
             ),51));
+
+            var winNum = storage.getStorageWinNum();
+            winNum += 1;
+            storage.setStorageWinNum(winNum);
+
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:this.selfPlayer.skinId,gunId:this.selfPlayer.gunId });
         }
         else
         {

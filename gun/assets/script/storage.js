@@ -60,6 +60,17 @@ module.exports = {
         return Number(currscore);
     },
 
+    setStorageWinNum: function(winNum)
+    {
+        cc.sys.localStorage.setItem("winNum",winNum);
+    },
+    getStorageWinNum: function()
+    {
+        var winNum = cc.sys.localStorage.getItem("winNum");
+        winNum = winNum ? winNum : 0;
+        return Number(winNum);
+    },
+
     setStorageCurrPlayer: function(id)
     {
         cc.sys.localStorage.setItem("currPlayer",id);

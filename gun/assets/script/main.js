@@ -51,6 +51,8 @@ cc.Class({
              });
          },function(){
              self.startDuizhan();
+         },function(){
+             self.stopDuizhan();
          });
          //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
          //    qianqista.datas(function(res){
@@ -764,6 +766,10 @@ cc.Class({
         {
             this.res.showToast("敬请期待！");
         }
+        else if(data == "gongzhonghao")
+        {
+            this.wxGongZhongHao();
+        }
         cc.log(data);
     },
 
@@ -795,6 +801,12 @@ cc.Class({
             })
         ));
 
+    },
+
+    stopDuizhan: function()
+    {
+        if(this.openduizhan && this.node_duizhan)
+            this.node_duizhan.goHome();
     },
 
     openTishi: function()
@@ -3745,18 +3757,11 @@ cc.Class({
                 foo: 'bar'
               },
               // envVersion: 'develop',
-              success(res) {
+              success: function(res) {
                 // 打开成功
               }
             });
-            // wx.previewImage({
-            //     urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
-            //     success: function (res) {
-            //     },
-            //     fail: function (res) {
-            //         return;
-            //     }
-            // });
+
         }
     },
 
@@ -3780,9 +3785,24 @@ cc.Class({
                 foo: 'bar'
               },
               // envVersion: 'develop',
-              success(res) {
+              success: function(res) {
                 // 打开成功
               }
+            });
+        }
+    },
+
+    wxGongZhongHao: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            wx.previewImage({
+                 urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
+                 success: function (res) {
+                 },
+                 fail: function (res) {
+                     return;
+                 }
             });
         }
     }

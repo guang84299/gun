@@ -7,6 +7,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        paimingItem2: {
+            default: null,
+            type: cc.Prefab
+        },
         chaoyueItem: {
             default: null,
             type: cc.Prefab
@@ -192,8 +196,18 @@ cc.Class({
             playerId:0,
             gunId:0
         };
+        this.winnumdata = {
+            wxgame:
+            {
+                winNum: 0,
+                update_time: 0
+            },
+            playerId:0,
+            gunId:0
+        };
         this.userInfo = null;
         this.friendRank = null;
+        this.friendWinNumRank = null;
         this.chaoyueData = [];
         var self = this;
 
@@ -232,6 +246,10 @@ cc.Class({
             else if(data.message == "updateScore")
             {
                 self.updateScore(data.score,data.playerId,data.gunId);
+            }
+            else if(data.message == "updateWinNum")
+            {
+                self.updateWinNum(data.winNum,data.playerId,data.gunId);
             }
             cc.log(data.message);
         });
@@ -274,11 +292,27 @@ cc.Class({
 
         self.node_paiming = cc.find("Canvas/node_rank");
         self.node_paiming_content = cc.find("bg/scroll/view/content",self.node_paiming);
+        self.node_paiming_item_me = cc.find("bg/item_me",self.node_paiming);
+        self.node_paiming_item_me2 = cc.find("bg/item_me2",self.node_paiming);
+
         self.node_paiming_num = cc.find("bg/item_me/bg/rank",self.node_paiming);
         self.node_paiming_icon = cc.find("bg/item_me/bg/icon",self.node_paiming);
         self.node_paiming_nick = cc.find("bg/item_me/bg/nike",self.node_paiming);
         self.node_paiming_score = cc.find("bg/item_me/bg/score",self.node_paiming);
         self.node_paiming_role = cc.find("bg/item_me/bg/role",self.node_paiming);
+
+        self.node_paiming_num2 = cc.find("bg/item_me2/bg/rank",self.node_paiming);
+        self.node_paiming_icon2 = cc.find("bg/item_me2/bg/icon",self.node_paiming);
+        self.node_paiming_nick2 = cc.find("bg/item_me2/bg/nike",self.node_paiming);
+        self.node_paiming_score2 = cc.find("bg/item_me2/bg/score",self.node_paiming);
+        self.node_paiming_role2 = cc.find("bg/item_me2/bg/role",self.node_paiming);
+
+        self.node_paiming_wujin = cc.find("bg/wujin",self.node_paiming);
+        self.node_paiming_duizhan = cc.find("bg/duizhan",self.node_paiming);
+        self.node_paiming_mask1 = cc.find("bg/mask1",self.node_paiming);
+        self.node_paiming_mask2 = cc.find("bg/mask2",self.node_paiming);
+        self.node_paiming_wujinbg = cc.find("bg/wujinbg",self.node_paiming);
+        self.node_paiming_duizhanbg = cc.find("bg/duizhanbg",self.node_paiming);
 
         self.node_fuhuo = cc.find("Canvas/node_fuhuo");
         self.node_fuhuo_icon = cc.find("fuhuo_share/icon",self.node_fuhuo);
@@ -292,7 +326,14 @@ cc.Class({
 
     click: function(event,data)
     {
-
+        if(data == "wujin")
+        {
+            this.showPaiming();
+        }
+        else if(data == "duizhan")
+        {
+            this.showWinNumPaiming();
+        }
     },
 
     showFuhuoRank: function(score)
@@ -489,11 +530,104 @@ cc.Class({
         });
     },
 
+    showWinNumPaiming: function()
+    {
+        var self = this;
+        this.node_paiming.active = true;
+        self.node_paiming_wujin.active = true;
+        self.node_paiming_duizhan.active = false;
+        self.node_paiming_mask1.active = false;
+        self.node_paiming_mask2.active = true;
+        self.node_paiming_wujinbg.active = false;
+        self.node_paiming_duizhanbg.active = true;
+
+        self.node_paiming_item_me.active = false;
+        self.node_paiming_item_me2.active = true;
+
+        this.node_paiming_content.removeAllChildren();
+        var selfrank = null;
+        if(this.friendWinNumRank && this.userInfo)
+        {
+
+            for(var i=0;i<this.friendWinNumRank.length;i++)
+            {
+                var data = this.friendWinNumRank[i];
+                var feiji_rank = data.KVDataList[1].value;
+                var rank  = JSON.parse(feiji_rank);
+
+                var item = cc.instantiate(this.paimingItem2);
+                var bg = cc.find("bg",item);
+                var num = cc.find("rank",bg);
+                var icon = cc.find("icon",bg);
+                var nick = cc.find("nike",bg);
+                var score = cc.find("score",bg);
+                var role = cc.find("role",bg);
+
+
+                num.getComponent("cc.Label").string = (i+1)+"";
+                if(data.avatarUrl && data.avatarUrl.length>10)
+                    this.loadPic(icon,data.avatarUrl);
+                nick.getComponent("cc.Label").string = data.nickname;
+                score.getComponent("cc.Label").string = rank.wxgame.winNum+"胜";
+
+                if(data.nickname == this.userInfo.nickName &&
+                    data.avatarUrl == this.userInfo.avatarUrl)
+                {
+                    selfrank = data;
+                    selfrank.num = (i+1);
+                }
+
+                role.removeAllChildren();
+
+                var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                role.addChild(player);
+
+                var gunConf = this.GAME.gunsconfig[rank.gunId];
+                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                gun.y = player.height*0.3 + gunConf.y;
+                player.addChild(gun);
+
+                this.node_paiming_content.addChild(item);
+            }
+            if(selfrank)
+            {
+                var feiji_rank = selfrank.KVDataList[1].value;
+                var rank  = JSON.parse(feiji_rank);
+
+                this.node_paiming_num2.getComponent("cc.Label").string = selfrank.num+"";
+                this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
+                this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nickname;
+                this.node_paiming_score2.getComponent("cc.Label").string = rank.wxgame.winNum+"胜";
+
+                this.node_paiming_role2.removeAllChildren();
+
+                var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                this.node_paiming_role2.addChild(player);
+
+                var gunConf = this.GAME.gunsconfig[rank.gunId];
+                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                gun.y = player.height*0.3 + gunConf.y;
+                player.addChild(gun);
+            }
+
+        }
+    },
+
 
     showPaiming: function()
     {
         var self = this;
         this.node_paiming.active = true;
+        self.node_paiming_wujin.active = false;
+        self.node_paiming_duizhan.active = true;
+        self.node_paiming_mask1.active = true;
+        self.node_paiming_mask2.active = false;
+        self.node_paiming_wujinbg.active = true;
+        self.node_paiming_duizhanbg.active = false;
+
+        self.node_paiming_item_me.active = true;
+        self.node_paiming_item_me2.active = false;
+
         this.node_paiming_content.removeAllChildren();
         var selfrank = null;
         if(this.friendRank && this.userInfo)
@@ -596,19 +730,30 @@ cc.Class({
     {
         var self = this;
         wx.getUserCloudStorage({
-            keyList:["gun_rank"],
+            keyList:["gun_rank","gun_winnum_rank"],
             success: function(res)
             {
                 cc.log(res);
                 if(res.KVDataList.length == 0)
                 {
                     self.setUserRank(0,new Date().getTime(),0,0,0);
+                    self.setUserWinNumRank(0,new Date().getTime(),0,0);
                 }
                 else
                 {
                     var feiji_rank = res.KVDataList[0].value;
                     self.kvdata = JSON.parse(feiji_rank);
                     cc.log(self.kvdata);
+
+                    if(res.KVDataList.length > 1)
+                    {
+                        var winnum_rank = res.KVDataList[1].value;
+                        self.winnumdata = JSON.parse(winnum_rank);
+                    }
+                    else
+                    {
+                        self.setUserWinNumRank(0,new Date().getTime(),0,0);
+                    }
                 }
             }
         });
@@ -622,6 +767,22 @@ cc.Class({
             {
                 this.kvdata.wxgame.score = score;
                 this.setUserRank(score,new Date().getTime(),this.kvdata.card,playerId,gunId);
+            }
+        }
+        else
+        {
+            this.getUserRank();
+        }
+    },
+
+    updateWinNum: function(winNum,playerId,gunId)
+    {
+        if(this.winnumdata)
+        {
+            if(winNum > this.winnumdata.wxgame.winNum)
+            {
+                this.winnumdata.wxgame.winNum = winNum;
+                this.setUserWinNumRank(winNum,new Date().getTime(),playerId,gunId);
             }
         }
         else
@@ -654,16 +815,42 @@ cc.Class({
         });
     },
 
+    setUserWinNumRank: function(winNum,update_time,playerId,gunId)
+    {
+        var self = this;
+        var data = {
+            key: "gun_winnum_rank",
+            value: "{\"wxgame\":{\"winNum\":"+winNum+",\"update_time\": "+update_time+"},\"playerId\":"+playerId+",\"gunId\":"+gunId+"}"
+        };
+
+        var kvDataList = [data];
+        wx.setUserCloudStorage({
+            KVDataList: kvDataList,
+            success: function(res)
+            {
+                self.winnumdata.wxgame.winNum = winNum;
+                self.getFriendRank();
+                cc.log(res);
+            },
+            fail: function(res)
+            {
+                cc.log(res);
+            }
+        });
+    },
+
     getFriendRank: function(callback)
     {
         var self = this;
         wx.getFriendCloudStorage({
-            keyList:["gun_rank"],
+            keyList:["gun_rank","gun_winnum_rank"],
             success: function(res)
             {
+                console.log(res);
                 self.friendRank = res.data;
+                self.friendWinNumRank = res.data;
                 self.sortFriendRank();
-                cc.log(res);
+
                 if(callback)
                     callback();
             }
@@ -680,6 +867,29 @@ cc.Class({
 
                 var b_rank =JSON.parse(b.KVDataList[0].value);
                 var BMaxScore = b_rank.wxgame.score;
+
+                return parseInt(BMaxScore) - parseInt(AMaxScore);
+            });
+        }
+
+        if(this.friendWinNumRank)
+        {
+            var data = [];
+            for(var i=0;i<this.friendWinNumRank.length;i++)
+            {
+                var item = this.friendWinNumRank[i];
+                if(item.KVDataList.length > 1)
+                {
+                    data.push(item);
+                }
+            }
+            this.friendWinNumRank = data;
+            this.friendWinNumRank.sort(function(a,b){
+                var a_rank =JSON.parse(a.KVDataList[1].value);
+                var AMaxScore=a_rank.wxgame.winNum;
+
+                var b_rank =JSON.parse(b.KVDataList[1].value);
+                var BMaxScore = b_rank.wxgame.winNum;
 
                 return parseInt(BMaxScore) - parseInt(AMaxScore);
             });

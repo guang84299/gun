@@ -1680,6 +1680,7 @@ cc.Class({
         this.state == "stop";
         this.stopScroll();
         this.node_over.active = true;
+        this.node_sel.active = false;
 
         this.node_game_ui.active = false;
         this.taizi_a.active = false;

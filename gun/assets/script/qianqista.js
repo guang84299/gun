@@ -438,6 +438,7 @@ module.exports = {
             }
         };
         xhr.open("POST", requestURL, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         if (cc.sys.isNative) {
             xhr.setRequestHeader("Accept-Encoding", "gzip,deflate");
         }
@@ -446,7 +447,17 @@ module.exports = {
         // method and before calling the send() method.
         xhr.timeout = 5000;// 5 seconds for timeout
 
-        xhr.send(params);
+        var datas = "";
+        var i = 0;
+        for (var k in params) {
+            if (i != 0) {
+                datas += "&";
+            }
+            datas += k + "=" + params[k];
+            i++;
+        }
+
+        xhr.send(datas);
     }
 
 

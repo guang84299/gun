@@ -4,7 +4,7 @@
 module.exports = {
     ws: null,
     ip: "wss://0a8ce26f.com",
-    //ip: "ws://192.168.129.101:9123",
+    //ip: "ws://192.168.129.118:9123",
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,
     logincallback: null,
@@ -232,10 +232,8 @@ module.exports = {
     enterRoomResult: function(result)
     {
         var data = JSON.parse(result);
-        if(data.result)
-        {
-            this.pk.enterRoom(data);
-        }
+        this.pk.enterRoom(data);
+
         console.log(data);
     },
 
@@ -358,16 +356,6 @@ module.exports = {
             body.leave = leave;
             this.send(this.MODE_USER_AGAIN,body);
         }
-    },
-
-    enterRoomResult: function(result)
-    {
-        var data = JSON.parse(result);
-        if(data.result)
-        {
-            this.pk.enterRoom(data);
-        }
-        console.log(data);
     },
 
     againResult: function(result)

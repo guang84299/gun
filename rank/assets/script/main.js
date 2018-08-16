@@ -779,6 +779,7 @@ cc.Class({
     {
         if(this.winnumdata)
         {
+            winNum = this.winnumdata.wxgame.winNum + 1;
             if(winNum > this.winnumdata.wxgame.winNum)
             {
                 this.winnumdata.wxgame.winNum = winNum;

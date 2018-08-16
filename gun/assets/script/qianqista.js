@@ -71,14 +71,14 @@ module.exports = {
     showcallback: null,
     hidecallback: null,
     fromid:"",
-    init: function(gameId,secret,gameName,initcallback,showcallback,hidecallback)
+    pkfromid:"",
+    init: function(gameId,secret,gameName,initcallback,showcallback)
     {
         this.gameId = gameId;
         this.secret = secret;
         this.gameName = gameName;
         this.initcallback = initcallback;
         this.showcallback = showcallback;
-        this.hidecallback = hidecallback;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -122,13 +122,11 @@ module.exports = {
             wx.onShow(function(res){
                 self.open();
                 var query = res.query;
-                if(query && query.channel && query.channel.length > 0)
-                    self.channel = query.channel;
                 if(query && query.fromid && query.fromid.length > 0)
                 {
-                    self.fromid = query.fromid;
+                    self.pkfromid = query.pkfromid;
                 }
-                if(self.power == 1 && self.channel == "shareonline")
+                if(self.power == 1 && query && query.channel && query.channel.length > 0 && self.channel == "shareonline" && self.pkfromid.length>0)
                 {
                     if(self.showcallback)
                         self.showcallback();
@@ -150,6 +148,7 @@ module.exports = {
                 this.userName = "test001";
                 this.avatarUrl = "https://77qqup.com:442/img/wxgame/49234a872c294891aa98877d51679180.png";
                 this.fromid = "test002";
+                this.pkfromid = "test002";
             }
             else
             {
@@ -159,6 +158,11 @@ module.exports = {
                 this.fromid = "test001";
             }
         }
+    },
+
+    setHideCallback: function(hidecallback)
+    {
+        this.hidecallback = hidecallback;
     },
 
     login: function(isSuccess, userInfo,callback)

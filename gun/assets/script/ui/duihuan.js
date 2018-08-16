@@ -76,7 +76,12 @@ cc.Class({
         {
             if(this.main.GAME.linghongbao == 1)
             {
-                wx.openCustomerServiceConversation({});
+                wx.openCustomerServiceConversation({
+                    showMessageCard: true,
+                    sendMessageTitle: "客服小姐姐在等你加她微信领红包呢",
+                    sendMessagePath: "https://jinshuju.net/f/R9umXM",
+                    sendMessageImg: "https://77qqup.com:442/img/wxgame/6d33e254174440b09fb119adc9c18c0f.png"
+                });
             }
             else
             {

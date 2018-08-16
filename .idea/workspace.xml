@@ -24,31 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="websocket.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="websocket.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/websocket.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-65.0" vertical-offset="15" max-vertical-offset="5805">
-              <caret line="118" column="44" selection-start-line="118" selection-start-column="44" selection-end-line="118" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.6660746" vertical-offset="0" max-vertical-offset="5625">
+              <caret line="25" column="38" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pk.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pk.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/pk.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5186501" vertical-offset="24353" max-vertical-offset="26985">
-              <caret line="1643" column="30" selection-start-line="1643" selection-start-column="30" selection-end-line="1643" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rank/assets/script/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.9259257" vertical-offset="4796" max-vertical-offset="13590">
-              <caret line="334" column="37" selection-start-line="334" selection-start-column="37" selection-end-line="334" selection-end-column="37" />
+            <state vertical-scroll-proportion="-5.5555553" vertical-offset="2760" max-vertical-offset="27375">
+              <caret line="194" column="48" selection-start-line="194" selection-start-column="48" selection-end-line="194" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -64,21 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="res.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/res.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4015" max-vertical-offset="10635">
-              <caret line="286" column="82" selection-start-line="286" selection-start-column="82" selection-end-line="286" selection-end-column="82" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="78.07407" vertical-offset="2993" max-vertical-offset="57255">
-              <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
+            <state vertical-scroll-proportion="-4.148148" vertical-offset="11768" max-vertical-offset="57135">
+              <caret line="792" column="27" selection-start-line="792" selection-start-column="27" selection-end-line="792" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -87,8 +67,18 @@
       <file leaf-file-name="award.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/award.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2367" max-vertical-offset="3450">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1992" max-vertical-offset="3450">
               <caret line="193" column="38" selection-start-line="193" selection-start-column="38" selection-end-line="193" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="duihuan.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/duihuan.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1485">
+              <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -97,8 +87,8 @@
       <file leaf-file-name="qianqista.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/qianqista.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.740741" vertical-offset="1702" max-vertical-offset="6765">
-              <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
+            <state vertical-scroll-proportion="-10.851851" vertical-offset="1882" max-vertical-offset="6825">
+              <caret line="145" column="13" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -110,11 +100,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/gun/assets/script/bullet.js" />
-        <option value="$PROJECT_DIR$/gun/assets/script/websocket.js" />
         <option value="$PROJECT_DIR$/gun/assets/script/storage.js" />
-        <option value="$PROJECT_DIR$/gun/assets/script/qianqista.js" />
-        <option value="$PROJECT_DIR$/gun/assets/script/main.js" />
         <option value="$PROJECT_DIR$/rank/assets/script/main.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/res.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/ui/duihuan.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/main.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/qianqista.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/websocket.js" />
         <option value="$PROJECT_DIR$/gun/assets/script/pk.js" />
       </list>
     </option>
@@ -165,60 +157,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rank" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rank" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gun" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rank" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="script" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -400,18 +338,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rank/assets/script/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.37037" vertical-offset="11513" max-vertical-offset="13605">
+          <caret line="788" column="12" selection-start-line="788" selection-start-column="12" selection-end-line="788" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/award.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2367" max-vertical-offset="3450">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1992" max-vertical-offset="3450">
           <caret line="193" column="38" selection-start-line="193" selection-start-column="38" selection-end-line="193" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/duihuan.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1485">
+          <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/qianqista.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.851851" vertical-offset="1882" max-vertical-offset="6825">
+          <caret line="145" column="13" selection-start-line="145" selection-start-column="13" selection-end-line="145" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/res.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4015" max-vertical-offset="10635">
-          <caret line="286" column="82" selection-start-line="286" selection-start-column="82" selection-end-line="286" selection-end-column="82" />
+        <state vertical-scroll-proportion="0.45932204" vertical-offset="9854" max-vertical-offset="10635">
+          <caret line="675" column="17" selection-start-line="675" selection-start-column="13" selection-end-line="675" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -424,42 +386,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/qianqista.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.740741" vertical-offset="1702" max-vertical-offset="6765">
-          <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="78.07407" vertical-offset="2993" max-vertical-offset="57255">
-          <caret line="59" column="39" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/websocket.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-65.0" vertical-offset="15" max-vertical-offset="5805">
-          <caret line="118" column="44" selection-start-line="118" selection-start-column="44" selection-end-line="118" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rank/assets/script/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9259257" vertical-offset="4796" max-vertical-offset="13590">
-          <caret line="334" column="37" selection-start-line="334" selection-start-column="37" selection-end-line="334" selection-end-column="37" />
+        <state vertical-scroll-proportion="-4.148148" vertical-offset="11768" max-vertical-offset="57135">
+          <caret line="792" column="27" selection-start-line="792" selection-start-column="27" selection-end-line="792" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/pk.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5186501" vertical-offset="24353" max-vertical-offset="26985">
-          <caret line="1643" column="30" selection-start-line="1643" selection-start-column="30" selection-end-line="1643" selection-end-column="30" />
+        <state vertical-scroll-proportion="-5.5555553" vertical-offset="2760" max-vertical-offset="27375">
+          <caret line="194" column="48" selection-start-line="194" selection-start-column="48" selection-end-line="194" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/websocket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6660746" vertical-offset="0" max-vertical-offset="5625">
+          <caret line="25" column="38" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
           <folding />
         </state>
       </provider>

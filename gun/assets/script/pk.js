@@ -55,6 +55,8 @@ cc.Class({
         this.GAME.isWin = false;
         this.isBgScroll = false;
         this.lastroomType = 1;
+        this.isHide = false;
+        this.isShare = false;
         var self = this;
 
         websocket.init(this,function(){
@@ -131,6 +133,19 @@ cc.Class({
         this.node_over_coin_num = cc.find("coin/num",this.node_over).getComponent("cc.Label");
 
         this.getCoin(storage.getStorageCoin());
+
+        var self = this;
+        this.qianqista.setHideCallback(function(){
+            if(self.isShare)
+            {
+                self.isShare = false;
+            }
+            else
+            {
+                self.isHide = true;
+                websocket.close();
+            }
+        });
     },
 
     updateUI: function()
@@ -250,7 +265,7 @@ cc.Class({
     {
         if(websocket.state == 1)
         {
-            websocket.enterRoom(2,1,this.main.GAME.currPlayer,this.main.GAME.currGun,this.qianqista.fromid);
+            websocket.enterRoom(2,1,this.main.GAME.currPlayer,this.main.GAME.currGun,this.qianqista.pkfromid);
         }
         else
         {
@@ -258,7 +273,7 @@ cc.Class({
             websocket.close();
             websocket.init(this,function(){
                 websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl,function(){
-                    websocket.enterRoom(2,1,self.main.GAME.currPlayer,self.main.GAME.currGun,self.qianqista.fromid);
+                    websocket.enterRoom(2,1,self.main.GAME.currPlayer,self.main.GAME.currGun,self.qianqista.pkfromid);
                 });
             });
         }
@@ -269,21 +284,15 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            self.isShare = true;
+
             var query = "channel=shareonline&fromid="+this.qianqista.openid;
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
             var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.coinmenu_txt1 && this.main.GAME.shares.coinmenu_pic1)
+            if(this.main.GAME.shares.duizhan_txt1 && this.main.GAME.shares.duizhan_pic1)
             {
-                if(Math.random()>0.5)
-                {
-                    title = this.main.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic1;
-                }
-                else
-                {
-                    title = this.main.GAME.shares.coinmenu_txt2;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic2;
-                }
+                title = this.main.GAME.shares.duizhan_txt1;
+                imageUrl = this.main.GAME.shares.duizhan_pic1;
             }
             wx.shareAppMessage({
                 query:query,
@@ -317,48 +326,56 @@ cc.Class({
 
     enterRoom: function(data)
     {
-        this.playerData = data;
-        this.selfPlayer = data.player;
-
-        this.node_sel_suiji.getComponent("cc.Button").interactable = false;
-        this.node_sel_duizhan.getComponent("cc.Button").interactable = false;
-        this.node_sel_home.getComponent("cc.Button").interactable = false;
-        this.node_sel_title.string = "匹配中";
-        this.node_sel_box_2_name.string = "(30)";
-        var pipeiTime = 30;
-        var num = 31;
-        if(data.roomType == 2)
+        if(data.result)
         {
-            this.node_sel_box_2_name.string = "(60)";
-            pipeiTime = 60;
-            num = 61;
-        }
+            this.playerData = data;
+            this.selfPlayer = data.player;
+
+            this.node_sel_suiji.getComponent("cc.Button").interactable = false;
+            this.node_sel_duizhan.getComponent("cc.Button").interactable = false;
+            //this.node_sel_home.getComponent("cc.Button").interactable = false;
+            //this.node_sel_home.color = cc.color(161,161,161);
+            this.node_sel_title.string = "匹配中";
+            this.node_sel_box_2_name.string = "(30)";
+            var pipeiTime = 30;
+            var num = 31;
+            if(data.roomType == 2)
+            {
+                this.node_sel_box_2_name.string = "(60)";
+                pipeiTime = 60;
+                num = 61;
+            }
 
 
-        this.state = "pipei";
+            this.state = "pipei";
 
-        if(data.player2)
-        {
-            this.joinRoom(data);
+            if(data.player2)
+            {
+                this.joinRoom(data);
+            }
+            else
+            {
+                var self = this;
+
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(1),
+                    cc.callFunc(function(){
+                        pipeiTime -= 1;
+                        var p = pipeiTime;
+                        if(p<0)
+                            p = 0;
+                        self.node_sel_box_2_name.string = "("+Math.floor(p)+")";
+                        if(Math.floor(pipeiTime) == 0)
+                        {
+                            websocket.questLeaveRoom(self.qianqista.openid);
+                        }
+                    })
+                ),num));
+            }
         }
         else
         {
-            var self = this;
-
-            this.node.runAction(cc.repeat(cc.sequence(
-                cc.delayTime(1),
-                cc.callFunc(function(){
-                    pipeiTime -= 1;
-                    var p = pipeiTime;
-                    if(p<0)
-                        p = 0;
-                    self.node_sel_box_2_name.string = "("+Math.floor(p)+")";
-                    if(Math.floor(pipeiTime) == 0)
-                    {
-                        websocket.questLeaveRoom(self.qianqista.openid);
-                    }
-                })
-            ),num));
+            this.res.showToast("对方已离线！");
         }
     },
 
@@ -409,7 +426,8 @@ cc.Class({
         this.res.showToast("连接超时，请重试");
         this.node_sel_suiji.getComponent("cc.Button").interactable = true;
         this.node_sel_duizhan.getComponent("cc.Button").interactable = true;
-        this.node_sel_home.getComponent("cc.Button").interactable = true;
+        //this.node_sel_home.getComponent("cc.Button").interactable = true;
+        //this.node_sel_home.color = cc.color(255,255,255);
         this.node_sel_title.string = "等待开战";
         this.node_sel_box_2_name.string = "等待加入";
         this.node_sel_willstart.string = "";
@@ -437,7 +455,8 @@ cc.Class({
 
             this.node_sel_suiji.getComponent("cc.Button").interactable = true;
             this.node_sel_duizhan.getComponent("cc.Button").interactable = true;
-            this.node_sel_home.getComponent("cc.Button").interactable = true;
+            //this.node_sel_home.getComponent("cc.Button").interactable = true;
+            //this.node_sel_home.color = cc.color(255,255,255);
             this.node_sel_title.string = "等待开战";
             this.node_sel_box_2_name.string = "等待加入";
             this.node_sel_willstart.string = "";
@@ -450,7 +469,8 @@ cc.Class({
 
         this.node_over_fanhui.getComponent("cc.Button").interactable = false;
         this.node_over_again.getComponent("cc.Button").interactable = false;
-        this.node_over_home.getComponent("cc.Button").interactable = false;
+        //this.node_over_home.getComponent("cc.Button").interactable = false;
+        //this.node_over_home.color = cc.color(161,161,161);
 
         if(this.state == "willagain")
         {
@@ -1668,6 +1688,7 @@ cc.Class({
         this.node_over_fanhui.getComponent("cc.Button").interactable = true;
         this.node_over_again.getComponent("cc.Button").interactable = true;
         this.node_over_home.getComponent("cc.Button").interactable = true;
+        this.node_over_home.color = cc.color(255,255,255);
 
         this.loadPic(this.node_over_box_1,this.selfPlayer.avatarUrl+"?"+Math.random());
         this.loadPic(this.node_over_box_2,this.enemyPlayer.avatarUrl+"?"+Math.random());
@@ -1684,14 +1705,14 @@ cc.Class({
             this.node_over_bili.string = "1 : 0";
             this.node_over_fanhui_str.string = "改天再战";
             this.node_over_again_str.string = "再来一局";
-            storage.setStorageCoin(storage.getStorageCoin()+50);
+            storage.setStorageCoin(storage.getStorageCoin()+40);
 
             this.node.runAction(cc.repeat(cc.sequence(
                 cc.delayTime(0.05),
                 cc.callFunc(function(){
                     self.addCoin();
                 })
-            ),51));
+            ),41));
 
             var winNum = storage.getStorageWinNum();
             winNum += 1;
@@ -1773,7 +1794,12 @@ cc.Class({
                 this.updateScroll(dt);
             }
         }
-        
+
+        if(this.isHide)
+        {
+            this.isHide = false;
+            this.goHome();
+        }
     },
 
     loadPic: function(sp,url)

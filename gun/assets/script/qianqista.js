@@ -121,18 +121,21 @@ module.exports = {
 
             wx.onShow(function(res){
                 self.open();
+
+                console.log('onShow:', res);
+                console.log('power:', self.power);
+
                 var query = res.query;
                 if(query && query.fromid && query.fromid.length > 0)
                 {
-                    self.pkfromid = query.pkfromid;
+                    self.pkfromid = query.fromid;
                 }
-                if(self.power == 1 && query && query.channel && query.channel.length > 0 && self.channel == "shareonline" && self.pkfromid.length>0)
+                if(self.power == 1 && query && query.channel && query.channel == "shareonline" && self.pkfromid)
                 {
                     if(self.showcallback)
                         self.showcallback();
                 }
-                console.log('onShow:', res);
-                console.log('power:', self.power);
+
             });
 
             wx.onHide(function(){

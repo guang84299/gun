@@ -57,6 +57,7 @@ cc.Class({
         this.lastroomType = 1;
         this.isHide = false;
         this.isShare = false;
+        this.isLiule = false;
         var self = this;
 
         websocket.init(this,function(){
@@ -438,6 +439,8 @@ cc.Class({
 
     fanhui: function()
     {
+        if(this.node_over.active)
+            this.isLiule = true;
         if(this.state == "willagain")
         {
             this.selfPlayer.leave = true;
@@ -588,7 +591,7 @@ cc.Class({
                 ),8));
             }
 
-            if(this.lastroomType == 1 && storage.getStorageCoin() < 20)
+            if((this.lastroomType == 1 && storage.getStorageCoin() < 20) || this.isLiule)
             {
                 this.selfPlayer.leave = true;
                 this.state = "stop";
@@ -1676,6 +1679,7 @@ cc.Class({
 
     gameOver: function()
     {
+        this.isLiule = false;
         var self = this;
         this.state == "stop";
         this.stopScroll();

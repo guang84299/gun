@@ -118,9 +118,9 @@ cc.Class({
         }
         else if(data == "fuhuo_video")
         {
-            this.res.showToast("该功能还未开启！");cc.winSize.width;
-            // this.main.wxVideoShow(2);
-            // this.main.qianqista.event("fuhuo_video");
+            //this.res.showToast("该功能还未开启！");cc.winSize.width;
+            this.main.wxVideoShow(2);
+            this.main.qianqista.event("fuhuo_video");
         }
         else if(data == "fuhuo_xuming")
         {

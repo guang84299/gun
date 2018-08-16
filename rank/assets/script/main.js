@@ -284,6 +284,7 @@ cc.Class({
         self.node_fuhuo_icon = cc.find("fuhuo_share/icon",self.node_fuhuo);
         self.node_fuhuo_nick = cc.find("fuhuo_share/nick",self.node_fuhuo);
         self.node_fuhuo_score = cc.find("fuhuo_share/score",self.node_fuhuo);
+        self.node_fuhuo_rank_mask = cc.find("fuhuo_share/rank_mask",self.node_fuhuo);
         self.node_fuhuo_no = cc.find("fuhuo_share/no",self.node_fuhuo);
 
         self.node_chaoyue = cc.find("Canvas/node_chaoyue");
@@ -341,6 +342,7 @@ cc.Class({
                 this.node_fuhuo_nick.active = true;
                 this.node_fuhuo_score.active = true;
                 this.node_fuhuo_icon.active = true;
+                this.node_fuhuo_rank_mask.active = true;
                 var feiji_rank = chaoyue.KVDataList[0].value;
                 var rank  = JSON.parse(feiji_rank);
 
@@ -354,6 +356,7 @@ cc.Class({
                 this.node_fuhuo_nick.active = false;
                 this.node_fuhuo_score.active = false;
                 this.node_fuhuo_icon.active = false;
+                this.node_fuhuo_rank_mask.active = false;
             }
         }
     },

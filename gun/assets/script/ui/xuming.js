@@ -72,23 +72,17 @@ cc.Class({
         var self = this;cc.winSize.width;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            const shareEventId = '2000_1037';
+            yxmp.report.event(shareEventId);
+            const shareOptions = Object.assign({}, yxmp.asset.getShareMessage(shareEventId));
+
             var query = "channel=sharexumingmenu";cc.winSize.width;
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";cc.winSize.width;
             var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
-            if(this.main.GAME.shares.cardmenu_txt1 && this.main.GAME.shares.cardmenu_pic1)
+            if(shareOptions)
             {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharexumingmenu_1";cc.winSize.width;
-                    title = this.main.GAME.shares.cardmenu_txt1;cc.winSize.width;
-                    imageUrl = this.main.GAME.shares.cardmenu_pic1;cc.winSize.width;
-                }
-                else
-                {
-                    query = "channel=sharexumingmenu_2";cc.winSize.width;
-                    title = this.main.GAME.shares.cardmenu_txt2;cc.winSize.width;
-                    imageUrl = this.main.GAME.shares.cardmenu_pic2;cc.winSize.width;
-                }
+                title = shareOptions.title;
+                imageUrl = shareOptions.imageUrl;
             }
 
             wx.shareAppMessage({

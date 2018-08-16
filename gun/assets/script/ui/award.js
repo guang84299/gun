@@ -183,23 +183,17 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            const shareEventId = '2000_1035';
+            yxmp.report.event(shareEventId);
+            const shareOptions = Object.assign({}, yxmp.asset.getShareMessage(shareEventId));
+
             var query = "channel=sharecoinmenu&fromid="+this.main.qianqista.openid;
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
             var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.coinmenu_txt1 && this.main.GAME.shares.coinmenu_pic1)
+            if(shareOptions)
             {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharecoinmenu_1&fromid="+this.main.qianqista.openid;cc.winSize.width;
-                    title = this.main.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic1;cc.winSize.width;
-                }
-                else
-                {
-                    query = "channel=sharecoinmenu_2&fromid="+this.main.qianqista.openid;
-                    title = this.main.GAME.shares.coinmenu_txt2;cc.winSize.width;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic2;
-                }
+                title = shareOptions.title;
+                imageUrl = shareOptions.imageUrl;
             }
             wx.shareAppMessage({
                 query:query,

@@ -1,5 +1,6 @@
 var qianqista = require("qianqista");
 var storage = require("storage");
+import './yxmp.js';
 
 cc.Class({
     extends: cc.Component,
@@ -74,8 +75,34 @@ cc.Class({
              }
          });
          cc.winSize.width;
-         
-         // cc.game.setFrameRate(50);
+
+
+         var sdkReady = yxmp.init({
+             appName: 'topgunner', // app_name需要填入, 是与服务器通信的凭证
+             serverUrl: 'https://api.xiuwu.me', // beta测试环境的地址是 betaapi.xiuwu.me
+             // 静态配表/资源的设置, 关系到推荐位, 版本号比对, 分享的物料配置
+             // 静态资源的beta/prod与API服务器的beta/prod配置是相互独立的.
+             asset: {
+                 server: 'https://s.xiuwu.me', // 生产和beta环境
+                 beta: false // 使用beta环境的配表内容
+             }
+         });
+
+         sdkReady.then(function(){
+             var recommendApp = yxmp.asset.getRecommendApp('home');
+             //{ icon, appid, path, poster }
+             if (recommendApp)
+             {
+                 self.GAME.more = recommendApp;
+                 if(self.GAME.more)
+                 {
+                      self.node_main_more.active = true;
+                     self.loadPic(self.node_main_more,recommendApp.icon);
+                 }
+             }
+         });
+
+      // cc.game.setFrameRate(50);
      },
 
     initPhysics: function()
@@ -171,7 +198,7 @@ cc.winSize.width;
         storage.setStoragePlayer(1);
         storage.setStorageGun(1);
         cc.winSize.width;
-        // storage.setStorageCoin(1000);
+        //storage.setStorageCoin(5000);
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
@@ -892,9 +919,9 @@ cc.winSize.width;
         }
         else if(data == "adlingqu")
         {
-            this.res.showToast("敬请期待！");
-            // this.wxVideoShow(1);
-            // qianqista.event("main_video");
+            //this.res.showToast("敬请期待！");
+            this.wxVideoShow(1);
+            qianqista.event("main_video");
 
             cc.winSize.width;
         }
@@ -910,7 +937,10 @@ cc.winSize.width;
 
             cc.winSize.width;
         }
- 
+        else if(data == "gongzhonghao")
+        {
+            this.openGuanZhu();
+        }
 
         cc.log(data);
     },
@@ -934,6 +964,17 @@ cc.winSize.width;
 
         playnum ++;
         cc.sys.localStorage.setItem("playnum",playnum);
+    },
+
+    openGuanZhu: function()
+    {
+        var guanzhu = cc.instantiate(this.res.node_guanzhu);
+        this.node.addChild(guanzhu);
+
+        cc.winSize.width;
+
+        this.node_guanzhu = guanzhu.getComponent("guanzhu");
+        this.node_guanzhu.show();
     },
 
     openXuming: function()
@@ -961,13 +1002,18 @@ cc.winSize.width;
 
     openDuihuan: function()
     {
-        var duihuan = cc.instantiate(this.res.node_duihuan);
-        this.node.addChild(duihuan);
+        //var duihuan = cc.instantiate(this.res.node_duihuan);
+        //this.node.addChild(duihuan);
+        //
+        //cc.winSize.width;
+        //
+        //this.node_duihuan = duihuan.getComponent("duihuan");
+        //this.node_duihuan.show();
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            wx.openCustomerServiceConversation({});
+        }
 
-        cc.winSize.width;
-
-        this.node_duihuan = duihuan.getComponent("duihuan");
-        this.node_duihuan.show();
         qianqista.event("btn_linghongbao");
     },
 
@@ -3683,12 +3729,16 @@ cc.winSize.width;
             });
 
             wx.onShareAppMessage(function (ops){
-                return {
-                    query:"channel=sharemenu",
-                    withShareTicket: true,
-                    title: "自从玩了这个游戏，每把吃鸡都能拿98K",
-                    imageUrl: cc.url.raw("resources/zhuanfa.jpg")
-                }
+                var shareEventId = '2000_1032';
+                // 上报分享事件
+                yxmp.report.event(shareEventId);
+                // [必须] - 接入由cms控制的分享物料系统
+                // 可以经由cms配置获取用于分享的物料 yxmp.asset.getShareMessage
+                return Object.assign({}, yxmp.asset.getShareMessage(shareEventId), {
+                    // [可选] - 一般不用, 除非有功能依赖于自定义的参数字段
+                    // 如果需要自定义参数的话可以在这里加上
+                    // query: 'param1=a',
+                });
             });
 
             wx.updateShareMenu({
@@ -3889,38 +3939,10 @@ cc.winSize.width;
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=groupsharemenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
-            if(this.GAME.shares.groupsharemenu_txt1 && this.GAME.shares.groupsharemenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=groupsharemenu_1";
-                    title = this.GAME.shares.groupsharemenu_txt1;cc.winSize.width;
-                    imageUrl = this.GAME.shares.groupsharemenu_pic1;
-                }
-                else
-                {
-                    query = "channel=groupsharemenu_2";
-                    title = this.GAME.shares.groupsharemenu_txt2;cc.winSize.width;
-                    imageUrl = this.GAME.shares.groupsharemenu_pic2;
-                }
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    qianqista.share(true);cc.winSize.width;
-                    cc.log(res);
-                },
-                fail: function()
-                {
-                    qianqista.share(false);cc.winSize.width;
-                }
-            });
+            const shareEventId = '2000_1033';
+            yxmp.report.event(shareEventId);
+            const shareOptions = Object.assign({}, yxmp.asset.getShareMessage(shareEventId));
+            wx.shareAppMessage(shareOptions);
         }
 
     },
@@ -3931,29 +3953,14 @@ cc.winSize.width;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharecardmenu";cc.winSize.width;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
-            if(this.GAME.shares.cardmenu_txt1 && this.GAME.shares.cardmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharecardmenu_1";
-                    title = this.GAME.shares.cardmenu_txt1;cc.winSize.width;
-                    imageUrl = this.GAME.shares.cardmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharecardmenu_2";
-                    title = this.GAME.shares.cardmenu_txt2;cc.winSize.width;
-                    imageUrl = this.GAME.shares.cardmenu_pic2;
-                }
-            }
+            const shareEventId = '2000_1034';
+            yxmp.report.event(shareEventId);
+            const shareOptions = Object.assign({}, yxmp.asset.getShareMessage(shareEventId));
 
             wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
+                query:shareOptions.query,
+                title: shareOptions.title,
+                imageUrl: shareOptions.imageUrl,
                 success: function(res)
                 {
                     if(res.shareTickets && res.shareTickets.length>0)
@@ -4011,80 +4018,80 @@ cc.winSize.width;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            // this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-b9e3b716f84a52de'});
-            // this.rewardedVideoAd.onLoad(function(){
-            //     console.log('激励视频 广告加载成功')
-            // });
-            // this.rewardedVideoAd.onClose(function(res){
-            //     // 用户点击了【关闭广告】按钮
-            //     // 小于 2.1.0 的基础库版本，res 是一个 undefined
-            //     if (res && res.isEnded || res === undefined) {
-            //         if(self.GAME.VIDEOAD_TYPE == 1)
-            //         {
-            //             var coin = storage.getStorageCoin();
-            //             coin = parseInt(coin) + 100;
-            //             storage.setStorageCoin(coin);
-            //             self.node_main_coin.getComponent("cc.Label").string = coin+"";
-            //             self.uploadData();
+            this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-8ea90d3fe2776f45'});
+            this.rewardedVideoAd.onLoad(function(){
+                 console.log('激励视频 广告加载成功')
+            });
+            this.rewardedVideoAd.onClose(function(res){
+                 // 用户点击了【关闭广告】按钮
+                 // 小于 2.1.0 的基础库版本，res 是一个 undefined
+                 if (res && res.isEnded || res === undefined) {
+                     if(self.GAME.VIDEOAD_TYPE == 1)
+                     {
+                         var coin = storage.getStorageCoin();
+                         coin = parseInt(coin) + 100;
+                         storage.setStorageCoin(coin);
+                         self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                         self.uploadData();
 
-            //             self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-            //             self.node_main_lingqu_time.active = true;
-            //             self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                         self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                         self.node_main_lingqu_time.active = true;
+                         self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-            //             storage.setStorageVideoTime(30);
+                         storage.setStorageVideoTime(30);
 
-            //             if(cc.isValid(self.node_coin))
-            //                 self.node_coin.updateUI();
+                         if(cc.isValid(self.node_coin))
+                             self.node_coin.updateUI();
 
-            //             self.res.showToast("金币+100");
-            //         }
-            //         else if(self.GAME.VIDEOAD_TYPE == 3)
-            //         {
-            //             storage.setStorageHasZhanShi(1);
-            //             self.node_zhanshi.updateUI();
-            //         }
-            //     }
-            //     else {
-            //         // 播放中途退出，不下发游戏奖励
-            //         if(self.GAME.VIDEOAD_TYPE == 1)
-            //             self.res.showToast("金币获取失败");
-            //     }
-            //     storage.resumeMusic();
-            // });
+                         self.res.showToast("金币+100");
+                     }
+                     else if(self.GAME.VIDEOAD_TYPE == 3)
+                     {
+                         storage.setStorageHasZhanShi(1);
+                         self.node_zhanshi.updateUI();
+                     }
+                 }
+                 else {
+                     // 播放中途退出，不下发游戏奖励
+                     if(self.GAME.VIDEOAD_TYPE == 1)
+                         self.res.showToast("金币获取失败");
+                 }
+                 storage.resumeMusic();
+            });
 
-            // this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
-            // this.rewardedVideoAd2.onLoad(function(){
-            //     console.log('激励视频 广告加载成功')
-            // });
-            // this.rewardedVideoAd2.onClose(function(res){
-            //     // 用户点击了【关闭广告】按钮
-            //     // 小于 2.1.0 的基础库版本，res 是一个 undefined
-            //     if (res && res.isEnded || res === undefined) {
-            //         if(self.GAME.VIDEOAD_TYPE == 2)
-            //         {
-            //             self.fuhuo(false,false,true);
-            //             self.res.showToast("复活成功");
-            //         }
-            //         else if(self.GAME.VIDEOAD_TYPE == 3)
-            //         {
-            //             storage.setStorageHasZhanShi(1);
-            //             self.node_zhanshi.updateUI();
-            //         }
-            //     }
-            //     else {
-            //         // 播放中途退出，不下发游戏奖励
-            //         if(self.GAME.VIDEOAD_TYPE == 2)
-            //         {
-            //             self.res.showToast("复活失败");
-            //         }
-            //         else if(self.GAME.VIDEOAD_TYPE == 3)
-            //         {
-            //             self.res.showToast("体验失败");
-            //         }
+            this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-c69482c68443d706'});
+            this.rewardedVideoAd2.onLoad(function(){
+                 console.log('激励视频 广告加载成功')
+            });
+            this.rewardedVideoAd2.onClose(function(res){
+                 // 用户点击了【关闭广告】按钮
+                 // 小于 2.1.0 的基础库版本，res 是一个 undefined
+                 if (res && res.isEnded || res === undefined) {
+                     if(self.GAME.VIDEOAD_TYPE == 2)
+                     {
+                         self.fuhuo(false,false,true);
+                         self.res.showToast("复活成功");
+                     }
+                     else if(self.GAME.VIDEOAD_TYPE == 3)
+                     {
+                         storage.setStorageHasZhanShi(1);
+                         self.node_zhanshi.updateUI();
+                     }
+                 }
+                 else {
+                     // 播放中途退出，不下发游戏奖励
+                     if(self.GAME.VIDEOAD_TYPE == 2)
+                     {
+                         self.res.showToast("复活失败");
+                     }
+                     else if(self.GAME.VIDEOAD_TYPE == 3)
+                     {
+                         self.res.showToast("体验失败");
+                     }
 
-            //     }
-            //     storage.resumeMusic();
-            // });
+                 }
+                 storage.resumeMusic();
+            });
 
 
 
@@ -4097,22 +4104,22 @@ cc.winSize.width;
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            // if(type == 1)
-            // {
-            //     this.rewardedVideoAd.show().catch(function(err){
-            //         self.rewardedVideoAd.load().then(function(){
-            //             self.rewardedVideoAd.show();
-            //         });
-            //     });
-            // }
-            // else
-            // {
-            //     this.rewardedVideoAd2.show().catch(function(err){
-            //         self.rewardedVideoAd2.load().then(function(){
-            //             self.rewardedVideoAd2.show();
-            //         });
-            //     });
-            // }
+            if(type == 1)
+            {
+                 this.rewardedVideoAd.show().catch(function(err){
+                     self.rewardedVideoAd.load().then(function(){
+                         self.rewardedVideoAd.show();
+                     });
+                 });
+            }
+            else
+            {
+                 this.rewardedVideoAd2.show().catch(function(err){
+                     self.rewardedVideoAd2.load().then(function(){
+                         self.rewardedVideoAd2.show();
+                     });
+                 });
+            }
         }
         else
         {
@@ -4147,8 +4154,6 @@ cc.winSize.width;
 
     wxBannerShow: function()
     {
-        return;
-
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
@@ -4157,7 +4162,7 @@ cc.winSize.width;
             var sc = sharedCanvas.width/this.dsize.width;
             var dpi = cc.view._devicePixelRatio;cc.winSize.width;
             this.bannerAd = wx.createBannerAd({
-                adUnitId: 'adunit-805ad9676746d8d2',
+                adUnitId: 'adunit-da9a22653a20122b',
                 style: {
                     left: 0,
                     top: sharedCanvas.height/dpi-300/3.5,
@@ -4177,7 +4182,6 @@ cc.winSize.width;
 
     wxBannerHide: function()
     {
-        return;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             if(this.bannerAd)
@@ -4191,34 +4195,53 @@ cc.winSize.width;
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var appIdstr = 'wx604f780b017da7df';
-            var pathstr = 'pages/main/main';
-            if(this.GAME.more)
+            //{ icon, appid, path, poster }
+            if(this.GAME.more.appid)
             {
-                var ss = this.GAME.more.split("--");
-                appIdstr = ss[1];cc.winSize.width;
-                pathstr = ss[2];
+                wx.navigateToMiniProgram({
+                    appId: this.GAME.more.appid,
+                    path: this.GAME.more.path,
+                    extraData: {
+                        foo: 'bar'
+                    },
+                    // envVersion: 'develop',
+                    success: function(res) {
+                        // 打开成功
+                    }
+                });
             }
+            else if(this.GAME.more.poster)
+            {
+                wx.previewImage({
+                    urls: [this.GAME.more.poster],
+                    success: function (res) {
+                    },
+                    fail: function (res) {
+                        return;
+                    }
+                });
+            }
+            //var appIdstr = 'wx604f780b017da7df';
+            //var pathstr = 'pages/main/main';
+            //if(this.GAME.more)
+            //{
+            //    var ss = this.GAME.more.split("--");
+            //    appIdstr = ss[1];cc.winSize.width;
+            //    pathstr = ss[2];
+            //}
+            //
+            //wx.navigateToMiniProgram({
+            //  appId: appIdstr,
+            //  path: pathstr,
+            //  extraData: {
+            //    foo: 'bar'
+            //  },
+            //  // envVersion: 'develop',
+            //  success: function(res) {
+            //    // 打开成功
+            //  }
+            //});cc.winSize.width;
 
-            wx.navigateToMiniProgram({
-              appId: appIdstr,
-              path: pathstr,
-              extraData: {
-                foo: 'bar'
-              },
-              // envVersion: 'develop',
-              success(res) {
-                // 打开成功
-              }
-            });cc.winSize.width;
-            // wx.previewImage({
-            //     urls: ["https://77qqup.com:442/img/wxgame/8e5f995bf8334553abb957ea21eb5b58.jpg"],
-            //     success: function (res) {
-            //     },
-            //     fail: function (res) {
-            //         return;
-            //     }
-            // });
         }
     },
 
@@ -4242,7 +4265,7 @@ cc.winSize.width;
                 foo: 'bar'
               },
               // envVersion: 'develop',
-              success(res) {
+              success:function(res) {
                 // 打开成功
               }
             });cc.winSize.width;

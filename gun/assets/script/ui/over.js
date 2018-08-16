@@ -155,29 +155,22 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharechangemenu";cc.winSize.width;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";cc.winSize.width;
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
-            if(this.main.GAME.shares.changemenu_txt1 && this.main.GAME.shares.changemenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharechangemenu_1";cc.winSize.width;
-                    title = this.main.GAME.shares.changemenu_txt1;cc.winSize.width;
-                    imageUrl = this.main.GAME.shares.changemenu_pic1;cc.winSize.width;
-                }
-                else
-                {
-                    query = "channel=sharechangemenu_2";cc.winSize.width;
-                    title = this.main.GAME.shares.changemenu_txt2;cc.winSize.width;
-                    imageUrl = this.main.GAME.shares.changemenu_pic2;cc.winSize.width;
-                }
-            }
+            const shareEventId = '2000_1036';
+            yxmp.report.event(shareEventId);
+            const shareOptions = Object.assign({}, yxmp.asset.getShareMessage(shareEventId));
+
+            //var query = "channel=sharechangemenu";cc.winSize.width;
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";cc.winSize.width;
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");cc.winSize.width;
+            //if(shareOptions)
+            //{
+            //
+            //}
 
             wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
+                query:shareOptions.query,
+                title: shareOptions.title,
+                imageUrl: shareOptions.imageUrl,
                 success: function(res)
                 {
                     this.main.qianqista.share(true);cc.winSize.width;
@@ -251,7 +244,7 @@ cc.Class({
             success: function(res){
                 savepic.active = true;
                 ma.active = false;
-                more.active = true;
+                more.active = false;
                 self.main.node_game_ui.active = true;
                 wx.saveImageToPhotosAlbum({
                     filePath: res.tempFilePath,

@@ -306,6 +306,7 @@ module.exports = {
                     if(r.state == 200)
                     {
                         var msg = r.data;
+                        console.log('groupid msg:', msg);
                         var b = (msg == null || msg == "null") ? false : true;
                         console.log('groupid:', msg.openGId);
                         if(callback)

@@ -37,12 +37,12 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.3,
-      "y": 0.5
+      "y": 0.72
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 144,
-      "height": 49
+      "width": 70,
+      "height": 46
     },
     "_rotationX": 0,
     "_rotationY": 0,

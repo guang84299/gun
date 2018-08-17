@@ -46,8 +46,11 @@ cc.Class({
          storage.preloadSound();
          this.wxVideoLoad();
         cc.winSize.width;
+
          var self = this;
-         qianqista.init("wx3256b6b014a0d069","8ca1f3a153a7906ca0ad9058d5c492a9","王牌枪手",function(){
+
+
+         qianqista.init("wx3256b6b014a0d069","a91097f900117997f13aa4250f56b650","王牌枪手",function(){
              qianqista.datas(function(res){
                  console.log('my datas:', res);cc.winSize.width;
                  if(res.state == 200)
@@ -56,16 +59,7 @@ cc.Class({
                  }
              });
          });
-         cc.winSize.width;
-         //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
-         //    qianqista.datas(function(res){
-         //        console.log('my datas:', res);
-         //        if(res.state == 200)
-         //        {
-         //            self.updateLocalData(res.data);
-         //        }
-         //    });
-         //});
+
          qianqista.control(function(res){
              console.log('my control:', res);
              if(res.state == 200)
@@ -74,7 +68,6 @@ cc.Class({
                  self.updateUIControl();
              }
          });
-         cc.winSize.width;
 
 
          var sdkReady = yxmp.init({
@@ -100,6 +93,8 @@ cc.Class({
                      self.loadPic(self.node_main_more,recommendApp.icon);
                  }
              }
+             qianqista.openid =  yxmp.getUserOpenId();
+
          });
 
       // cc.game.setFrameRate(50);

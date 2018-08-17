@@ -138,11 +138,15 @@ module.exports = {
         }
 
         var self = this;
-        this.getOpenId(function(){
-            self.state = 1;
-            self.initdata();cc.winSize.width;
-            console.log('----init end ----');
-        });
+        self.state = 1;
+        self.initdata();
+        console.log('----init end ----');
+
+        //this.getOpenId(function(){
+        //    self.state = 1;
+        //    self.initdata();cc.winSize.width;
+        //    console.log('----init end ----');
+        //});
     },
 
     initdata: function()
@@ -281,7 +285,7 @@ module.exports = {
                         {
                             var msg = JSON.parse(r.msg);
                             self.session_key = msg.session_key;
-                            self.openid = msg.openid;cc.winSize.width;
+                            self.openid = msg.openid;
 
                             console.log('openid:', self.openid);
                             if(callback)
@@ -302,28 +306,46 @@ module.exports = {
             var self = this;
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             {
-                self.httpPost("groupid",{encryptedData:encryptedData,sessionkey:self.session_key,iv:iv},function(r){
-                    if(r.state == 200)
+                var promise = yxmp.api.decryptShareInfo(encryptedData,iv);
+                promise.then(function(msg){
+                    //success
+                    console.log('groupid msg:', msg);
+                    var b = msg ? true : false;
+                    if(callback)
                     {
-                        var msg = r.data;
-                        console.log('groupid msg:', msg);
-                        var b = (msg == null || msg == "null") ? false : true;
-                        console.log('groupid:', msg.openGId);
-                        if(callback)
+                        if(b)
                         {
-                            if(b == true)
-                            {
-                                callback(b,msg.openGId,msg.watermark.timestamp*1000);cc.winSize.width;
-                            }
-                            else
-                            {
-                                callback(b);cc.winSize.width;
-                            }
+                            callback(b,msg.data.gid,new Date().getTime());
                         }
-
+                        else
+                        {
+                            callback(b);
+                        }
                     }
-                    console.log('groupid:', r);cc.winSize.width;
                 });
+
+                //self.httpPost("groupid",{encryptedData:encryptedData,sessionkey:self.session_key,iv:iv},function(r){
+                //    if(r.state == 200)
+                //    {
+                //        var msg = r.data;
+                //        console.log('groupid msg:', msg);
+                //        var b = (msg == null || msg == "null") ? false : true;
+                //        console.log('groupid:', msg.openGId);
+                //        if(callback)
+                //        {
+                //            if(b == true)
+                //            {
+                //                callback(b,msg.openGId,msg.watermark.timestamp*1000);cc.winSize.width;
+                //            }
+                //            else
+                //            {
+                //                callback(b);cc.winSize.width;
+                //            }
+                //        }
+                //
+                //    }
+                //    console.log('groupid:', r);cc.winSize.width;
+                //});
             }
         }
     },

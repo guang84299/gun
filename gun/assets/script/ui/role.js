@@ -134,6 +134,8 @@ cc.Class({
         {
             this.main.openstore = false;
             this.main.goMain();
+            if(this.main.opentiaozhan)
+                this.main.node_tiaozhan.show2();
             this.hide();
         }
         else if(data == "rolejiesuo")

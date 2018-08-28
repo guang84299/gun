@@ -22,6 +22,9 @@ cc.Class({
          this.openover = false;
          this.openstore = false;
          this.openduizhan = false;
+         this.opentiaozhan = false;
+         this.tiaozhanlv = 0;
+         this.tiaozhandata = {killEnemy:0,killBoss:0,baoTou:0,fireNum:0,baoTou2:0};
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
@@ -73,7 +76,7 @@ cc.Class({
 
          // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
-         
+
      },
 
     initPhysics: function()
@@ -164,8 +167,8 @@ cc.Class({
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
-        // storage.setStorageQianDao(0);
-        // storage.setStorageQianDaoTime(-1);
+        //storage.setStorageQianDao(6);
+        //storage.setStorageQianDaoTime(-1);
         //storage.setStorageYindao(0);
         //storage.setStorageGunJieSuoNum(1);
         //storage.setStorageRoleJieSuoNum(4);
@@ -176,6 +179,9 @@ cc.Class({
         // storage.setStorageGunInviteNum(1);
         // storage.setStorageGunInviteAwardNum(0);
         //storage.setStorageGun(16,0);
+
+        //storage.setStorageLevel(35);
+
     },
 
 
@@ -191,6 +197,15 @@ cc.Class({
         this.node_game_ui.boss =  cc.find("boss",this.node_game_ui);
         this.node_game_ui.hitbg =  cc.find("hitbg",this.node_game_ui);
         this.node_game_ui.yindao =  cc.find("yindao",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem1 =  cc.find("tiaozhan/item1",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem2 =  cc.find("tiaozhan/item2",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem3 =  cc.find("tiaozhan/item3",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem4 =  cc.find("tiaozhan/item4",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem5 =  cc.find("tiaozhan/item5",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem6 =  cc.find("tiaozhan/item6",this.node_game_ui);
+        this.node_game_ui.tiaozhanitem7 =  cc.find("tiaozhan/item7",this.node_game_ui);
+
+
         this.node_main = cc.find("Canvas/node_main");
         this.node_main_coin = cc.find("coin/num",this.node_main);
         this.node_main_score = cc.find("score",this.node_main);
@@ -248,6 +263,9 @@ cc.Class({
         this.GAME.more2 = null;
         this.GAME.linghongbao = 0;
         this.GAME.sharecard = false;
+        this.GAME.sharetiaozhan = false;
+        this.GAME.sharetiaozhan_pic = null;
+        this.GAME.sharetiaozhan_txt = null;
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
@@ -256,7 +274,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard")
+                if(con.id == "sharecard2")
                 {
                     if(con.value == "1")
                     {
@@ -274,6 +292,21 @@ cc.Class({
                 else if(con.id == "linghongbao")
                 {
                     this.GAME.linghongbao = con.value;
+                }
+                else if(con.id == "sharetiaozhan")
+                {
+                    if(con.value == "1")
+                    {
+                        this.GAME.sharetiaozhan = true;
+                    }
+                }
+                else if(con.id == "sharetiaozhan_pic")
+                {
+                    this.GAME.sharetiaozhan_pic = con.value;
+                }
+                else if(con.id == "sharetiaozhan_txt")
+                {
+                    this.GAME.sharetiaozhan_txt = con.value;
                 }
                 else
                 {
@@ -297,6 +330,7 @@ cc.Class({
                     }
                 }
             }
+
         }
         var cardnum = storage.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
@@ -318,6 +352,17 @@ cc.Class({
         //}
 
         this.updateDian();
+
+        if(this.GAME.control.length>0)
+        {
+            var currQianDao = storage.getStorageQianDao();
+            var currQianDaoTime = storage.getStorageQianDaoTime();
+            var now = new Date().getDate();
+            if(currQianDao < 7 && currQianDaoTime != now)
+            {
+                this.openQianDao();
+            }
+        }
     },
 
     loadPic: function(sp,url)
@@ -569,9 +614,17 @@ cc.Class({
         {
             this.loutis.push(loutis[i]);
         }
+
         this.last_h = 0;
         this.ltzorder = 1000000;
         this.ltcolor = this.res.bgcolor[0];
+        if(this.opentiaozhan)
+        {
+            for(var i=0;i<loutis.length;i++)
+            {
+                this.loutis.push(loutis[i]);
+            }
+        }
         this.currLoutis = [];
         this.louticolls = [];
         this.GAME.state = "stop";
@@ -645,6 +698,8 @@ cc.Class({
             this.node_over.hide();
         this.openover = false;
         this.initGameData();
+
+        this.ltcolor = this.res.bgcolor[Math.floor(Math.random()*this.res.bgcolor.length)];
 
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
@@ -762,13 +817,85 @@ cc.Class({
         }
         else if(data == "tiaozhan")
         {
-            this.res.showToast("敬请期待！");
+            this.openTiaoZhan();
         }
         else if(data == "gongzhonghao")
         {
             this.wxGongZhongHao();
         }
         cc.log(data);
+    },
+
+    openTiaoZhandesc: function(lv)
+    {
+        var self = this;
+        this.player.active = false;
+        if(this.enemy)
+        this.enemy.active = false;
+
+        var tiaozhandesc = cc.instantiate(self.res.node_tiaozhan_desc);
+        self.node.addChild(tiaozhandesc);
+        self.node_tiaozhan_desc = tiaozhandesc.getComponent("tiaozhandesc");
+        self.node_tiaozhan_desc.show(lv);
+
+    },
+
+    openTiaoZhanFail: function(a,b)
+    {
+        var self = this;
+        this.wxBannerHide();
+        storage.setStorageCoin(storage.getStorageCoin()+Math.floor(this.GAME.coin));
+        this.player.active = false;
+        this.enemy.active = false;
+
+        this.node_game_ui.runAction(cc.sequence(
+            cc.delayTime(0.3),
+            cc.callFunc(function(){
+                self.node_game_ui.active = false;
+
+                var tiaozhanfail = cc.instantiate(self.res.node_tiaozhan_fail);
+                self.node.addChild(tiaozhanfail);
+                self.node_tiaozhan_fail = tiaozhanfail.getComponent("tiaozhanfail");
+                self.node_tiaozhan_fail.show(a,b);
+            })
+        ));
+
+    },
+
+    openTiaoZhanSus: function()
+    {
+        var self = this;
+        this.wxBannerHide();
+        storage.setStorageCoin(storage.getStorageCoin()+Math.floor(this.GAME.coin));
+        this.player.active = false;
+        this.enemy.active = false;
+
+        this.node_game_ui.runAction(cc.sequence(
+            cc.delayTime(1.7),
+            cc.callFunc(function(){
+                self.node_game_ui.active = false;
+
+                var tiaozhansus = cc.instantiate(self.res.node_tiaozhan_sus);
+                self.node.addChild(tiaozhansus);
+                self.node_tiaozhan_sus = tiaozhansus.getComponent("tiaozhansus");
+                self.node_tiaozhan_sus.show();
+            })
+        ));
+
+    },
+
+    openTiaoZhan: function()
+    {
+        this.wxQuanState(false);
+        this.opentiaozhan = true;
+        //this.node_game.active = false;
+        this.node_game_ui.active = false;
+        this.node_main.active = false;
+
+        var tiaozhan = cc.instantiate(this.res.node_tiaozhan);
+        this.node.addChild(tiaozhan);
+        this.node_tiaozhan = tiaozhan.getComponent("tiaozhan");
+        this.node_tiaozhan.show();
     },
 
     openDuizhan: function()
@@ -1162,13 +1289,235 @@ cc.Class({
         this.wxBannerShow();
     },
 
+    startTiaoZhan: function()
+    {
+        this.node_game_ui.tiaozhanitem1.active = false;
+        this.node_game_ui.tiaozhanitem2.active = false;
+        this.node_game_ui.tiaozhanitem3.active = false;
+        this.node_game_ui.tiaozhanitem4.active = false;
+        this.node_game_ui.tiaozhanitem5.active = false;
+        this.node_game_ui.tiaozhanitem6.active = false;
+        this.node_game_ui.tiaozhanitem7.active = false;
+
+        this.tiaozhandata = {killEnemy:0,killBoss:0,baoTou:0,fireNum:0,baoTou2:0};
+        this.GAME.enemy_num = this.res.levels[this.tiaozhanlv][0].num;
+        this.updateTiaoZhanUI();
+        this.startGmae();
+    },
+
     goMain: function()
     {
+        this.node_game_ui.tiaozhanitem1.active = false;
+        this.node_game_ui.tiaozhanitem2.active = false;
+        this.node_game_ui.tiaozhanitem3.active = false;
+        this.node_game_ui.tiaozhanitem4.active = false;
+        this.node_game_ui.tiaozhanitem5.active = false;
+        this.node_game_ui.tiaozhanitem6.active = false;
+        this.node_game_ui.tiaozhanitem7.active = false;
+
         this.openover = false;
         this.wxQuanState(true);
         this.wxCloseOver();
         this.wxCloseRank();
         this.initGmae();
+    },
+
+    updateTiaoZhanUI: function()
+    {
+        var res = {a:false,b:false};
+        if(this.opentiaozhan)
+        {
+            var lvdata = this.res.levels[this.tiaozhanlv][0];
+            if(lvdata.type == 1)
+            {
+                this.node_game_ui.tiaozhanitem1.active = true;
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem1).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem1);
+                desc.string = this.tiaozhandata.killEnemy + "/" + lvdata.val;
+                if(this.tiaozhandata.killEnemy >= lvdata.val)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.a = false;
+                }
+            }
+            else if(lvdata.type == 2)
+            {
+                this.node_game_ui.tiaozhanitem2.active = true;
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem2).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem2);
+                desc.string = this.tiaozhandata.baoTou + "/" + lvdata.val;
+                if(this.tiaozhandata.baoTou >= lvdata.val)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.a = false;
+                }
+            }
+            else if(lvdata.type == 3)
+            {
+                this.node_game_ui.tiaozhanitem1.active = true;
+                this.node_game_ui.tiaozhanitem4.active = true;
+
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem1).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem1);
+                desc.string = this.tiaozhandata.killEnemy + "/" + lvdata.val;
+                if(this.tiaozhandata.killEnemy >= lvdata.val)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    res.b = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.b = false;
+                }
+
+                var desc2 = cc.find("desc",this.node_game_ui.tiaozhanitem4).getComponent("cc.Label");
+                var dacheng2 = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem4);
+                desc2.string = "";
+                if(this.GAME.currGun+1 == lvdata.gunId)
+                {
+                    dacheng2.x = dacheng2.parent.width+3;
+                    dacheng2.active = true;
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng2.active = false;
+                    res.a = false;
+                }
+
+                if(dacheng.active && dacheng2.active)
+                {
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                }
+            }
+            else if(lvdata.type == 4)
+            {
+                this.node_game_ui.tiaozhanitem5.active = true;
+                this.node_game_ui.tiaozhanitem7.active = true;
+
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem5).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem5);
+                desc.string = this.tiaozhandata.killBoss + "/" +lvdata.num;
+                if(this.tiaozhandata.killBoss >= lvdata.num)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.a = false;
+                }
+
+                var desc2 = cc.find("desc",this.node_game_ui.tiaozhanitem7).getComponent("cc.Label");
+                var dacheng2 = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem7);
+                var fireNum = this.tiaozhandata.fireNum;
+                fireNum = fireNum == 0 ? 1 : fireNum;
+                desc2.string = Math.floor(this.tiaozhandata.baoTou2/fireNum*100)+"%/" + Math.floor(lvdata.val*100)+"%";
+                if(this.tiaozhandata.baoTou2/fireNum > lvdata.val)
+                {
+                    dacheng2.x = dacheng2.parent.width+3;
+                    dacheng2.active = true;
+
+                    res.b = true;
+                }
+                else
+                {
+                    dacheng2.active = false;
+                    res.b = false;
+                }
+
+                if(dacheng.active && dacheng2.active)
+                {
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                }
+            }
+            else if(lvdata.type == 5)
+            {
+                this.node_game_ui.tiaozhanitem5.active = true;
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem5).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem5);
+                desc.string = this.tiaozhandata.killBoss + "/" + lvdata.val;
+                if(this.tiaozhandata.killBoss >= lvdata.val)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.a = false;
+                }
+            }
+            else if(lvdata.type == 6)
+            {
+                this.node_game_ui.tiaozhanitem1.active = true;
+                this.node_game_ui.tiaozhanitem6.active = true;
+
+                var desc = cc.find("desc",this.node_game_ui.tiaozhanitem1).getComponent("cc.Label");
+                var dacheng = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem1);
+                desc.string = this.tiaozhandata.killEnemy + "/" + lvdata.num;
+                if(this.tiaozhandata.killEnemy >= lvdata.num)
+                {
+                    dacheng.x = dacheng.parent.width+3;
+                    dacheng.active = true;
+                    res.a = true;
+                }
+                else
+                {
+                    dacheng.active = false;
+                    res.a = false;
+                }
+
+                var desc2 = cc.find("desc",this.node_game_ui.tiaozhanitem6).getComponent("cc.Label");
+                var dacheng2 = cc.find("desc/dacheng",this.node_game_ui.tiaozhanitem6);
+                var fireNum = this.tiaozhandata.fireNum;
+                fireNum = fireNum == 0 ? 1 : fireNum;
+                desc2.string = Math.floor(this.tiaozhandata.baoTou2/fireNum*100)+"%/" + Math.floor(lvdata.val*100)+"%";
+                if(this.tiaozhandata.baoTou2/fireNum > lvdata.val)
+                {
+                    dacheng2.x = dacheng2.parent.width+3;
+                    dacheng2.active = true;
+                    res.b = true;
+                }
+                else
+                {
+                    dacheng2.active = false;
+                    res.b = false;
+                }
+
+                if(dacheng.active && dacheng2.active)
+                {
+                    this.res.showToastRW();
+                    this.openTiaoZhanSus();
+                }
+            }
+        }
+        return res;
     },
 
     getScore: function(score)
@@ -1446,7 +1795,7 @@ cc.Class({
         this.player.addChild(this.player.fangdanyi,1);
         this.player.fangdanyi.active = false;
         var cardnum = storage.getStorageCard();
-        if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
+        if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi && !this.opentiaozhan)
         {
             this.player.fangdanyi.active = true;
         }
@@ -1479,6 +1828,10 @@ cc.Class({
 
     createEnemy: function()
     {
+        if(this.opentiaozhan) {
+            this.createTiaoZhanEnemy();
+            return;
+        }
         if(this.GAME.enemy_num==0)
         {
             this.enemy = cc.instantiate(this.res.bosss[Math.floor(Math.random()*this.res.bosss.length)]);
@@ -1527,6 +1880,65 @@ cc.Class({
         this.GAME.enemy_num --;
         this.enemy.ismove = false;
         //this.enemy.die = true;
+    },
+
+    createTiaoZhanEnemy: function()
+    {
+        if(this.GAME.enemy_num <= 1)
+        {
+            var res = this.updateTiaoZhanUI();
+            this.openTiaoZhanFail(res.a,res.b);
+            return;
+        }
+
+        var lvdata = this.res.levels[this.tiaozhanlv][0];
+        if(lvdata.type == 1 || lvdata.type == 2 || lvdata.type == 3 || lvdata.type == 6)
+        {
+            var index = Math.floor(Math.random()*this.res.enemys.length);
+            this.enemy = cc.instantiate(this.res.enemys[index]);
+            this.enemy.enemyindex = index;
+            this.enemy.enemytype = this.res.enemysconfig[index].type;
+            this.enemy.enemycolor = this.res.enemysconfig[index].color;
+            this.node_game.addChild(this.enemy,1000001);
+
+            var gunConf = this.res.gunsconfig[0];
+            this.enemy.gun = cc.instantiate(this.res.guns[0]);
+            this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
+            this.enemy.addChild(this.enemy.gun);
+
+            this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
+            this.enemy.gun_fire.y = gunConf.y;
+            this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
+            this.enemy.gun_fire.active = false;
+            this.enemy.gun.addChild(this.enemy.gun_fire,0);
+        }
+        else
+        {
+            this.enemy = cc.instantiate(this.res.bosss[Math.floor(Math.random()*this.res.bosss.length)]);
+            this.enemy.enemytype = 4;
+            this.enemy.enemycolor = this.res.enemysconfig[2].color;
+            this.enemy.hp = Math.floor(Math.random()*10+15);
+            this.enemy.zhp = this.enemy.hp;
+            this.node_game.addChild(this.enemy,1000001);
+
+            var gunConf = this.res.gunsconfig[0];
+            this.enemy.gun = cc.instantiate(this.res.guns[0]);
+            this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
+            this.enemy.addChild(this.enemy.gun);
+
+            this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
+            this.enemy.gun_fire.y = gunConf.y;
+            this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
+            this.enemy.gun_fire.active = false;
+            this.enemy.gun.addChild(this.enemy.gun_fire,0);
+
+            this.node_game_ui.boss.active = true;
+            this.node_game_ui.boss.getComponent("cc.ProgressBar").progress = 1;
+
+            storage.playSound(this.res.audio_boss_chu);
+        }
+        this.GAME.enemy_num --;
+        this.enemy.ismove = false;
     },
 
     copyEnemy: function()
@@ -1943,6 +2355,7 @@ cc.Class({
             this.player.kill = false;
             this.player.isfire = true;
 
+
             var rota = -this.player.gun.rotation;
             var v = cc.v2(1,0);
 
@@ -1957,6 +2370,12 @@ cc.Class({
             this.player.gun.hitbodynum = 0;
             this.player.gun.firenum = 0;
             var gunConf = this.res.gunsconfig[this.GAME.currGun];
+
+            if(this.opentiaozhan)
+            {
+                this.tiaozhandata.fireNum += gunConf.num;
+            }
+
             var dis = 1584;
             var bulletspeed = 2200;
             if(cc.sys.os == cc.sys.OS_ANDROID)
@@ -2551,6 +2970,12 @@ cc.Class({
             ));
 
             storage.setStorageHitHeadNum(parseInt(storage.getStorageHitHeadNum())+1);
+
+            if(this.opentiaozhan)
+            {
+                this.tiaozhandata.baoTou = this.GAME.killhead;
+                this.tiaozhandata.baoTou2 += 1;
+            }
         }
         else
         {
@@ -2582,6 +3007,11 @@ cc.Class({
                     self.poolbloods.put(par);
                 })
             ));
+
+            if(this.opentiaozhan)
+            {
+                this.tiaozhandata.baoTou = this.GAME.killhead;
+            }
         }
         var seq = cc.sequence(
             cc.scaleTo(0.3,sct,sct).easing(cc.easeSineIn()),
@@ -2666,24 +3096,51 @@ cc.Class({
                 }
                 dis += 100;
                 var pos = cc.pAdd(this.enemy.position,cc.pMult(this.enemy.diedir, dis));
-                var ac = cc.sequence(
-                    cc.spawn(
-                        cc.jumpTo(dis/900,pos,dis/2,1),
-                        cc.rotateBy(dis/900,roang)
-                    ),
-                    cc.callFunc(function(){
-                        self.playerMove(true);
-                    }),
-                    cc.removeSelf()
-                );
+                var ac = null;
+                if(this.opentiaozhan)
+                {
+                    this.node_game_ui.boss.active = false;
+                    ac = cc.sequence(
+                        cc.spawn(
+                            cc.jumpTo(dis/900,pos,dis/2,1),
+                            cc.rotateBy(dis/900,roang)
+                        ),
+                        cc.callFunc(function(){
+                            self.playerMove(false);
+                        }),
+                        cc.removeSelf()
+                    );
+                }
+                else
+                {
+                    ac = cc.sequence(
+                        cc.spawn(
+                            cc.jumpTo(dis/900,pos,dis/2,1),
+                            cc.rotateBy(dis/900,roang)
+                        ),
+                        cc.callFunc(function(){
+                            self.playerMove(true);
+                        }),
+                        cc.removeSelf()
+                    );
+                }
                 this.enemy.runAction(ac);
                 this.enemy.die = true;
 
                 this.node_game_ui.killhead.active = false;
                 this.getScore(10*this.GAME.killhead);
-                this.GAME.killhead = 0;
 
-                this.showChuKou();
+                if(this.opentiaozhan)
+                {
+                    this.tiaozhandata.killBoss += 1;
+                }
+                else
+                {
+                    this.GAME.killhead = 0;
+
+                    this.showChuKou();
+                }
+
 
                 storage.setStorageHitBossNum(parseInt(storage.getStorageHitBossNum())+1);
             }
@@ -2716,8 +3173,14 @@ cc.Class({
 
             this.enemy.die = true;
             this.enemy.runAction(ac);
+
+            if(this.opentiaozhan)
+            {
+                this.tiaozhandata.killEnemy += 1;
+            }
         }
         this.judgeChengjiuGame();
+        this.updateTiaoZhanUI();
     },
 
     showChuKou: function()
@@ -2827,11 +3290,19 @@ cc.Class({
         }
         else
         {
-            if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
-                this.judgeFuHuo();
+            if(this.opentiaozhan)
+            {
+                var res = this.updateTiaoZhanUI();
+                this.openTiaoZhanFail(res.a,res.b);
+            }
             else
             {
-                this.gameResult();
+                if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
+                    this.judgeFuHuo();
+                else
+                {
+                    this.gameResult();
+                }
             }
         }
     },
@@ -3041,7 +3512,8 @@ cc.Class({
                 if(this.uploadScoreDt > 10)
                 {
                     this.uploadScoreDt = 0;
-                    this.wxUploadScore(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
+                    if(!this.opentiaozhan)
+                        this.wxUploadScore(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
                 }
             }
             this.subdt += dt;
@@ -3055,7 +3527,8 @@ cc.Class({
                     if(this.subdt > sdd)
                     {
                         this.subdt = 0;
-                        this._updaetSubDomainCanvas();
+                        if(!this.opentiaozhan)
+                            this._updaetSubDomainCanvas();
                     }
                 }
             }
@@ -3615,6 +4088,17 @@ cc.Class({
                         storage.setStorageHasZhanShi(1);
                         self.node_zhanshi.updateUI();
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    {
+                        self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                        storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                        self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2);
+                        self.node_tiaozhan_sus.updateCoin();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.node_tiaozhan_fail.updateJumpNum();
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
@@ -3625,6 +4109,14 @@ cc.Class({
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
                         self.res.showToast("体验失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    {
+                        self.res.showToast("获取失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.res.showToast("获取失败");
                     }
 
                 }
@@ -3685,6 +4177,17 @@ cc.Class({
             {
                 storage.setStorageHasZhanShi(1);
                 this.node_zhanshi.updateUI();
+            }
+            else if(type == 4)
+            {
+                this.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                storage.setStorageCoin(storage.getStorageCoin()+this.node_tiaozhan_sus.award*2);
+                this.res.showToast("金币+"+this.node_tiaozhan_sus.award*2);
+                this.node_tiaozhan_sus.updateCoin();
+            }
+            else if(type == 5)
+            {
+                this.node_tiaozhan_fail.updateJumpNum();
             }
             storage.resumeMusic();
         }

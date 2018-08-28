@@ -75,6 +75,22 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_tiaozhan: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_tiaozhan_sus: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_tiaozhan_fail: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_tiaozhan_desc: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab
@@ -238,11 +254,12 @@ cc.Class({
         audio_chengjiu: {
             url: cc.AudioClip,
             default: null
-        },
+        }
     },
 
     onLoad: function()
     {
+
         this.playersconfig = [
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.0},
             {speed:1.5,coin:1,fire:0,aimLen:1,aimSpeed:1.0},
@@ -489,7 +506,160 @@ cc.Class({
             ]
 
         ];
-    
+
+
+        this.levels = [
+            [
+                {type:1,desc:"连续击败5个敌人",val:5,num:5}
+            ],
+            [
+                {type:1,desc:"连续击败10个敌人",val:10,num:10}
+            ],
+            [
+                {type:2,desc:"连续爆头2次",val:2,num:10}
+            ],
+            [
+                {type:1,desc:"连续击败15个敌人",val:15,num:15}
+            ],
+            [
+                {type:5,desc:"击败2个boss",val:2,num:2}
+            ],
+            [
+                {type:2,desc:"连续爆头3次",val:3,num:15}
+            ],
+            [
+                {type:3,desc:"使用乌兹",desc2:"击败10个敌人",val:10,num:10,gunId:3}
+            ],
+            [
+                {type:2,desc:"连续爆头4次",val:4,num:15}
+            ],
+            [
+                {type:1,desc:"连续击败20个敌人",val:20,num:20}
+            ],
+            [
+                {type:5,desc:"击败3个boss",val:3,num:3}
+            ],
+            [
+                {type:3,desc:"使用沙漠之鹰",desc2:"击败12个敌人",val:12,num:12,gunId:2}
+            ],
+            [
+                {type:1,desc:"连续击败25个敌人",val:25,num:25}
+            ],
+            [
+                {type:2,desc:"连续爆头5次",val:5,num:15}
+            ],
+            [
+                {type:5,desc:"击败4个boss",val:4,num:4}
+            ],
+            [
+                {type:3,desc:"使用M4",desc2:"击败15个敌人",val:15,num:15,gunId:4}
+            ],
+            [
+                {type:1,desc:"连续击败30个敌人",val:30,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头6次",val:6,num:15}
+            ],
+            [
+                {type:5,desc:"击败5个boss",val:5,num:5}
+            ],
+            [
+                {type:3,desc:"使用AK-47",desc2:"击败20个敌人",val:20,num:20,gunId:5}
+            ],
+            [
+                {type:1,desc:"连续击败35个敌人",val:35,num:35}
+            ],
+            [
+                {type:2,desc:"连续爆头7次",val:7,num:15}
+            ],
+            [
+                {type:5,desc:"击败6个boss",val:6,num:6}
+            ],
+            [
+                {type:3,desc:"使用侦察者",desc2:"击败20个敌人",val:20,num:20,gunId:6}
+            ],
+            [
+                {type:6,desc:"连续击败30个敌人",desc2:"30%以上爆头率",val:0.3,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头8次",val:8,num:15}
+            ],
+            [
+                {type:4,desc:"击败5个boss",desc2:"30%以上爆头率",val:0.3,num:5}
+            ],
+            [
+                {type:3,desc:"使用M240",desc2:"击败25个敌人",val:25,num:25,gunId:8}
+            ],
+            [
+                {type:6,desc:"连续击败30个敌人",desc2:"50%以上爆头率",val:0.5,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头9次",val:9,num:15}
+            ],
+            [
+                {type:4,desc:"击败5个boss",desc2:"40%以上爆头率",val:0.4,num:5}
+            ],
+            [
+                {type:3,desc:"使用AWP",desc2:"击败20个敌人",val:20,num:20,gunId:9}
+            ],
+            [
+                {type:6,desc:"连续击败30个敌人",desc2:"60%以上爆头率",val:0.6,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头10次",val:10,num:14}
+            ],
+            [
+                {type:4,desc:"击败6个boss",desc2:"50%以上爆头率",val:0.5,num:6}
+            ],
+            [
+                {type:3,desc:"使用神力",desc2:"击败20个敌人",val:20,num:20,gunId:17}
+            ],
+            [
+                {type:6,desc:"连续击败30个敌人",desc2:"70%以上爆头率",val:0.7,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头10次",val:10,num:13}
+            ],
+            [
+                {type:4,desc:"击败6个boss",desc2:"60%以上爆头率",val:0.6,num:6}
+            ],
+            [
+                {type:3,desc:"使用巨人",desc2:"击败20个敌人",val:20,num:20,gunId:19}
+            ],
+            [
+                {type:6,desc:"连续击败30个敌人",desc2:"80%以上爆头率",val:0.8,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头10次",val:10,num:12}
+            ],
+            [
+                {type:4,desc:"击败6个boss",desc2:"70%以上爆头率",val:0.7,num:6}
+            ],
+            [
+                {type:2,desc:"连续爆头10次",val:10,num:10}
+            ],
+            [
+                {type:2,desc:"连续爆头15次",val:15,num:15}
+            ],
+            [
+                {type:2,desc:"连续爆头20次",val:20,num:20}
+            ],
+            [
+                {type:2,desc:"连续爆头25次",val:25,num:25}
+            ],
+            [
+                {type:2,desc:"连续爆头30次",val:30,num:30}
+            ],
+            [
+                {type:2,desc:"连续爆头35次",val:35,num:35}
+            ],
+            [
+                {type:2,desc:"连续爆头40次",val:40,num:40}
+            ],
+            [
+                {type:2,desc:"连续爆头50次",val:50,num:50}
+            ]
+        ];
     },
 
     updateDitu: function()
@@ -687,6 +857,23 @@ cc.Class({
     showToastCJ: function()
     {
         var toast = cc.instantiate(this.toast_cj);
+        toast.opacity = 0;
+        toast.y = cc.winSize.height/2 - 50;
+        this.node.addChild(toast,1000);
+
+        var seq = cc.sequence(
+            cc.fadeIn(0.5),
+            cc.delayTime(2),
+            cc.fadeOut(0.5),
+            cc.removeSelf()
+        );
+        toast.runAction(seq);
+    },
+
+    showToastRW: function()
+    {
+        var toast = cc.instantiate(this.toast_cj);
+        cc.find("str",toast).getComponent("cc.Label").string = "任务已达成！";
         toast.opacity = 0;
         toast.y = cc.winSize.height/2 - 50;
         this.node.addChild(toast,1000);

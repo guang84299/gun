@@ -430,6 +430,17 @@ module.exports = {
         return Number(has);
     },
 
+    setStorageLevel: function(level)
+    {
+        cc.sys.localStorage.setItem("level",level);
+    },
+    getStorageLevel: function()
+    {
+        var level = cc.sys.localStorage.getItem("level");
+        level = level ? level : 0;
+        return Number(level);
+    },
+
     judgeShareGroupState: function(openGId,timestamp)
     {
         var shareGroupList = this.getStorageShareGroupList();

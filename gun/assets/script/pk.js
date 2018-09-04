@@ -980,6 +980,8 @@ cc.Class({
         {
             if(this.state == "willagain")
                 return;
+            this.playerData.playerA.hp = 50;
+            this.playerData.playerB.hp = 50;
             if(this.GAME.isWin)
             {
                 this.node_over_again_str.string = "再来一局(8)";
@@ -1057,6 +1059,9 @@ cc.Class({
         //}
         else if(data.againType == 4)//立即开始
         {
+            this.playerData.playerA.hp = 50;
+            this.playerData.playerB.hp = 50;
+
             this.node.stopAllActions();
             this.state = "stop";
             websocket.startGame();
@@ -1596,6 +1601,7 @@ cc.Class({
         if(playerData)
         {
             playerData.player.aim.active = true;
+            playerData.player.gun_fire.active = false;
             playerData.player.gun.stopAllActions();
             playerData.player.gun.rotation = data.rotate;
             var playerConf = this.res.playersconfig[playerData.skinId];
@@ -2214,12 +2220,15 @@ cc.Class({
 
     enemyHurt: function(isHead,diedir,playerData,hurtPlayer)
     {
-        var playerConf = this.res.playersconfig[playerData.skinId];
-        var gunConf = this.res.gunsconfig[playerData.gunId];
-        var hhp = (gunConf.fire+playerConf.fire);
-        if(isHead)
-            hhp *= 2;
-        websocket.bulletCollision(hurtPlayer.uid,hhp,isHead,diedir.x,diedir.y);
+        if(playerData.uid == this.qianqista.openid || (playerData.robot == 1 && this.isControlRobot()))
+        {
+            var playerConf = this.res.playersconfig[playerData.skinId];
+            var gunConf = this.res.gunsconfig[playerData.gunId];
+            var hhp = (gunConf.fire+playerConf.fire);
+            if(isHead)
+                hhp *= 2;
+            websocket.bulletCollision(hurtPlayer.uid,hhp,isHead,diedir.x,diedir.y);
+        }
     },
 
     killEnemy: function(data)

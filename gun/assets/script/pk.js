@@ -557,7 +557,7 @@ cc.Class({
             }
             this.node_sel2_gun.getComponent("cc.Button").interactable = false;
             this.node_sel2_title.string = "匹配中";
-            this.node_sel2_willstart.string = "(300)";
+            this.node_sel2_willstart.string = "(30)";
             var pipeiTime = 300;
             var num = 301;
 
@@ -566,12 +566,21 @@ cc.Class({
                 cc.delayTime(1),
                 cc.callFunc(function(){
                     pipeiTime -= 1;
+                    if(self.node_sel2_willstart_la.active)
+                    {
+                        if(pipeiTime>30)
+                        {
+                            pipeiTime = 30;
+                            num = 31;
+                        }
+                    }
                     var p = pipeiTime;
                     if(p<0)
                         p = 0;
                     self.node_sel2_willstart.string = "("+Math.floor(p)+")";
                     if(Math.floor(pipeiTime) == 0)
                     {
+                        self.node.stopAllActions();
                         websocket.questLeaveRoom(self.qianqista.openid);
                     }
                 })
@@ -2479,7 +2488,7 @@ cc.Class({
         }
         if(this.playerData.roomType == 3)
         {
-            coin.position = this.node_over2_box_1.parent.convertToWorldSpaceAR(this.node_over2_box_1.position);
+            coin.position = this.node_over2_guang.parent.convertToWorldSpaceAR(this.node_over2_guang.position);
             this.node_over2.addChild(coin);
         }
         else

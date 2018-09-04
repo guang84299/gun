@@ -67,8 +67,8 @@
       <file leaf-file-name="pk.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/pk.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.52575487" vertical-offset="40796" max-vertical-offset="42090">
-              <caret line="2700" column="5" selection-start-line="2700" selection-start-column="5" selection-end-line="2700" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.11900533" vertical-offset="8318" max-vertical-offset="42225">
+              <caret line="559" column="53" selection-start-line="559" selection-start-column="53" selection-end-line="559" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -689,8 +689,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/pk.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.52575487" vertical-offset="40796" max-vertical-offset="42090">
-          <caret line="2700" column="5" selection-start-line="2700" selection-start-column="5" selection-end-line="2700" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.11900533" vertical-offset="8318" max-vertical-offset="42225">
+          <caret line="559" column="53" selection-start-line="559" selection-start-column="53" selection-end-line="559" selection-end-column="53" />
           <folding />
         </state>
       </provider>

@@ -58,6 +58,8 @@ cc.Class({
         this.isHide = false;
         this.isShare = false;
         this.isClickSuiji2 = false;
+        this.isSuiJiMatch = false;
+        this.isFromShare = false;
         var self = this;
 
         websocket.init(this,function(){
@@ -333,8 +335,10 @@ cc.Class({
         }
         else if(data == "suiji2")
         {
+            this.isFromShare = false;
             if(this.state == "pipei")
             {
+                this.isSuiJiMatch = true;
                 websocket.matchRoom();
                 this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
                 this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
@@ -371,6 +375,7 @@ cc.Class({
         }
         else if(data == "duizhan2")
         {
+            this.isFromShare = false;
             if(websocket.state != 1)
             {
                 var self = this;
@@ -394,10 +399,12 @@ cc.Class({
         }
         else if(data == "sel2_fanhui")
         {
+            this.isSuiJiMatch = false;
             this.sel2_fanhui();
         }
         else if(data == "home")
         {
+            this.isSuiJiMatch = false;
             if(this.state == "willagain")
             {
                 this.state = "stop";
@@ -429,6 +436,7 @@ cc.Class({
         }
         else if(data == "over2_fanhui")
         {
+            this.isSuiJiMatch = false;
             this.over2_fanhui();
         }
         cc.log(data);
@@ -460,6 +468,7 @@ cc.Class({
         {
             this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
             this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
+            this.isFromShare = true;
         }
     },
 
@@ -762,15 +771,36 @@ cc.Class({
             if(this.isClickSuiji2)
             {
                 this.isClickSuiji2 = false;
+                this.isSuiJiMatch = true;
                 websocket.matchRoom();
             }
             else
             {
                 if(this.findPlayerNum() == 1)
                 {
-                    this.wxGropSharePk();
+                    if(this.isFromShare)
+                    {
+                        this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
+                        this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
+                    }
+                    else
+                    {
+                        this.wxGropSharePk();
+                    }
                 }
             }
+            if(this.playerData.playerA && this.playerData.playerA.uid == this.qianqista.openid && !this.isSuiJiMatch)
+            {
+                if(this.findPlayerNum() == 3)
+                {
+                    this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
+                }
+                else
+                {
+                    this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
+                }
+            }
+
             if(this.playerData.playerA)
             {
                 this.loadPic(this.node_sel2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());

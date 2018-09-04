@@ -3,21 +3,24 @@
  */
 module.exports = {
     ws: null,
-    ip: "wss://0a8ce26f.com",
-    //ip: "ws://192.168.129.118:9123",
+    //ip: "wss://0a8ce26f.com",
+    //ip: "ws://192.168.129.110:9123",
+    ip: "wss://e26f.cn",
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,
     logincallback: null,
     //用户模块
     MODE_USER_LOGIN : "GModeUser_login",
     MODE_USER_HERTBEAT : "GModeUser_heartBeat",
-    MODE_USER_ENTERROOM : "GModeUser_enterRoom",
+    MODE_USER_MATCH : "GModeUser_match",
+    MODE_USER_MATCHROOM : "GModeUser_matchRoom",
     MODE_USER_RECCONN : "GModeUser_recConn",
     MODE_USER_AGAIN : "GModeUser_again",
 
     MODE_USER_LOGIN_RESULT : "GModeUser_loginResult",
     MODE_USER_HERTBEAT_RESULT : "GModeUser_heartBeatResult",
-    MODE_USER_ENTERROOM_RESULT : "GModeUser_enterRoomResult",
+    MODE_USER_MATCH_RESULT : "GModeUser_matchResult",
+    MODE_USER_MATCHEND_RESULT: "GModeUser_matchEndResult",
     MODE_USER_RECCONN_RESULT : "GModeUser_recConnResult",
     MODE_USER_AGAIN_RESULT : "GModeUser_againResult",
 
@@ -122,8 +125,10 @@ module.exports = {
                 this.loginResult(body);
             else if(fun == "heartBeatResult")
                 this.heartBeatResult(body);
-            else if(fun == "enterRoomResult")
-                this.enterRoomResult(body);
+            else if(fun == "matchResult")
+                this.matchResult(body);
+            else if(fun == "matchEndResult")
+                this.matchEndResult(body);
             else if(fun == "joinRoomResult")
                 this.joinRoomResult(body);
             else if(fun == "questLeaveRoomResult")
@@ -215,26 +220,34 @@ module.exports = {
         console.log(data);
     },
 
-    enterRoom: function(type,dir,skinId,gunId,uid)
+    match: function(type,skinId,gunId,roomId)
     {
         if(this.state == 1)
         {
             var body = {};
             body.type = type;
-            body.dir = dir;
             body.skinId = skinId;
             body.gunId = gunId;
-            body.uid = uid;
-            this.send(this.MODE_USER_ENTERROOM,body);
+            body.roomId = roomId;
+            this.send(this.MODE_USER_MATCH,body);
         }
     },
 
-    enterRoomResult: function(result)
+    matchResult: function(result)
     {
         var data = JSON.parse(result);
-        this.pk.enterRoom(data);
+        this.pk.match(data);
 
         console.log(data);
+    },
+
+    matchRoom: function()
+    {
+        if(this.state == 1)
+        {
+            var body = {};
+            this.send(this.MODE_USER_MATCHROOM,body);
+        }
     },
 
     joinRoomResult: function(result)
@@ -243,6 +256,16 @@ module.exports = {
         if(data.result)
         {
             this.pk.joinRoom(data);
+        }
+        console.log(data);
+    },
+
+    matchEndResult: function(result)
+    {
+        var data = JSON.parse(result);
+        if(data.result)
+        {
+            //this.pk.joinRoom(data);
         }
         console.log(data);
     },
@@ -282,29 +305,31 @@ module.exports = {
         this.pk.roomTimeOut();
     },
 
-    move: function(y)
+    move: function(y,uid)
     {
         var body = {};
         body.y = y;
+        body.uid = uid;
         this.send(this.MODE_GAME_MOVE,body);
     },
     moveResult: function(result)
     {
         var data = JSON.parse(result);
-        this.pk.enemyMove(data);
+        this.pk.playerMove(data);
     },
 
-    rotate: function(rotate)
+    rotate: function(rotate,uid)
     {
         var body = {};
         body.rotate = rotate;
+        body.uid = uid;
         this.send(this.MODE_GAME_ROTATE,body);
     },
 
     rotateResult: function(result)
     {
         var data = JSON.parse(result);
-        this.pk.enemyRotate(data);
+        this.pk.playerRotate(data);
     },
 
     attack: function(uid)
@@ -342,18 +367,12 @@ module.exports = {
         this.pk.leaveRoom(data);
     },
 
-    again: function(type,dir,skinId,gunId,uid,touid,leave)
+    again: function(start)
     {
         if(this.state == 1)
         {
             var body = {};
-            body.type = type;
-            body.dir = dir;
-            body.skinId = skinId;
-            body.gunId = gunId;
-            body.uid = uid;
-            body.touid = touid;
-            body.leave = leave;
+            body.start = start;
             this.send(this.MODE_USER_AGAIN,body);
         }
     },

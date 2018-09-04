@@ -72,6 +72,7 @@ module.exports = {
     hidecallback: null,
     fromid:"",
     pkfromid:"",
+    pkroomtype: 0,
     init: function(gameId,secret,gameName,initcallback,showcallback)
     {
         this.gameId = gameId;
@@ -109,7 +110,12 @@ module.exports = {
                 if(query && query.fromid && query.fromid.length > 0)
                 {
                     this.fromid = query.fromid;
+                    this.pkfromid = query.fromid;
                     console.log('fromid:', query.fromid);
+                }
+                if(query && query.roomType)
+                {
+                    this.pkroomtype = query.roomType;
                 }
                 var sto_channel = cc.sys.localStorage.getItem("channel");
                 if(!sto_channel)
@@ -130,7 +136,11 @@ module.exports = {
                 {
                     self.pkfromid = query.fromid;
                 }
-                if(self.power == 1 && query && query.channel && query.channel == "shareonline" && self.pkfromid)
+                if(query && query.roomType)
+                {
+                    self.pkroomtype = query.roomType;
+                }
+                if(self.power == 1 && query && query.channel && query.channel == "shareonline" && self.pkfromid && self.pkroomtype>0)
                 {
                     if(self.showcallback)
                         self.showcallback();

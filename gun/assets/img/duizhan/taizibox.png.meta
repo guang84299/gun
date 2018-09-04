@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "38747653-6e81-41a9-8a13-0ce34d1dc82b",
+  "uuid": "bf22d288-7703-4b30-a893-0664c4589430",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "gunzi": {
+    "taizibox": {
       "ver": "1.0.3",
-      "uuid": "c24e8a2f-6720-4799-9fe5-4b77a27491d1",
-      "rawTextureUuid": "38747653-6e81-41a9-8a13-0ce34d1dc82b",
+      "uuid": "9ac84aa8-1c94-42a7-b88e-d708e6b82a0d",
+      "rawTextureUuid": "bf22d288-7703-4b30-a893-0664c4589430",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 67,
-      "height": 63,
-      "rawWidth": 67,
-      "rawHeight": 63,
+      "width": 77,
+      "height": 56,
+      "rawWidth": 77,
+      "rawHeight": 56,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

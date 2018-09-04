@@ -57,7 +57,7 @@ cc.Class({
         this.lastroomType = 1;
         this.isHide = false;
         this.isShare = false;
-        this.isLiule = false;
+        this.isClickSuiji2 = false;
         var self = this;
 
         websocket.init(this,function(){
@@ -78,27 +78,49 @@ cc.Class({
         this.bg_2_4 = cc.find("bg_2_4",this.node_game);
         this.taizi_a = cc.find("taizi_a",this.node_game);
         this.taizi_b = cc.find("taizi_b",this.node_game);
+        this.taizi_c = cc.find("taizi_c",this.node_game);
+        this.taizi_d = cc.find("taizi_d",this.node_game);
         this.taizi_a_player = cc.find("taizi_a/player",this.node_game);
         this.taizi_b_player = cc.find("taizi_b/player",this.node_game);
+        this.taizi_c_player = cc.find("taizi_c/player",this.node_game);
+        this.taizi_d_player = cc.find("taizi_d/player",this.node_game);
 
         this.node_game_ui = cc.find("node_game_ui",this.node);
         this.coin = cc.find("coin",this.node_game_ui);
         this.coin_num = cc.find("coin/num",this.node_game_ui).getComponent("cc.Label");
         this.time = cc.find("timebg/time",this.node_game_ui).getComponent("cc.Label");
 
-        this.left_icon = cc.find("left/icon",this.node_game_ui);
-        this.left_name = cc.find("left/name",this.node_game_ui).getComponent("cc.Label");
-        this.left_pro = cc.find("left/pro",this.node_game_ui).getComponent("cc.ProgressBar");
-        this.left_pro_bar = cc.find("left/pro/bar",this.node_game_ui);
+        this.box_a = cc.find("a",this.node_game_ui);
+        this.box_b = cc.find("b",this.node_game_ui);
+        this.box_c = cc.find("c",this.node_game_ui);
+        this.box_d = cc.find("d",this.node_game_ui);
 
-        this.right_icon = cc.find("right/icon",this.node_game_ui);
-        this.right_name = cc.find("right/name",this.node_game_ui).getComponent("cc.Label");
-        this.right_pro = cc.find("right/pro",this.node_game_ui).getComponent("cc.ProgressBar");
-        this.right_pro_bar = cc.find("right/pro/bar",this.node_game_ui);
+        this.a_icon = cc.find("a/icon",this.node_game_ui);
+        this.a_name = cc.find("a/name",this.node_game_ui).getComponent("cc.Label");
+        this.a_pro = cc.find("a/pro",this.node_game_ui).getComponent("cc.ProgressBar");
+        this.a_pro_bar = cc.find("a/pro/bar",this.node_game_ui);
+
+        this.b_icon = cc.find("b/icon",this.node_game_ui);
+        this.b_name = cc.find("b/name",this.node_game_ui).getComponent("cc.Label");
+        this.b_pro = cc.find("b/pro",this.node_game_ui).getComponent("cc.ProgressBar");
+        this.b_pro_bar = cc.find("b/pro/bar",this.node_game_ui);
+
+        this.c_icon = cc.find("c/icon",this.node_game_ui);
+        this.c_name = cc.find("c/name",this.node_game_ui).getComponent("cc.Label");
+        this.c_pro = cc.find("c/pro",this.node_game_ui).getComponent("cc.ProgressBar");
+        this.c_pro_bar = cc.find("c/pro/bar",this.node_game_ui);
+
+        this.d_icon = cc.find("d/icon",this.node_game_ui);
+        this.d_name = cc.find("d/name",this.node_game_ui).getComponent("cc.Label");
+        this.d_pro = cc.find("d/pro",this.node_game_ui).getComponent("cc.ProgressBar");
+        this.d_pro_bar = cc.find("d/pro/bar",this.node_game_ui);
 
         this.fire = cc.find("fire",this.node_game_ui);
         this.fire_pro = cc.find("fire",this.node_game_ui).getComponent("cc.ProgressBar");
         this.hitbg = cc.find("hitbg",this.node_game_ui);
+
+        this.node_sel_mode = cc.find("node_sel_mode",this.node);
+        this.node_sel_mode_coin_num = cc.find("coin/num",this.node_sel_mode).getComponent("cc.Label");
 
 
         this.node_sel = cc.find("node_sel",this.node);
@@ -110,11 +132,34 @@ cc.Class({
         this.node_sel_box_2_name = cc.find("bg/box_2/name",this.node_sel).getComponent("cc.Label");
         this.node_sel_suiji = cc.find("suiji",this.node_sel);
         this.node_sel_duizhan = cc.find("duizhan",this.node_sel);
+        this.node_sel_gun = cc.find("gun",this.node_sel);
         this.node_sel_home = cc.find("home",this.node_sel);
         this.node_sel_willstart = cc.find("bg/willstart",this.node_sel).getComponent("cc.Label");
         this.node_sel_coin = cc.find("coin",this.node_sel);
         this.node_sel_coin_num = cc.find("coin/num",this.node_sel).getComponent("cc.Label");
 
+
+        this.node_sel2 = cc.find("node_sel2",this.node);
+        this.node_sel2_title = cc.find("bg/title",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_box_1 = cc.find("bg/box_1",this.node_sel2);
+        this.node_sel2_box_2 = cc.find("bg/box_2",this.node_sel2);
+        this.node_sel2_box_3 = cc.find("bg/box_3",this.node_sel2);
+        this.node_sel2_box_4 = cc.find("bg/box_4",this.node_sel2);
+        this.node_sel2_box_2_wenhao = cc.find("bg/box_2/wenhao",this.node_sel2);
+        this.node_sel2_box_3_wenhao = cc.find("bg/box_3/wenhao",this.node_sel2);
+        this.node_sel2_box_4_wenhao = cc.find("bg/box_4/wenhao",this.node_sel2);
+        this.node_sel2_box_1_name = cc.find("bg/box_1/name",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_box_2_name = cc.find("bg/box_2/name",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_box_3_name = cc.find("bg/box_3/name",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_box_4_name = cc.find("bg/box_4/name",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_suiji = cc.find("suiji",this.node_sel2);
+        this.node_sel2_duizhan = cc.find("duizhan",this.node_sel2);
+        this.node_sel2_gun = cc.find("gun",this.node_sel2);
+        this.node_sel2_home = cc.find("home",this.node_sel2);
+        this.node_sel2_willstart_la = cc.find("bg/willstart",this.node_sel2);
+        this.node_sel2_willstart = cc.find("bg/willstart",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_coin = cc.find("coin",this.node_sel2);
+        this.node_sel2_coin_num = cc.find("coin/num",this.node_sel2).getComponent("cc.Label");
 
 
         this.node_over = cc.find("node_over",this.node);
@@ -129,9 +174,31 @@ cc.Class({
         this.node_over_fanhui_str = cc.find("fanhui/str",this.node_over).getComponent("cc.Label");
         this.node_over_again = cc.find("again",this.node_over);
         this.node_over_again_str = cc.find("again/str",this.node_over).getComponent("cc.Label");
+        this.node_over_jifenx2 = cc.find("jifenx2",this.node_over);
         this.node_over_home = cc.find("home",this.node_over);
         this.node_over_coin = cc.find("coin",this.node_over);
         this.node_over_coin_num = cc.find("coin/num",this.node_over).getComponent("cc.Label");
+
+        this.node_over2 = cc.find("node_over2",this.node);
+        this.node_over2_title = cc.find("bg/title",this.node_over2).getComponent("cc.Label");
+        this.node_over2_box_1 = cc.find("bg/box_1",this.node_over2);
+        this.node_over2_box_2 = cc.find("bg/box_2",this.node_over2);
+        this.node_over2_box_3 = cc.find("bg/box_3",this.node_over2);
+        this.node_over2_box_4 = cc.find("bg/box_4",this.node_over2);
+        this.node_over2_box_1_name = cc.find("bg/box_1/name",this.node_over2).getComponent("cc.Label");
+        this.node_over2_box_2_name = cc.find("bg/box_2/name",this.node_over2).getComponent("cc.Label");
+        this.node_over2_box_3_name = cc.find("bg/box_3/name",this.node_over2).getComponent("cc.Label");
+        this.node_over2_box_4_name = cc.find("bg/box_4/name",this.node_over2).getComponent("cc.Label");
+        this.node_over2_guang = cc.find("bg/guang",this.node_over2);
+        this.node_over2_bili = cc.find("bg/bili",this.node_over2).getComponent("cc.Label");
+        this.node_over2_fanhui = cc.find("fanhui",this.node_over2);
+        this.node_over2_fanhui_str = cc.find("fanhui/str",this.node_over2).getComponent("cc.Label");
+        this.node_over2_again = cc.find("again",this.node_over2);
+        this.node_over2_again_str = cc.find("again/str",this.node_over2).getComponent("cc.Label");
+        this.node_over2_jifenx2 = cc.find("jifenx2",this.node_over2);
+        this.node_over2_home = cc.find("home",this.node_over2);
+        this.node_over2_coin = cc.find("coin",this.node_over2);
+        this.node_over2_coin_num = cc.find("coin/num",this.node_over2).getComponent("cc.Label");
 
         this.getCoin(storage.getStorageCoin());
 
@@ -154,17 +221,25 @@ cc.Class({
         this.loadPic(this.node_sel_box_1,this.qianqista.avatarUrl+"?"+Math.random());
         this.node_sel_box_1_name.string = this.qianqista.userName;
 
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.node_sel2_box_1_name.string = this.qianqista.userName;
+
         this.node_game_ui.active = false;
         this.taizi_a.active = false;
         this.taizi_b.active = false;
+        this.taizi_c.active = false;
+        this.taizi_d.active = false;
     },
 
     getCoin: function(coin)
     {
         this.GAME.coin += coin;
         this.coin_num.string = Math.floor(this.GAME.coin)+"";
+        this.node_sel_mode_coin_num.string = Math.floor(this.GAME.coin)+"";
         this.node_over_coin_num.string = Math.floor(this.GAME.coin)+"";
         this.node_sel_coin_num.string = Math.floor(this.GAME.coin)+"";
+        this.node_over2_coin_num.string = Math.floor(this.GAME.coin)+"";
+        this.node_sel2_coin_num.string = Math.floor(this.GAME.coin)+"";
     },
 
 
@@ -191,7 +266,18 @@ cc.Class({
 
     click: function(event,data)
     {
-        if(data == "suiji")
+        if(data == "danren")
+        {
+            this.node_sel_mode.active = false;
+            this.node_sel.active = true;
+        }
+        else if(data == "shuangren")
+        {
+            this.isClickSuiji2 = false;
+            this.node_sel_mode.active = false;
+            this.node_sel2.active = true;
+        }
+        else if(data == "suiji")
         {
             var coin = storage.getStorageCoin();
             if(coin < 20)
@@ -206,7 +292,7 @@ cc.Class({
             }
             if(websocket.state == 1)
             {
-                websocket.enterRoom(1,1,this.main.GAME.currPlayer,this.main.GAME.currGun,"0");
+                websocket.match(1,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
             }
             else
             {
@@ -220,7 +306,6 @@ cc.Class({
         }
         else if(data == "duizhan")
         {
-            this.wxGropSharePk();
             if(websocket.state != 1)
             {
                 var self = this;
@@ -230,14 +315,93 @@ cc.Class({
                     websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
                 });
             }
+            else
+            {
+                websocket.match(2,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+            }
+        }
+        else if(data == "sel_fanhui")
+        {
+            if(this.state == "willstart" || this.state == "pipei")
+            {
+                this.state = "stop";
+                websocket.questLeaveRoom(this.qianqista.openid);
+                this.node.stopAllActions();
+            }
+            this.node_sel.active = false;
+            this.node_sel_mode.active = true;
+        }
+        else if(data == "suiji2")
+        {
+            if(this.state == "pipei")
+            {
+                websocket.matchRoom();
+                this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
+                this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
+                this.node_sel2_willstart_la.active = true;
+            }
+            else
+            {
+                var coin = storage.getStorageCoin();
+                if(coin < 20)
+                {
+                    //this.res.showToast("金币不足");
+                    var coin = cc.instantiate(this.res.node_coin);
+                    coin.position = cc.v2(0,0);
+                    this.node.addChild(coin);
+                    this.node_coin = coin.getComponent("coin");
+                    this.node_coin.show();
+                    return;
+                }
+                if(websocket.state == 1)
+                {
+                    this.isClickSuiji2 = true;
+                    websocket.match(3,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                }
+                else
+                {
+                    this.res.showToast("服务器登录失败！重新登录中...");
+                    var self = this;
+                    websocket.close();
+                    websocket.init(this,function(){
+                        websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+                    });
+                }
+            }
+        }
+        else if(data == "duizhan2")
+        {
+            if(websocket.state != 1)
+            {
+                var self = this;
+                this.res.showToast("服务器登录失败！重新登录中...");
+                websocket.close();
+                websocket.init(this,function(){
+                    websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+                });
+            }
+            else
+            {
+                if(this.state == "pipei")
+                {
+                    this.wxGropSharePk();
+                }
+                else
+                {
+                    websocket.match(3,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                }
+            }
+        }
+        else if(data == "sel2_fanhui")
+        {
+            this.sel2_fanhui();
         }
         else if(data == "home")
         {
             if(this.state == "willagain")
             {
-                this.selfPlayer.leave = true;
                 this.state = "stop";
-                websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
+                websocket.questLeaveRoom(this.qianqista.openid);
                 this.node.stopAllActions();
             }
 
@@ -255,18 +419,31 @@ cc.Class({
         {
             this.fanhui();
         }
+        else if(data == "over_fanhui")
+        {
+            this.fanhui();
+        }
         else if(data == "again")
         {
             this.again();
+        }
+        else if(data == "over2_fanhui")
+        {
+            this.over2_fanhui();
         }
         cc.log(data);
     },
 
     sharePk: function()
     {
+        this.node_sel_mode.active = false;
+        if(this.qianqista.pkroomtype == 2)
+            this.node_sel.active = true;
+        else
+            this.node_sel2.active = true;
         if(websocket.state == 1)
         {
-            websocket.enterRoom(2,1,this.main.GAME.currPlayer,this.main.GAME.currGun,this.qianqista.pkfromid);
+            websocket.match(this.qianqista.pkroomtype,this.main.GAME.currPlayer,this.main.GAME.currGun,this.qianqista.pkfromid);
         }
         else
         {
@@ -274,9 +451,15 @@ cc.Class({
             websocket.close();
             websocket.init(this,function(){
                 websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl,function(){
-                    websocket.enterRoom(2,1,self.main.GAME.currPlayer,self.main.GAME.currGun,self.qianqista.pkfromid);
+                    websocket.match(self.qianqista.pkroomtype,self.main.GAME.currPlayer,self.main.GAME.currGun,self.qianqista.pkfromid);
                 });
             });
+        }
+
+        if(this.qianqista.pkroomtype == 3)
+        {
+            this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
+            this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
         }
     },
 
@@ -287,7 +470,7 @@ cc.Class({
         {
             self.isShare = true;
 
-            var query = "channel=shareonline&fromid="+this.qianqista.openid;
+            var query = "channel=shareonline&fromid="+this.playerData.playerA.roomId +"&roomType="+this.playerData.roomType;
             var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
             var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
             if(this.main.GAME.shares.duizhan_txt1 && this.main.GAME.shares.duizhan_pic1)
@@ -302,11 +485,6 @@ cc.Class({
                 success: function(res)
                 {
                     //self.res.showToast("分享成功，等待好友上线吧");
-                    if(websocket.state == 1)
-                    {
-                        websocket.enterRoom(2,1,self.main.GAME.currPlayer,self.main.GAME.currGun,"0");
-                    }
-
                     cc.log(res);
                 },
                 fail: function()
@@ -318,115 +496,370 @@ cc.Class({
         }
         else
         {
-            if(websocket.state == 1)
-            {
-                websocket.enterRoom(2,1,this.main.GAME.currPlayer,this.main.GAME.currGun,"0");
-            }
+            cc.log("房间id:"+this.playerData.playerA.roomId);
         }
     },
 
-    enterRoom: function(data)
+    match: function(data)
     {
-        if(data.result)
-        {
-            this.playerData = data;
-            this.selfPlayer = data.player;
+        var self = this;
 
+        if(this.node_sel.active)
+        {
             this.node_sel_suiji.getComponent("cc.Button").interactable = false;
             this.node_sel_duizhan.getComponent("cc.Button").interactable = false;
-            //this.node_sel_home.getComponent("cc.Button").interactable = false;
-            //this.node_sel_home.color = cc.color(161,161,161);
+            this.node_sel_gun.getComponent("cc.Button").interactable = false;
             this.node_sel_title.string = "匹配中";
             this.node_sel_box_2_name.string = "(30)";
             var pipeiTime = 30;
             var num = 31;
-            if(data.roomType == 2)
+            if(data.type == 2)
             {
                 this.node_sel_box_2_name.string = "(60)";
                 pipeiTime = 60;
                 num = 61;
             }
 
-
             this.state = "pipei";
+            this.node.runAction(cc.repeat(cc.sequence(
+                cc.delayTime(1),
+                cc.callFunc(function(){
+                    pipeiTime -= 1;
+                    var p = pipeiTime;
+                    if(p<0)
+                        p = 0;
+                    self.node_sel_box_2_name.string = "("+Math.floor(p)+")";
+                    if(Math.floor(pipeiTime) == 0)
+                    {
+                        websocket.questLeaveRoom(self.qianqista.openid);
+                    }
+                })
+            ),num));
 
-            if(data.player2)
-            {
-                this.joinRoom(data);
-            }
-            else
-            {
-                var self = this;
-
-                this.node.runAction(cc.repeat(cc.sequence(
-                    cc.delayTime(1),
-                    cc.callFunc(function(){
-                        pipeiTime -= 1;
-                        var p = pipeiTime;
-                        if(p<0)
-                            p = 0;
-                        self.node_sel_box_2_name.string = "("+Math.floor(p)+")";
-                        if(Math.floor(pipeiTime) == 0)
-                        {
-                            websocket.questLeaveRoom(self.qianqista.openid);
-                        }
-                    })
-                ),num));
-            }
         }
         else
         {
-            this.res.showToast("对方已离线！");
+            this.node_sel2_willstart_la.active = false;
+            if(this.isClickSuiji2)
+            {
+                this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
+                this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
+                this.node_sel2_willstart_la.active = true;
+            }
+            this.node_sel2_gun.getComponent("cc.Button").interactable = false;
+            this.node_sel2_title.string = "匹配中";
+            this.node_sel2_willstart.string = "(300)";
+            var pipeiTime = 300;
+            var num = 301;
+
+            this.state = "pipei";
+            this.node.runAction(cc.repeat(cc.sequence(
+                cc.delayTime(1),
+                cc.callFunc(function(){
+                    pipeiTime -= 1;
+                    var p = pipeiTime;
+                    if(p<0)
+                        p = 0;
+                    self.node_sel2_willstart.string = "("+Math.floor(p)+")";
+                    if(Math.floor(pipeiTime) == 0)
+                    {
+                        websocket.questLeaveRoom(self.qianqista.openid);
+                    }
+                })
+            ),num));
+        }
+
+    },
+
+    findSelfPlayerData: function()
+    {
+        if(this.playerData.playerA && this.playerData.playerA.uid == this.qianqista.openid)
+            return this.playerData.playerA;
+        if(this.playerData.playerB && this.playerData.playerB.uid == this.qianqista.openid)
+            return this.playerData.playerB;
+        if(this.playerData.playerC && this.playerData.playerC.uid == this.qianqista.openid)
+            return this.playerData.playerC;
+        if(this.playerData.playerD && this.playerData.playerD.uid == this.qianqista.openid)
+            return this.playerData.playerD;
+    },
+
+    findPlayerDataByUid: function(uid)
+    {
+        if(this.playerData.playerA && this.playerData.playerA.uid == uid)
+            return this.playerData.playerA;
+        if(this.playerData.playerB && this.playerData.playerB.uid == uid)
+            return this.playerData.playerB;
+        if(this.playerData.playerC && this.playerData.playerC.uid == uid)
+            return this.playerData.playerC;
+        if(this.playerData.playerD && this.playerData.playerD.uid == uid)
+            return this.playerData.playerD;
+    },
+
+    findEnemyPlayerData: function()
+    {
+        if(this.playerData.playerA && this.playerData.playerA.uid != this.qianqista.openid)
+            return this.playerData.playerA;
+        if(this.playerData.playerB && this.playerData.playerB.uid != this.qianqista.openid)
+            return this.playerData.playerB;
+    },
+
+    findPlayerNum: function()
+    {
+        var num = 0;
+        if(this.playerData.playerA)
+            num ++;
+        if(this.playerData.playerB)
+            num ++;
+        if(this.playerData.playerC)
+            num ++;
+        if(this.playerData.playerD)
+            num ++;
+        return num;
+    },
+
+    isControlRobot: function()
+    {
+        if(this.playerData.playerA && this.playerData.playerA.onLine && this.playerData.playerA.uid == this.qianqista.openid)
+            return true;
+        else if(this.playerData.playerB && this.playerData.playerB.onLine && this.playerData.playerB.uid == this.qianqista.openid)
+            return true;
+        else if(this.playerData.playerC && this.playerData.playerC.onLine && this.playerData.playerC.uid == this.qianqista.openid)
+            return true;
+        return false;
+    },
+
+    initRobot: function()
+    {
+        if(this.playerData.playerA && this.playerData.playerA.robot == 1)
+        {
+            this.playerData.playerA.robotlv = 1;
+            this.playerData.playerA.nextFireType = 0;
+            this.playerData.playerA.firepro = 0;
+        }
+        if(this.playerData.playerB && this.playerData.playerB.robot == 1)
+        {
+            this.playerData.playerB.robotlv = 1;
+            this.playerData.playerB.nextFireType = 0;
+            this.playerData.playerB.firepro = 0;
+        }
+        if(this.playerData.playerC && this.playerData.playerC.robot == 1)
+        {
+            this.playerData.playerC.robotlv = 1;
+            this.playerData.playerC.nextFireType = 0;
+            this.playerData.playerC.firepro = 0;
+        }
+        if(this.playerData.playerD && this.playerData.playerD.robot == 1)
+        {
+            this.playerData.playerD.robotlv = 1;
+            this.playerData.playerD.nextFireType = 0;
+            this.playerData.playerD.firepro = 0;
         }
     },
 
+
     joinRoom: function(data)
     {
-        this.enemyData = data;
-        this.enemyPlayer = data.player2;
-        this.enemyPlayer.leave = false;
-        cc.log(this.enemyPlayer);
-        this.loadPic(this.node_sel_box_2,this.enemyPlayer.avatarUrl+"?"+Math.random());
-        this.node_sel_box_2_name.string = this.enemyPlayer.name;
-        this.node_sel_box_2_wenhao.active = false;
-        this.node_sel_title.string = "匹配成功";
-        this.node_sel_willstart.string = "即将开始游戏...3";
-
-        this.state = "willstart";
         var self = this;
-        var willStartTime = 3;
-        this.node.stopAllActions();
-        this.node.runAction(cc.repeat(cc.sequence(
-            cc.delayTime(1),
-            cc.callFunc(function(){
-                willStartTime -= 1;
-                self.node_sel_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
-                if(Math.floor(willStartTime) == 0)
-                {
+        this.playerData = data;
 
-                    if(self.state == "willstart")
-                    {
-                        cc.log("start game");
-                        websocket.startGame();
-                    }
-
-                }
-            })
-        ),3));
-
-        if(this.playerData.roomType == 1)
+        if(this.playerData.playerA)
         {
-            storage.setStorageCoin(storage.getStorageCoin()-20);
-            this.getCoin(-20);
+            this.playerData.playerA.onLine = true;
         }
-        this.lastroomType = this.playerData.roomType;
+        if(this.playerData.playerB)
+        {
+            this.playerData.playerB.onLine = true;
+        }
+        if(this.playerData.playerC)
+        {
+            this.playerData.playerC.onLine = true;
+        }
+        if(this.playerData.playerD)
+        {
+            this.playerData.playerD.onLine = true;
+        }
+
+        if(data.roomType == 1)
+        {
+            var enemyPlayer = this.findEnemyPlayerData();
+
+            //匹配完成开始倒计时
+            if(this.findPlayerNum() == 2)
+            {
+                this.initRobot();
+
+                this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+                this.node_sel_box_2_name.string = enemyPlayer.name;
+                this.node_sel_box_2_wenhao.active = false;
+                this.node_sel_title.string = "匹配成功";
+                this.node_sel_willstart.string = "即将开始游戏...3";
+
+                this.state = "willstart";
+                var willStartTime = 3;
+                this.node.stopAllActions();
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(1),
+                    cc.callFunc(function(){
+                        willStartTime -= 1;
+                        self.node_sel_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        if(Math.floor(willStartTime) == 0)
+                        {
+
+                            if(self.state == "willstart")
+                            {
+                                cc.log("start game");
+                                websocket.startGame();
+                            }
+
+                        }
+                    })
+                ),3));
+
+                storage.setStorageCoin(storage.getStorageCoin()-20);
+                this.getCoin(-20);
+            }
+        }
+        else if(data.roomType == 2)
+        {
+            if(this.findPlayerNum() == 1)
+            {
+                this.wxGropSharePk();
+            }
+            //匹配完成开始倒计时
+            if(this.findPlayerNum() == 2)
+            {
+                var enemyPlayer = this.findEnemyPlayerData();
+                this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+                this.node_sel_box_2_name.string = enemyPlayer.name;
+                this.node_sel_box_2_wenhao.active = false;
+                this.node_sel_title.string = "匹配成功";
+                this.node_sel_willstart.string = "即将开始游戏...3";
+
+                this.state = "willstart";
+                var willStartTime = 3;
+                this.node.stopAllActions();
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(1),
+                    cc.callFunc(function(){
+                        willStartTime -= 1;
+                        self.node_sel_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        if(Math.floor(willStartTime) == 0)
+                        {
+
+                            if(self.state == "willstart")
+                            {
+                                cc.log("start game");
+                                websocket.startGame();
+                            }
+
+                        }
+                    })
+                ),3));
+            }
+        }
+        else if(data.roomType == 3)
+        {
+            if(this.isClickSuiji2)
+            {
+                this.isClickSuiji2 = false;
+                websocket.matchRoom();
+            }
+            else
+            {
+                if(this.findPlayerNum() == 1)
+                {
+                    this.wxGropSharePk();
+                }
+            }
+            if(this.playerData.playerA)
+            {
+                this.loadPic(this.node_sel2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
+                this.node_sel2_box_1_name.string = this.playerData.playerA.name;
+            }
+            if(this.playerData.playerB)
+            {
+                this.loadPic(this.node_sel2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
+                this.node_sel2_box_2_name.string = this.playerData.playerB.name;
+                this.node_sel2_box_2_wenhao.active = false;
+            }
+            else
+            {
+                this.node_sel2_box_2_name.string = "等待加入";
+                this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                this.node_sel2_box_2_wenhao.active = true;
+            }
+            if(this.playerData.playerC)
+            {
+                this.loadPic(this.node_sel2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
+                this.node_sel2_box_3_name.string = this.playerData.playerC.name;
+                this.node_sel2_box_3_wenhao.active = false;
+            }
+            else
+            {
+                this.node_sel2_box_3_name.string = "等待加入";
+                this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                this.node_sel2_box_3_wenhao.active = true;
+            }
+            if(this.playerData.playerD)
+            {
+                this.loadPic(this.node_sel2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
+                this.node_sel2_box_4_name.string = this.playerData.playerD.name;
+                this.node_sel2_box_4_wenhao.active = false;
+            }
+            else
+            {
+                this.node_sel2_box_4_name.string = "等待加入";
+                this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                this.node_sel2_box_4_wenhao.active = true;
+            }
+            //匹配完成开始倒计时
+            if(this.findPlayerNum() == 4)
+            {
+                this.initRobot();
+
+                this.node_sel2_willstart_la.active = true;
+                this.node_sel2_title.string = "匹配成功";
+                this.node_sel2_willstart.string = "即将开始游戏...3";
+
+                this.state = "willstart";
+                var willStartTime = 3;
+                this.node.stopAllActions();
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(1),
+                    cc.callFunc(function(){
+                        willStartTime -= 1;
+                        self.node_sel2_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        if(Math.floor(willStartTime) == 0)
+                        {
+
+                            if(self.state == "willstart")
+                            {
+                                cc.log("start game");
+                                websocket.startGame();
+                            }
+
+                        }
+                    })
+                ),3));
+            }
+        }
     },
 
     pipeiFail: function()
     {
-        this.res.showToast("连接超时，请重试");
+        if(this.node_over.active)
+        {
+            this.node_over.active = false;
+            this.node_sel.active = true;
+        }
+        else
+        {
+            this.res.showToast("离开房间");
+        }
+
         this.node_sel_suiji.getComponent("cc.Button").interactable = true;
         this.node_sel_duizhan.getComponent("cc.Button").interactable = true;
+        this.node_sel_gun.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.color = cc.color(255,255,255);
         this.node_sel_title.string = "等待开战";
@@ -439,32 +872,80 @@ cc.Class({
 
     fanhui: function()
     {
-        if(this.node_over.active)
-            this.isLiule = true;
-        if(this.state == "willagain")
-        {
-            this.selfPlayer.leave = true;
-            this.state = "stop";
-            websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
-            this.node.stopAllActions();
-        }
-        else
-        {
-            this.state = "stop";
-            this.node.stopAllActions();
+        this.state = "stop";
+        websocket.questLeaveRoom(this.qianqista.openid);
+        this.node.stopAllActions();
 
-            this.node_over.active = false;
-            this.node_sel.active = true;
+        this.node_over.active = false;
+        this.node_sel.active = true;
 
-            this.node_sel_suiji.getComponent("cc.Button").interactable = true;
-            this.node_sel_duizhan.getComponent("cc.Button").interactable = true;
-            //this.node_sel_home.getComponent("cc.Button").interactable = true;
-            //this.node_sel_home.color = cc.color(255,255,255);
-            this.node_sel_title.string = "等待开战";
-            this.node_sel_box_2_name.string = "等待加入";
-            this.node_sel_willstart.string = "";
-            this.node_sel_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
-        }
+        this.node_sel_suiji.getComponent("cc.Button").interactable = true;
+        this.node_sel_duizhan.getComponent("cc.Button").interactable = true;
+        this.node_sel_gun.getComponent("cc.Button").interactable = true;
+        //this.node_sel_home.getComponent("cc.Button").interactable = true;
+        //this.node_sel_home.color = cc.color(255,255,255);
+        this.node_sel_title.string = "等待开战";
+        this.node_sel_box_2_name.string = "等待加入";
+        this.node_sel_willstart.string = "";
+        this.node_sel_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+    },
+
+    sel2_fanhui: function()
+    {
+        this.state = "stop";
+        websocket.questLeaveRoom(this.qianqista.openid);
+        this.node.stopAllActions();
+
+        this.node_sel2.active = false;
+        this.node_sel_mode.active = true;
+
+        this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
+        this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
+        this.node_sel2_gun.getComponent("cc.Button").interactable = true;
+        this.node_sel2_title.string = "等待开战";
+        this.node_sel2_willstart.string = "";
+
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.node_sel2_box_1_name.string = this.qianqista.userName;
+        this.node_sel2_box_2_name.string = "等待加入";
+        this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+        this.node_sel2_box_3_name.string = "等待加入";
+        this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+        this.node_sel2_box_4_name.string = "等待加入";
+        this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+
+        this.node_sel2_box_2_wenhao.active = true;
+        this.node_sel2_box_3_wenhao.active = true;
+        this.node_sel2_box_4_wenhao.active = true;
+    },
+
+    over2_fanhui: function()
+    {
+        this.state = "stop";
+        websocket.questLeaveRoom(this.qianqista.openid);
+        this.node.stopAllActions();
+
+        this.node_over2.active = false;
+        this.node_sel2.active = true;
+
+        this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
+        this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
+        this.node_sel2_gun.getComponent("cc.Button").interactable = true;
+        this.node_sel2_title.string = "等待开战";
+        this.node_sel2_willstart.string = "";
+
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.node_sel2_box_1_name.string = this.qianqista.userName;
+        this.node_sel2_box_2_name.string = "等待加入";
+        this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+        this.node_sel2_box_3_name.string = "等待加入";
+        this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+        this.node_sel2_box_4_name.string = "等待加入";
+        this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+
+        this.node_sel2_box_2_wenhao.active = true;
+        this.node_sel2_box_3_wenhao.active = true;
+        this.node_sel2_box_4_wenhao.active = true;
     },
 
     again: function()
@@ -472,71 +953,39 @@ cc.Class({
 
         this.node_over_fanhui.getComponent("cc.Button").interactable = false;
         this.node_over_again.getComponent("cc.Button").interactable = false;
-        //this.node_over_home.getComponent("cc.Button").interactable = false;
-        //this.node_over_home.color = cc.color(161,161,161);
+        this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
 
         if(this.state == "willagain")
         {
-            websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",3);
+            websocket.again(1);
         }
         else
         {
-            if(this.GAME.isWin)
-            {
-                this.node_over_again_str.string = "再来一局(8)";
-            }
-            else
-            {
-                this.node_over_again_str.string = "不服再来(8)";
-            }
-            websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0",this.enemyPlayer.uid,1);
-
-            var self = this;
-            this.node.runAction(cc.sequence(
-                cc.delayTime(2),
-                cc.callFunc(function(){
-                    if(self.state != "willagain")
-                    {
-                        self.enemyPlayer.leave = true;
-                        websocket.again(2,1,self.selfPlayer.skinId,self.selfPlayer.gunId,"0","0",2);
-                    }
-                })
-            ));
+            websocket.again(0);
         }
     },
 
     toAgain: function(data)
     {
+        var self = this;
         if(data.againType == 1)
         {
-            this.playerData = data;
-            this.selfPlayer = data.player;
-            this.selfPlayer.leave = false;
+            this.res.showToast("房间解散");
         }
         else if(data.againType == 2)
         {
-            websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,this.enemyPlayer.uid,"0",1);
+            this.res.showToast("对方已离开");
         }
         else if(data.againType == 3)
         {
-            if(data.player)
-            {
-                this.playerData = data;
-                this.selfPlayer = data.player;
-                this.selfPlayer.leave = false;
-                this.node_over_fanhui_str.string = "赶紧溜";
-            }
-            this.enemyData = data;
-            this.enemyPlayer = data.player2;
-            this.enemyPlayer.leave = false;
-
+            if(this.state == "willagain")
+                return;
             if(this.GAME.isWin)
             {
+                this.node_over_again_str.string = "再来一局(8)";
+
                 var str = "再来一局";
-                if(data.player)
-                    str = "来就来";
                 this.state = "willagain";
-                var self = this;
                 var willStartTime = 8;
                 this.node.stopAllActions();
                 this.node.runAction(cc.repeat(cc.sequence(
@@ -546,12 +995,10 @@ cc.Class({
                         self.node_over_again_str.string = str + "("+Math.floor(willStartTime) + ")";
                         if(Math.floor(willStartTime) == 0)
                         {
-
                             if(self.state == "willagain")
                             {
                                 cc.log("start game");
                                 websocket.startGame();
-
                                 if(self.lastroomType == 1)
                                 {
                                     storage.setStorageCoin(storage.getStorageCoin()-20);
@@ -565,11 +1012,10 @@ cc.Class({
             }
             else
             {
+                this.node_over_again_str.string = "不服再来(8)";
+
                 var str = "不服再来";
-                if(data.player)
-                    str = "来就来";
                 this.state = "willagain";
-                var self = this;
                 var willStartTime = 8;
                 this.node.stopAllActions();
                 this.node.runAction(cc.repeat(cc.sequence(
@@ -591,23 +1037,25 @@ cc.Class({
                 ),8));
             }
 
-            if((this.lastroomType == 1 && storage.getStorageCoin() < 20) || this.isLiule)
-            {
-                this.selfPlayer.leave = true;
-                this.state = "stop";
-                websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
-                this.node.stopAllActions();
-            }
+            this.node_over_fanhui_str.string = "赶紧溜";
+
+            //if((this.lastroomType == 1 && storage.getStorageCoin() < 20) || this.isLiule)
+            //{
+            //    this.selfPlayer.leave = true;
+            //    this.state = "stop";
+            //    websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
+            //    this.node.stopAllActions();
+            //}
         }
-        else if(data.againType == 4)//溜了
-        {
-            if(this.enemyPlayer.leave || !this.selfPlayer.leave)
-                this.res.showToast("对方离开");
-            this.node.stopAllActions();
-            this.state = "stop";
-            this.fanhui();
-        }
-        else if(data.againType == 5)//立即开始
+        //else if(data.againType == 4)//溜了
+        //{
+        //    if(this.enemyPlayer.leave || !this.selfPlayer.leave)
+        //        this.res.showToast("对方离开");
+        //    this.node.stopAllActions();
+        //    this.state = "stop";
+        //    this.fanhui();
+        //}
+        else if(data.againType == 4)//立即开始
         {
             this.node.stopAllActions();
             this.state = "stop";
@@ -627,16 +1075,64 @@ cc.Class({
         {
             if(this.state == "start" || this.state == "willstart")
             {
-                if(this.enemyPlayer.leave)
+                this.state = "stop";
+                this.res.showToast("对方掉线！");
+                if(this.playerData && this.playerData.roomType != 3)
                 {
-                    this.enemyPlayer.hp = -1;
-                    this.res.showToast("对方掉线！");
-                    this.gameOver();
+                    var enemyPlayer = this.findEnemyPlayerData();
+                    enemyPlayer.hp = 0;
                 }
+
+                this.gameOver();
             }
             else
             {
-                this.pipeiFail();
+                if(this.playerData && this.playerData.roomType == 3 && this.state == "pipei")
+                {
+                    this.state = "stop";
+                    this.sel2_fanhui();
+                }
+                else
+                {
+                    this.pipeiFail();
+                }
+            }
+        }
+        else
+        {
+            if(this.playerData && this.playerData.roomType == 3 && this.state == "pipei")
+            {
+                var leaveData = this.findPlayerDataByUid(data.uid);
+                if(leaveData && leaveData.onLine)
+                {
+                    leaveData.onLine = false;
+                    this.res.showToast(leaveData.name + " 离开！");
+
+                    if(this.playerData.playerA && this.playerData.playerA.uid == data.uid)
+                    {
+                        this.node_sel2_box_1_name.string = "等待加入";
+                        this.node_sel2_box_1.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                    }
+                    else if(this.playerData.playerB && this.playerData.playerB.uid == data.uid)
+                    {
+                        this.node_sel2_box_2_name.string = "等待加入";
+                        this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                        this.node_sel2_box_2_wenhao.active = true;
+                    }
+                    else if(this.playerData.playerC && this.playerData.playerC.uid == data.uid)
+                    {
+                        this.node_sel2_box_3_name.string = "等待加入";
+                        this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                        this.node_sel2_box_3_wenhao.active = true;
+                    }
+                    else if(this.playerData.playerD && this.playerData.playerD.uid == data.uid)
+                    {
+                        this.node_sel2_box_4_name.string = "等待加入";
+                        this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                        this.node_sel2_box_4_wenhao.active = true;
+                    }
+                }
+
             }
         }
 
@@ -653,15 +1149,57 @@ cc.Class({
         }
         else
         {
-            this.enemyPlayer.leave = true;
-            if(this.state == "willagain")
+            if(this.playerData && this.playerData.roomType == 3)
             {
-                this.selfPlayer.leave = true;
-                this.state = "stop";
-                websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
+                if(this.state == "start" || this.state == "willstart")
+                {
+                    var leaveData = this.findPlayerDataByUid(data.uid);
+                    leaveData.onLine = false;
+                    this.res.showToast(leaveData.name + " 掉线！");
+                    websocket.bulletCollision(leaveData.uid,leaveData.hp,0,0,0);
+                }
+                else if(this.state == "pipei")
+                {
+                    var leaveData = this.findPlayerDataByUid(data.uid);
+                    if(leaveData && leaveData.onLine)
+                    {
+                        leaveData.onLine = false;
+
+                        this.res.showToast(leaveData.name + " 离开！");
+
+                        if(this.playerData.playerA && this.playerData.playerA.uid == data.uid)
+                        {
+                            this.node_sel2_box_1_name.string = "等待加入";
+                            this.node_sel2_box_1.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                        }
+                        else if(this.playerData.playerB && this.playerData.playerB.uid == data.uid)
+                        {
+                            this.node_sel2_box_2_name.string = "等待加入";
+                            this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                            this.node_sel2_box_2_wenhao.active = true;
+                        }
+                        else if(this.playerData.playerC && this.playerData.playerC.uid == data.uid)
+                        {
+                            this.node_sel2_box_3_name.string = "等待加入";
+                            this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                            this.node_sel2_box_3_wenhao.active = true;
+                        }
+                        else if(this.playerData.playerD && this.playerData.playerD.uid == data.uid)
+                        {
+                            this.node_sel2_box_4_name.string = "等待加入";
+                            this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+                            this.node_sel2_box_4_wenhao.active = true;
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                websocket.questLeaveRoom(this.qianqista.openid);
                 this.node.stopAllActions();
             }
-            websocket.questLeaveRoom(this.qianqista.openid);
         }
     },
 
@@ -670,45 +1208,68 @@ cc.Class({
         this.state = "start";
         this.isBgScroll = false;
         this.node_sel.active = false;
+        this.node_sel2.active = false;
         this.node_over.active = false;
+        this.node_over2.active = false;
 
         this.node_game_ui.active = true;
         this.taizi_a.active = true;
         this.taizi_b.active = true;
-        this.fire_pro.progress = 1;
-        this.fire.stopAllActions();
-
-        if(this.selfPlayer.dirX == 1)
+        if(this.playerData.roomType == 3)
         {
-            this.loadPic(this.left_icon,this.selfPlayer.avatarUrl+"?"+Math.random());
-            this.left_name.string = this.selfPlayer.name;
-            this.left_pro.progress = 50/this.selfPlayer.hp;
-            //this.left_pro_bar.color = cc.color();
+            this.taizi_c.active = true;
+            this.taizi_d.active = true;
 
-            this.loadPic(this.right_icon,this.enemyPlayer.avatarUrl+"?"+Math.random());
-            this.right_name.string = this.enemyPlayer.name;
-            this.right_pro.progress = 50/this.enemyPlayer.hp;
-
-
+            this.box_c.active = true;
+            this.box_d.active = true;
         }
         else
         {
-            this.loadPic(this.left_icon,this.enemyPlayer.avatarUrl+"?"+Math.random());
-            this.left_name.string = this.enemyPlayer.name;
-            this.left_pro.progress = 50/this.enemyPlayer.hp;
-
-            this.loadPic(this.right_icon,this.selfPlayer.avatarUrl+"?"+Math.random());
-            this.right_name.string = this.selfPlayer.name;
-            this.right_pro.progress = 50/this.selfPlayer.hp;
+            this.box_c.active = false;
+            this.box_d.active = false;
         }
-        this.left_pro_bar.color = cc.color(0,160,233);
-        this.right_pro_bar.color = cc.color(0,160,233);
-        this.initPlayer();
-        this.initEnemy();
+        this.fire_pro.progress = 1;
+        this.fire.stopAllActions();
+
+        if(this.playerData.playerA)
+        {
+            this.loadPic(this.a_icon,this.playerData.playerA.avatarUrl+"?"+Math.random());
+            this.a_name.string = this.playerData.playerA.name;
+            this.a_pro.progress = 50/this.playerData.playerA.hp;
+            this.a_pro_bar.color = cc.color(0,160,233);
+            this.initPlayer(this.playerData.playerA);
+        }
+        if(this.playerData.playerB)
+        {
+            this.loadPic(this.b_icon,this.playerData.playerB.avatarUrl+"?"+Math.random());
+            this.b_name.string = this.playerData.playerB.name;
+            this.b_pro.progress = 50/this.playerData.playerB.hp;
+            this.b_pro_bar.color = cc.color(0,160,233);
+            this.initPlayer(this.playerData.playerB);
+        }
+        if(this.playerData.playerC)
+        {
+            this.loadPic(this.c_icon,this.playerData.playerC.avatarUrl+"?"+Math.random());
+            this.c_name.string = this.playerData.playerC.name;
+            this.c_pro.progress = 50/this.playerData.playerC.hp;
+            this.c_pro_bar.color = cc.color(0,160,233);
+            this.initPlayer(this.playerData.playerC);
+        }
+        if(this.playerData.playerD)
+        {
+            this.loadPic(this.d_icon,this.playerData.playerD.avatarUrl+"?"+Math.random());
+            this.d_name.string = this.playerData.playerD.name;
+            this.d_pro.progress = 50/this.playerData.playerD.hp;
+            this.d_pro_bar.color = cc.color(0,160,233);
+            this.initPlayer(this.playerData.playerD);
+        }
+
 
         var h = this.dsize.height/5;
         this.taizi_a.y = h*3;
         this.taizi_b.y = h*2;
+        this.taizi_c.y = h*2;
+        this.taizi_d.y = h*3;
 
         var jishibg = new cc.Node();
         var jishi = jishibg.addComponent("cc.Label");
@@ -748,87 +1309,60 @@ cc.Class({
         //this.bgscroll();
     },
 
-    initPlayer: function()
+    initPlayer: function(playerData)
     {
         var playerbg = null;
-        if(this.selfPlayer.dirX == 1)
+        if(playerData.pos == 1)
             playerbg = this.taizi_a_player;
-        else
+        else if(playerData.pos == 2)
             playerbg = this.taizi_b_player;
+        else if(playerData.pos == 3)
+            playerbg = this.taizi_c_player;
+        else if(playerData.pos == 4)
+            playerbg = this.taizi_d_player;
 
         playerbg.destroyAllChildren();
 
-        this.player = cc.instantiate(this.res.players[this.selfPlayer.skinId]);
-        playerbg.addChild(this.player);
+        playerData.player = cc.instantiate(this.res.players[playerData.skinId]);
+        playerData.player.pos = playerData.pos;
+        playerbg.addChild(playerData.player);
 
-        var playerConf = this.res.playersconfig[this.selfPlayer.skinId];
-        var gunConf = this.res.gunsconfig[this.selfPlayer.gunId];
+        var playerConf = this.res.playersconfig[playerData.skinId];
+        var gunConf = this.res.gunsconfig[playerData.gunId];
 
-        this.player.gun = cc.instantiate(this.res.guns[this.selfPlayer.gunId]);
-        this.player.gun.y = this.player.height*0.3 + gunConf.y;
-        this.player.addChild(this.player.gun,1);
-        if(this.selfPlayer.dirX == 2)
-            this.player.scaleX = -1;
+        playerData.player.gun = cc.instantiate(this.res.guns[playerData.gunId]);
+        playerData.player.gun.y = playerData.player.height*0.3 + gunConf.y;
+        playerData.player.addChild(playerData.player.gun,1);
+        if(playerData.pos == 2 || playerData.pos == 4)
+            playerData.player.scaleX = -1;
 
-        this.player.aim = cc.instantiate(this.res.aim_1);
-        this.player.aim.y = this.player.gun.y;
-        this.player.aim.active = false;
-        this.player.aim.line = cc.find("line",this.player.aim);
-        this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
-        this.player.addChild(this.player.aim,0);
+        playerData.player.aim = cc.instantiate(this.res.aim_1);
+        playerData.player.aim.y = playerData.player.gun.y;
+        playerData.player.aim.active = false;
+        playerData.player.aim.line = cc.find("line",playerData.player.aim);
+        playerData.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
+        playerData.player.addChild(playerData.player.aim,0);
 
-        this.player.aim.line.rotation = 0;
-        this.player.aim.getComponent("cc.ProgressBar").progress = 0;
+        playerData.player.aim.line.rotation = 0;
+        playerData.player.aim.getComponent("cc.ProgressBar").progress = 0;
 
-        this.player.gun_fire = cc.instantiate(this.res.gun_fire);
-        this.player.gun_fire.y = gunConf.y;
-        this.player.gun_fire.x = this.player.gun.width*(1-this.player.gun.anchorX);
-        this.player.gun_fire.active = false;
-        this.player.gun.addChild(this.player.gun_fire,0);
+        playerData.player.gun_fire = cc.instantiate(this.res.gun_fire);
+        playerData.player.gun_fire.y = gunConf.y;
+        playerData.player.gun_fire.x = playerData.player.gun.width*(1-playerData.player.gun.anchorX);
+        playerData.player.gun_fire.active = false;
+        playerData.player.gun.addChild(playerData.player.gun_fire,0);
+
+        if(playerData.uid != this.qianqista.openid)
+        {
+            playerData.player.aim.opacity = 0;
+        }
     },
 
-    initEnemy: function()
-    {
-        var playerbg = null;
-        if(this.enemyPlayer.dirX == 1)
-            playerbg = this.taizi_a_player;
-        else
-            playerbg = this.taizi_b_player;
-
-        playerbg.destroyAllChildren();
-
-        this.enemy = cc.instantiate(this.res.players[this.enemyPlayer.skinId]);
-        playerbg.addChild(this.enemy);
-
-        var playerConf = this.res.playersconfig[this.enemyPlayer.skinId];
-        var gunConf = this.res.gunsconfig[this.enemyPlayer.gunId];
-
-        this.enemy.gun = cc.instantiate(this.res.guns[this.enemyPlayer.gunId]);
-        this.enemy.gun.y = this.enemy.height*0.3 + gunConf.y;
-        this.enemy.addChild(this.enemy.gun,1);
-        if(this.enemyPlayer.dirX == 2)
-            this.enemy.scaleX = -1;
-
-        this.enemy.aim = cc.instantiate(this.res.aim_1);
-        this.enemy.aim.y = this.enemy.gun.y;
-        this.enemy.aim.active = false;
-        this.enemy.aim.line = cc.find("line",this.enemy.aim);
-        this.enemy.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
-        this.enemy.addChild(this.enemy.aim,0);
-        this.enemy.aim.opacity = 0;
-
-        this.enemy.aim.line.rotation = 0;
-        this.enemy.aim.getComponent("cc.ProgressBar").progress = 0;
-
-        this.enemy.gun_fire = cc.instantiate(this.res.gun_fire);
-        this.enemy.gun_fire.y = gunConf.y;
-        this.enemy.gun_fire.x = this.enemy.gun.width*(1-this.enemy.gun.anchorX);
-        this.enemy.gun_fire.active = false;
-        this.enemy.gun.addChild(this.enemy.gun_fire,0);
-    },
 
     bgscroll: function()
     {
+        if(this.state != "start")
+            return;
         this.isBgScroll = true;
         this.bg_1_1.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
         this.bg_1_2.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
@@ -843,54 +1377,263 @@ cc.Class({
         var h = this.dsize.height/5;
         this.taizi_a.y = h*3;
         this.taizi_b.y = h*2;
+        this.taizi_c.y = h*2;
+        this.taizi_d.y = h*3;
 
-        var self = this;
-        if(this.selfPlayer.dirX == 1)
+        this.playerToMove();
+        this.playerToRotate();
+    },
+
+    playerToMove: function()
+    {
+        var selfPlayer = this.findSelfPlayerData();
+        if(selfPlayer.pos == 1)
+            websocket.move(this.taizi_a.y,selfPlayer.uid);
+        else if(selfPlayer.pos == 2)
+            websocket.move(this.taizi_b.y,selfPlayer.uid);
+        else if(selfPlayer.pos == 3)
+            websocket.move(this.taizi_c.y,selfPlayer.uid);
+        else if(selfPlayer.pos == 4)
+            websocket.move(this.taizi_d.y,selfPlayer.uid);
+
+        if(this.isControlRobot())
         {
-            this.taizi_a.runAction(cc.repeatForever(cc.sequence(
-                cc.callFunc(function(){
-                    websocket.move(self.taizi_a.y);
-                }),
-                cc.moveBy(4,0,-h),
-                cc.moveBy(4,0,h)
-            )));
+            if(this.playerData.playerA && this.playerData.playerA.robot == 1)
+            {
+                websocket.move(this.taizi_a.y,this.playerData.playerA.uid);
+            }
+            if(this.playerData.playerB && this.playerData.playerB.robot == 1)
+            {
+                websocket.move(this.taizi_b.y,this.playerData.playerB.uid);
+            }
+            if(this.playerData.playerC && this.playerData.playerC.robot == 1)
+            {
+                websocket.move(this.taizi_c.y,this.playerData.playerC.uid);
+            }
+            if(this.playerData.playerD && this.playerData.playerD.robot == 1)
+            {
+                websocket.move(this.taizi_d.y,this.playerData.playerD.uid);
+            }
+        }
+    },
+
+    playerToRotate: function(uid)
+    {
+        if(uid)
+        {
+            var control = this.isControlRobot();
+
+            if(this.playerData.playerA && this.playerData.playerA.uid == uid)
+            {
+                if(this.playerData.playerA.robot == 1)
+                {
+                    if(control)
+                    websocket.rotate(this.playerData.playerA.player.gun.rotation,this.playerData.playerA.uid);
+                }
+                else{
+                    websocket.rotate(this.playerData.playerA.player.gun.rotation,this.playerData.playerA.uid);
+                }
+            }
+            else if(this.playerData.playerB && this.playerData.playerB.uid == uid)
+            {
+                if(this.playerData.playerB.robot == 1)
+                {
+                    if(control)
+                        websocket.rotate(this.playerData.playerB.player.gun.rotation,this.playerData.playerB.uid);
+                }
+                else{
+                    websocket.rotate(this.playerData.playerB.player.gun.rotation,this.playerData.playerB.uid);
+                }
+            }
+            else if(this.playerData.playerC && this.playerData.playerC.uid == uid)
+            {
+                if(this.playerData.playerC.robot == 1)
+                {
+                    if(control)
+                        websocket.rotate(this.playerData.playerC.player.gun.rotation,this.playerData.playerC.uid);
+                }
+                else{
+                    websocket.rotate(this.playerData.playerC.player.gun.rotation,this.playerData.playerC.uid);
+                }
+            }
+            else if(this.playerData.playerD && this.playerData.playerD.uid == uid)
+            {
+                if(this.playerData.playerD.robot == 1)
+                {
+                    if(control)
+                        websocket.rotate(this.playerData.playerD.player.gun.rotation,this.playerData.playerD.uid);
+                }
+                else{
+                    websocket.rotate(this.playerData.playerD.player.gun.rotation,this.playerData.playerD.uid);
+                }
+            }
+
         }
         else
         {
-            this.taizi_b.runAction(cc.repeatForever(cc.sequence(
-                cc.callFunc(function(){
-                    websocket.move(self.taizi_b.y);
-                }),
-                cc.moveBy(4,0,h),
-                cc.moveBy(4,0,-h)
-            )));
-        }
+            var selfPlayer = this.findSelfPlayerData();
+            websocket.rotate(selfPlayer.player.gun.rotation,selfPlayer.uid);
+            if(this.isControlRobot())
+            {
+                if(this.playerData.playerA && this.playerData.playerA.robot == 1)
+                {
+                    websocket.rotate(this.playerData.playerA.player.gun.rotation,this.playerData.playerA.uid);
+                }
+                if(this.playerData.playerB && this.playerData.playerB.robot == 1)
+                {
+                    websocket.rotate(this.playerData.playerB.player.gun.rotation,this.playerData.playerB.uid);
+                }
+                if(this.playerData.playerC && this.playerData.playerC.robot == 1)
+                {
+                    websocket.rotate(this.playerData.playerC.player.gun.rotation,this.playerData.playerC.uid);
+                }
+                if(this.playerData.playerD && this.playerData.playerD.robot == 1)
+                {
+                    websocket.rotate(this.playerData.playerD.player.gun.rotation,this.playerData.playerD.uid);
+                }
+            }
 
-       this.playerRotate();
+
+        }
     },
 
-    playerRotate: function()
+    playerMove: function(data)
+    {
+        var self = this;
+        var h = this.dsize.height/5;
+
+        var selfData = this.findSelfPlayerData();
+        var control = this.isControlRobot();
+        if(this.playerData.playerA && data.uid == this.playerData.playerA.uid)
+        {
+            var issend = (data.uid == selfData.uid) || (this.playerData.playerA.robot == 1 && control);
+            this.taizi_a.stopAllActions();
+            this.taizi_a.y = data.y;
+            this.taizi_a.runAction(cc.sequence(
+                cc.moveBy(4,0,-h),
+                cc.moveBy(4,0,h),
+                cc.callFunc(function(){
+                    if(issend)
+                        websocket.move(self.taizi_a.y,self.playerData.playerA.uid);
+                })
+            ));
+        }
+        else if(this.playerData.playerB && data.uid == this.playerData.playerB.uid)
+        {
+            var issend = (data.uid == selfData.uid) || (this.playerData.playerB.robot == 1 && control);
+            this.taizi_b.stopAllActions();
+            this.taizi_b.y = data.y;
+            this.taizi_b.runAction(cc.sequence(
+                cc.moveBy(4,0,h),
+                cc.moveBy(4,0,-h),
+                cc.callFunc(function(){
+                    if(issend)
+                        websocket.move(self.taizi_b.y,self.playerData.playerB.uid);
+                })
+            ));
+        }
+        else if(this.playerData.playerC && data.uid == this.playerData.playerC.uid)
+        {
+            var issend = (data.uid == selfData.uid) || (this.playerData.playerC.robot == 1 && control);
+            this.taizi_c.stopAllActions();
+            this.taizi_c.y = data.y;
+            this.taizi_c.runAction(cc.sequence(
+                cc.moveBy(4,0,h),
+                cc.moveBy(4,0,-h),
+                cc.callFunc(function(){
+                    if(issend)
+                        websocket.move(self.taizi_c.y,self.playerData.playerC.uid);
+                })
+            ));
+        }
+        else if(this.playerData.playerD && data.uid == this.playerData.playerD.uid)
+        {
+            var issend = (data.uid == selfData.uid) || (this.playerData.playerD.robot == 1 && control);
+            this.taizi_d.stopAllActions();
+            this.taizi_d.y = data.y;
+            this.taizi_d.runAction(cc.sequence(
+                cc.moveBy(4,0,-h),
+                cc.moveBy(4,0,h),
+                cc.callFunc(function(){
+                    if(issend)
+                        websocket.move(self.taizi_d.y,self.playerData.playerD.uid);
+                })
+            ));
+        }
+
+    },
+
+    playerRotate: function(data)
     {
         var self = this;
 
-        this.player.gun.stopAllActions();
-        this.player.aim.active = true;
-        this.player.gun.rotation = 0;
-        var playerConf = this.res.playersconfig[this.selfPlayer.skinId];
+        var selfData = this.findSelfPlayerData();
+        var control = this.isControlRobot();
+        var issend = false;
+        var playerData = null;
+        if(this.playerData.playerA && data.uid == this.playerData.playerA.uid)
+        {
+            issend = (data.uid == selfData.uid) || (this.playerData.playerA.robot == 1 && control);
+            playerData = this.playerData.playerA;
+        }
+        else if(this.playerData.playerB && data.uid == this.playerData.playerB.uid)
+        {
+            issend = (data.uid == selfData.uid) || (this.playerData.playerB.robot == 1 && control);
+            playerData = this.playerData.playerB;
+        }
+        else if(this.playerData.playerC && data.uid == this.playerData.playerC.uid)
+        {
+            issend = (data.uid == selfData.uid) || (this.playerData.playerC.robot == 1 && control);
+            playerData = this.playerData.playerC;
+        }
+        else if(this.playerData.playerD && data.uid == this.playerData.playerD.uid)
+        {
+            issend = (data.uid == selfData.uid) || (this.playerData.playerD.robot == 1 && control);
+            playerData = this.playerData.playerD;
+        }
 
-        var ac = cc.repeatForever(cc.sequence(
-            cc.callFunc(function(){
-                websocket.rotate(self.player.gun.rotation);
-                self.player.gun.rotationDir = 1;
-            }),
-            cc.rotateTo(1.1*playerConf.aimSpeed,-60).easing(cc.easeIn(1.5)),
-            cc.callFunc(function(){
-                self.player.gun.rotationDir = 2;
-            }),
-            cc.rotateTo(1.1*playerConf.aimSpeed,0).easing(cc.easeOut(1.5))
-        ));
-        ac.setTag(1);
-        this.player.gun.runAction(ac);
+
+        if(playerData)
+        {
+            playerData.player.aim.active = true;
+            playerData.player.gun.stopAllActions();
+            playerData.player.gun.rotation = data.rotate;
+            var playerConf = this.res.playersconfig[playerData.skinId];
+            var ac = null;
+            if(playerData.player.gun.rotationDir == 1)
+            {
+                var per = Math.abs((playerData.player.gun.rotation+60)/-60);
+                ac = cc.sequence(
+                    cc.callFunc(function(){
+                        playerData.player.gun.rotationDir = 1;
+                    }),
+                    cc.rotateTo(1.1*playerConf.aimSpeed*per,-60).easing(cc.easeIn(1.5)),
+                    cc.callFunc(function(){
+                        playerData.player.gun.rotationDir = 2;
+                    }),
+                    cc.rotateTo(1.1*playerConf.aimSpeed,0).easing(cc.easeOut(1.5)),
+                    cc.callFunc(function(){
+                        if(issend)
+                        websocket.rotate(playerData.player.gun.rotation,playerData.uid);
+                        playerData.player.gun.rotationDir = 1;
+                    })
+                );
+            }
+            else
+            {
+                var per = playerData.player.gun.rotation/-60;
+                ac = cc.sequence(
+                    cc.rotateTo(1.1*playerConf.aimSpeed*per,0).easing(cc.easeOut(1.5)),
+                    cc.callFunc(function(){
+                        if(issend)
+                        websocket.rotate(playerData.player.gun.rotation,playerData.uid);
+                        playerData.player.gun.rotationDir = 1;
+                    })
+                );
+            }
+            ac.setTag(1);
+            playerData.player.gun.runAction(ac);
+        }
     },
 
     stopScroll: function()
@@ -907,10 +1650,14 @@ cc.Class({
 
         this.taizi_a.stopAllActions();
         this.taizi_b.stopAllActions();
+        this.taizi_c.stopAllActions();
+        this.taizi_d.stopAllActions();
 
         var h = this.dsize.height/5;
         this.taizi_a.y = h*3;
         this.taizi_b.y = h*2;
+        this.taizi_c.y = h*2;
+        this.taizi_d.y = h*3;
     },
 
     updateScroll: function(dt)
@@ -937,69 +1684,169 @@ cc.Class({
         this.updateAim();
     },
 
-    enemyMove: function(data)
-    {
-        var h = this.dsize.height/5;
-        if(this.enemyPlayer.dirX == 1)
-        {
-            this.taizi_a.y = data.y;
-            this.taizi_a.stopAllActions();
-            this.taizi_a.runAction(cc.sequence(
-                cc.moveBy(4,0,-h),
-                cc.moveBy(4,0,h)
-            ));
-        }
-        else
-        {
-            this.taizi_b.y = data.y;
-            this.taizi_b.stopAllActions();
-            this.taizi_b.runAction(cc.sequence(
-                cc.moveBy(4,0,h),
-                cc.moveBy(4,0,-h)
-            ));
-        }
-    },
-
-    enemyRotate: function(data)
-    {
-        this.enemy.gun.stopAllActions();
-        this.enemy.aim.active = true;
-        this.enemy.gun.rotation = data.rotate;
-        var playerConf = this.res.playersconfig[this.enemyPlayer.skinId];
-
-        var self = this;
-        var ac = cc.sequence(
-            cc.callFunc(function(){
-                self.enemy.gun.rotationDir = 1;
-            }),
-            cc.rotateTo(1.1*playerConf.aimSpeed,-60).easing(cc.easeIn(1.5)),
-            cc.callFunc(function(){
-                self.enemy.gun.rotationDir = 2;
-            }),
-            cc.rotateTo(1.1*playerConf.aimSpeed,0).easing(cc.easeOut(1.5))
-        );
-        ac.setTag(1);
-        this.enemy.gun.runAction(ac);
-    },
 
     updateAim: function()
     {
-        if(this.player.aim.active)
+        if(this.playerData.playerA && this.playerData.playerA.player.aim.active)
         {
-            var ang = -this.player.gun.rotation;
+            var ang = -this.playerData.playerA.player.gun.rotation;
             var zpro = 60/360;
             var pro = ang/60*zpro;
-            this.player.aim.line.rotation = -ang;
-            this.player.aim.getComponent("cc.ProgressBar").progress = pro;
+            this.playerData.playerA.player.aim.line.rotation = -ang;
+            this.playerData.playerA.player.aim.getComponent("cc.ProgressBar").progress = pro;
         }
 
-        if(this.enemy.aim.active)
+        if(this.playerData.playerB && this.playerData.playerB.player.aim.active)
         {
-            var ang = -this.enemy.gun.rotation;
+            var ang = -this.playerData.playerB.player.gun.rotation;
             var zpro = 60/360;
             var pro = ang/60*zpro;
-            this.enemy.aim.line.rotation = -ang;
-            this.enemy.aim.getComponent("cc.ProgressBar").progress = pro;
+            this.playerData.playerB.player.aim.line.rotation = -ang;
+            this.playerData.playerB.player.aim.getComponent("cc.ProgressBar").progress = pro;
+        }
+
+        if(this.playerData.playerC && this.playerData.playerC.player.aim.active)
+        {
+            var ang = -this.playerData.playerC.player.gun.rotation;
+            var zpro = 60/360;
+            var pro = ang/60*zpro;
+            this.playerData.playerC.player.aim.line.rotation = -ang;
+            this.playerData.playerC.player.aim.getComponent("cc.ProgressBar").progress = pro;
+        }
+
+        if(this.playerData.playerD && this.playerData.playerD.player.aim.active)
+        {
+            var ang = -this.playerData.playerD.player.gun.rotation;
+            var zpro = 60/360;
+            var pro = ang/60*zpro;
+            this.playerData.playerD.player.aim.line.rotation = -ang;
+            this.playerData.playerD.player.aim.getComponent("cc.ProgressBar").progress = pro;
+        }
+    },
+
+    updateRobot: function(dt)
+    {
+        if(this.isControlRobot())
+        {
+            var arr = [];
+            if(this.playerData.playerA && this.playerData.playerA.robot == 1 && this.playerData.playerA.hp > 0)
+                arr.push(this.playerData.playerA);
+            if(this.playerData.playerB && this.playerData.playerB.robot == 1 && this.playerData.playerB.hp > 0)
+                arr.push(this.playerData.playerB);
+            if(this.playerData.playerC && this.playerData.playerC.robot == 1 && this.playerData.playerC.hp > 0)
+                arr.push(this.playerData.playerC);
+            if(this.playerData.playerD && this.playerData.playerD.robot == 1 && this.playerData.playerD.hp > 0)
+                arr.push(this.playerData.playerD);
+
+            for(var i=0;i<arr.length;i++)
+            {
+                var playerData = arr[i];
+
+                if(playerData.nextFireType == 0)
+                {
+                    var bobotconf = this.res.robotconfig[playerData.robotlv-1];
+                    var r = Math.random();
+                    if(r<=bobotconf.baotou)
+                        playerData.nextFireType = 1;
+                    else if(r >bobotconf.baotou && r<=(bobotconf.hit+bobotconf.baotou))
+                        playerData.nextFireType = 2;
+                    else if(r > (bobotconf.hit+bobotconf.baotou) && r<=(bobotconf.hit+bobotconf.baotou+bobotconf.willhit))
+                        playerData.nextFireType = 3;
+                    else
+                        playerData.nextFireType = 4;
+
+                    var gunConf = this.res.gunsconfig[playerData.gunId];
+                    playerData.firepro = gunConf.num*gunConf.fire*0.5-0.5;
+
+                }
+
+                playerData.firepro -= dt;
+                if(playerData.firepro <= 0 && playerData.nextFireType > 0)
+                {
+
+                    var pos = cc.v2(playerData.player.parent.parent.x,playerData.player.parent.parent.y+playerData.player.gun.y);
+                    var enemy = null;
+                    if(playerData.pos == 1 || playerData.pos == 3)
+                    {
+                        var dis = 1000;
+                        if(this.playerData.playerB && this.playerData.playerB.hp > 0)
+                        {
+                            dis = Math.abs(playerData.player.y - this.playerData.playerB.player.y);
+                            enemy = this.playerData.playerB;
+                        }
+                        if(this.playerData.playerD && this.playerData.playerD.hp > 0)
+                        {
+                            var dis2 = Math.abs(playerData.player.y - this.playerData.playerD.player.y);
+                            if(dis2 < dis)
+                            {
+                                enemy = this.playerData.playerD;
+                            }
+                        }
+                    }
+                    else if(playerData.pos == 2 || playerData.pos == 4)
+                    {
+                        var dis = 1000;
+                        if(this.playerData.playerA && this.playerData.playerA.hp > 0)
+                        {
+                            dis = Math.abs(playerData.player.y - this.playerData.playerA.player.y);
+                            enemy = this.playerData.playerA;
+                        }
+                        if(this.playerData.playerC && this.playerData.playerC.hp > 0)
+                        {
+                            var dis2 = Math.abs(playerData.player.y - this.playerData.playerC.player.y);
+                            if(dis2 < dis)
+                            {
+                                enemy = this.playerData.playerC;
+                            }
+                        }
+                    }
+
+                    if(enemy == null || !enemy.player)
+                        continue;
+                    var pos2 = cc.v2(enemy.player.parent.parent.x,enemy.player.parent.parent.y+enemy.player.height*0.8);
+                    var dir = cc.pNormalize(cc.v2(pos2.x-pos.x,pos2.y-pos.y));
+                    var ang = cc.pToAngle(dir);
+                    ang = cc.radiansToDegrees(ang);
+                    if(ang>60)
+                        ang = 180 - ang;
+                    //爆头
+                    if(playerData.nextFireType == 1)
+                    {
+
+                        if(ang > 0 && ang + playerData.player.gun.rotation < -4 && ang + playerData.player.gun.rotation > -5)
+                        {
+                            playerData.nextFireType = 0;
+                            websocket.attack(playerData.uid);
+                        }
+                    }
+                    else if(playerData.nextFireType == 2)
+                    {
+
+                        if(ang > 0 && ang + playerData.player.gun.rotation < -4 && ang + playerData.player.gun.rotation > -5)
+                        {
+                            playerData.nextFireType = 0;
+                            websocket.attack(playerData.uid);
+                        }
+                    }
+                    else if(playerData.nextFireType == 3)
+                    {
+
+                        if(ang > 0 && (ang + playerData.player.gun.rotation < 15 || ang + playerData.player.gun.rotation > -15))
+                        {
+                            playerData.nextFireType = 0;
+                            websocket.attack(playerData.uid);
+                        }
+                    }
+                    else
+                    {
+                        if(ang + playerData.player.gun.rotation < 15 || ang + playerData.player.gun.rotation > -15)
+                        {
+                            playerData.nextFireType = 0;
+                            websocket.attack(playerData.uid);
+                        }
+                    }
+                }
+            }
         }
     },
 
@@ -1007,8 +1854,11 @@ cc.Class({
     {
         if(this.fire_pro.progress >= 1 && this.state == "start" && this.isBgScroll)
         {
+            var selfData = this.findSelfPlayerData();
+            if(selfData.hp <= 0)
+                return;
             this.fire_pro.progress = 0;
-            var gunConf = this.res.gunsconfig[this.selfPlayer.gunId];
+            var gunConf = this.res.gunsconfig[selfData.gunId];
             var self = this;
 
             var cd = 0;
@@ -1025,7 +1875,7 @@ cc.Class({
                 })
             ),num));
 
-            websocket.attack(self.selfPlayer.uid);
+            websocket.attack(selfData.uid);
         }
     },
 
@@ -1036,30 +1886,13 @@ cc.Class({
         rands.push(data.r2);
         rands.push(data.r3);
         rands.push(data.r4);
-        if(data.uid == this.selfPlayer.uid)
-        {
-            this.playerFire(true,rands);
-        }
-        else
-        {
-            this.playerFire(false,rands);
-        }
+        this.playerFire(this.findPlayerDataByUid(data.uid),rands);
     },
 
-    playerFire: function(isSelf,rands)
+    playerFire: function(playerData,rands)
     {
-        var player = null;
-        var gunId = 0;
-        if(isSelf)
-        {
-            player = this.player;
-            gunId = this.selfPlayer.gunId;
-        }
-        else
-        {
-            player = this.enemy;
-            gunId = this.enemyPlayer.gunId;
-        }
+        var player = playerData.player;
+        var gunId = playerData.gunId;
         if(player.aim.active)
         {
             var self = this;
@@ -1131,7 +1964,8 @@ cc.Class({
                     cc.moveBy(0.1,10,3),
                     cc.delayTime(0.2),
                     cc.callFunc(function(){
-                        self.playerFireEnd(isSelf);
+                        player.gun_fire.active = false;
+                        self.playerFireEnd(playerData.uid);
                     })
                 );
                 player.gun.runAction(cc.sequence(cc.delayTime(0.05),
@@ -1155,7 +1989,7 @@ cc.Class({
                 bullet.opacity = 255;
                 this.node_game.addChild(bullet,1000001);
                 bullet.diedir = dir;
-                bullet.isSelf = isSelf;
+                bullet.pos = playerData.pos;
                 pos = cc.pAdd(pos,bullet.position);
 
                 var seq = cc.sequence(
@@ -1226,7 +2060,8 @@ cc.Class({
                     cc.repeat(ac,gunConf.num),
                     cc.delayTime(0.2),
                     cc.callFunc(function(){
-                        self.playerFireEnd(isSelf);
+                        player.gun_fire.active = false;
+                        self.playerFireEnd(playerData.uid);
                     })
                 );
                 player.gun.runAction(ac2);
@@ -1258,7 +2093,7 @@ cc.Class({
                     bullet.opacity = 0;
                     this.node_game.addChild(bullet,1000001);
                     bullet.diedir = dir2;
-                    bullet.isSelf = isSelf;
+                    bullet.pos = playerData.pos;
 
                     pos = cc.pAdd(pos,bullet.position);
 
@@ -1321,7 +2156,8 @@ cc.Class({
                     cc.moveBy(0.1,10,3),
                     cc.delayTime(0.2),
                     cc.callFunc(function(){
-                        self.playerFireEnd(isSelf);
+                        player.gun_fire.active = false;
+                        self.playerFireEnd(playerData.uid);
                     })
                 );
                 player.gun.runAction(cc.sequence(cc.delayTime(0.05),
@@ -1357,7 +2193,7 @@ cc.Class({
                     //bullet.opacity = 0;
                     this.node_game.addChild(bullet,1000001);
                     bullet.diedir = dir2;
-                    bullet.isSelf = isSelf;
+                    bullet.pos = playerData.pos;
 
                     pos = cc.pAdd(pos,bullet.position);
 
@@ -1371,81 +2207,19 @@ cc.Class({
         }
     },
 
-    playerFireEnd: function(isSelf)
+    playerFireEnd: function(uid)
     {
-        var self = this;
-        if(isSelf)
-        {
-            this.player.aim.active = true;
-
-            this.player.gun.stopAllActions();
-            var playerConf = this.res.playersconfig[this.selfPlayer.skinId];
-            var ac = null;
-            if(this.player.gun.rotationDir == 1)
-            {
-                var per = Math.abs((this.player.gun.rotation+60)/-60);
-                ac = cc.sequence(
-                    cc.rotateTo(1.1*playerConf.aimSpeed*per,-60).easing(cc.easeIn(1.5)),
-                    cc.callFunc(function(){
-                        self.player.gun.rotationDir = 2;
-                    }),
-                    cc.rotateTo(1.1*playerConf.aimSpeed,0).easing(cc.easeOut(1.5)),
-                    cc.callFunc(function(){
-                        self.playerRotate();
-                    })
-                );
-            }
-            else
-            {
-                var per = this.player.gun.rotation/-60;
-                ac = cc.sequence(
-                    cc.rotateTo(1.1*playerConf.aimSpeed*per,0).easing(cc.easeOut(1.5)),
-                    cc.callFunc(function(){
-                        self.playerRotate();
-                    })
-                );
-            }
-
-            ac.setTag(1);
-            this.player.gun.runAction(ac);
-        }
-        else
-        {
-            this.enemy.aim.active = true;
-
-            this.enemy.gun.stopAllActions();
-            var playerConf = this.res.playersconfig[this.enemyPlayer.skinId];
-            var ac = null;
-            if(this.enemy.gun.rotationDir == 1)
-            {
-                var per =  Math.abs((this.enemy.gun.rotation+60)/-60);
-                ac = cc.sequence(
-                    cc.rotateTo(1.1*playerConf.aimSpeed*per,-60).easing(cc.easeIn(1.5)),
-                    cc.callFunc(function(){
-                        self.enemy.gun.rotationDir = 2;
-                    }),
-                    cc.rotateTo(1.1*playerConf.aimSpeed,0).easing(cc.easeOut(1.5))
-                );
-            }
-            else
-            {
-                var per = this.enemy.gun.rotation/-60;
-                ac = cc.rotateTo(1.1*playerConf.aimSpeed*per,0).easing(cc.easeOut(1.5));
-            }
-
-            ac.setTag(1);
-            this.enemy.gun.runAction(ac);
-        }
+        this.playerToRotate(uid);
     },
 
-    enemyHurt: function(isHead,diedir)
+    enemyHurt: function(isHead,diedir,playerData,hurtPlayer)
     {
-        var playerConf = this.res.playersconfig[this.selfPlayer.skinId];
-        var gunConf = this.res.gunsconfig[this.selfPlayer.gunId];
+        var playerConf = this.res.playersconfig[playerData.skinId];
+        var gunConf = this.res.gunsconfig[playerData.gunId];
         var hhp = (gunConf.fire+playerConf.fire);
         if(isHead)
             hhp *= 2;
-        websocket.bulletCollision(this.enemyPlayer.uid,hhp,isHead,diedir.x,diedir.y);
+        websocket.bulletCollision(hurtPlayer.uid,hhp,isHead,diedir.x,diedir.y);
     },
 
     killEnemy: function(data)
@@ -1455,17 +2229,10 @@ cc.Class({
         var hurt = data.hurt;
         var hpnum = data.hp;
         var diedir = cc.v2(data.diedirX,data.diedirY);
-        var player = null;
-        if(data.uid == this.selfPlayer.uid)
-        {
-            player = this.player;
-            this.selfPlayer.hp = hpnum;
-        }
-        else
-        {
-            player = this.enemy;
-            this.enemyPlayer.hp = hpnum;
-        }
+
+        var playerData = this.findPlayerDataByUid(data.uid);
+        var player = playerData.player;
+        playerData.hp = hpnum;
 
         var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
 
@@ -1506,12 +2273,12 @@ cc.Class({
                 par = this.main.poolbigbloods.get();
                 par.getComponent("cc.ParticleSystem").resetSystem();
             } else {
-                par = cc.instantiate(this.bigblood);
+                par = cc.instantiate(this.res.bigblood);
             }
             par.getComponent("cc.ParticleSystem").startColor = cc.color(255,0,0);
             par.getComponent("cc.ParticleSystem").endColor = cc.color(255,0,0);
             par.position = hit.position;
-            par.scaleX = -this.enemy.scaleX;
+            par.scaleX = -player.scaleX;
             this.node_game.addChild(par,1000001);
             par.runAction(cc.sequence(
                 cc.delayTime(1),
@@ -1532,7 +2299,7 @@ cc.Class({
             par.getComponent("cc.ParticleSystem").startColor = cc.color(255,0,0);
             par.getComponent("cc.ParticleSystem").endColor = cc.color(255,0,0);
             par.position = hit.position;
-            par.scaleX = -this.enemy.scaleX;
+            par.scaleX = -player.scaleX;
             this.node_game.addChild(par,1000001);
 
             par.runAction(cc.sequence(
@@ -1566,62 +2333,53 @@ cc.Class({
             cc.removeSelf()
         ));
 
-        if(data.uid == this.selfPlayer.uid)
+        if(playerData.pos == 1)
         {
-            if(this.selfPlayer.dirX == 1)
-            {
-                this.left_pro.progress = hpnum/50.0;
-                if(this.left_pro.progress>=0.9)
-                    this.left_pro_bar.color = cc.color(0,160,233);
-                else if(this.left_pro.progress>=0.4 && this.left_pro.progress<0.9)
-                    this.left_pro_bar.color = cc.color(0,255,0);
-                else if(this.left_pro.progress>=0.1 && this.left_pro.progress<0.4)
-                    this.left_pro_bar.color = cc.color(255,183,0);
-                else
-                    this.left_pro_bar.color = cc.color(255,0,0);
-            }
+            this.a_pro.progress = hpnum/50.0;
+            if(this.a_pro.progress>=0.9)
+                this.a_pro_bar.color = cc.color(0,160,233);
+            else if(this.a_pro.progress>=0.4 && this.a_pro.progress<0.9)
+                this.a_pro_bar.color = cc.color(0,255,0);
+            else if(this.a_pro.progress>=0.1 && this.a_pro.progress<0.4)
+                this.a_pro_bar.color = cc.color(255,183,0);
             else
-            {
-                this.right_pro.progress = hpnum/50.0;
-
-                if(this.right_pro.progress>=0.9)
-                    this.right_pro_bar.color = cc.color(0,160,233);
-                else if(this.right_pro.progress>=0.4 && this.right_pro.progress<0.9)
-                    this.right_pro_bar.color = cc.color(0,255,0);
-                else if(this.right_pro.progress>=0.1 && this.right_pro.progress<0.4)
-                    this.right_pro_bar.color = cc.color(255,183,0);
-                else
-                    this.right_pro_bar.color = cc.color(255,0,0);
-            }
+                this.a_pro_bar.color = cc.color(255,0,0);
         }
-        else
+        else if(playerData.pos == 2)
         {
-            if(this.enemyPlayer.dirX == 1)
-            {
-                this.left_pro.progress = hpnum/50.0;
-
-                if(this.left_pro.progress>=0.9)
-                    this.left_pro_bar.color = cc.color(0,160,233);
-                else if(this.left_pro.progress>=0.4 && this.left_pro.progress<0.9)
-                    this.left_pro_bar.color = cc.color(0,255,0);
-                else if(this.left_pro.progress>=0.1 && this.left_pro.progress<0.4)
-                    this.left_pro_bar.color = cc.color(255,183,0);
-                else
-                    this.left_pro_bar.color = cc.color(255,0,0);
-            }
+            this.b_pro.progress = hpnum/50.0;
+            if(this.b_pro.progress>=0.9)
+                this.b_pro_bar.color = cc.color(0,160,233);
+            else if(this.b_pro.progress>=0.4 && this.b_pro.progress<0.9)
+                this.b_pro_bar.color = cc.color(0,255,0);
+            else if(this.b_pro.progress>=0.1 && this.b_pro.progress<0.4)
+                this.b_pro_bar.color = cc.color(255,183,0);
             else
-            {
-                this.right_pro.progress = hpnum/50.0;
-
-                if(this.right_pro.progress>=0.9)
-                    this.right_pro_bar.color = cc.color(0,160,233);
-                else if(this.right_pro.progress>=0.4 && this.right_pro.progress<0.9)
-                    this.right_pro_bar.color = cc.color(0,255,0);
-                else if(this.right_pro.progress>=0.1 && this.right_pro.progress<0.4)
-                    this.right_pro_bar.color = cc.color(255,183,0);
-                else
-                    this.right_pro_bar.color = cc.color(255,0,0);
-            }
+                this.b_pro_bar.color = cc.color(255,0,0);
+        }
+        else if(playerData.pos == 3)
+        {
+            this.c_pro.progress = hpnum/50.0;
+            if(this.c_pro.progress>=0.9)
+                this.c_pro_bar.color = cc.color(0,160,233);
+            else if(this.c_pro.progress>=0.4 && this.c_pro.progress<0.9)
+                this.c_pro_bar.color = cc.color(0,255,0);
+            else if(this.c_pro.progress>=0.1 && this.c_pro.progress<0.4)
+                this.c_pro_bar.color = cc.color(255,183,0);
+            else
+                this.c_pro_bar.color = cc.color(255,0,0);
+        }
+        else if(playerData.pos == 4)
+        {
+            this.d_pro.progress = hpnum/50.0;
+            if(this.d_pro.progress>=0.9)
+                this.d_pro_bar.color = cc.color(0,160,233);
+            else if(this.d_pro.progress>=0.4 && this.d_pro.progress<0.9)
+                this.d_pro_bar.color = cc.color(0,255,0);
+            else if(this.d_pro.progress>=0.1 && this.d_pro.progress<0.4)
+                this.d_pro_bar.color = cc.color(255,183,0);
+            else
+                this.d_pro_bar.color = cc.color(255,0,0);
         }
 
         if(hpnum<=0)
@@ -1640,7 +2398,29 @@ cc.Class({
                     cc.rotateBy(dis/300,roang)
                 ),
                 cc.callFunc(function(){
-                    self.gameOver();
+                    if(self.playerData.roomType == 3)
+                    {
+                        if(playerData.pos == 1 && self.playerData.playerC.hp <= 0)
+                        {
+                            self.gameOver();
+                        }
+                        else if(playerData.pos == 2 && self.playerData.playerD.hp <= 0)
+                        {
+                            self.gameOver();
+                        }
+                        else if(playerData.pos == 3 && self.playerData.playerA.hp <= 0)
+                        {
+                            self.gameOver();
+                        }
+                        else if(playerData.pos == 4 && self.playerData.playerB.hp <= 0)
+                        {
+                            self.gameOver();
+                        }
+                    }
+                    else
+                    {
+                        self.gameOver();
+                    }
                 }),
                 cc.removeSelf()
             );
@@ -1658,8 +2438,16 @@ cc.Class({
         } else {
             coin = cc.instantiate(this.res.coin);
         }
-        coin.position = this.node_over_box_1.parent.convertToWorldSpaceAR(this.node_over_box_1.position);
-        this.node_over.addChild(coin);
+        if(this.playerData.roomType == 3)
+        {
+            coin.position = this.node_over2_box_1.parent.convertToWorldSpaceAR(this.node_over2_box_1.position);
+            this.node_over2.addChild(coin);
+        }
+        else
+        {
+            coin.position = this.node_over_box_1.parent.convertToWorldSpaceAR(this.node_over_box_1.position);
+            this.node_over.addChild(coin);
+        }
 
         var coinNum = 1;
 
@@ -1679,62 +2467,183 @@ cc.Class({
 
     gameOver: function()
     {
-        this.isLiule = false;
         var self = this;
-        this.state == "stop";
+        this.state = "stop";
         this.stopScroll();
-        this.node_over.active = true;
+
         this.node_sel.active = false;
+        this.node_sel2.active = false;
 
         this.node_game_ui.active = false;
         this.taizi_a.active = false;
         this.taizi_b.active = false;
+        this.taizi_c.active = false;
+        this.taizi_d.active = false;
 
-        this.node_over_fanhui.getComponent("cc.Button").interactable = true;
-        this.node_over_again.getComponent("cc.Button").interactable = true;
-        this.node_over_home.getComponent("cc.Button").interactable = true;
-        this.node_over_home.color = cc.color(255,255,255);
+        var selfPlayer = this.findSelfPlayerData();
 
-        this.loadPic(this.node_over_box_1,this.selfPlayer.avatarUrl+"?"+Math.random());
-        this.loadPic(this.node_over_box_2,this.enemyPlayer.avatarUrl+"?"+Math.random());
-        this.node_over_box_1_name.string = this.selfPlayer.name;
-        this.node_over_box_2_name.string = this.enemyPlayer.name;
-        this.node_over_guang.stopAllActions();
-        this.node_over_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
-
-        if(this.selfPlayer.hp>this.enemyPlayer.hp)
+        if(this.playerData.roomType == 3)
         {
-            this.GAME.isWin = true;
-            this.node_over_title.string = "恭喜！获得胜利";
-            this.node_over_guang.position = this.node_over_box_1.position;
-            this.node_over_bili.string = "1 : 0";
-            this.node_over_fanhui_str.string = "改天再战";
-            this.node_over_again_str.string = "再来一局";
-            storage.setStorageCoin(storage.getStorageCoin()+40);
+            this.node_over2.active = true;
+            this.node_over2_fanhui.getComponent("cc.Button").interactable = true;
+            this.node_over2_again.getComponent("cc.Button").interactable = true;
+            this.node_over2_home.getComponent("cc.Button").interactable = true;
+            this.node_over2_home.color = cc.color(255,255,255);
 
-            this.node.runAction(cc.repeat(cc.sequence(
-                cc.delayTime(0.05),
-                cc.callFunc(function(){
-                    self.addCoin();
-                })
-            ),41));
+            this.loadPic(this.node_over2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
+            this.node_over2_box_1_name.string = this.playerData.playerA.name;
+            this.node_over2_box_2_name.string = this.playerData.playerB.name;
+            this.node_over2_box_3_name.string = this.playerData.playerC.name;
+            this.node_over2_box_4_name.string = this.playerData.playerD.name;
+            this.node_over2_guang.stopAllActions();
+            this.node_over2_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
 
-            var winNum = storage.getStorageWinNum();
-            winNum += 1;
-            storage.setStorageWinNum(winNum);
+            var winpos = 0;
+            var guangpos = this.node_over2_box_1.position;
+            if(this.playerData.playerA.hp + this.playerData.playerC.hp > this.playerData.playerB.hp + this.playerData.playerD.hp)
+            {
+                if(this.playerData.playerA.uid == selfPlayer.uid)
+                    winpos = 1;
+                if(this.playerData.playerC.uid == selfPlayer.uid)
+                {
+                    winpos = 3;
+                    guangpos = this.node_over2_box_3.position;
+                }
+            }
+            else
+            {
+                if(this.playerData.playerB.uid == selfPlayer.uid)
+                {
+                    winpos = 2;
+                    guangpos = this.node_over2_box_2.position;
+                }
+                if(this.playerData.playerD.uid == selfPlayer.uid)
+                {
+                    winpos = 4;
+                    guangpos = this.node_over2_box_4.position;
+                }
+            }
+            if(winpos > 0)
+            {
+                this.GAME.isWin = true;
+                this.node_over2_title.string = "恭喜！获得胜利";
+                this.node_over2_guang.position = guangpos;
+                this.node_over2_bili.string = "1 : 0";
+                this.node_over2_fanhui_str.string = "改天再战";
+                this.node_over2_again_str.string = "再来一局";
+                storage.setStorageCoin(storage.getStorageCoin()+40);
 
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:this.selfPlayer.skinId,gunId:this.selfPlayer.gunId });
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(0.05),
+                    cc.callFunc(function(){
+                        self.addCoin();
+                    })
+                ),41));
+
+                var winNum = storage.getStorageWinNum();
+                winNum += 1;
+                storage.setStorageWinNum(winNum);
+
+                if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                    wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+            }
+            else
+            {
+                var windata = this.playerData.playerA;
+                if(this.playerData.playerB.hp > windata.hp)
+                {
+                    windata = this.playerData.playerB;
+                    guangpos =this.node_over2_box_2.position;
+                }
+                if(this.playerData.playerC.hp > windata.hp)
+                {
+                    windata = this.playerData.playerC;
+                    guangpos =this.node_over2_box_3.position;
+                }
+                if(this.playerData.playerD.hp > windata.hp)
+                {
+                    windata = this.playerData.playerD;
+                    guangpos =this.node_over2_box_4.position;
+                }
+
+                this.GAME.isWin = false;
+                this.node_over2_title.string = "遗憾！失败了";
+                this.node_over2_guang.position = guangpos;
+                this.node_over2_bili.string = "0 : 1";
+                this.node_over2_fanhui_str.string = "溜了";
+                this.node_over2_again_str.string = "不服再来";
+            }
         }
         else
         {
-            this.GAME.isWin = false;
-            this.node_over_title.string = "遗憾！失败了";
-            this.node_over_guang.position = this.node_over_box_2.position;
-            this.node_over_bili.string = "0 : 1";
-            this.node_over_fanhui_str.string = "溜了";
-            this.node_over_again_str.string = "不服再来";
+            this.node_over.active = true;
+            this.node_over_fanhui.getComponent("cc.Button").interactable = true;
+            this.node_over_again.getComponent("cc.Button").interactable = true;
+            this.node_over_jifenx2.getComponent("cc.Button").interactable = true;
+            this.node_over_home.getComponent("cc.Button").interactable = true;
+            this.node_over_home.color = cc.color(255,255,255);
+
+            var enemyPlayer = this.findEnemyPlayerData();
+
+            this.loadPic(this.node_over_box_1,selfPlayer.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+            this.node_over_box_1_name.string = selfPlayer.name;
+            this.node_over_box_2_name.string = enemyPlayer.name;
+            this.node_over_guang.stopAllActions();
+            this.node_over_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
+
+            if(selfPlayer.hp>enemyPlayer.hp)
+            {
+                this.GAME.isWin = true;
+                this.node_over_title.string = "恭喜！获得胜利";
+                this.node_over_guang.position = this.node_over_box_1.position;
+                this.node_over_bili.string = "1 : 0";
+                this.node_over_fanhui_str.string = "改天再战";
+                this.node_over_again_str.string = "再来一局";
+                storage.setStorageCoin(storage.getStorageCoin()+40);
+
+                this.node.runAction(cc.repeat(cc.sequence(
+                    cc.delayTime(0.05),
+                    cc.callFunc(function(){
+                        self.addCoin();
+                    })
+                ),41));
+
+                var winNum = storage.getStorageWinNum();
+                winNum += 1;
+                storage.setStorageWinNum(winNum);
+
+                if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                    wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+            }
+            else
+            {
+                this.GAME.isWin = false;
+                this.node_over_title.string = "遗憾！失败了";
+                this.node_over_guang.position = this.node_over_box_2.position;
+                this.node_over_bili.string = "0 : 1";
+                this.node_over_fanhui_str.string = "溜了";
+                this.node_over_again_str.string = "不服再来";
+            }
+
+            if(enemyPlayer.robot == 1)
+            {
+                if(Math.random()<=0.4)
+                {
+                    this.node.runAction(cc.sequence(
+                        cc.delayTime(2),
+                        cc.callFunc(function(){
+                            websocket.again(0);
+                        })
+                    ));
+                }
+            }
+
         }
+
     },
 
     roomCountDown: function(data)
@@ -1771,15 +2680,42 @@ cc.Class({
         else
             self.node.collnum ++;
 
-        if(self.node.collnum==1 && self.node.isSelf)
+        if(self.node.collnum==1)
         {
-            if(other.node == this.enemy)
+            if(self.node.pos == 1 && other.node.pos != 1 && other.node.pos != 3)
             {
-                this.enemyHurt(other.tag,self.node.diedir);
+                if(other.node.pos == 2)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerA,this.playerData.playerB);
+                else if(other.node.pos == 4)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerA,this.playerData.playerD);
+
+                this.main.poolebullets.put(self.node);
+            }
+            else if(self.node.pos == 2 && other.node.pos != 2 && other.node.pos != 4)
+            {
+                if(other.node.pos == 1)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerB,this.playerData.playerA);
+                else if(other.node.pos == 3)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerB,this.playerData.playerC);
+                this.main.poolebullets.put(self.node);
+            }
+            else if(self.node.pos == 3 && other.node.pos != 3 && other.node.pos != 1)
+            {
+                if(other.node.pos == 2)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerC,this.playerData.playerB);
+                else if(other.node.pos == 4)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerC,this.playerData.playerD);
+                this.main.poolebullets.put(self.node);
+            }
+            else if(self.node.pos == 4 && other.node.pos != 4 && other.node.pos != 2)
+            {
+                if(other.node.pos == 1)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerD,this.playerData.playerA);
+                else if(other.node.pos == 3)
+                    this.enemyHurt(other.tag,self.node.diedir,this.playerData.playerD,this.playerData.playerC);
+                this.main.poolebullets.put(self.node);
             }
         }
-        if((!self.node.isSelf && other.node == this.player) || (self.node.isSelf && other.node == this.enemy))
-            this.main.poolebullets.put(self.node);
     },
     
     update: function(dt)
@@ -1797,6 +2733,7 @@ cc.Class({
             if(this.state == "start")
             {
                 this.updateScroll(dt);
+                this.updateRobot(dt);
             }
         }
 

@@ -331,6 +331,16 @@ cc.Class({
 
         this.inviteconfig = [50,70,80,100,600];
 
+        this.robotconfig = [
+            {lv:1,baotou:0.1,hit:0.3,willhit:0.45,other:0.15},
+            {lv:2,baotou:0.1,hit:0.3,willhit:0.45,other:0.15},
+            {lv:3,baotou:0.2,hit:0.4,willhit:0.25,other:0.15},
+            {lv:4,baotou:0.2,hit:0.4,willhit:0.25,other:0.15},
+            {lv:5,baotou:0.2,hit:0.4,willhit:0.25,other:0.15},
+            {lv:6,baotou:0.3,hit:0.4,willhit:0.2,other:0.1},
+            {lv:7,baotou:0.3,hit:0.4,willhit:0.2,other:0.1}
+        ];
+
         this.GAME = {};
 
         this.GAME.loutis = [

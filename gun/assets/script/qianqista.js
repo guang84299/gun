@@ -63,6 +63,7 @@ module.exports = {
     session_key: "",
     power: 0,//授权状态
     url: "https://77qqup.com:442/sta/",
+    url2: "http://192.168.129.101:8080/gun/",
     avatarUrl: "",//头像
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
@@ -170,6 +171,9 @@ module.exports = {
                 this.avatarUrl = "https://77qqup.com:442/img/wxgame/1b6474f6563845c4a5afd5b9a797c017.png";
                 this.fromid = "test001";
             }
+            this.state = 1;
+            if(self.initcallback)
+                self.initcallback();
         }
     },
 
@@ -469,6 +473,155 @@ module.exports = {
         //
         //xhr.send(datas);
         xhr.send(params);
+    },
+
+
+
+    pdatas: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("datas",{openid:this.openid},function(res){
+                console.log("pdatas:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    paddUser: function(callback,score)
+    {
+        if(this.state == 1)
+        {
+            this.httpPost2("addUser",{openid:this.openid,nick:this.userName,avatarUrl:this.avatarUrl,score:score},function(res){
+                console.log("addUser:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    uploadScore: function(score)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("uploadScore",{openid:this.openid,score:score},function(res){
+                console.log("uploadScore:",res);
+            });
+        }
+    },
+
+    updateJScore: function(jscore)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("updateJScore",{openid:this.openid,jscore:jscore},function(res){
+                console.log("updateJScore:",res);
+            });
+        }
+    },
+
+    rankScore: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("rankScore",{rows:50},function(res){
+                console.log("rankScore:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    rankJScore: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("rankJScore",{rows:50},function(res){
+                console.log("rankJScore:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+
+    sendRequest2: function(path, data, handler){
+        var xhr = cc.loader.getXMLHttpRequest();
+        var params = "?";
+        for (var k in data) {
+            if (params != "?") {
+                params += "&";
+            }
+            params += k + "=" + data[k];
+        }
+        var requestURL = this.url2 + path + encodeURI(params);
+        console.log("RequestURL:" + requestURL);
+
+        xhr.open("GET", requestURL, true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+                try {
+                    var ret = JSON.parse(xhr.responseText);
+                    if (handler !== null) {
+                        handler(ret);
+                    }
+                } catch (e) {
+                    console.log("sendRequest Err:" + e,requestURL);
+                } finally {}
+            }
+        };
+        // note: In Internet Explorer, the timeout property may be set only after calling the open()
+        // method and before calling the send() method.
+        xhr.timeout = 5000; // 5 seconds for timeout
+        // var btoa = btoa("test:test");
+        var btoa = require('buffer').Buffer.from('test:test').toString('base64');
+        xhr.setRequestHeader("Authorization", "Basic " + btoa);
+        if (cc.sys.isNative) {
+            xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
+        }
+        xhr.send();
+        return xhr;
+    },
+
+    httpPost2: function (url, params, handler) {
+        var xhr = cc.loader.getXMLHttpRequest();
+        var requestURL = this.url2 + url;
+        console.log("RequestURL:" + requestURL);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+                try {
+                    var ret = JSON.parse(xhr.responseText);
+                    if (handler !== null) {
+                        handler(ret);
+                    }
+                } catch (e) {
+                    console.log("sendRequest Err:" + e);
+                } finally {}
+            }
+        };
+        xhr.open("POST", requestURL, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        if (cc.sys.isNative) {
+            xhr.setRequestHeader("Accept-Encoding", "gzip,deflate");
+        }
+
+        // note: In Internet Explorer, the timeout property may be set only after calling the open()
+        // method and before calling the send() method.
+        xhr.timeout = 5000;// 5 seconds for timeout
+        //
+        var datas = "";
+        var i = 0;
+        for (var k in params) {
+            if (i != 0) {
+                datas += "&";
+            }
+            datas += k + "=" + params[k];
+            i++;
+        }
+        xhr.send(datas);
+        //xhr.send(params);
     }
 
 

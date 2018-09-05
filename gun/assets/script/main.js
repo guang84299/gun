@@ -52,6 +52,9 @@ cc.Class({
                      self.updateLocalData(res.data);
                  }
              });
+             qianqista.pdatas(function(res){
+                 self.updateLocalData2(res);
+             });
          },function(){
              self.startDuizhan();
          });
@@ -380,6 +383,28 @@ cc.Class({
         });
     },
 
+    updateLocalData2: function(res)
+    {
+        if(res.state == 1)
+        {
+            qianqista.paddUser(function(res){
+
+            },storage.getStorageScore());
+        }
+        else
+        {
+            var datas = res.data;
+            if(datas)
+            {
+                if(datas.jscore)
+                    storage.setStorageJScore(datas.jscore);
+                if(datas.maxJscore)
+                    storage.setStorageMaxJScore(datas.maxJscore);
+
+            }
+        }
+    },
+
     updateLocalData: function(data)
     {
         if(data)
@@ -395,6 +420,8 @@ cc.Class({
                 storage.setStorageCard(parseInt(datas.card));
             if(datas.qiandao)
                 storage.setStorageQianDao(parseInt(datas.qiandao));
+            if(datas.winNum)
+                storage.setStorageWinNum(datas.winNum);
             if(datas.player_1)
                 storage.setStoragePlayer(1,parseInt(datas.player_1));
             if(datas.player_2)
@@ -494,6 +521,8 @@ cc.Class({
                 storage.setStorageGunInviteAwardNum(parseInt(datas.gunInviteAwardNum));
             if(datas.guninvitelist)
                 storage.setStorageGunInviteNum(datas.guninvitelist.length);
+            if(datas.winNumAwardNum)
+                storage.setStorageWinNumAwardNum(datas.winNumAwardNum);
 
 
             this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
@@ -525,6 +554,7 @@ cc.Class({
         datas.coin = storage.getStorageCoin();
         datas.score = storage.getStorageScore();
         datas.card = storage.getStorageCard();
+        datas.winNum = storage.getStorageWinNum();
         datas.qiandao = storage.getStorageQianDao();
         datas.player_1 = storage.getStoragePlayer(1);
         datas.player_2 = storage.getStoragePlayer(2);
@@ -573,6 +603,7 @@ cc.Class({
         datas.shareGroupList = storage.getStorageShareGroupList();
         datas.shareGroupTime = storage.getStorageShareGroupTime();
         datas.gunInviteAwardNum = storage.getStorageGunInviteAwardNum();
+        datas.winNumAwardNum = storage.getStorageWinNumAwardNum();
 
         var data = JSON.stringify(datas);
         var self = this;
@@ -581,6 +612,8 @@ cc.Class({
             if(res && res.state == 200)
                 self.updateData();
         });
+
+        qianqista.uploadScore(storage.getStorageScore());
     },
 
 
@@ -1052,7 +1085,7 @@ cc.Class({
         }
 
         var isshow = false;
-        for(var i=1;i<=5;i++) {
+        for(var i=1;i<=6;i++) {
             if (i == 1) {
                 var num = storage.getStorageHitEnemyNum();
                 var awardnum = storage.getStorageHitEnemyAwardNum();
@@ -1120,6 +1153,20 @@ cc.Class({
                     awardnum -= 1;
                 }
                 var data = this.res.chengjiuconfig.jiesuorole[awardnum];
+                if (!isend && num >= data.num) {
+                    isshow = true;
+                    break;
+                }
+            }
+            else if (i == 6) {
+                var num = storage.getStorageWinNum();
+                var awardnum = storage.getStorageWinNumAwardNum();
+                var isend = false;
+                if (awardnum >= this.res.chengjiuconfig.duizhan.length) {
+                    isend = true;
+                    awardnum -= 1;
+                }
+                var data = this.res.chengjiuconfig.duizhan[awardnum];
                 if (!isend && num >= data.num) {
                     isshow = true;
                     break;

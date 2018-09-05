@@ -60,6 +60,33 @@ module.exports = {
         return Number(currscore);
     },
 
+    setStorageJScore: function(jscore)
+    {
+        cc.sys.localStorage.setItem("jscore",jscore);
+        if(jscore>this.getStorageMaxJScore())
+        {
+            this.setStorageMaxJScore(jscore);
+        }
+    },
+    getStorageJScore: function()
+    {
+        var currscore = cc.sys.localStorage.getItem("jscore");
+        currscore = currscore ? currscore : 0;
+        return Number(currscore);
+    },
+
+    setStorageMaxJScore: function(jscore)
+    {
+        cc.sys.localStorage.setItem("maxjscore",jscore);
+    },
+    getStorageMaxJScore: function()
+    {
+        var currscore = cc.sys.localStorage.getItem("maxjscore");
+        currscore = currscore ? currscore : 0;
+        return Number(currscore);
+    },
+
+
     setStorageWinNum: function(winNum)
     {
         cc.sys.localStorage.setItem("winNum",winNum);
@@ -100,6 +127,18 @@ module.exports = {
     getStorageCurrGun: function()
     {
         var currGun = cc.sys.localStorage.getItem("currGun");
+        currGun = currGun ? currGun : 1;
+        return Number(currGun);
+    },
+
+    setStorageCurrPkGun: function(id)
+    {
+        cc.sys.localStorage.setItem("currPkGun",id);
+        var currGun = cc.sys.localStorage.getItem("currPkGun");
+    },
+    getStorageCurrPkGun: function()
+    {
+        var currGun = cc.sys.localStorage.getItem("currPkGun");
         currGun = currGun ? currGun : 1;
         return Number(currGun);
     },
@@ -385,6 +424,17 @@ module.exports = {
     getStorageGunInviteAwardNum: function()
     {
         var num = cc.sys.localStorage.getItem("gun_invite_award_num");
+        num = num ? num : 0;
+        return Number(num);
+    },
+
+    setStorageWinNumAwardNum: function(num)
+    {
+        cc.sys.localStorage.setItem("winNum_award_num",num);
+    },
+    getStorageWinNumAwardNum: function()
+    {
+        var num = cc.sys.localStorage.getItem("winNum_award_num");
         num = num ? num : 0;
         return Number(num);
     },

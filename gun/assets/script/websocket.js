@@ -4,8 +4,8 @@
 module.exports = {
     ws: null,
     //ip: "wss://0a8ce26f.com",
-    //ip: "ws://192.168.129.110:9123",
-    ip: "wss://e26f.cn",
+    ip: "ws://192.168.129.101:9123",
+    //ip: "wss://e26f.cn",
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,
     logincallback: null,
@@ -16,6 +16,7 @@ module.exports = {
     MODE_USER_MATCHROOM : "GModeUser_matchRoom",
     MODE_USER_RECCONN : "GModeUser_recConn",
     MODE_USER_AGAIN : "GModeUser_again",
+    MODE_USER_UPDATEUSER : "GModeUser_updateUser",
 
     MODE_USER_LOGIN_RESULT : "GModeUser_loginResult",
     MODE_USER_HERTBEAT_RESULT : "GModeUser_heartBeatResult",
@@ -385,5 +386,15 @@ module.exports = {
             this.pk.toAgain(data);
         }
         console.log(data);
+    },
+
+    updateUser: function(jscore)
+    {
+        if(this.state == 1)
+        {
+            var body = {};
+            body.jscore = jscore;
+            this.send(this.MODE_USER_UPDATEUSER,body);
+        }
     }
 };

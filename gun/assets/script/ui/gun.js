@@ -42,6 +42,7 @@ cc.Class({
         this.node_gun_page1 = cc.find("page/view/content/page_1",this.node_gun);
         this.node_gun_page2 = cc.find("page/view/content/page_2",this.node_gun);
         this.node_gun_page3 = cc.find("page/view/content/page_3",this.node_gun);
+        this.node_gun_page4 = cc.find("page/view/content/page_4",this.node_gun);
         this.node_roleyaoqing = cc.find("roleyaoqing",this.node_gun);
 
         this.updateUI();
@@ -52,7 +53,11 @@ cc.Class({
         var s = cc.winSize;
         var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
 
-        if(this.main.GAME.sharecard == 1 && index != 2)
+        var currGun = storage.getStorageCurrGun();
+        if(this.main.openduizhan)
+            currGun = storage.getStorageCurrPkGun();
+
+        if(this.main.GAME.sharecard == 1 && index < 2)
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
@@ -63,8 +68,8 @@ cc.Class({
         var player = cc.instantiate(this.res.players[this.main.GAME.currPlayer]);
         this.node_gun_top_player.addChild(player);
 
-        var gunConf = this.res.gunsconfig[this.main.GAME.currGun];
-        var gun = cc.instantiate(this.res.guns[this.main.GAME.currGun]);
+        var gunConf = this.res.gunsconfig[currGun-1];
+        var gun = cc.instantiate(this.res.guns[currGun-1]);
         gun.y = player.height*0.3 + gunConf.y;
         player.addChild(gun);
 
@@ -86,7 +91,8 @@ cc.Class({
         cc.find("roleyaoqing/txt2",this.node_gun).color = this.main.ltcolor;
         cc.find("roleyaoqing/coin",this.node_gun).color = this.main.ltcolor;
 
-        var currGun = storage.getStorageCurrGun();
+
+        var jlv = this.res.judgeRobotLv(storage.getStorageMaxJScore());
         for(var i=1;i<=19;i++)
         {
             if(i == 10)
@@ -121,7 +127,15 @@ cc.Class({
                 if(storage.getStorageGun(i) == 1)
                 {
                     box1.color = cc.color(243,180,69);
-                    item.canset = true;
+                    if(this.main.openduizhan)
+                    {
+                        if(i<=jlv*3)
+                            item.canset = true;
+                        else
+                            box1.color = cc.color(100,100,100);
+                    }
+                    else
+                        item.canset = true;
                 }
                 else
                 {
@@ -134,6 +148,7 @@ cc.Class({
             }
         }
         this.updateGunRiQi();
+        this.updateGunJifen();
 
         storage.playSound(this.res.audio_role);
     },
@@ -154,6 +169,12 @@ cc.Class({
         if(data == "home")
         {
             this.main.openstore = false;
+            if(this.main.openduizhan)
+            {
+                this.main.node_duizhan.showGunUI(false);
+                this.hide();
+                return;
+            }
             this.main.goMain();
             if(this.main.opentiaozhan)
                 this.main.node_tiaozhan.show2();
@@ -187,7 +208,7 @@ cc.Class({
         if(data == "page_gun")
         {
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
-            if(index != 2)
+            if(index < 2)
             {
                 if(this.main.GAME.fangdanyi)
                 {
@@ -378,16 +399,32 @@ cc.Class({
 
     setGun: function(id)
     {
-        var currGun = storage.getStorageCurrGun();
-        if(currGun != id)
+        if(this.main.openduizhan)
         {
-            storage.playSound(this.res.audio_role_huan);
-            storage.setStorageCurrGun(id);
-            this.main.GAME.currGun = storage.getStorageCurrGun()-1;
-            this.main.GAME.currGunTmp = this.main.GAME.currGun;
-            this.updateUI();
-            this.main.uploadData();
+            var currGun = storage.getStorageCurrPkGun();
+            if(currGun != id)
+            {
+                storage.playSound(this.res.audio_role_huan);
+                storage.setStorageCurrPkGun(id);
+                this.updateUI();
+                this.main.node_duizhan.updateCurrPkGun();
+            }
         }
+        else
+        {
+            var currGun = storage.getStorageCurrGun();
+            if(currGun != id)
+            {
+                storage.playSound(this.res.audio_role_huan);
+                storage.setStorageCurrGun(id);
+                this.main.GAME.currGun = storage.getStorageCurrGun()-1;
+                this.main.GAME.currGunTmp = this.main.GAME.currGun;
+                this.updateUI();
+                this.main.uploadData();
+            }
+        }
+
+
     },
 
     updateGunRiQi: function()
@@ -412,6 +449,10 @@ cc.Class({
         }
 
         var currGun = storage.getStorageCurrGun();
+        if(this.main.openduizhan)
+            currGun = storage.getStorageCurrPkGun();
+        var jlv = this.res.judgeRobotLv(storage.getStorageMaxJScore());
+
         var box1 = cc.find("box_1",this.node_gun_page3);
         var box2 = cc.find("box_2",this.node_gun_page3);
         this.node_gun_page3.gunId = 10;
@@ -429,12 +470,65 @@ cc.Class({
             if(storage.getStorageGun(10) == 1)
             {
                 box1.color = cc.color(243,180,69);
+                if(this.main.openduizhan)
+                {
+                    if(10<=jlv*3)
+                        this.node_gun_page3.canset = true;
+                    else
+                        box1.color = cc.color(100,100,100);
+                }
+                else
                 this.node_gun_page3.canset = true;
             }
             else
             {
                 box1.color = cc.color(100,100,100);
                 this.node_gun_page3.canset = false;
+            }
+        }
+    },
+
+    updateGunJifen: function()
+    {
+        var maxJscore = storage.getStorageMaxJScore();
+        if(maxJscore >= 300)
+        {
+            storage.setStorageGun(20,1);
+        }
+        else
+        {
+            storage.setStorageGun(20,0);
+        }
+
+        var currGun = storage.getStorageCurrGun();
+        if(this.main.openduizhan)
+            currGun = storage.getStorageCurrPkGun();
+
+        var box1 = cc.find("box_1",this.node_gun_page4);
+        var box2 = cc.find("box_2",this.node_gun_page4);
+        var jscore = cc.find("jscore",this.node_gun_page4);
+        jscore.getComponent("cc.Label").string = "最高积分："+maxJscore;
+        this.node_gun_page4.gunId = 20;
+
+        if(20 == currGun)
+        {
+            box1.active = false;
+            box2.active = true;
+            box2.color = cc.color(243,180,69);
+        }
+        else
+        {
+            box1.active = true;
+            box2.active = false;
+            if(storage.getStorageGun(20) == 1)
+            {
+                box1.color = cc.color(243,180,69);
+                this.node_gun_page4.canset = true;
+            }
+            else
+            {
+                box1.color = cc.color(100,100,100);
+                this.node_gun_page4.canset = false;
             }
         }
     },

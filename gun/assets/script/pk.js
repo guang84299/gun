@@ -18,6 +18,7 @@ cc.Class({
         this.res = cc.find("Canvas").getComponent("res");
 
         this.qianqista = this.main.qianqista;
+        this.currPkGun = storage.getStorageCurrPkGun()-1;
 
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
@@ -180,6 +181,7 @@ cc.Class({
         this.node_over_home = cc.find("home",this.node_over);
         this.node_over_coin = cc.find("coin",this.node_over);
         this.node_over_coin_num = cc.find("coin/num",this.node_over).getComponent("cc.Label");
+        this.node_over_jifen = cc.find("bg/jifen",this.node_over).getComponent("cc.Label");
 
         this.node_over2 = cc.find("node_over2",this.node);
         this.node_over2_title = cc.find("bg/title",this.node_over2).getComponent("cc.Label");
@@ -201,6 +203,7 @@ cc.Class({
         this.node_over2_home = cc.find("home",this.node_over2);
         this.node_over2_coin = cc.find("coin",this.node_over2);
         this.node_over2_coin_num = cc.find("coin/num",this.node_over2).getComponent("cc.Label");
+        this.node_over2_jifen = cc.find("bg/jifen",this.node_over2).getComponent("cc.Label");
 
         this.getCoin(storage.getStorageCoin());
 
@@ -231,6 +234,25 @@ cc.Class({
         this.taizi_b.active = false;
         this.taizi_c.active = false;
         this.taizi_d.active = false;
+    },
+
+    updateCurrPkGun: function()
+    {
+        this.currPkGun = storage.getStorageCurrPkGun()-1;
+    },
+
+    showGunUI: function(active)
+    {
+        if(active)
+        {
+            this.main.node_game.active = true;
+            this.node.active = false;
+        }
+        else
+        {
+            this.main.node_game.active = false;
+            this.node.active = true;
+        }
     },
 
     getCoin: function(coin)
@@ -282,7 +304,7 @@ cc.Class({
         else if(data == "suiji")
         {
             var coin = storage.getStorageCoin();
-            if(coin < 20)
+            if(coin < 30)
             {
                 //this.res.showToast("金币不足");
                 var coin = cc.instantiate(this.res.node_coin);
@@ -294,7 +316,7 @@ cc.Class({
             }
             if(websocket.state == 1)
             {
-                websocket.match(1,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                websocket.match(1,this.main.GAME.currPlayer,this.currPkGun,0);
             }
             else
             {
@@ -319,7 +341,7 @@ cc.Class({
             }
             else
             {
-                websocket.match(2,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                websocket.match(2,this.main.GAME.currPlayer,this.currPkGun,0);
             }
         }
         else if(data == "sel_fanhui")
@@ -347,7 +369,7 @@ cc.Class({
             else
             {
                 var coin = storage.getStorageCoin();
-                if(coin < 20)
+                if(coin < 30)
                 {
                     //this.res.showToast("金币不足");
                     var coin = cc.instantiate(this.res.node_coin);
@@ -360,7 +382,7 @@ cc.Class({
                 if(websocket.state == 1)
                 {
                     this.isClickSuiji2 = true;
-                    websocket.match(3,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                    websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
                 }
                 else
                 {
@@ -393,7 +415,7 @@ cc.Class({
                 }
                 else
                 {
-                    websocket.match(3,this.main.GAME.currPlayer,this.main.GAME.currGun,0);
+                    websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
                 }
             }
         }
@@ -432,12 +454,33 @@ cc.Class({
         }
         else if(data == "again")
         {
+            if(this.playerData && this.playerData.roomType == 1)
+            {
+                var coin = storage.getStorageCoin();
+                if(coin < 30)
+                {
+                    //this.res.showToast("金币不足");
+                    var coin = cc.instantiate(this.res.node_coin);
+                    coin.position = cc.v2(0,0);
+                    this.node.addChild(coin);
+                    this.node_coin = coin.getComponent("coin");
+                    this.node_coin.show();
+                    return;
+                }
+            }
+
+
             this.again();
         }
         else if(data == "over2_fanhui")
         {
             this.isSuiJiMatch = false;
             this.over2_fanhui();
+        }
+        else if(data == "gun")
+        {
+            this.main.openGun();
+            this.showGunUI(true);
         }
         cc.log(data);
     },
@@ -449,9 +492,25 @@ cc.Class({
             this.node_sel.active = true;
         else
             this.node_sel2.active = true;
+
+        if(this.qianqista.pkroomtype == 3)
+        {
+            var coin = storage.getStorageCoin();
+            if(coin < 30)
+            {
+                //this.res.showToast("金币不足");
+                var coin = cc.instantiate(this.res.node_coin);
+                coin.position = cc.v2(0,0);
+                this.node.addChild(coin);
+                this.node_coin = coin.getComponent("coin");
+                this.node_coin.show();
+                return;
+            }
+        }
+
         if(websocket.state == 1)
         {
-            websocket.match(this.qianqista.pkroomtype,this.main.GAME.currPlayer,this.main.GAME.currGun,this.qianqista.pkfromid);
+            websocket.match(this.qianqista.pkroomtype,this.main.GAME.currPlayer,this.currPkGun,this.qianqista.pkfromid);
         }
         else
         {
@@ -459,7 +518,7 @@ cc.Class({
             websocket.close();
             websocket.init(this,function(){
                 websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl,function(){
-                    websocket.match(self.qianqista.pkroomtype,self.main.GAME.currPlayer,self.main.GAME.currGun,self.qianqista.pkfromid);
+                    websocket.match(self.qianqista.pkroomtype,self.main.GAME.currPlayer,self.currPkGun,self.qianqista.pkfromid);
                 });
             });
         }
@@ -557,7 +616,7 @@ cc.Class({
             }
             this.node_sel2_gun.getComponent("cc.Button").interactable = false;
             this.node_sel2_title.string = "匹配中";
-            this.node_sel2_willstart.string = "(30)";
+            this.node_sel2_willstart.string = "(60)";
             var pipeiTime = 300;
             var num = 301;
 
@@ -568,10 +627,10 @@ cc.Class({
                     pipeiTime -= 1;
                     if(self.node_sel2_willstart_la.active)
                     {
-                        if(pipeiTime>30)
+                        if(pipeiTime>60)
                         {
-                            pipeiTime = 30;
-                            num = 31;
+                            pipeiTime = 60;
+                            num = 61;
                         }
                     }
                     var p = pipeiTime;
@@ -648,27 +707,31 @@ cc.Class({
 
     initRobot: function()
     {
+        var robotlv = 1;
+        if(this.playerData.playerA)
+            robotlv = this.res.judgeRobotLv(this.playerData.playerA.jscore);
+
         if(this.playerData.playerA && this.playerData.playerA.robot == 1)
         {
-            this.playerData.playerA.robotlv = 1;
+            this.playerData.playerA.robotlv = robotlv;
             this.playerData.playerA.nextFireType = 0;
             this.playerData.playerA.firepro = 0;
         }
         if(this.playerData.playerB && this.playerData.playerB.robot == 1)
         {
-            this.playerData.playerB.robotlv = 1;
+            this.playerData.playerB.robotlv = robotlv;
             this.playerData.playerB.nextFireType = 0;
             this.playerData.playerB.firepro = 0;
         }
         if(this.playerData.playerC && this.playerData.playerC.robot == 1)
         {
-            this.playerData.playerC.robotlv = 1;
+            this.playerData.playerC.robotlv = robotlv;
             this.playerData.playerC.nextFireType = 0;
             this.playerData.playerC.firepro = 0;
         }
         if(this.playerData.playerD && this.playerData.playerD.robot == 1)
         {
-            this.playerData.playerD.robotlv = 1;
+            this.playerData.playerD.robotlv = robotlv;
             this.playerData.playerD.nextFireType = 0;
             this.playerData.playerD.firepro = 0;
         }
@@ -733,8 +796,8 @@ cc.Class({
                     })
                 ),3));
 
-                storage.setStorageCoin(storage.getStorageCoin()-20);
-                this.getCoin(-20);
+                storage.setStorageCoin(storage.getStorageCoin()-30);
+                this.getCoin(-30);
             }
         }
         else if(data.roomType == 2)
@@ -880,6 +943,25 @@ cc.Class({
                         }
                     })
                 ),3));
+
+
+                var selfData = this.findSelfPlayerData();
+                var num = 0;
+                if(this.playerData.playerA.matchRoomId > 0 && this.playerData.playerA.matchRoomId == selfData.roomId)
+                    num ++;
+                if(this.playerData.playerB.matchRoomId > 0 && this.playerData.playerB.matchRoomId == selfData.roomId)
+                    num ++;
+                if(this.playerData.playerC.matchRoomId > 0 && this.playerData.playerC.matchRoomId == selfData.roomId)
+                    num ++;
+                if(this.playerData.playerD.matchRoomId > 0 && this.playerData.playerD.matchRoomId == selfData.roomId)
+                    num ++;
+
+                if(num != 3)
+                {
+                    storage.setStorageCoin(storage.getStorageCoin()-30);
+                    this.getCoin(-30);
+                }
+
             }
         }
     },
@@ -1021,6 +1103,11 @@ cc.Class({
                 return;
             this.playerData.playerA.hp = 50;
             this.playerData.playerB.hp = 50;
+
+            if(this.playerData.playerA.maxJscore > 180)
+                this.playerData.playerA.hp = 75;
+            if(this.playerData.playerB.maxJscore > 180)
+                this.playerData.playerB.hp = 75;
             if(this.GAME.isWin)
             {
                 this.node_over_again_str.string = "再来一局(8)";
@@ -1080,35 +1167,40 @@ cc.Class({
 
             this.node_over_fanhui_str.string = "赶紧溜";
 
-            //if((this.lastroomType == 1 && storage.getStorageCoin() < 20) || this.isLiule)
-            //{
-            //    this.selfPlayer.leave = true;
-            //    this.state = "stop";
-            //    websocket.again(2,1,this.selfPlayer.skinId,this.selfPlayer.gunId,"0","0",2);
-            //    this.node.stopAllActions();
-            //}
+            if(this.playerData.roomType == 1)
+            {
+                var coin = storage.getStorageCoin();
+                if(coin>=30)
+                {
+                    storage.setStorageCoin(storage.getStorageCoin()-30);
+                    this.getCoin(-30);
+                }
+                else
+                {
+                    storage.setStorageCoin(0);
+                    this.getCoin(-coin);
+                }
+            }
         }
-        //else if(data.againType == 4)//溜了
-        //{
-        //    if(this.enemyPlayer.leave || !this.selfPlayer.leave)
-        //        this.res.showToast("对方离开");
-        //    this.node.stopAllActions();
-        //    this.state = "stop";
-        //    this.fanhui();
-        //}
+
         else if(data.againType == 4)//立即开始
         {
             this.playerData.playerA.hp = 50;
             this.playerData.playerB.hp = 50;
 
+            if(this.playerData.playerA.maxJscore > 180)
+                this.playerData.playerA.hp = 75;
+            if(this.playerData.playerB.maxJscore > 180)
+                this.playerData.playerB.hp = 75;
+
             this.node.stopAllActions();
             this.state = "stop";
             websocket.startGame();
 
-            if(this.lastroomType == 1)
+            if(this.playerData.roomType == 1)
             {
-                storage.setStorageCoin(storage.getStorageCoin()-20);
-                this.getCoin(-20);
+                storage.setStorageCoin(storage.getStorageCoin()-30);
+                this.getCoin(-30);
             }
         }
     },
@@ -1279,7 +1371,7 @@ cc.Class({
         {
             this.loadPic(this.a_icon,this.playerData.playerA.avatarUrl+"?"+Math.random());
             this.a_name.string = this.playerData.playerA.name;
-            this.a_pro.progress = 50/this.playerData.playerA.hp;
+            this.a_pro.progress = 1;
             this.a_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerA);
         }
@@ -1287,7 +1379,7 @@ cc.Class({
         {
             this.loadPic(this.b_icon,this.playerData.playerB.avatarUrl+"?"+Math.random());
             this.b_name.string = this.playerData.playerB.name;
-            this.b_pro.progress = 50/this.playerData.playerB.hp;
+            this.b_pro.progress = 1;
             this.b_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerB);
         }
@@ -1295,7 +1387,7 @@ cc.Class({
         {
             this.loadPic(this.c_icon,this.playerData.playerC.avatarUrl+"?"+Math.random());
             this.c_name.string = this.playerData.playerC.name;
-            this.c_pro.progress = 50/this.playerData.playerC.hp;
+            this.c_pro.progress = 1;
             this.c_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerC);
         }
@@ -1303,7 +1395,7 @@ cc.Class({
         {
             this.loadPic(this.d_icon,this.playerData.playerD.avatarUrl+"?"+Math.random());
             this.d_name.string = this.playerData.playerD.name;
-            this.d_pro.progress = 50/this.playerData.playerD.hp;
+            this.d_pro.progress = 1;
             this.d_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerD);
         }
@@ -2381,9 +2473,13 @@ cc.Class({
             cc.removeSelf()
         ));
 
+        var maxHp = 50.0;
+        if(playerData.maxJscore > 180)
+            maxHp = 75.0;
+
         if(playerData.pos == 1)
         {
-            this.a_pro.progress = hpnum/50.0;
+            this.a_pro.progress = hpnum/maxHp;
             if(this.a_pro.progress>=0.9)
                 this.a_pro_bar.color = cc.color(0,160,233);
             else if(this.a_pro.progress>=0.4 && this.a_pro.progress<0.9)
@@ -2395,7 +2491,7 @@ cc.Class({
         }
         else if(playerData.pos == 2)
         {
-            this.b_pro.progress = hpnum/50.0;
+            this.b_pro.progress = hpnum/maxHp;
             if(this.b_pro.progress>=0.9)
                 this.b_pro_bar.color = cc.color(0,160,233);
             else if(this.b_pro.progress>=0.4 && this.b_pro.progress<0.9)
@@ -2407,7 +2503,7 @@ cc.Class({
         }
         else if(playerData.pos == 3)
         {
-            this.c_pro.progress = hpnum/50.0;
+            this.c_pro.progress = hpnum/maxHp;
             if(this.c_pro.progress>=0.9)
                 this.c_pro_bar.color = cc.color(0,160,233);
             else if(this.c_pro.progress>=0.4 && this.c_pro.progress<0.9)
@@ -2419,7 +2515,7 @@ cc.Class({
         }
         else if(playerData.pos == 4)
         {
-            this.d_pro.progress = hpnum/50.0;
+            this.d_pro.progress = hpnum/maxHp;
             if(this.d_pro.progress>=0.9)
                 this.d_pro_bar.color = cc.color(0,160,233);
             else if(this.d_pro.progress>=0.4 && this.d_pro.progress<0.9)
@@ -2582,14 +2678,30 @@ cc.Class({
                 this.node_over2_bili.string = "1 : 0";
                 this.node_over2_fanhui_str.string = "改天再战";
                 this.node_over2_again_str.string = "再来一局";
-                storage.setStorageCoin(storage.getStorageCoin()+40);
+
+                if(this.isCanJScore())
+                {
+                    var jscore = this.winJscore();
+                    this.node_over2_jifen.string = "积分+"+jscore;
+                    selfPlayer.jscore += jscore;
+                    if(selfPlayer.jscore > selfPlayer.maxJscore)
+                        selfPlayer.maxJscore = selfPlayer.jscore;
+                    websocket.updateUser(selfPlayer.jscore);
+
+                    storage.setStorageJScore(selfPlayer.jscore);
+                }
+                else
+                {
+                    this.node_over2_jifen.string = "";
+                }
+                storage.setStorageCoin(storage.getStorageCoin()+50);
 
                 this.node.runAction(cc.repeat(cc.sequence(
                     cc.delayTime(0.05),
                     cc.callFunc(function(){
                         self.addCoin();
                     })
-                ),41));
+                ),51));
 
                 var winNum = storage.getStorageWinNum();
                 winNum += 1;
@@ -2623,6 +2735,20 @@ cc.Class({
                 this.node_over2_bili.string = "0 : 1";
                 this.node_over2_fanhui_str.string = "溜了";
                 this.node_over2_again_str.string = "不服再来";
+
+                if(this.isCanJScore())
+                {
+                    var jscore = this.failJscore();
+                    this.node_over2_jifen.string = "积分-"+jscore;
+                    selfPlayer.jscore -= jscore;
+                    websocket.updateUser(selfPlayer.jscore);
+
+                    storage.setStorageJScore(selfPlayer.jscore);
+                }
+                else
+                {
+                    this.node_over2_jifen.string = "";
+                }
             }
         }
         else
@@ -2651,14 +2777,30 @@ cc.Class({
                 this.node_over_bili.string = "1 : 0";
                 this.node_over_fanhui_str.string = "改天再战";
                 this.node_over_again_str.string = "再来一局";
-                storage.setStorageCoin(storage.getStorageCoin()+40);
+                storage.setStorageCoin(storage.getStorageCoin()+50);
+
+                if(this.isCanJScore())
+                {
+                    var jscore = this.winJscore();
+                    this.node_over_jifen.string = "积分+"+jscore;
+                    selfPlayer.jscore += jscore;
+                    if(selfPlayer.jscore > selfPlayer.maxJscore)
+                        selfPlayer.maxJscore = selfPlayer.jscore;
+                    websocket.updateUser(selfPlayer.jscore);
+
+                    storage.setStorageJScore(selfPlayer.jscore);
+                }
+                else
+                {
+                    this.node_over_jifen.string = "";
+                }
 
                 this.node.runAction(cc.repeat(cc.sequence(
                     cc.delayTime(0.05),
                     cc.callFunc(function(){
                         self.addCoin();
                     })
-                ),41));
+                ),51));
 
                 var winNum = storage.getStorageWinNum();
                 winNum += 1;
@@ -2675,9 +2817,24 @@ cc.Class({
                 this.node_over_bili.string = "0 : 1";
                 this.node_over_fanhui_str.string = "溜了";
                 this.node_over_again_str.string = "不服再来";
+
+                if(this.isCanJScore())
+                {
+                    var jscore = this.failJscore();
+                    this.node_over_jifen.string = "积分-"+jscore;
+                    selfPlayer.jscore -= jscore;
+                    websocket.updateUser(selfPlayer.jscore);
+
+                    storage.setStorageJScore(selfPlayer.jscore);
+                }
+                else
+                {
+                    this.node_over_jifen.string = "";
+                }
             }
 
-            if(enemyPlayer.robot == 1)
+            var coin = storage.getStorageCoin();
+            if(enemyPlayer.robot == 1 && coin >= 30)
             {
                 if(Math.random()<=0.4)
                 {
@@ -2692,6 +2849,97 @@ cc.Class({
 
         }
 
+    },
+
+    isCanJScore: function()
+    {
+        var r = false;
+        if(this.playerData.roomType == 3)
+        {
+            var selfData = this.findSelfPlayerData();
+            var num = 0;
+            if(this.playerData.playerA.matchRoomId > 0 && this.playerData.playerA.matchRoomId == selfData.roomId)
+                num ++;
+            if(this.playerData.playerB.matchRoomId > 0 && this.playerData.playerB.matchRoomId == selfData.roomId)
+                num ++;
+            if(this.playerData.playerC.matchRoomId > 0 && this.playerData.playerC.matchRoomId == selfData.roomId)
+                num ++;
+            if(this.playerData.playerD.matchRoomId > 0 && this.playerData.playerD.matchRoomId == selfData.roomId)
+                num ++;
+
+            if(num == 0 || num == 1 || num == 2)
+                r = true;
+        }
+        else
+        {
+            var enemyData = this.findEnemyPlayerData();
+            if(enemyData.matchRoomId == 0)
+                r = true;
+        }
+        return r;
+    },
+
+    winJscore: function()
+    {
+        var sc = 0;
+        var enemyscore = 0;
+        var selfData = this.findSelfPlayerData();
+        if(this.playerData.roomType == 3)
+        {
+            if(selfData.pos == 1 || selfData.pos == 3)
+            {
+                enemyscore = (this.playerData.playerB.jscore + this.playerData.playerD.jscore)/2;
+            }
+            else
+            {
+                enemyscore = (this.playerData.playerA.jscore + this.playerData.playerC.jscore)/2;
+            }
+        }
+        else
+        {
+            enemyscore = this.findEnemyPlayerData().jscore;
+        }
+
+        if(selfData.jscore <= 70)
+            sc = 15;
+        else if(selfData.jscore > 70 && selfData.jscore <=150)
+        {
+            sc = 12 + (enemyscore - selfData.jscore)*0.2;
+            sc = sc < 10 ? 10 : sc;
+        }
+        else if(selfData.jscore > 150 && selfData.jscore <=240)
+        {
+            sc = 10 + (enemyscore - selfData.jscore)*0.25;
+            sc = sc < 8 ? 8 : sc;
+        }
+        else if(selfData.jscore > 240)
+        {
+            sc = 8 + (enemyscore - selfData.jscore)*0.3;
+            sc = sc < 6 ? 6 : sc;
+        }
+
+        return Math.floor(sc);
+    },
+
+    failJscore: function()
+    {
+        var sc = 0;
+        var enemyscore = this.winJscore();
+        var selfData = this.findSelfPlayerData();
+        if(selfData.jscore > 70 && selfData.jscore <=150)
+        {
+            sc = enemyscore*0.7;
+        }
+        else if(selfData.jscore > 150 && selfData.jscore <=240)
+        {
+            sc = enemyscore*0.8;
+        }
+        else if(selfData.jscore > 240)
+        {
+            sc = enemyscore*0.9;
+        }
+
+        return Math.floor(sc);
     },
 
     roomCountDown: function(data)

@@ -270,7 +270,17 @@ cc.Class({
             {speed:1,coin:1,fire:0,aimLen:1.1,aimSpeed:1.0},
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.1},
             {speed:1,coin:1,fire:0,aimLen:1,aimSpeed:1.2},
-            {speed:1.5,coin:1,fire:0,aimLen:1.2,aimSpeed:1.1}
+            {speed:1.5,coin:1,fire:0,aimLen:1.2,aimSpeed:1.1},
+
+            {speed:1,coin:1,fire:0,aimLen:1.1,aimSpeed:1.05},
+            {speed:1,coin:1.1,fire:0,aimLen:1.1,aimSpeed:1.0},
+            {speed:1,coin:1,fire:0,aimLen:1.1,aimSpeed:1.1},
+            {speed:1,coin:1,fire:1,aimLen:1.1,aimSpeed:1.0},
+            {speed:1,coin:1.1,fire:0,aimLen:1,aimSpeed:1.1},
+            {speed:1,coin:1,fire:0,aimLen:1.15,aimSpeed:1.1},
+            {speed:1,coin:1,fire:1,aimLen:1.15,aimSpeed:1.0},
+            {speed:1,coin:1.2,fire:1,aimLen:1,aimSpeed:1.0},
+            {speed:1,coin:1,fire:1,aimLen:1,aimSpeed:1.2}
         ];
 
         this.enemysconfig = [
@@ -311,7 +321,9 @@ cc.Class({
             {aimLen:0.7,type:2,fire:1,num:5,angle:5,y:15,speed:0.06,score:1,coin:1},
             {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:3,coin:2},
             {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
-            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2}
+            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2},
+
+            {aimLen:1.2,type:2,fire:3,num:4,angle:3,y:15,speed:0.08,score:2,coin:2}
         ];
 
         this.bgcolor = [cc.color(36,106,206),cc.color(110,24,128),cc.color(25,112,133),cc.color(136,110,94),
@@ -326,7 +338,8 @@ cc.Class({
             hithead:[{num:50,coin:10},{num:100,coin:20},{num:200,coin:30},{num:500,coin:50},{num:1000,coin:100},{num:5000,coin:200}],
             hitboss:[{num:20,coin:10},{num:50,coin:20},{num:100,coin:30},{num:200,coin:50},{num:500,coin:100},{num:1000,coin:200}],
             jiesuogun:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100},{num:10,coin:200},{num:12,coin:300},{num:14,coin:300},{num:16,coin:300}],
-            jiesuorole:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}]
+            jiesuorole:[{num:2,coin:10},{num:4,coin:30},{num:8,coin:100}],
+            duizhan:[{num:1,coin:10},{num:3,coin:30},{num:5,coin:50},{num:10,coin:80},{num:20,coin:100},{num:30,coin:120}]
         };
 
         this.inviteconfig = [50,70,80,100,600];
@@ -895,6 +908,24 @@ cc.Class({
             cc.removeSelf()
         );
         toast.runAction(seq);
+    },
+
+    judgeRobotLv: function(jscore)
+    {
+        if(jscore<30)
+            return 1;
+        else if(jscore<70)
+            return 2;
+        else if(jscore<120)
+            return 3;
+        else if(jscore<180)
+            return 4;
+        else if(jscore<240)
+            return 5;
+        else if(jscore<300)
+            return 6;
+        else
+            return 7;
     }
 
 });

@@ -388,12 +388,14 @@ module.exports = {
         console.log(data);
     },
 
-    updateUser: function(jscore)
+    updateUser: function(jscore,star)
     {
         if(this.state == 1)
         {
+            star = star ? star : 0;
             var body = {};
             body.jscore = jscore;
+            body.star = star;
             this.send(this.MODE_USER_UPDATEUSER,body);
         }
     }

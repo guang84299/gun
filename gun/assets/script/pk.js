@@ -58,6 +58,7 @@ cc.Class({
         this.lastroomType = 1;
         this.isHide = false;
         this.isShare = false;
+        this.isVedio = false;
         this.isClickSuiji2 = false;
         this.isSuiJiMatch = false;
         this.isFromShare = false;
@@ -212,6 +213,10 @@ cc.Class({
             if(self.isShare)
             {
                 self.isShare = false;
+            }
+            else if(self.isVedio)
+            {
+                self.isVedio = false;
             }
             else
             {
@@ -481,6 +486,15 @@ cc.Class({
         {
             this.main.openGun();
             this.showGunUI(true);
+        }
+        else if(data == "jifenx2")
+        {
+            this.isVedio = true;
+            this.main.wxVideoShow(6);
+            if(this.node_over.active)
+                this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
+            else
+                this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
         }
         cc.log(data);
     },
@@ -2626,6 +2640,8 @@ cc.Class({
 
         var selfPlayer = this.findSelfPlayerData();
 
+        this.lastjscore = 0;
+
         if(this.playerData.roomType == 3)
         {
             this.node_over2.active = true;
@@ -2633,6 +2649,7 @@ cc.Class({
             this.node_over2_again.getComponent("cc.Button").interactable = true;
             this.node_over2_home.getComponent("cc.Button").interactable = true;
             this.node_over2_home.color = cc.color(255,255,255);
+            this.node_over2_jifenx2.getComponent("cc.Button").interactable = true;
 
             this.loadPic(this.node_over2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
@@ -2686,9 +2703,11 @@ cc.Class({
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
-                    websocket.updateUser(selfPlayer.jscore);
+                    websocket.updateUser(selfPlayer.jscore,this.winStarNum());
 
                     storage.setStorageJScore(selfPlayer.jscore);
+
+                    this.lastjscore = jscore;
                 }
                 else
                 {
@@ -2744,6 +2763,8 @@ cc.Class({
                     websocket.updateUser(selfPlayer.jscore);
 
                     storage.setStorageJScore(selfPlayer.jscore);
+
+                    this.lastjscore = jscore;
                 }
                 else
                 {
@@ -2786,9 +2807,12 @@ cc.Class({
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
-                    websocket.updateUser(selfPlayer.jscore);
+
+                    websocket.updateUser(selfPlayer.jscore,this.winStarNum());
 
                     storage.setStorageJScore(selfPlayer.jscore);
+
+                    this.lastjscore = jscore;
                 }
                 else
                 {
@@ -2826,6 +2850,8 @@ cc.Class({
                     websocket.updateUser(selfPlayer.jscore);
 
                     storage.setStorageJScore(selfPlayer.jscore);
+
+                    this.lastjscore = jscore;
                 }
                 else
                 {
@@ -2849,6 +2875,27 @@ cc.Class({
 
         }
 
+    },
+
+    jifenx2: function()
+    {
+        var selfData = this.findSelfPlayerData();
+        selfData.jscore += this.lastjscore
+        websocket.updateUser(selfData.jscore);
+        this.res.showToast("积分+"+this.lastjscore);
+    },
+
+    winStarNum: function()
+    {
+        var num = 0;
+        var selfData = this.findSelfPlayerData();
+        if(selfData.jscore <= 120)
+            num = 1;
+        else if(selfData.jscore > 120 && selfData.jscore <= 240)
+            num = 2;
+        else if(selfData.jscore > 240)
+            num = 3;
+        return num;
     },
 
     isCanJScore: function()

@@ -4190,6 +4190,13 @@ cc.Class({
                     {
                         self.node_tiaozhan_fail.updateJumpNum();
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 6)
+                    {
+                        if(self.openduizhan)
+                        {
+                            self.node_duizhan.jifenx2();
+                        }
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
@@ -4206,6 +4213,10 @@ cc.Class({
                         self.res.showToast("获取失败");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.res.showToast("获取失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 6)
                     {
                         self.res.showToast("获取失败");
                     }
@@ -4282,6 +4293,13 @@ cc.Class({
             else if(type == 5)
             {
                 this.node_tiaozhan_fail.updateJumpNum();
+            }
+            else if(type == 6)
+            {
+                if(this.openduizhan)
+                {
+                    this.node_duizhan.jifenx2();
+                }
             }
             storage.resumeMusic();
         }

@@ -545,6 +545,18 @@ module.exports = {
         }
     },
 
+    rankStar: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("rankStar",{rows:50},function(res){
+                console.log("rankStar:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
 
     sendRequest2: function(path, data, handler){
         var xhr = cc.loader.getXMLHttpRequest();

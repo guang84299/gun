@@ -84,7 +84,7 @@ cc.Class({
         if(index == 0)
             jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
         else
-            jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*50 + 750);
+            jscoin.getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*100 + 700);
 
         cc.find("roleyaoqing/coinbg",this.node_gun).color = this.main.ltcolor;
         cc.find("roleyaoqing/txt",this.node_gun).color = this.main.ltcolor;
@@ -221,7 +221,7 @@ cc.Class({
                 }
                 else if(index == 1)
                 {
-                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*50 + 750);
+                    cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum2()*100 + 700);
                 }
             }
             else
@@ -317,7 +317,7 @@ cc.Class({
     gunjiesuo2: function()
     {
         var self = this;
-        var needcoin = storage.getStorageGunJieSuoNum2()*50 + 750;
+        var needcoin = storage.getStorageGunJieSuoNum2()*100 + 700;
         if(storage.getStorageCoin()< needcoin)
         {
             this.main.openCoinNode();

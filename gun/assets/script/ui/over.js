@@ -65,8 +65,12 @@ cc.Class({
 
         if(this.main.GAME.useZhanShi)
         {
-            this.main.GAME.useZhanShi = false;
-            this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+            if(storage.getStorageHasZhanShi() == 0)
+            {
+                this.main.GAME.useZhanShi = false;
+                this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+                storage.setStorageHasZhanShi(-1);
+            }
         }
         this.main.uploadData();
         this.main.updateDian();
@@ -111,6 +115,11 @@ cc.Class({
     {
         if(data == "home")
         {
+            if(this.main.GAME.useZhanShi)
+            {
+                this.main.GAME.useZhanShi = false;
+                this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+            }
             this.main.goMain();
         }
         else if(data == "over_rank")
@@ -126,6 +135,13 @@ cc.Class({
         else if(data == "again")
         {
             this.main.wxCloseOver();
+            if(storage.getStorageHasZhanShi() == -1)
+            {
+                storage.setStorageHasZhanShi(0);
+                this.main.goMain();
+                this.main.openTryzhanshi();
+            }
+            else
             this.main.again();
         }
         else if(data == "junhuo")

@@ -63,7 +63,7 @@ module.exports = {
     session_key: "",
     power: 0,//授权状态
     url: "https://77qqup.com:442/sta/",
-    url2: "http://192.168.129.101:8080/gun/",
+    url2: "http://192.168.129.110:8080/gun/",
     avatarUrl: "",//头像
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,

@@ -4,7 +4,7 @@
 module.exports = {
     ws: null,
     //ip: "wss://0a8ce26f.com",
-    ip: "ws://192.168.129.101:9123",
+    ip: "ws://192.168.129.110:9123",
     //ip: "wss://e26f.cn",
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,

@@ -47,6 +47,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_tryzhanshi: {
+            default: null,
+            type: cc.Prefab
+        },
         node_xuming: {
             default: null,
             type: cc.Prefab

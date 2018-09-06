@@ -282,6 +282,16 @@ module.exports = {
         num = num ? num : 0;
         return Number(num);
     },
+    setStorageRoleJieSuoNum2: function(num)
+    {
+        cc.sys.localStorage.setItem("role_jiesuo_num2",num);
+    },
+    getStorageRoleJieSuoNum2: function()
+    {
+        var num = cc.sys.localStorage.getItem("role_jiesuo_num2");
+        num = num ? num : 0;
+        return Number(num);
+    },
     setStorageRoleJieSuoAwardNum: function(num)
     {
         cc.sys.localStorage.setItem("role_jiesuo_award_num",num);

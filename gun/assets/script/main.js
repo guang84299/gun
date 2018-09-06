@@ -223,6 +223,15 @@ cc.Class({
         //        cc.scaleTo(0.5,1).easing(cc.easeSineOut())
         //    )));
 
+        var videoTime = storage.getStorageVideoTime();
+        if(videoTime>0)
+        {
+            this.node_main_lingqu.getComponent("cc.Button").interactable = false;
+            this.node_main_lingqu_time.active = true;
+        }
+
+
+
         this.node_main_zhanshibg_guang = cc.find("zhanshibg/guang",this.node_main);
         this.node_main_fangdanyi_guang = cc.find("fangdanyi/guang",this.node_main);
         this.node_main_linggunbg_guang = cc.find("linggunbg/guang",this.node_main);
@@ -493,6 +502,8 @@ cc.Class({
                 storage.setStorageGunJieSuoAwardNum(parseInt(datas.gunJiesuoAwardNum));
             if(datas.roleJiesuoNum)
                 storage.setStorageRoleJieSuoNum(parseInt(datas.roleJiesuoNum));
+            if(datas.roleJiesuoNum2)
+                storage.setStorageRoleJieSuoNum2(parseInt(datas.roleJiesuoNum2));
             if(datas.roleJiesuoAwardNum)
                 storage.setStorageRoleJieSuoAwardNum(parseInt(datas.roleJiesuoAwardNum));
             if(datas.hitEnemyNum)
@@ -591,6 +602,7 @@ cc.Class({
         datas.gunJiesuoNum2 = storage.getStorageGunJieSuoNum2();
         datas.gunJiesuoAwardNum = storage.getStorageGunJieSuoAwardNum();
         datas.roleJiesuoNum = storage.getStorageRoleJieSuoNum();
+        datas.roleJiesuoNum2 = storage.getStorageRoleJieSuoNum2();
         datas.roleJiesuoAwardNum = storage.getStorageRoleJieSuoAwardNum();
         datas.hitEnemyNum = storage.getStorageHitEnemyNum();
         datas.hitEnemyAwardNum = storage.getStorageHitEnemyAwardNum();
@@ -745,6 +757,12 @@ cc.Class({
         this.initPlayer();
         this.updateLouTiOpa(0);
         this.startGmae();
+
+        if(this.GAME.useZhanShi)
+        {
+            storage.setStorageHasZhanShi(storage.getStorageHasZhanShi()-1);
+        }
+
     },
 
     click: function(event,data,page)
@@ -752,8 +770,16 @@ cc.Class({
         if(data == "start")
         {
             this.wxQuanState(false);
-            this.startGmae();
-            this.openTishi();
+            if(storage.getStorageHasZhanShi() == -1)
+            {
+                storage.setStorageHasZhanShi(0);
+                this.openTryzhanshi();
+            }
+            else
+            {
+                this.startGmae();
+                this.openTishi();
+            }
         }
         else if(data == "juese")
         {
@@ -857,6 +883,15 @@ cc.Class({
             this.wxGongZhongHao();
         }
         cc.log(data);
+    },
+
+    openTryzhanshi: function()
+    {
+        this.wxQuanState(false);
+        var tryzhanshi = cc.instantiate(this.res.node_tryzhanshi);
+        this.node.addChild(tryzhanshi);
+        this.node_tryzhanshi = tryzhanshi.getComponent("tryzhanshi");
+        this.node_tryzhanshi.show();
     },
 
     openTiaoZhandesc: function(lv)
@@ -1146,6 +1181,7 @@ cc.Class({
             }
             else if (i == 5) {
                 var num = storage.getStorageRoleJieSuoNum();
+                num = parseInt(num) + parseInt(storage.getStorageRoleJieSuoNum2());
                 var awardnum = storage.getStorageRoleJieSuoAwardNum();
                 var isend = false;
                 if (awardnum >= this.res.chengjiuconfig.jiesuorole.length) {
@@ -1213,6 +1249,7 @@ cc.Class({
         if(awardnum2<this.res.chengjiuconfig.jiesuorole.length)
         {
             var num = storage.getStorageRoleJieSuoNum();
+            num =  parseInt(num) + parseInt(storage.getStorageRoleJieSuoNum2());
             var data = this.res.chengjiuconfig.jiesuorole[awardnum2];
             if(num >= data.num)
             {
@@ -4105,8 +4142,12 @@ cc.Class({
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        storage.setStorageHasZhanShi(1);
-                        self.node_zhanshi.updateUI();
+                        storage.setStorageHasZhanShi(5);
+                        if(cc.isValid(self.node_zhanshi))
+                            self.node_zhanshi.updateUI();
+                        else if(cc.isValid(self.node_tryzhanshi))
+                            self.node_tryzhanshi.useZhanshiStart();
+
                     }
                 }
                 else {
@@ -4132,8 +4173,11 @@ cc.Class({
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        storage.setStorageHasZhanShi(1);
-                        self.node_zhanshi.updateUI();
+                        storage.setStorageHasZhanShi(5);
+                        if(cc.isValid(self.node_zhanshi))
+                            self.node_zhanshi.updateUI();
+                        else if(cc.isValid(self.node_tryzhanshi))
+                            self.node_tryzhanshi.useZhanshiStart();
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 4)
                     {
@@ -4222,8 +4266,11 @@ cc.Class({
             }
             else if(type == 3)
             {
-                storage.setStorageHasZhanShi(1);
-                this.node_zhanshi.updateUI();
+                storage.setStorageHasZhanShi(5);
+                if(cc.isValid(this.node_zhanshi))
+                    this.node_zhanshi.updateUI();
+                else if(cc.isValid(this.node_tryzhanshi))
+                    this.node_tryzhanshi.useZhanshiStart();
             }
             else if(type == 4)
             {

@@ -34,41 +34,13 @@ cc.Class({
     initUI: function()
     {
         this.node_zhanshi = this.node;
-        this.node_zhanshi_guang = cc.find("bg/guang",this.node_zhanshi);
-        this.node_zhanshi_zhanshivedio = cc.find("bg/zhanshivedio",this.node_zhanshi);
-        this.node_zhanshi_vediostart = cc.find("bg/vediostart",this.node_zhanshi);
-        this.node_zhanshi_vediostart_num = cc.find("num",this.node_zhanshi_vediostart);
-        this.node_zhanshi_buy = cc.find("bg/buy",this.node_zhanshi);
+
         this.updateUI();
     },
 
     updateUI: function()
     {
-        this.node_zhanshi_guang.stopAllActions();
-        this.node_zhanshi_guang.runAction(cc.repeatForever(
-            cc.rotateBy(1,180)
-        ));
 
-        if(storage.getStoragePlayer(10) == 1)
-        {
-            this.node_zhanshi_zhanshivedio.active = false;
-            this.node_zhanshi_vediostart.active = false;
-            this.node_zhanshi_buy.active = true;
-        }
-        else
-        {
-            if(storage.getStorageHasZhanShi() > 0)
-            {
-                this.node_zhanshi_zhanshivedio.active = false;
-                this.node_zhanshi_vediostart.active = true;
-                this.node_zhanshi_vediostart_num.getComponent("cc.Label").string = "剩余使用次数:"+storage.getStorageHasZhanShi();
-            }
-            else
-            {
-                this.node_zhanshi_zhanshivedio.active = true;
-                this.node_zhanshi_vediostart.active = false;
-            }
-        }
 
     },
 
@@ -85,17 +57,16 @@ cc.Class({
 
     click: function(event,data)
     {
-        if(data == "close_zhanshi")
+        if(data == "close")
         {
-            if(!this.main.openfuhuo)
-                this.main.wxQuanState(true);
+            this.main.wxQuanState(true);
             this.hide();
         }
-        else if(data == "vediostart")
+        else if(data == "coin_tryzhanshi")
         {
-            this.useZhanshiStart();
+            this.main.openJuese();
         }
-        else if(data == "zhanshivedio")
+        else if(data == "vedio_tryzhanshi")
         {
             this.main.wxVideoShow(3);
         }

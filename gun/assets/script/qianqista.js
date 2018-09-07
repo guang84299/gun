@@ -63,7 +63,7 @@ module.exports = {
     session_key: "",
     power: 0,//授权状态
     url: "https://77qqup.com:442/sta/",
-    url2: "http://192.168.129.110:8080/gun/",
+    url2: "https://www.e26f.cn/gun/",
     avatarUrl: "",//头像
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
@@ -525,7 +525,7 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            this.sendRequest2("rankScore",{rows:50},function(res){
+            this.sendRequest2("rankScore",{openid:this.openid,rows:50},function(res){
                 console.log("rankScore:",res);
                 if(callback)
                     callback(res);
@@ -537,7 +537,7 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            this.sendRequest2("rankJScore",{rows:50},function(res){
+            this.sendRequest2("rankJScore",{openid:this.openid,rows:50},function(res){
                 console.log("rankJScore:",res);
                 if(callback)
                     callback(res);
@@ -549,8 +549,32 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            this.sendRequest2("rankStar",{rows:50},function(res){
+            this.sendRequest2("rankStar",{openid:this.openid,rows:50},function(res){
                 console.log("rankStar:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    rankStarLast: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("rankStarLast",{openid:this.openid},function(res){
+                console.log("rankStarLast:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    subTime: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("subTime",{},function(res){
+                console.log("subTime:",res);
                 if(callback)
                     callback(res);
             });

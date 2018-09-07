@@ -2703,11 +2703,14 @@ cc.Class({
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
-                    websocket.updateUser(selfPlayer.jscore,this.winStarNum());
+                    websocket.updateUser(selfPlayer.jscore,this.winStarNum(),selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+
+                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                        wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
                 {
@@ -2726,8 +2729,7 @@ cc.Class({
                 winNum += 1;
                 storage.setStorageWinNum(winNum);
 
-                if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                    wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+
             }
             else
             {
@@ -2760,7 +2762,7 @@ cc.Class({
                     var jscore = this.failJscore();
                     this.node_over2_jifen.string = "积分-"+jscore;
                     selfPlayer.jscore -= jscore;
-                    websocket.updateUser(selfPlayer.jscore);
+                    websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
@@ -2808,11 +2810,14 @@ cc.Class({
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
 
-                    websocket.updateUser(selfPlayer.jscore,this.winStarNum());
+                    websocket.updateUser(selfPlayer.jscore,this.winStarNum(),selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+
+                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                        wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
                 {
@@ -2830,8 +2835,7 @@ cc.Class({
                 winNum += 1;
                 storage.setStorageWinNum(winNum);
 
-                if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                    wx.postMessage({ message: "updateWinNum",winNum:winNum,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+
             }
             else
             {
@@ -2847,7 +2851,7 @@ cc.Class({
                     var jscore = this.failJscore();
                     this.node_over_jifen.string = "积分-"+jscore;
                     selfPlayer.jscore -= jscore;
-                    websocket.updateUser(selfPlayer.jscore);
+                    websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
@@ -2875,14 +2879,24 @@ cc.Class({
 
         }
 
+
+        this.qianqista.rankJScore(function(res){
+            self.main.worldrank.pk = res.data;
+        });
+
     },
 
     jifenx2: function()
     {
         var selfData = this.findSelfPlayerData();
-        selfData.jscore += this.lastjscore
-        websocket.updateUser(selfData.jscore);
+        selfData.jscore += this.lastjscore;
+        websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
         this.res.showToast("积分+"+this.lastjscore);
+        if(this.lastjscore > 0)
+        {
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
+        }
     },
 
     winStarNum: function()

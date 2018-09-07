@@ -95,6 +95,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_star: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

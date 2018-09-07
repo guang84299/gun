@@ -4,8 +4,8 @@
 module.exports = {
     ws: null,
     //ip: "wss://0a8ce26f.com",
-    ip: "ws://192.168.129.110:9123",
-    //ip: "wss://e26f.cn",
+    //ip: "ws://192.168.129.110:9123",
+    ip: "wss://e26f.cn",
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,
     logincallback: null,
@@ -388,7 +388,7 @@ module.exports = {
         console.log(data);
     },
 
-    updateUser: function(jscore,star)
+    updateUser: function(jscore,star,gunId,playerId)
     {
         if(this.state == 1)
         {
@@ -396,6 +396,8 @@ module.exports = {
             var body = {};
             body.jscore = jscore;
             body.star = star;
+            body.gunId = gunId;
+            body.playerId = playerId;
             this.send(this.MODE_USER_UPDATEUSER,body);
         }
     }

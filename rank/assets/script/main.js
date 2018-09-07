@@ -15,120 +15,12 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        player_1: {
-            default: null,
+        players: {
+            default: [],
             type: cc.Prefab
         },
-        player_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        player_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_1: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_2: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_3: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_4: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_5: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_6: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_7: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_8: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_9: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_10: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_11: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_12: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_13: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_14: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_15: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_16: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_17: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_18: {
-            default: null,
-            type: cc.Prefab
-        },
-        gun_19: {
-            default: null,
+        guns: {
+            default: [],
             type: cc.Prefab
         },
         box_1: {
@@ -155,32 +47,31 @@ cc.Class({
     {
         this.dsize = cc.view.getDesignResolutionSize();
         this.GAME = {};
-        this.GAME.players = [this.player_1,this.player_2,this.player_3,this.player_4,this.player_5,
-            this.player_6,this.player_7,this.player_8,this.player_9,this.player_10];
-        this.GAME.guns = [this.gun_1,this.gun_2,this.gun_3,this.gun_4,this.gun_5,this.gun_6,this.gun_7,this.gun_8,
-            this.gun_9,this.gun_10,this.gun_11,this.gun_12,this.gun_13,this.gun_14,this.gun_15,this.gun_16,
-            this.gun_17,this.gun_18,this.gun_19];
+        this.GAME.players = this.players;
+        this.GAME.guns = this.guns;
         this.GAME.gunsconfig = [
-            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
-            {aimLen:1.2,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
+            {aimLen:1.5,type:1,fire:2,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
+            {aimLen:1.2,type:1,fire:3,num:1,angle:0,y:15,speed:0,score:2,coin:1.5},
             {aimLen:0.6,type:2,fire:1,num:3,angle:8,y:15,speed:0.08,score:1,coin:1},
             {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
             {aimLen:0.8,type:2,fire:2,num:3,angle:6,y:15,speed:0.12,score:1,coin:1},
-            {aimLen:1.6,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
+            {aimLen:1.6,type:1,fire:3,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
             {aimLen:0.5,type:3,fire:2,num:3,angle:8,y:15,speed:0.2,score:1,coin:1},
             {aimLen:0.9,type:2,fire:3,num:3,angle:7,y:15,speed:0.18,score:1,coin:1},
-            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:1.5,coin:1.5},
-            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:1.8,coin:1.8},
+            {aimLen:2,type:1,fire:4,num:1,angle:0,y:15,speed:0.2,score:2,coin:1.5},
+            {aimLen:3,type:1,fire:5,num:1,angle:0,y:2,speed:0.2,score:2,coin:1.8},
 
             {aimLen:1,type:3,fire:2,num:4,angle:8,y:15,speed:0,score:1.2,coin:1.2},
             {aimLen:0.8,type:2,fire:2,num:4,angle:7,y:15,speed:0.06,score:1,coin:1},
             {aimLen:1.2,type:3,fire:3,num:2,angle:7,y:15,speed:0,score:1.2,coin:1.2},
             {aimLen:1,type:2,fire:2,num:4,angle:7,y:15,speed:0.15,score:1,coin:1},
-            {aimLen:0.5,type:3,fire:2,num:5,angle:10,y:15,speed:0,score:1,coin:1},
+            {aimLen:0.5,type:3,fire:2,num:5,angle:15,y:15,speed:0,score:1,coin:1},
             {aimLen:0.7,type:2,fire:1,num:5,angle:5,y:15,speed:0.06,score:1,coin:1},
-            {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:1.5,coin:1.5},
+            {aimLen:1.2,type:1,fire:5,num:1,angle:0,y:15,speed:0,score:3,coin:2},
             {aimLen:0.9,type:2,fire:3,num:3,angle:3,y:15,speed:0.08,score:1,coin:1},
-            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:1.2,coin:2}
+            {aimLen:1.5,type:1,fire:7,num:1,angle:0,y:15,speed:0,score:3,coin:2},
+
+            {aimLen:1.2,type:2,fire:3,num:4,angle:3,y:15,speed:0.08,score:2,coin:2}
         ];
 
         this.initUI();
@@ -209,6 +100,8 @@ cc.Class({
         this.friendRank = null;
         this.friendWinNumRank = null;
         this.chaoyueData = [];
+        this.worldrank = {};
+        this.ranktype = 1;
         var self = this;
 
 
@@ -226,6 +119,7 @@ cc.Class({
                 self.node_fuhuo.active = false;
             }
             else if(data.message == "friendRank"){ //好友排行榜
+                self.worldrank = data.worldrank;
                 self.showPaiming();
             }
             else if(data.message == "overRank"){ //3人排行榜
@@ -292,6 +186,8 @@ cc.Class({
 
         self.node_paiming = cc.find("Canvas/node_rank");
         self.node_paiming_content = cc.find("bg/scroll/view/content",self.node_paiming);
+        self.node_paiming_title = cc.find("bg/title",self.node_paiming).getComponent("cc.Label");
+        self.node_paiming_ranktype_txt = cc.find("bg/ranktype/txt",self.node_paiming).getComponent("cc.Label");
         self.node_paiming_item_me = cc.find("bg/item_me",self.node_paiming);
         self.node_paiming_item_me2 = cc.find("bg/item_me2",self.node_paiming);
 
@@ -333,6 +229,15 @@ cc.Class({
         else if(data == "duizhan")
         {
             this.showWinNumPaiming();
+        }
+        else if(data == "ranktype")
+        {
+            if(this.ranktype == 1)
+                this.ranktype = 2;
+            else
+                this.ranktype = 1;
+
+            this.showPaiming();
         }
     },
 
@@ -545,78 +450,146 @@ cc.Class({
         self.node_paiming_item_me2.active = true;
 
         this.node_paiming_content.removeAllChildren();
-        var selfrank = null;
-        if(this.friendWinNumRank && this.userInfo)
+        if(this.ranktype == 1)
         {
+            self.node_paiming_title.string = "世界排行榜";
+            self.node_paiming_ranktype_txt.string = "好友";
 
-            for(var i=0;i<this.friendWinNumRank.length;i++)
+            var selfrank = null;
+            if(this.worldrank.pk && this.worldrank.pk.length>0)
             {
-                var data = this.friendWinNumRank[i];
-                var feiji_rank = data.KVDataList[1].value;
-                var rank  = JSON.parse(feiji_rank);
-
-                var item = cc.instantiate(this.paimingItem2);
-                var bg = cc.find("bg",item);
-                var num = cc.find("rank",bg);
-                var icon = cc.find("icon",bg);
-                var nick = cc.find("nike",bg);
-                var score = cc.find("score",bg);
-                var role = cc.find("role",bg);
-
-
-                num.getComponent("cc.Label").string = (i+1)+"";
-                if(data.avatarUrl && data.avatarUrl.length>10)
-                    this.loadPic(icon,data.avatarUrl);
-                nick.getComponent("cc.Label").string = data.nickname;
-                score.getComponent("cc.Label").string = rank.wxgame.winNum+"胜";
-
-                if(data.nickname == this.userInfo.nickName &&
-                    data.avatarUrl == this.userInfo.avatarUrl)
+                selfrank = this.worldrank.pk[this.worldrank.pk.length-1];
+                for(var i=0;i<this.worldrank.pk.length-1;i++)
                 {
-                    selfrank = data;
-                    selfrank.num = (i+1);
+                    var data = this.worldrank.pk[i];
+
+                    var item = cc.instantiate(this.paimingItem2);
+                    var bg = cc.find("bg",item);
+                    var num = cc.find("rank",bg);
+                    var icon = cc.find("icon",bg);
+                    var nick = cc.find("nike",bg);
+                    var score = cc.find("score",bg);
+                    var role = cc.find("role",bg);
+
+
+                    num.getComponent("cc.Label").string = (i+1)+"";
+                    if(data.avatarUrl && data.avatarUrl.length>10)
+                        this.loadPic(icon,data.avatarUrl);
+                    nick.getComponent("cc.Label").string = data.nick;
+                    score.getComponent("cc.Label").string = data.jscore;
+
+                    role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[data.playerId]);
+                    role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[data.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[data.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+
+                    this.node_paiming_content.addChild(item);
+                }
+                if(selfrank)
+                {
+                    this.node_paiming_num2.getComponent("cc.Label").string = selfrank.id+"";
+                    this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
+                    this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nick;
+                    this.node_paiming_score2.getComponent("cc.Label").string = selfrank.jscore;
+
+                    this.node_paiming_role2.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[selfrank.playerId]);
+                    this.node_paiming_role2.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[selfrank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[selfrank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
                 }
 
-                role.removeAllChildren();
-
-                var player = cc.instantiate(this.GAME.players[rank.playerId]);
-                role.addChild(player);
-
-                var gunConf = this.GAME.gunsconfig[rank.gunId];
-                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
-                gun.y = player.height*0.3 + gunConf.y;
-                player.addChild(gun);
-
-                this.node_paiming_content.addChild(item);
             }
-            if(selfrank)
-            {
-                var feiji_rank = selfrank.KVDataList[1].value;
-                var rank  = JSON.parse(feiji_rank);
-
-                this.node_paiming_num2.getComponent("cc.Label").string = selfrank.num+"";
-                this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
-                this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nickname;
-                this.node_paiming_score2.getComponent("cc.Label").string = rank.wxgame.winNum+"胜";
-
-                this.node_paiming_role2.removeAllChildren();
-
-                var player = cc.instantiate(this.GAME.players[rank.playerId]);
-                this.node_paiming_role2.addChild(player);
-
-                var gunConf = this.GAME.gunsconfig[rank.gunId];
-                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
-                gun.y = player.height*0.3 + gunConf.y;
-                player.addChild(gun);
-            }
-
         }
+        else
+        {
+            self.node_paiming_title.string = "好友排行榜";
+            self.node_paiming_ranktype_txt.string = "世界";
+
+            var selfrank = null;
+            if(this.friendWinNumRank && this.userInfo)
+            {
+
+                for(var i=0;i<this.friendWinNumRank.length;i++)
+                {
+                    var data = this.friendWinNumRank[i];
+                    var feiji_rank = data.KVDataList[1].value;
+                    var rank  = JSON.parse(feiji_rank);
+
+                    var item = cc.instantiate(this.paimingItem2);
+                    var bg = cc.find("bg",item);
+                    var num = cc.find("rank",bg);
+                    var icon = cc.find("icon",bg);
+                    var nick = cc.find("nike",bg);
+                    var score = cc.find("score",bg);
+                    var role = cc.find("role",bg);
+
+
+                    num.getComponent("cc.Label").string = (i+1)+"";
+                    if(data.avatarUrl && data.avatarUrl.length>10)
+                        this.loadPic(icon,data.avatarUrl);
+                    nick.getComponent("cc.Label").string = data.nickname;
+                    score.getComponent("cc.Label").string = rank.wxgame.winNum;
+
+                    if(data.nickname == this.userInfo.nickName &&
+                        data.avatarUrl == this.userInfo.avatarUrl)
+                    {
+                        selfrank = data;
+                        selfrank.num = (i+1);
+                    }
+
+                    role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                    role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[rank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+
+                    this.node_paiming_content.addChild(item);
+                }
+                if(selfrank)
+                {
+                    var feiji_rank = selfrank.KVDataList[1].value;
+                    var rank  = JSON.parse(feiji_rank);
+
+                    this.node_paiming_num2.getComponent("cc.Label").string = selfrank.num+"";
+                    this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
+                    this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nickname;
+                    this.node_paiming_score2.getComponent("cc.Label").string = rank.wxgame.winNum;
+
+                    this.node_paiming_role2.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                    this.node_paiming_role2.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[rank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+                }
+
+            }
+        }
+
     },
 
 
     showPaiming: function()
     {
         var self = this;
+
         this.node_paiming.active = true;
         self.node_paiming_wujin.active = false;
         self.node_paiming_duizhan.active = true;
@@ -629,101 +602,169 @@ cc.Class({
         self.node_paiming_item_me2.active = false;
 
         this.node_paiming_content.removeAllChildren();
-        var selfrank = null;
-        if(this.friendRank && this.userInfo)
+
+        if(this.ranktype == 1)
         {
+            self.node_paiming_title.string = "世界排行榜";
+            self.node_paiming_ranktype_txt.string = "好友";
 
-            for(var i=0;i<this.friendRank.length;i++)
+            var selfrank = null;
+            if(this.worldrank.wujin && this.worldrank.wujin.length>0)
             {
-                var data = this.friendRank[i];
-                var feiji_rank = data.KVDataList[0].value;
-                var rank  = JSON.parse(feiji_rank);
 
-                var item = cc.instantiate(this.paimingItem);
-                var bg = cc.find("bg",item);
-                var num = cc.find("rank",bg);
-                var icon = cc.find("icon",bg);
-                var nick = cc.find("nike",bg);
-                var score = cc.find("score",bg);
-                var role = cc.find("role",bg);
-
-                //var j1 = cc.find("j1",icon);
-                //var j2 = cc.find("j2",icon);
-                //var j3 = cc.find("j3",icon);
-                //
-                //if(i+1 == 1)
-                //    j1.active = true;
-                //else if(i+1 == 2)
-                //    j2.active = true;
-                //else if(i+1 == 3)
-                //    j3.active = true;
-
-                num.getComponent("cc.Label").string = (i+1)+"";
-                if(data.avatarUrl && data.avatarUrl.length>10)
-                    this.loadPic(icon,data.avatarUrl);
-                nick.getComponent("cc.Label").string = data.nickname;
-                score.getComponent("cc.Label").string = rank.wxgame.score+"";
-
-                if(data.nickname == this.userInfo.nickName &&
-                    data.avatarUrl == this.userInfo.avatarUrl)
+                selfrank = this.worldrank.wujin[this.worldrank.wujin.length-1];
+                for(var i=0;i<this.worldrank.wujin.length-1;i++)
                 {
-                    //bg.active = true;
-                    //num.color = cc.color(200,176,165,255);
-                    //nick.color = cc.color(200,176,165,255);
-                    //score.color = cc.color(200,176,165,255);
-                    selfrank = data;
-                    selfrank.num = (i+1);
+                    var data = this.worldrank.wujin[i];
+
+                    var item = cc.instantiate(this.paimingItem);
+                    var bg = cc.find("bg",item);
+                    var num = cc.find("rank",bg);
+                    var icon = cc.find("icon",bg);
+                    var nick = cc.find("nike",bg);
+                    var score = cc.find("score",bg);
+                    var role = cc.find("role",bg);
+
+                    num.getComponent("cc.Label").string = (i+1)+"";
+                    if(data.avatarUrl && data.avatarUrl.length>10)
+                        this.loadPic(icon,data.avatarUrl);
+                    nick.getComponent("cc.Label").string = data.nick;
+                    score.getComponent("cc.Label").string = data.score+"";
+
+
+                    role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[data.playerId]);
+                    role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[data.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[data.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+
+                    this.node_paiming_content.addChild(item);
+                }
+                if(selfrank)
+                {
+                    this.node_paiming_num.getComponent("cc.Label").string = selfrank.id+"";
+                    this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
+                    this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
+                    this.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
+
+                    this.node_paiming_role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[selfrank.playerId]);
+                    this.node_paiming_role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[selfrank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[selfrank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
                 }
 
-                role.removeAllChildren();
-
-                var player = cc.instantiate(this.GAME.players[rank.playerId]);
-                role.addChild(player);
-
-                var gunConf = this.GAME.gunsconfig[rank.gunId];
-                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
-                gun.y = player.height*0.3 + gunConf.y;
-                player.addChild(gun);
-
-                this.node_paiming_content.addChild(item);
-            }
-            if(selfrank)
-            {
-                var feiji_rank = selfrank.KVDataList[0].value;
-                var rank  = JSON.parse(feiji_rank);
-
-                //var j1 = cc.find("j1",self.node_paiming_icon);
-                //var j2 = cc.find("j2",self.node_paiming_icon);
-                //var j3 = cc.find("j3",self.node_paiming_icon);
-                //j1.active = false;
-                //j2.active = false;
-                //j3.active = false;
-                //
-                //if(selfrank.num == 1)
-                //    j1.active = true;
-                //else if(selfrank.num == 2)
-                //    j2.active = true;
-                //else if(selfrank.num == 3)
-                //    j3.active = true;
-
-                this.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
-                this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
-                this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nickname;
-                this.node_paiming_score.getComponent("cc.Label").string = rank.wxgame.score+"";
-
-                this.node_paiming_role.removeAllChildren();
-
-                var player = cc.instantiate(this.GAME.players[rank.playerId]);
-                this.node_paiming_role.addChild(player);
-
-                var gunConf = this.GAME.gunsconfig[rank.gunId];
-                var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
-                gun.y = player.height*0.3 + gunConf.y;
-                player.addChild(gun);
             }
 
         }
+        else
+        {
+            self.node_paiming_title.string = "好友排行榜";
+            self.node_paiming_ranktype_txt.string = "世界";
 
+            var selfrank = null;
+            if(this.friendRank && this.userInfo)
+            {
+
+                for(var i=0;i<this.friendRank.length;i++)
+                {
+                    var data = this.friendRank[i];
+                    var feiji_rank = data.KVDataList[0].value;
+                    var rank  = JSON.parse(feiji_rank);
+
+                    var item = cc.instantiate(this.paimingItem);
+                    var bg = cc.find("bg",item);
+                    var num = cc.find("rank",bg);
+                    var icon = cc.find("icon",bg);
+                    var nick = cc.find("nike",bg);
+                    var score = cc.find("score",bg);
+                    var role = cc.find("role",bg);
+
+                    //var j1 = cc.find("j1",icon);
+                    //var j2 = cc.find("j2",icon);
+                    //var j3 = cc.find("j3",icon);
+                    //
+                    //if(i+1 == 1)
+                    //    j1.active = true;
+                    //else if(i+1 == 2)
+                    //    j2.active = true;
+                    //else if(i+1 == 3)
+                    //    j3.active = true;
+
+                    num.getComponent("cc.Label").string = (i+1)+"";
+                    if(data.avatarUrl && data.avatarUrl.length>10)
+                        this.loadPic(icon,data.avatarUrl);
+                    nick.getComponent("cc.Label").string = data.nickname;
+                    score.getComponent("cc.Label").string = rank.wxgame.score+"";
+
+                    if(data.nickname == this.userInfo.nickName &&
+                        data.avatarUrl == this.userInfo.avatarUrl)
+                    {
+                        //bg.active = true;
+                        //num.color = cc.color(200,176,165,255);
+                        //nick.color = cc.color(200,176,165,255);
+                        //score.color = cc.color(200,176,165,255);
+                        selfrank = data;
+                        selfrank.num = (i+1);
+                    }
+
+                    role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                    role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[rank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+
+                    this.node_paiming_content.addChild(item);
+                }
+                if(selfrank)
+                {
+                    var feiji_rank = selfrank.KVDataList[0].value;
+                    var rank  = JSON.parse(feiji_rank);
+
+                    //var j1 = cc.find("j1",self.node_paiming_icon);
+                    //var j2 = cc.find("j2",self.node_paiming_icon);
+                    //var j3 = cc.find("j3",self.node_paiming_icon);
+                    //j1.active = false;
+                    //j2.active = false;
+                    //j3.active = false;
+                    //
+                    //if(selfrank.num == 1)
+                    //    j1.active = true;
+                    //else if(selfrank.num == 2)
+                    //    j2.active = true;
+                    //else if(selfrank.num == 3)
+                    //    j3.active = true;
+
+                    this.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
+                    this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
+                    this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nickname;
+                    this.node_paiming_score.getComponent("cc.Label").string = rank.wxgame.score+"";
+
+                    this.node_paiming_role.removeAllChildren();
+
+                    var player = cc.instantiate(this.GAME.players[rank.playerId]);
+                    this.node_paiming_role.addChild(player);
+
+                    var gunConf = this.GAME.gunsconfig[rank.gunId];
+                    var gun = cc.instantiate(this.GAME.guns[rank.gunId]);
+                    gun.y = player.height*0.3 + gunConf.y;
+                    player.addChild(gun);
+                }
+
+            }
+        }
     },
 
     getUserRank: function()

@@ -8524,8 +8524,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 260,
-      "height": 125
+      "width": 185,
+      "height": 277
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -8533,8 +8533,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 129,
-      "y": -68.5
+      "x": 159.2,
+      "y": -5
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -8670,8 +8670,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 520,
-      "height": 156
+      "width": 332,
+      "height": 139
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -8679,7 +8679,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": -100,
       "y": 0
     },
     "_skewX": 0,
@@ -8816,8 +8816,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 260,
-      "height": 125
+      "width": 332,
+      "height": 138
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -8825,8 +8825,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -129,
-      "y": -68.5
+      "x": -100,
+      "y": -73.8
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -9418,6 +9418,9 @@
     },
     "node_tiaozhan_desc": {
       "__uuid__": "7fb2829f-2e1c-4c2f-910f-b5642035b588"
+    },
+    "node_star": {
+      "__uuid__": "edfef990-01c3-4202-ab3f-df68a29499cc"
     },
     "loutis": [
       {

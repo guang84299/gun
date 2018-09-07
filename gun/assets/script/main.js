@@ -25,6 +25,10 @@ cc.Class({
          this.opentiaozhan = false;
          this.tiaozhanlv = 0;
          this.tiaozhandata = {killEnemy:0,killBoss:0,baoTou:0,fireNum:0,baoTou2:0};
+         this.worldrank = {
+             wujin:[],
+             pk:[]
+         };
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
@@ -54,6 +58,12 @@ cc.Class({
              });
              qianqista.pdatas(function(res){
                  self.updateLocalData2(res);
+             });
+             qianqista.rankScore(function(res){
+                 self.worldrank.wujin = res.data;
+             });
+             qianqista.rankJScore(function(res){
+                 self.worldrank.pk = res.data;
              });
          },function(){
              self.startDuizhan();
@@ -872,7 +882,7 @@ cc.Class({
         }
         else if(data == "duizhan")
         {
-            this.openDuizhan();
+            this.openStar();
         }
         else if(data == "tiaozhan")
         {
@@ -964,6 +974,15 @@ cc.Class({
         this.node.addChild(tiaozhan);
         this.node_tiaozhan = tiaozhan.getComponent("tiaozhan");
         this.node_tiaozhan.show();
+    },
+
+    openStar: function()
+    {
+        this.wxQuanState(false);
+        var star = cc.instantiate(this.res.node_star);
+        this.node.addChild(star);
+        this.node_star = star.getComponent("star");
+        this.node_star.show();
     },
 
     openDuizhan: function()
@@ -3397,6 +3416,10 @@ cc.Class({
         this.node.addChild(over);
         this.node_over = over.getComponent("over");
         this.node_over.show();
+
+        qianqista.rankScore(function(res){
+            self.worldrank.wujin = res.data;
+        });
     },
 
     judgeFuHuo: function()
@@ -3964,7 +3987,7 @@ cc.Class({
     {
         this.display_gray_rank.active = true;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "friendRank" });
+            wx.postMessage({ message: "friendRank",worldrank:this.worldrank });
     },
 
     wxOverRank: function(score,playerId,gunId)

@@ -34,7 +34,9 @@ cc.Class({
     initUI: function()
     {
         this.node_qiandao = this.node;
+        this.node_qiandao_vedio = cc.find("bg/vedio",this.node_qiandao);
 
+        this.riqiId = 0;
         this.updateUI();
     },
 
@@ -92,8 +94,17 @@ cc.Class({
         {
             if(event.target.canset)
             {
-                this.setGunRiQi(event.target.riqiId);
-                this.updateUI();
+                if(this.node_qiandao_vedio.getComponent("cc.Toggle").isChecked)
+                {
+                    this.riqiId = event.target.riqiId;
+                    this.main.wxVideoShow(7);
+                }
+                else
+                {
+                    this.setGunRiQi(event.target.riqiId);
+                    this.updateUI();
+                }
+
             }
         }
      
@@ -115,13 +126,23 @@ cc.Class({
         // this.updateGunRiQi();
         this.updateUI();
 
-        storage.setStorageCoin(parseInt(storage.getStorageCoin()) +  this.res.qiandaoconfig[id-1]);
-        this.res.showToast("金币+"+this.res.qiandaoconfig[id-1]);
+        var award = this.res.qiandaoconfig[id-1];
+        if(this.node_qiandao_vedio.getComponent("cc.Toggle").isChecked)
+            award *= 2;
+
+        storage.setStorageCoin(parseInt(storage.getStorageCoin()) + award);
+        this.res.showToast("金币+"+award);
         this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         this.main.uploadData();
         this.main.updateDian();
         storage.playSound(this.res.audio_coin);
     },
+
+    vedioRiqi: function()
+    {
+        this.setGunRiQi(this.riqiId);
+        this.updateUI();
+    }
     
 });

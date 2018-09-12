@@ -23,6 +23,10 @@ cc.Class({
             default: [],
             type: cc.Prefab
         },
+        pk_lvs: {
+            default: [],
+            type: cc.SpriteFrame
+        },
         box_1: {
             default: null,
             type: cc.SpriteFrame
@@ -196,12 +200,14 @@ cc.Class({
         self.node_paiming_nick = cc.find("bg/item_me/bg/nike",self.node_paiming);
         self.node_paiming_score = cc.find("bg/item_me/bg/score",self.node_paiming);
         self.node_paiming_role = cc.find("bg/item_me/bg/role",self.node_paiming);
+        self.node_paiming_lv = cc.find("bg/item_me/bg/lv",self.node_paiming);
 
         self.node_paiming_num2 = cc.find("bg/item_me2/bg/rank",self.node_paiming);
         self.node_paiming_icon2 = cc.find("bg/item_me2/bg/icon",self.node_paiming);
         self.node_paiming_nick2 = cc.find("bg/item_me2/bg/nike",self.node_paiming);
         self.node_paiming_score2 = cc.find("bg/item_me2/bg/score",self.node_paiming);
         self.node_paiming_role2 = cc.find("bg/item_me2/bg/role",self.node_paiming);
+        self.node_paiming_lv2 = cc.find("bg/item_me2/bg/lv",self.node_paiming);
 
         self.node_paiming_wujin = cc.find("bg/wujin",self.node_paiming);
         self.node_paiming_duizhan = cc.find("bg/duizhan",self.node_paiming);
@@ -217,6 +223,56 @@ cc.Class({
         self.node_fuhuo_no = cc.find("fuhuo_share/no",self.node_fuhuo);
 
         self.node_chaoyue = cc.find("Canvas/node_chaoyue");
+    },
+
+    judgeRobotLv: function(jscore)
+    {
+        if(jscore<30)
+            return 1;
+        else if(jscore<70)
+            return 2;
+        else if(jscore<120)
+            return 3;
+        else if(jscore<180)
+            return 4;
+        else if(jscore<240)
+            return 5;
+        else if(jscore<300)
+            return 6;
+        else
+            return 7;
+    },
+
+    getPkLvSp: function(jscore,rank)
+    {
+        var lv = this.judgeRobotLv(jscore);
+        if(lv<7)
+        {
+            return this.pk_lvs[lv-1];
+        }
+        else
+        {
+            if(rank > 100)
+            {
+                return this.pk_lvs[7-1];
+            }
+            else if(rank <= 100 && rank > 10)
+            {
+                return this.pk_lvs[8-1];
+            }
+            else if(rank <= 10 && rank >= 4)
+            {
+                return this.pk_lvs[9-1];
+            }
+            else if(rank <= 3 && rank >= 2)
+            {
+                return this.pk_lvs[10-1];
+            }
+            else if(rank == 1)
+            {
+                return this.pk_lvs[11-1];
+            }
+        }
     },
 
 
@@ -450,6 +506,7 @@ cc.Class({
         self.node_paiming_item_me2.active = true;
 
         this.node_paiming_content.removeAllChildren();
+        this.node_paiming_lv2.active = false;
         if(this.ranktype == 1)
         {
             self.node_paiming_title.string = "世界排行榜";
@@ -470,6 +527,8 @@ cc.Class({
                     var nick = cc.find("nike",bg);
                     var score = cc.find("score",bg);
                     var role = cc.find("role",bg);
+                    var lv = cc.find("lv",bg);
+                    lv.active = true;
 
 
                     num.getComponent("cc.Label").string = (i+1)+"";
@@ -477,6 +536,7 @@ cc.Class({
                         this.loadPic(icon,data.avatarUrl);
                     nick.getComponent("cc.Label").string = data.nick;
                     score.getComponent("cc.Label").string = data.jscore;
+                    lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.jscore,i+1);
 
                     role.removeAllChildren();
 
@@ -492,10 +552,12 @@ cc.Class({
                 }
                 if(selfrank)
                 {
+                    this.node_paiming_lv2.active = true;
                     this.node_paiming_num2.getComponent("cc.Label").string = selfrank.id+"";
                     this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
                     this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nick;
                     this.node_paiming_score2.getComponent("cc.Label").string = selfrank.jscore;
+                    this.node_paiming_lv2.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.jscore,selfrank.id);
 
                     this.node_paiming_role2.removeAllChildren();
 
@@ -600,7 +662,7 @@ cc.Class({
 
         self.node_paiming_item_me.active = true;
         self.node_paiming_item_me2.active = false;
-
+        this.node_paiming_lv.active = false;
         this.node_paiming_content.removeAllChildren();
 
         if(this.ranktype == 1)
@@ -624,12 +686,15 @@ cc.Class({
                     var nick = cc.find("nike",bg);
                     var score = cc.find("score",bg);
                     var role = cc.find("role",bg);
+                    var lv = cc.find("lv",bg);
+                    lv.active = true;
 
                     num.getComponent("cc.Label").string = (i+1)+"";
                     if(data.avatarUrl && data.avatarUrl.length>10)
                         this.loadPic(icon,data.avatarUrl);
                     nick.getComponent("cc.Label").string = data.nick;
                     score.getComponent("cc.Label").string = data.score+"";
+                    lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.score,i+1);
 
 
                     role.removeAllChildren();
@@ -646,10 +711,12 @@ cc.Class({
                 }
                 if(selfrank)
                 {
+                    this.node_paiming_lv.active = true;
                     this.node_paiming_num.getComponent("cc.Label").string = selfrank.id+"";
                     this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
                     this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
                     this.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
+                    this.node_paiming_lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.score,selfrank.id);
 
                     this.node_paiming_role.removeAllChildren();
 

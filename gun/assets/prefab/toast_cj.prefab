@@ -69,7 +69,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite",
+    "_name": "sp",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1

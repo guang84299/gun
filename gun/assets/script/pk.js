@@ -19,6 +19,7 @@ cc.Class({
 
         this.qianqista = this.main.qianqista;
         this.currPkGun = storage.getStorageCurrPkGun()-1;
+        this.publish = storage.getStoragePublish();
 
         var manager = cc.director.getCollisionManager();
         manager.enabled = true;
@@ -141,6 +142,8 @@ cc.Class({
         this.node_sel_willstart = cc.find("bg/willstart",this.node_sel).getComponent("cc.Label");
         this.node_sel_coin = cc.find("coin",this.node_sel);
         this.node_sel_coin_num = cc.find("coin/num",this.node_sel).getComponent("cc.Label");
+        this.node_sel_lv = cc.find("bg/lv",this.node_sel).getComponent("cc.Sprite");
+        this.node_sel_lv_num = cc.find("bg/lv/num",this.node_sel).getComponent("cc.Label");
 
 
         this.node_sel2 = cc.find("node_sel2",this.node);
@@ -164,6 +167,8 @@ cc.Class({
         this.node_sel2_willstart = cc.find("bg/willstart",this.node_sel2).getComponent("cc.Label");
         this.node_sel2_coin = cc.find("coin",this.node_sel2);
         this.node_sel2_coin_num = cc.find("coin/num",this.node_sel2).getComponent("cc.Label");
+        this.node_sel2_lv = cc.find("bg/lv",this.node_sel2).getComponent("cc.Sprite");
+        this.node_sel2_lv_num = cc.find("bg/lv/num",this.node_sel2).getComponent("cc.Label");
 
 
         this.node_over = cc.find("node_over",this.node);
@@ -183,6 +188,7 @@ cc.Class({
         this.node_over_coin = cc.find("coin",this.node_over);
         this.node_over_coin_num = cc.find("coin/num",this.node_over).getComponent("cc.Label");
         this.node_over_jifen = cc.find("bg/jifen",this.node_over).getComponent("cc.Label");
+        this.node_over_star = cc.find("bg/star",this.node_over).getComponent("cc.Label");
 
         this.node_over2 = cc.find("node_over2",this.node);
         this.node_over2_title = cc.find("bg/title",this.node_over2).getComponent("cc.Label");
@@ -205,6 +211,7 @@ cc.Class({
         this.node_over2_coin = cc.find("coin",this.node_over2);
         this.node_over2_coin_num = cc.find("coin/num",this.node_over2).getComponent("cc.Label");
         this.node_over2_jifen = cc.find("bg/jifen",this.node_over2).getComponent("cc.Label");
+        this.node_over2_star = cc.find("bg/star",this.node_over2).getComponent("cc.Label");
 
         this.getCoin(storage.getStorageCoin());
 
@@ -234,11 +241,23 @@ cc.Class({
         this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
         this.node_sel2_box_1_name.string = this.qianqista.userName;
 
+        var rank = 1000;
+        var pk = this.main.worldrank.pk;
+        if(pk.length > 0)
+            rank = pk[pk.length-1].id;
+        this.node_sel_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
+        this.node_sel_lv_num.string = storage.getStorageMaxJScore();
+
+        this.node_sel2_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
+        this.node_sel2_lv_num.string = storage.getStorageMaxJScore();
+
         this.node_game_ui.active = false;
         this.taizi_a.active = false;
         this.taizi_b.active = false;
         this.taizi_c.active = false;
         this.taizi_d.active = false;
+
+        this.publish = storage.getStoragePublish();
     },
 
     updateCurrPkGun: function()
@@ -877,7 +896,8 @@ cc.Class({
             }
             if(this.playerData.playerA && this.playerData.playerA.uid == this.qianqista.openid && !this.isSuiJiMatch)
             {
-                if(this.findPlayerNum() == 3)
+                var fnum = this.findPlayerNum();
+                if(fnum == 3 || fnum == 4)
                 {
                     this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
                 }
@@ -885,6 +905,11 @@ cc.Class({
                 {
                     this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
                 }
+
+                if(fnum == 4)
+                    this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
+                else
+                    this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
             }
 
             if(this.playerData.playerA)
@@ -1023,6 +1048,14 @@ cc.Class({
         this.node_sel_box_2_name.string = "等待加入";
         this.node_sel_willstart.string = "";
         this.node_sel_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
+
+        var rank = 1000;
+        var pk = this.main.worldrank.pk;
+        if(pk.length > 0)
+            rank = pk[pk.length-1].id;
+        this.node_sel_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
+        this.node_sel_lv_num.string = storage.getStorageMaxJScore();
+
     },
 
     sel2_fanhui: function()
@@ -1081,6 +1114,14 @@ cc.Class({
         this.node_sel2_box_2_wenhao.active = true;
         this.node_sel2_box_3_wenhao.active = true;
         this.node_sel2_box_4_wenhao.active = true;
+
+        var rank = 1000;
+        var pk = this.main.worldrank.pk;
+        if(pk.length > 0)
+            rank = pk[pk.length-1].id;
+
+        this.node_sel2_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
+        this.node_sel2_lv_num.string = storage.getStorageMaxJScore();
     },
 
     again: function()
@@ -1096,7 +1137,18 @@ cc.Class({
         }
         else
         {
-            websocket.again(0);
+            var enemyPlayer = this.findEnemyPlayerData();
+            if(enemyPlayer && enemyPlayer.robot == 1)
+            {
+                if(enemyPlayer.againNum && enemyPlayer.againNum == 1)
+                    websocket.again(0);
+                else
+                    this.res.showToast("对方已离开");
+            }
+            else
+            {
+                websocket.again(0);
+            }
         }
     },
 
@@ -1141,10 +1193,10 @@ cc.Class({
                             {
                                 cc.log("start game");
                                 websocket.startGame();
-                                if(self.lastroomType == 1)
+                                if(self.playerData.roomType == 1)
                                 {
-                                    storage.setStorageCoin(storage.getStorageCoin()-20);
-                                    self.getCoin(-20);
+                                    storage.setStorageCoin(storage.getStorageCoin()-30);
+                                    self.getCoin(-30);
                                 }
                             }
 
@@ -1172,6 +1224,12 @@ cc.Class({
                             {
                                 cc.log("start game");
                                 websocket.startGame();
+
+                                if(self.playerData.roomType == 1)
+                                {
+                                    storage.setStorageCoin(storage.getStorageCoin()-30);
+                                    self.getCoin(-30);
+                                }
                             }
 
                         }
@@ -1181,20 +1239,7 @@ cc.Class({
 
             this.node_over_fanhui_str.string = "赶紧溜";
 
-            if(this.playerData.roomType == 1)
-            {
-                var coin = storage.getStorageCoin();
-                if(coin>=30)
-                {
-                    storage.setStorageCoin(storage.getStorageCoin()-30);
-                    this.getCoin(-30);
-                }
-                else
-                {
-                    storage.setStorageCoin(0);
-                    this.getCoin(-coin);
-                }
-            }
+
         }
 
         else if(data.againType == 4)//立即开始
@@ -1283,6 +1328,13 @@ cc.Class({
                     }
                 }
 
+            }
+
+            if(this.playerData && this.playerData.roomType != 3)
+            {
+                websocket.questLeaveRoom(this.qianqista.openid);
+                this.node.stopAllActions();
+                this.res.showToast("对方离开！");
             }
         }
 
@@ -2696,14 +2748,20 @@ cc.Class({
                 this.node_over2_fanhui_str.string = "改天再战";
                 this.node_over2_again_str.string = "再来一局";
 
+                cc.find("str",this.node_over2_jifenx2).active = true;
+                cc.find("suiji",this.node_over2_jifenx2).active = true;
+                cc.find("str2",this.node_over2_jifenx2).active = false;
+
                 if(this.isCanJScore())
                 {
                     var jscore = this.winJscore();
+                    var star = this.winStarNum();
                     this.node_over2_jifen.string = "积分+"+jscore;
+                    this.node_over2_star.string = "星辉+"+star;
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
-                    websocket.updateUser(selfPlayer.jscore,this.winStarNum(),selfPlayer.gunId,selfPlayer.skinId);
+                    websocket.updateUser(selfPlayer.jscore,star,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
@@ -2757,10 +2815,16 @@ cc.Class({
                 this.node_over2_fanhui_str.string = "溜了";
                 this.node_over2_again_str.string = "不服再来";
 
+                cc.find("str",this.node_over2_jifenx2).active = false;
+                cc.find("suiji",this.node_over2_jifenx2).active = false;
+                cc.find("str2",this.node_over2_jifenx2).active = true;
+
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
                     this.node_over2_jifen.string = "积分-"+jscore;
+                    this.node_over2_star.string = "星辉+"+0;
+
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
@@ -2800,17 +2864,22 @@ cc.Class({
                 this.node_over_bili.string = "1 : 0";
                 this.node_over_fanhui_str.string = "改天再战";
                 this.node_over_again_str.string = "再来一局";
+                cc.find("str",this.node_over_jifenx2).active = true;
+                cc.find("suiji",this.node_over_jifenx2).active = true;
+                cc.find("str2",this.node_over_jifenx2).active = false;
                 storage.setStorageCoin(storage.getStorageCoin()+50);
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.winJscore();
+                    var star = this.winStarNum();
                     this.node_over_jifen.string = "积分+"+jscore;
+                    this.node_over_star.string = "星辉+"+star;
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
 
-                    websocket.updateUser(selfPlayer.jscore,this.winStarNum(),selfPlayer.gunId,selfPlayer.skinId);
+                    websocket.updateUser(selfPlayer.jscore,star,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
@@ -2846,10 +2915,15 @@ cc.Class({
                 this.node_over_fanhui_str.string = "溜了";
                 this.node_over_again_str.string = "不服再来";
 
+                cc.find("str",this.node_over_jifenx2).active = false;
+                cc.find("suiji",this.node_over_jifenx2).active = false;
+                cc.find("str2",this.node_over_jifenx2).active = true;
+
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
                     this.node_over_jifen.string = "积分-"+jscore;
+                    this.node_over_star.string = "星辉+"+0;
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
@@ -2875,6 +2949,13 @@ cc.Class({
                         })
                     ));
                 }
+                else
+                {
+                    if(Math.random()<=0.4)
+                        enemyPlayer.againNum = 1;
+                    else
+                        enemyPlayer.againNum = 0;
+                }
             }
 
         }
@@ -2894,6 +2975,7 @@ cc.Class({
         this.res.showToast("积分+"+this.lastjscore);
         if(this.lastjscore > 0)
         {
+            storage.setStorageJScore(selfData.jscore);
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
                 wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
         }
@@ -2989,15 +3071,18 @@ cc.Class({
         var selfData = this.findSelfPlayerData();
         if(selfData.jscore > 70 && selfData.jscore <=150)
         {
-            sc = enemyscore*0.7;
+            sc = 20 - enemyscore;
+            sc = sc < 5 ? 5 : sc;
         }
         else if(selfData.jscore > 150 && selfData.jscore <=240)
         {
-            sc = enemyscore*0.8;
+            sc = 17 - enemyscore;
+            sc = sc < 5 ? 5 : sc;
         }
         else if(selfData.jscore > 240)
         {
-            sc = enemyscore*0.9;
+            sc = 14 - enemyscore;
+            sc = sc < 5 ? 5 : sc;
         }
 
         return Math.floor(sc);

@@ -59,11 +59,18 @@ module.exports = {
     gameName: "",//游戏名
     channel: "",//渠道
     openid: "",
+    unionId: null,
     userName: "",
     session_key: "",
+    encryptedData: null,
+    iv: null,
     power: 0,//授权状态
     url: "https://77qqup.com:442/sta/",
     url2: "https://www.e26f.cn/gun/",
+
+    url3: "https://www.e26f.cn/gun/",
+    url4: "https://www.0a8ce26f.com/gun/",
+
     avatarUrl: "",//头像
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
@@ -74,6 +81,7 @@ module.exports = {
     fromid:"",
     pkfromid:"",
     pkroomtype: 0,
+    isupdateunionid: true,
     init: function(gameId,secret,gameName,initcallback,showcallback)
     {
         this.gameId = gameId;
@@ -189,9 +197,11 @@ module.exports = {
         {
             if(!userInfo)
                 console.error("--------","userInfo is null");
-            this.userName = userInfo.nickName;
+            this.userName = userInfo.userInfo.nickName;
             this.power = 1;
-            this.avatarUrl = userInfo.avatarUrl;
+            this.avatarUrl = userInfo.userInfo.avatarUrl;
+            this.encryptedData = userInfo.encryptedData;
+            this.iv = userInfo.iv;
             console.log('userInfo:', userInfo);
         }
         else
@@ -354,6 +364,8 @@ module.exports = {
                             console.log('openid:', self.openid);
                             if(callback)
                                 callback();
+
+                            self.getUnionId(self.encryptedData,self.iv);
                         }
                         console.log('jscode2session:', r);
                     });
@@ -362,6 +374,36 @@ module.exports = {
         }
 
     },
+
+    getUnionId: function(encryptedData,iv,callback)
+    {
+        if(this.state == 1)
+        {
+            var self = this;
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            {
+                self.httpPost("groupid",{encryptedData:encryptedData,sessionkey:self.session_key,iv:iv},function(r){
+                    if(r.state == 200)
+                    {
+                        var msg = r.data;
+                        console.log('unionId:', msg.unionId);
+                        self.unionId = msg.unionId;
+                        if(callback)
+                        {
+                            callback();
+                        }
+
+                        if(self.isupdateunionid)
+                        {
+                            self.updateUnionId();
+                        }
+                    }
+                    console.log('unionId:', r);
+                });
+            }
+        }
+    },
+
     //获取群id
     getGrpupId: function(encryptedData,iv,callback)
     {
@@ -579,6 +621,38 @@ module.exports = {
                     callback(res);
             });
         }
+    },
+
+    updateUnionId: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("updateUnionId",{openid:this.openid,unionId:this.unionId},function(res){
+                console.log("updateUnionId:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    myMony: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("myMony",{openid:this.openid},function(res){
+                console.log("myMony:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    updateUrl2: function(type)
+    {
+        if(type == 0)
+            this.url2 = this.url3;
+        else
+            this.url2 = this.url4;
     },
 
 

@@ -74,6 +74,8 @@ cc.Class({
         player.addChild(gun);
 
         this.node_gun_score.getComponent("cc.Label").string = storage.getStorageScore();
+        if(this.main.openduizhan)
+            this.node_gun_score.getComponent("cc.Label").string = storage.getStorageMaxJScore();
         this.node_gun_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         cc.find("gunjiesuo/coinbg",this.node_gun).color = this.main.ltcolor;
@@ -108,6 +110,8 @@ cc.Class({
             var box2 = cc.find("box_2",item);
             var txt1 = cc.find("txt1",item);
             var txt2 = cc.find("txt2",item);
+            var suo = cc.find("suo",item);
+            suo.active = false;
             item.gunId = i;
 
             txt1.color = cc.color(255,255,255);
@@ -132,7 +136,11 @@ cc.Class({
                         if(i<=jlv*3)
                             item.canset = true;
                         else
-                            box1.color = cc.color(100,100,100);
+                        {
+                            suo.active = true;
+                            var score = this.res.getJSocreByGunId(i);
+                            cc.find("num",suo).getComponent("cc.Label").string = score +"分解锁";
+                        }
                     }
                     else
                         item.canset = true;

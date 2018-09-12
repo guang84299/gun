@@ -59,6 +59,10 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_coinx2: {
+            default: null,
+            type: cc.Prefab
+        },
         node_fuhuo: {
             default: null,
             type: cc.Prefab
@@ -128,6 +132,10 @@ cc.Class({
             type: cc.Prefab
         },
         sp_over_players: {
+            default: [],
+            type: cc.SpriteFrame
+        },
+        pk_lvs: {
             default: [],
             type: cc.SpriteFrame
         },
@@ -918,6 +926,26 @@ cc.Class({
         toast.runAction(seq);
     },
 
+    showToastMony: function(mony)
+    {
+        var toast = cc.instantiate(this.toast_cj);
+        cc.find("sp",toast).active = false;
+        var str = cc.find("str",toast);
+        str.x = 0;
+        str.getComponent("cc.Label").string = "你有"+mony+"元现金红包待领取！";
+        toast.opacity = 0;
+        toast.y = cc.winSize.height/2 - 50;
+        this.node.addChild(toast,1000);
+
+        var seq = cc.sequence(
+            cc.fadeIn(0.5),
+            cc.delayTime(2),
+            cc.fadeOut(0.5),
+            cc.removeSelf()
+        );
+        toast.runAction(seq);
+    },
+
     judgeRobotLv: function(jscore)
     {
         if(jscore<30)
@@ -934,6 +962,54 @@ cc.Class({
             return 6;
         else
             return 7;
+    },
+
+    getJSocreByGunId: function(gunId)
+    {
+        if(gunId>3 && gunId<=6)
+            return 30;
+        else if(gunId>6 && gunId<=9)
+            return 70;
+        else if(gunId>9 && gunId<=12)
+            return 120;
+        else if(gunId>12 && gunId<=15)
+            return 180;
+        else if(gunId>15 && gunId<=18)
+            return 240;
+        else if(gunId>18)
+            return 300;
+    },
+
+    getPkLvSp: function(jscore,rank)
+    {
+        var lv = this.judgeRobotLv(jscore);
+        if(lv<7)
+        {
+            return this.pk_lvs[lv-1];
+        }
+        else
+        {
+            if(rank > 100)
+            {
+                return this.pk_lvs[7-1];
+            }
+            else if(rank <= 100 && rank > 10)
+            {
+                return this.pk_lvs[8-1];
+            }
+            else if(rank <= 10 && rank >= 4)
+            {
+                return this.pk_lvs[9-1];
+            }
+            else if(rank <= 3 && rank >= 2)
+            {
+                return this.pk_lvs[10-1];
+            }
+            else if(rank == 1)
+            {
+                return this.pk_lvs[11-1];
+            }
+        }
     }
 
 });

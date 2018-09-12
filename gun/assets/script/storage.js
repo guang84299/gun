@@ -86,6 +86,26 @@ module.exports = {
         return Number(currscore);
     },
 
+    setStorageUnionid: function(unionid)
+    {
+        cc.sys.localStorage.setItem("unionid",unionid);
+    },
+    getStorageUnionid: function()
+    {
+        var unionid = cc.sys.localStorage.getItem("unionid");
+        return unionid;
+    },
+
+    setStoragePublish: function(publish)
+    {
+        cc.sys.localStorage.setItem("publish",publish);
+    },
+    getStoragePublish: function()
+    {
+        var publish = cc.sys.localStorage.getItem("publish");
+        publish = publish ? publish : 0;
+        return Number(publish);
+    },
 
     setStorageWinNum: function(winNum)
     {

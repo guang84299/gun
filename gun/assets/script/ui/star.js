@@ -138,7 +138,10 @@ cc.Class({
                 if(data.avatarUrl && data.avatarUrl.length>10)
                     this.loadPic(icon,data.avatarUrl);
                 nike.getComponent("cc.Label").string = data.nick;
-                score.getComponent("cc.Label").string = data.star;
+                if(this.ranktype == 1)
+                    score.getComponent("cc.Label").string = data.star;
+                else
+                    score.getComponent("cc.Label").string = data.lastStar;
                 award.getComponent("cc.Label").string = data.award+"￥";
 
                 this.node_star_scroll_content.addChild(item);
@@ -150,7 +153,10 @@ cc.Class({
                 if(selfdata.avatarUrl && selfdata.avatarUrl.length>10)
                     this.loadPic(this.node_star_item_me_icon,selfdata.avatarUrl);
                 this.node_star_item_me_nike.getComponent("cc.Label").string = selfdata.nick;
-                this.node_star_item_me_score.getComponent("cc.Label").string = selfdata.star;
+                if(this.ranktype == 1)
+                    this.node_star_item_me_score.getComponent("cc.Label").string = selfdata.star;
+                else
+                    this.node_star_item_me_score.getComponent("cc.Label").string = selfdata.lastStar;
                 this.node_star_item_me_award.getComponent("cc.Label").string = selfdata.award+"￥";
 
             }
@@ -224,16 +230,18 @@ cc.Class({
                 this.subTime = 0;
 
 
-            var d = Math.floor(this.subTime/(24*60*60*1000));
-            var h = Math.floor((this.subTime - d*24*60*60*1000)/(60*60*1000));
-            var m = Math.floor((this.subTime - d*24*60*60*1000 - h*60*60*1000)/(60*1000));
-            var s = Math.floor(((this.subTime - d*24*60*60*1000 - h*60*60*1000 - m*60*1000))/1000);
-
-            var sd = "0"+d;
+            //var d = Math.floor(this.subTime/(24*60*60*1000));
+            //var h = Math.floor((this.subTime - d*24*60*60*1000)/(60*60*1000));
+            //var m = Math.floor((this.subTime - d*24*60*60*1000 - h*60*60*1000)/(60*1000));
+            //var s = Math.floor(((this.subTime - d*24*60*60*1000 - h*60*60*1000 - m*60*1000))/1000);
+            var h = Math.floor(this.subTime/(60*60*1000));
+            var m = Math.floor((this.subTime - h*60*60*1000)/(60*1000));
+            var s = Math.floor(((this.subTime - h*60*60*1000 - m*60*1000))/1000);
+            //var sd = "0"+d;
             var sh = h < 10 ? "0"+h : h;
             var sm = m < 10 ? "0"+m : m;
             var ss = s < 10 ? "0"+s : s;
-            this.node_star_time.string = "剩余时间 "+sd+":"+sh+":"+sm+":"+ss;
+            this.node_star_time.string = "剩余时间 "+sh+":"+sm+":"+ss;
         }
 
     }

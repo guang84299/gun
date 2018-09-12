@@ -68,15 +68,7 @@ cc.Class({
          },function(){
              self.startDuizhan();
          });
-         //qianqista.init("wxd3cb7ae66c150daf","65acd0a6197124b3eef2b0210fc1b8cc","西部神枪手2",function(){
-         //    qianqista.datas(function(res){
-         //        console.log('my datas:', res);
-         //        if(res.state == 200)
-         //        {
-         //            self.updateLocalData(res.data);
-         //        }
-         //    });
-         //});
+
          qianqista.control(function(res){
              console.log('my control:', res);
              if(res.state == 200)
@@ -180,7 +172,7 @@ cc.Class({
 
         //storage.setStorageGun(10,0);
         //storage.setStorageCurrGun(1);
-        //storage.setStorageQianDao(6);
+        //storage.setStorageQianDao(1);
         //storage.setStorageQianDaoTime(-1);
         //storage.setStorageYindao(0);
         //storage.setStorageGunJieSuoNum(1);
@@ -288,6 +280,7 @@ cc.Class({
         this.GAME.sharetiaozhan = false;
         this.GAME.sharetiaozhan_pic = null;
         this.GAME.sharetiaozhan_txt = null;
+        this.GAME.sharecoinx2 = false;
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
@@ -296,7 +289,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard2")
+                if(con.id == "sharecard")
                 {
                     if(con.value == "1")
                     {
@@ -329,6 +322,26 @@ cc.Class({
                 else if(con.id == "sharetiaozhan_txt")
                 {
                     this.GAME.sharetiaozhan_txt = con.value;
+                }
+                else if(con.id == "sharecoinx2")
+                {
+                    if(con.value == "1")
+                    {
+                        this.GAME.sharecoinx2 = true;
+                    }
+                }
+                else if(con.id == "publish")
+                {
+                    if(con.value == "1")
+                    {
+                        storage.setStoragePublish(1);
+                        qianqista.updateUrl2(1);
+                    }
+                    else
+                    {
+                        storage.setStoragePublish(0);
+                        qianqista.updateUrl2(0);
+                    }
                 }
                 else
                 {
@@ -419,6 +432,11 @@ cc.Class({
                     storage.setStorageJScore(datas.jscore);
                 if(datas.maxJscore)
                     storage.setStorageMaxJScore(datas.maxJscore);
+                if(datas.unionid && datas.unionid.length > 1)
+                {
+                    storage.setStorageUnionid(datas.unionid);
+                    qianqista.isupdateunionid = false;
+                }
 
             }
         }
@@ -893,6 +911,14 @@ cc.Class({
             this.wxGongZhongHao();
         }
         cc.log(data);
+    },
+
+    openCoinx2: function(coin)
+    {
+        var coinx2 = cc.instantiate(this.res.node_coinx2);
+        this.node.addChild(coinx2);
+        this.node_coinx2 = coinx2.getComponent("coinx2");
+        this.node_coinx2.show(coin);
     },
 
     openTryzhanshi: function()
@@ -1423,6 +1449,23 @@ cc.Class({
         this.wxCloseOver();
         this.wxCloseRank();
         this.initGmae();
+
+
+        var showMonyTime = cc.sys.localStorage.getItem("showMonyTime");
+        showMonyTime = showMonyTime ? showMonyTime : 0;
+        if(new Date().getTime() - showMonyTime > 10*60*1000)
+        {
+            cc.sys.localStorage.setItem("showMonyTime",new Date().getTime());
+            var self = this;
+            qianqista.myMony(function(res){
+                if(res.data && res.data >= 1)
+                {
+                    self.res.showToastMony(res.data);
+                    storage.playSound(self.res.audio_chengjiu);
+                }
+            });
+        }
+
     },
 
     updateTiaoZhanUI: function()
@@ -3782,10 +3825,16 @@ cc.Class({
                         },
                         success: function(res)
                         {
-                            cc.log(res.userInfo);
+                            console.log(res);
                             self.userInfo = res.userInfo;
-                            qianqista.login(true,res.userInfo,function(){
+                            qianqista.login(true,res,function(){
                                 self.startDuizhan();
+                                qianqista.rankScore(function(res2){
+                                    self.worldrank.wujin = res2.data;
+                                });
+                                qianqista.rankJScore(function(res2){
+                                    self.worldrank.pk = res2.data;
+                                });
                             });
                             wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
                         }
@@ -3888,10 +3937,16 @@ cc.Class({
                                 },
                                 success: function(res)
                                 {
-                                    cc.log(res.userInfo);
+                                    console.log(res);
                                     self.userInfo = res.userInfo;
-                                    qianqista.login(true,res.userInfo,function(){
+                                    qianqista.login(true,res,function(){
                                         self.startDuizhan();
+                                        qianqista.rankScore(function(res2){
+                                            self.worldrank.wujin = res2.data;
+                                        });
+                                        qianqista.rankJScore(function(res2){
+                                            self.worldrank.pk = res2.data;
+                                        });
                                     });
                                     wx.postMessage({ message: "loginSuccess",userInfo:res.userInfo });
                                 }
@@ -4220,6 +4275,16 @@ cc.Class({
                             self.node_duizhan.jifenx2();
                         }
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 7)
+                    {
+                        if(cc.isValid(self.node_qiandao))
+                            self.node_qiandao.vedioRiqi();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 8)
+                    {
+                        if(cc.isValid(self.node_coinx2))
+                            self.node_coinx2.lingquSuc();
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
@@ -4240,6 +4305,14 @@ cc.Class({
                         self.res.showToast("获取失败");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 6)
+                    {
+                        self.res.showToast("获取失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 7)
+                    {
+                        self.res.showToast("获取失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 8)
                     {
                         self.res.showToast("获取失败");
                     }
@@ -4323,6 +4396,16 @@ cc.Class({
                 {
                     this.node_duizhan.jifenx2();
                 }
+            }
+            else if(type == 7)
+            {
+                if(cc.isValid(this.node_qiandao))
+                    this.node_qiandao.vedioRiqi();
+            }
+            else if(type == 8)
+            {
+                if(cc.isValid(this.node_coinx2))
+                    this.node_coinx2.lingquSuc();
             }
             storage.resumeMusic();
         }

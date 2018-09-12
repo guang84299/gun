@@ -197,6 +197,7 @@ cc.Class({
             else if(i == 5)
             {
                 var num = storage.getStorageRoleJieSuoNum();
+                num = parseInt(num) + parseInt(storage.getStorageRoleJieSuoNum2());
                 var awardnum = storage.getStorageRoleJieSuoAwardNum();
                 var isend = false;
                 if(awardnum>=this.res.chengjiuconfig.jiesuorole.length)
@@ -343,6 +344,8 @@ cc.Class({
             this.main.qianqista.event("chengjiu_lingqu_num_10");
         else if(awardnum == 20)
             this.main.qianqista.event("chengjiu_lingqu_num_20");
+
+        this.main.openCoinx2(coin);
     },
 
     

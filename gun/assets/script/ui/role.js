@@ -40,10 +40,11 @@ cc.Class({
         this.node_role_coin = cc.find("coin/num",this.node_role);
         this.node_role_page = cc.find("page",this.node_role);
         this.node_role_page1 = cc.find("page/view/content/page_1",this.node_role);
-        this.node_role_page2 = cc.find("page/view/content/page_2",this.node_role);
+        //this.node_role_page2 = cc.find("page/view/content/page_2",this.node_role);
         this.node_role_page3 = cc.find("page/view/content/page_3",this.node_role);
         this.node_role_page3_guang = cc.find("guang",this.node_role_page3);
         this.node_roleyaoqing = cc.find("roleyaoqing",this.node_role);
+        this.node_roleyaoqing_time = cc.find("roleyaoqing/time",this.node_role);
 
         this.node_role_page3_guang.runAction(cc.repeatForever(
             cc.rotateBy(1,180)
@@ -56,6 +57,7 @@ cc.Class({
 
     updateUI: function()
     {
+        this.updateTime();
         var s = cc.winSize;
         var index = this.node_role_page.getComponent("cc.PageView").getCurrentPageIndex();
 
@@ -67,10 +69,12 @@ cc.Class({
         }
 
 
-        if(this.main.GAME.sharecard == 1)
-            this.node_roleyaoqing.active = true;
-        else
-            this.node_roleyaoqing.active = false;
+
+        //
+        //if(this.main.GAME.sharecard == 1)
+        //    this.node_roleyaoqing.active = true;
+        //else
+        //    this.node_roleyaoqing.active = false;
         this.node_role_center.height = s.height - 335;
         this.node_role_center.color = this.main.ltcolor;
 
@@ -102,17 +106,17 @@ cc.Class({
         cc.find("roleyaoqing/coin",this.node_role).color = this.main.ltcolor;
 
         var currPlayer = storage.getStorageCurrPlayer();
-        for(var i=1;i<=19;i++)
+        for(var i=1;i<=10;i++)
         {
             if(i == 10)
                 continue;
             var item = null;
             if(i<10)
                 item = cc.find("item_"+i,this.node_role_page1);
-            else if(i>10)
-            {
-                item = cc.find("item_"+(i-10),this.node_role_page2);
-            }
+            //else if(i>10)
+            //{
+            //    item = cc.find("item_"+(i-10),this.node_role_page2);
+            //}
 
             var box1 = cc.find("box_1",item);
             var box2 = cc.find("box_2",item);
@@ -206,9 +210,9 @@ cc.Class({
             var index = this.node_role_page.getComponent("cc.PageView").getCurrentPageIndex();
             if(index == 0)
                 this.rolejiesuo();
+            //else if(index == 1)
+            //    this.rolejiesuo2();
             else if(index == 1)
-                this.rolejiesuo2();
-            else if(index == 2)
                 this.rolejiesuo3();
         }
         else if(data == "roleitem")
@@ -220,8 +224,9 @@ cc.Class({
         }
         else if(data == "roleyaoqing")
         {
-            this.main.openstore = true;
-            this.main.openAward();
+            //this.main.openstore = true;
+            //this.main.openAward();
+            this.main.wxVideoShow(1);
         }
         cc.log(data);
     },
@@ -235,11 +240,11 @@ cc.Class({
             {
                 cc.find("rolejiesuo/coin",this.node_role).getComponent("cc.Label").string = 500;
             }
+            //else if(index == 1)
+            //{
+            //    cc.find("rolejiesuo/coin",this.node_role).getComponent("cc.Label").string = (storage.getStorageRoleJieSuoNum2()*100 + 1000);
+            //}
             else if(index == 1)
-            {
-                cc.find("rolejiesuo/coin",this.node_role).getComponent("cc.Label").string = (storage.getStorageRoleJieSuoNum2()*100 + 1000);
-            }
-            else if(index == 2)
             {
                 cc.find("rolejiesuo/coin",this.node_role).getComponent("cc.Label").string = 5000;
             }
@@ -454,5 +459,21 @@ cc.Class({
     updateCoin: function(num)
     {
         this.node_role_coin.getComponent("cc.Label").string = num+"";
+    },
+
+    updateTime: function()
+    {
+        var videoTime = storage.getStorageVideoTime();
+        if(videoTime<0)
+        {
+            this.node_roleyaoqing_time.active = false;
+            this.node_roleyaoqing.getComponent("cc.Button").interactable = true;
+        }
+        else
+        {
+            this.node_roleyaoqing.getComponent("cc.Button").interactable = false;
+            this.node_roleyaoqing_time.active = true;
+            this.node_roleyaoqing_time.getComponent("cc.Label").string = "0:"+videoTime;
+        }
     }
 });

@@ -61,7 +61,7 @@ cc.Class({
         this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
         this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
-        for(var i=1;i<=6;i++)
+        for(var i=1;i<=5;i++)
         {
             var item = cc.find("item_"+i,this.node_chengjiu_scroll_content);
             var lnum = cc.find("num",item);
@@ -226,37 +226,37 @@ cc.Class({
                     box.color = cc.color(255,255,255);
                 }
             }
-            else if(i == 6)
-            {
-                var num = storage.getStorageWinNum();
-                var awardnum = storage.getStorageWinNumAwardNum();
-                var isend = false;
-                if(awardnum>=this.res.chengjiuconfig.duizhan.length)
-                {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.duizhan[awardnum];
-                lnum.getComponent("cc.Label").string = "x"+data.num;
-                award.getComponent("cc.Label").string = data.coin;
-                curr.getComponent("cc.Label").string = num + "/"+ data.num;
-
-                box.coin = data.coin;
-                box.canset = false;
-                if(isend)
-                {
-                    box.color = cc.color(181,181,181);
-                }
-                else if(num >= data.num)
-                {
-                    box.color = cc.color(143,195,31);
-                    box.canset = true;
-                }
-                else
-                {
-                    box.color = cc.color(255,255,255);
-                }
-            }
+            //else if(i == 6)
+            //{
+            //    var num = storage.getStorageWinNum();
+            //    var awardnum = storage.getStorageWinNumAwardNum();
+            //    var isend = false;
+            //    if(awardnum>=this.res.chengjiuconfig.duizhan.length)
+            //    {
+            //        isend = true;
+            //        awardnum -= 1;
+            //    }
+            //    var data = this.res.chengjiuconfig.duizhan[awardnum];
+            //    lnum.getComponent("cc.Label").string = "x"+data.num;
+            //    award.getComponent("cc.Label").string = data.coin;
+            //    curr.getComponent("cc.Label").string = num + "/"+ data.num;
+            //
+            //    box.coin = data.coin;
+            //    box.canset = false;
+            //    if(isend)
+            //    {
+            //        box.color = cc.color(181,181,181);
+            //    }
+            //    else if(num >= data.num)
+            //    {
+            //        box.color = cc.color(143,195,31);
+            //        box.canset = true;
+            //    }
+            //    else
+            //    {
+            //        box.color = cc.color(255,255,255);
+            //    }
+            //}
         }
     },
 
@@ -316,14 +316,14 @@ cc.Class({
             var awardnum = storage.getStorageRoleJieSuoAwardNum();
             storage.setStorageRoleJieSuoAwardNum(parseInt(awardnum)+1);
         }
-        else if(id == 6)
-        {
-            var awardnum = storage.getStorageWinNumAwardNum();
-            storage.setStorageWinNumAwardNum(parseInt(awardnum)+1);
-        }
+        //else if(id == 6)
+        //{
+        //    var awardnum = storage.getStorageWinNumAwardNum();
+        //    storage.setStorageWinNumAwardNum(parseInt(awardnum)+1);
+        //}
 
         this.main.uploadData();
-        this.res.showToast("金币+"+coin);
+        //this.res.showToast("金币+"+coin);
         this.updateUI();
         this.main.updateDian();
         storage.playSound(this.res.audio_coin);

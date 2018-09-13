@@ -22,7 +22,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 37
@@ -210,7 +210,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "93Gg4+3wJH14SZ8b26Dzv5",
     "sync": false
@@ -364,7 +364,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "c9xHoeQqRNJIzWd8MTVRsw",
     "sync": false
@@ -521,7 +521,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "87ta1CgRBIMbjtAVy/orqp",
     "sync": false
@@ -612,7 +612,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "b3OKdQw6ZPYq6+w4t3dH04",
     "sync": false
@@ -703,7 +703,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "a1Lw3sU0hNb6nDIJ0bSlZk",
     "sync": false
@@ -790,7 +790,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "e0+EjseG9I149WcchAdutg",
     "sync": false
@@ -904,7 +904,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "07gfr62I9P1ZauvRDZmpqk",
     "sync": false
@@ -1075,7 +1075,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "72VoyqrAVJEJYuuB5KpEUa",
     "sync": false
@@ -1150,7 +1150,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "观看视频领金币",
+    "_N$string": "观看广告领金币",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1162,7 +1162,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "0cOgIJrVhIYIR9wdEb8WXa",
     "sync": false
@@ -1199,7 +1199,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "d0yRPoccxNqp0BKeY+ynmJ",
     "sync": false
@@ -1219,7 +1219,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "a9d05777-fe66-4745-9126-5c61b92165cb"
     },
     "fileId": "49bjWzrBlIObEP6A6BLIMR",
     "sync": false

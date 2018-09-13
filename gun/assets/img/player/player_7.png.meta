@@ -7,7 +7,7 @@
   "subMetas": {
     "player_7": {
       "ver": "1.0.3",
-      "uuid": "16d010eb-7e94-4964-aab7-fac833781933",
+      "uuid": "8e221016-56cf-47c7-aa6d-41b709a9229f",
       "rawTextureUuid": "f1687455-409a-44cc-9482-1ee5111d607e",
       "trimType": "auto",
       "trimThreshold": 1,
@@ -17,9 +17,9 @@
       "trimX": 0,
       "trimY": 0,
       "width": 59,
-      "height": 90,
+      "height": 93,
       "rawWidth": 59,
-      "rawHeight": 90,
+      "rawHeight": 93,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

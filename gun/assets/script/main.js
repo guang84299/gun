@@ -47,37 +47,37 @@ cc.Class({
          storage.preloadSound();
          this.wxVideoLoad();
 
-         var self = this;
-         qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
-             qianqista.datas(function(res){
-                 console.log('my datas:', res);
-                 if(res.state == 200)
-                 {
-                     self.updateLocalData(res.data);
-                 }
-             });
-             qianqista.pdatas(function(res){
-                 self.updateLocalData2(res);
-             });
-             qianqista.rankScore(function(res){
-                 self.worldrank.wujin = res.data;
-             });
-             qianqista.rankJScore(function(res){
-                 self.worldrank.pk = res.data;
-             });
-         },function(){
-             self.startDuizhan();
-         });
-
-         qianqista.control(function(res){
-             console.log('my control:', res);
-             if(res.state == 200)
-             {
-                 self.GAME.control = res.data;
-                 self.updateUIControl();
-
-             }
-         });
+         //var self = this;
+         //qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
+         //    qianqista.datas(function(res){
+         //        console.log('my datas:', res);
+         //        if(res.state == 200)
+         //        {
+         //            self.updateLocalData(res.data);
+         //        }
+         //    });
+         //    qianqista.pdatas(function(res){
+         //        self.updateLocalData2(res);
+         //    });
+         //    qianqista.rankScore(function(res){
+         //        self.worldrank.wujin = res.data;
+         //    });
+         //    qianqista.rankJScore(function(res){
+         //        self.worldrank.pk = res.data;
+         //    });
+         //},function(){
+         //    self.startDuizhan();
+         //});
+         //
+         //qianqista.control(function(res){
+         //    console.log('my control:', res);
+         //    if(res.state == 200)
+         //    {
+         //        self.GAME.control = res.data;
+         //        self.updateUIControl();
+         //
+         //    }
+         //});
 
          // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
@@ -181,8 +181,8 @@ cc.Class({
         // storage.setStorageInviteNum(5);
         // storage.setStorageInviteAwardNum(4);
 
-        // storage.setStorageGunInviteNum(1);
-        // storage.setStorageGunInviteAwardNum(0);
+        //storage.setStorageGunInviteNum(1);
+        //storage.setStorageGunInviteAwardNum(0);
         //storage.setStorageGun(16,0);
 
         //storage.setStorageLevel(35);
@@ -237,10 +237,12 @@ cc.Class({
         this.node_main_zhanshibg_guang = cc.find("zhanshibg/guang",this.node_main);
         this.node_main_fangdanyi_guang = cc.find("fangdanyi/guang",this.node_main);
         this.node_main_linggunbg_guang = cc.find("linggunbg/guang",this.node_main);
+        this.node_main_chengjiu_guang = cc.find("chengjiu/guang",this.node_main);
 
         this.node_main_zhanshibg_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
         this.node_main_fangdanyi_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
         this.node_main_linggunbg_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
+        this.node_main_chengjiu_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
         //var stringTime = "2018-07-05 17:01:00";
         //var timestamp2 = (new Date(Date.parse(stringTime.replace(/-/g,"/")))).getTime();
         //if(new Date().getTime() < timestamp2)
@@ -268,9 +270,9 @@ cc.Class({
         this.node_main_more.active = false;
         //this.node_main_more2.active = false;
         
-        cc.find("fangdanyi",this.node_main).active = false;
+        //cc.find("fangdanyi",this.node_main).active = false;
         cc.find("bottom/lingjiang",this.node_main).active = false;
-        cc.find("linggunbg",this.node_main).active = false;
+        //cc.find("linggunbg",this.node_main).active = false;
         
 
         this.GAME.more = null;
@@ -289,7 +291,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard")
+                if(con.id == "sharecard2")
                 {
                     if(con.value == "1")
                     {
@@ -367,6 +369,7 @@ cc.Class({
             }
 
         }
+        this.GAME.fangdanyi = true;
         var cardnum = storage.getStorageCard();
         if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi)
         {
@@ -388,8 +391,8 @@ cc.Class({
 
         this.updateDian();
 
-        if(this.GAME.control.length>0)
-        {
+        //if(this.GAME.control.length>0)
+        //{
             var currQianDao = storage.getStorageQianDao();
             var currQianDaoTime = storage.getStorageQianDaoTime();
             var now = new Date().getDate();
@@ -397,7 +400,7 @@ cc.Class({
             {
                 this.openQianDao();
             }
-        }
+        //}
     },
 
     loadPic: function(sp,url)
@@ -806,7 +809,7 @@ cc.Class({
             else
             {
                 this.startGmae();
-                this.openTishi();
+                //this.openTishi();
             }
         }
         else if(data == "juese")
@@ -1135,7 +1138,7 @@ cc.Class({
     {
         var qiandao_dian = cc.find("qiandao/dian",this.node_main);
         var lingjiang_dian = cc.find("bottom/lingjiang/dian",this.node_main);
-        var chengjiu_dian = cc.find("bottom/chengjiu/dian",this.node_main);
+        var chengjiu_dian = cc.find("chengjiu/dian",this.node_main);
         
 
         qiandao_dian.active = false;
@@ -1165,7 +1168,7 @@ cc.Class({
         }
 
         var isshow = false;
-        for(var i=1;i<=6;i++) {
+        for(var i=1;i<=5;i++) {
             if (i == 1) {
                 var num = storage.getStorageHitEnemyNum();
                 var awardnum = storage.getStorageHitEnemyAwardNum();
@@ -1239,20 +1242,20 @@ cc.Class({
                     break;
                 }
             }
-            else if (i == 6) {
-                var num = storage.getStorageWinNum();
-                var awardnum = storage.getStorageWinNumAwardNum();
-                var isend = false;
-                if (awardnum >= this.res.chengjiuconfig.duizhan.length) {
-                    isend = true;
-                    awardnum -= 1;
-                }
-                var data = this.res.chengjiuconfig.duizhan[awardnum];
-                if (!isend && num >= data.num) {
-                    isshow = true;
-                    break;
-                }
-            }
+            //else if (i == 6) {
+            //    var num = storage.getStorageWinNum();
+            //    var awardnum = storage.getStorageWinNumAwardNum();
+            //    var isend = false;
+            //    if (awardnum >= this.res.chengjiuconfig.duizhan.length) {
+            //        isend = true;
+            //        awardnum -= 1;
+            //    }
+            //    var data = this.res.chengjiuconfig.duizhan[awardnum];
+            //    if (!isend && num >= data.num) {
+            //        isshow = true;
+            //        break;
+            //    }
+            //}
         }
 
         if(isshow)
@@ -1736,6 +1739,17 @@ cc.Class({
                     ti.addChild(wujian);
                 }
 
+                if(i == 4)
+                {
+                    var l4399 = new cc.Node();
+                    var s4399 = l4399.addComponent("cc.Label");
+                    s4399.string = "4399";
+                    l4399.x = (ti.width/2 - ti.x)/2;
+                    l4399.y = this.tih-30;
+                    l4399.rotation = -30;
+                    l4399.opacity = 200;
+                    ti.addChild(l4399);
+                }
 
                 this.last_h = this.last_h + item[1]*this.tih;
                 this.ltzorder--;
@@ -3703,12 +3717,20 @@ cc.Class({
 
                     if(cc.isValid(this.node_coin))
                         this.node_coin.updateUI();
+                    if(cc.isValid(this.node_role))
+                        this.node_role.updateTime();
+                    if(cc.isValid(this.node_gun))
+                        this.node_gun.updateTime();
                 }
                 else
                 {
                     this.node_main_lingqu_time.getComponent("cc.Label").string = "0:"+videoTime;
                     if(cc.isValid(this.node_coin))
                         this.node_coin.updateUI();
+                    if(cc.isValid(this.node_role))
+                        this.node_role.updateTime();
+                    if(cc.isValid(this.node_gun))
+                        this.node_gun.updateTime();
                     storage.setStorageVideoTime(videoTime-1);
                 }
             }
@@ -4215,6 +4237,16 @@ cc.Class({
 
                         if(cc.isValid(self.node_coin))
                             self.node_coin.updateUI();
+                        if(cc.isValid(self.node_role))
+                        {
+                            self.node_role.updateTime();
+                            self.node_role.updateCoin(coin);
+                        }
+                        if(cc.isValid(self.node_gun))
+                        {
+                            self.node_gun.updateTime();
+                            self.node_gun.updateCoin(coin);
+                        }
 
                         self.res.showToast("金币+100");
                     }
@@ -4285,6 +4317,22 @@ cc.Class({
                         if(cc.isValid(self.node_coinx2))
                             self.node_coinx2.lingquSuc();
                     }
+                    else if(self.GAME.VIDEOAD_TYPE == 9)
+                    {
+                        var gunInviteNum = storage.getStorageGunInviteNum();
+                        storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
+                        if(cc.isValid(self.node_linggun))
+                            self.node_linggun.updateUI();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 10)
+                    {
+                        self.res.showToast("获取到一个防弹衣");
+
+                        var cardnum = storage.getStorageCard();
+                        cardnum = parseInt(cardnum) + 1;
+                        storage.setStorageCard(cardnum);
+                        self.node_card.updateUI();
+                    }
                 }
                 else {
                     // 播放中途退出，不下发游戏奖励
@@ -4296,26 +4344,11 @@ cc.Class({
                     {
                         self.res.showToast("体验失败");
                     }
-                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    else
                     {
                         self.res.showToast("获取失败");
                     }
-                    else if(self.GAME.VIDEOAD_TYPE == 5)
-                    {
-                        self.res.showToast("获取失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 6)
-                    {
-                        self.res.showToast("获取失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 7)
-                    {
-                        self.res.showToast("获取失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 8)
-                    {
-                        self.res.showToast("获取失败");
-                    }
+
 
                 }
                 storage.resumeMusic();
@@ -4349,10 +4382,165 @@ cc.Class({
                 });
             }
         }
+        else if(cc.sys.isBrowser)
+        {
+            var adnum = storage.getStorageAdNum();
+            if(adnum>=10)
+            {
+                var now = new Date().getTime();
+                var adtime = storage.getStorageAdTime();
+                if(now - adtime > 24*60*60*1000)
+                {
+                    storage.setStorageAdNum(0);
+                }
+                else
+                {
+                    self.res.showToast("今天的广告次数已看完，明天再来哦！");
+                    return;
+                }
+            }
+
+
+            if(window.h5api.canPlayAd())
+            {
+                window.h5api.playAd(function(obj){
+                    console.log('代码:' + obj.code + ',消息:' + obj.message);
+                    if(obj.code === 10000){
+                        console.log('开始播放');
+                    } else if(obj.code === 10001){
+                        console.log('播放结束');
+                        storage.setStorageAdNum(adnum+1);
+                        storage.setStorageAdTime(new Date().getTime());
+                        if(self.GAME.VIDEOAD_TYPE == 1)
+                        {
+                            var coin = storage.getStorageCoin();
+                            coin = parseInt(coin) + 100;
+                            storage.setStorageCoin(coin);
+                            self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                            self.uploadData();
+
+                            self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                            self.node_main_lingqu_time.active = true;
+                            self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                            storage.setStorageVideoTime(120);
+
+                            if(cc.isValid(self.node_coin))
+                                self.node_coin.updateUI();
+                            if(cc.isValid(self.node_role))
+                            {
+                                self.node_role.updateTime();
+                                self.node_role.updateCoin(coin);
+                            }
+                            if(cc.isValid(self.node_gun))
+                            {
+                                self.node_gun.updateTime();
+                                self.node_gun.updateCoin(coin);
+                            }
+
+                            self.res.showToast("金币+100");
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 2)
+                        {
+                            self.fuhuo(false,false,true);
+                            self.res.showToast("复活成功");
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 3)
+                        {
+                            storage.setStorageHasZhanShi(5);
+                            if(cc.isValid(self.node_zhanshi))
+                                self.node_zhanshi.updateUI();
+                            else if(cc.isValid(self.node_tryzhanshi))
+                                self.node_tryzhanshi.useZhanshiStart();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 4)
+                        {
+                            self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                            storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                            self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2);
+                            self.node_tiaozhan_sus.updateCoin();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 5)
+                        {
+                            self.node_tiaozhan_fail.updateJumpNum();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 6)
+                        {
+                            if(self.openduizhan)
+                            {
+                                self.node_duizhan.jifenx2();
+                            }
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 7)
+                        {
+                            if(cc.isValid(self.node_qiandao))
+                                self.node_qiandao.vedioRiqi();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 8)
+                        {
+                            if(cc.isValid(self.node_coinx2))
+                                self.node_coinx2.lingquSuc();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 9)
+                        {
+                            var gunInviteNum = storage.getStorageGunInviteNum();
+                            storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
+                            if(cc.isValid(self.node_linggun))
+                                self.node_linggun.updateUI();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 10)
+                        {
+                            self.res.showToast("获取到一个防弹衣");
+
+                            var cardnum = storage.getStorageCard();
+                            cardnum = parseInt(cardnum) + 1;
+                            storage.setStorageCard(cardnum);
+                            self.node_card.updateUI();
+                        }
+
+                    } else {
+                        console.log('广告异常');
+                        if(self.GAME.VIDEOAD_TYPE == 1)
+                            self.res.showToast("金币获取失败");
+                        else if(self.GAME.VIDEOAD_TYPE == 2)
+                        {
+                            self.res.showToast("复活失败");
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 3)
+                        {
+                            self.res.showToast("体验失败");
+                        }
+                        else
+                        {
+                            self.res.showToast("获取失败");
+                        }
+
+                    }
+                });
+            }
+        }
         else
         {
             if(type == 1)
             {
+                var adnum = storage.getStorageAdNum();
+                if(adnum>=10)
+                {
+                    var now = new Date().getTime();
+                    var adtime = storage.getStorageAdTime();
+                    if(now - adtime > 24*60*60*1000)
+                    {
+                        storage.setStorageAdNum(0);
+                    }
+                    else
+                    {
+                        self.res.showToast("今天的广告次数已看完，明天再来哦！");
+                        return;
+                    }
+                }
+                storage.setStorageAdNum(adnum+1);
+                storage.setStorageAdTime(new Date().getTime());
+
                 var coin = storage.getStorageCoin();
                 coin = parseInt(coin) + 100;
                 storage.setStorageCoin(coin);
@@ -4363,9 +4551,19 @@ cc.Class({
                 this.node_main_lingqu_time.active = true;
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                storage.setStorageVideoTime(30);
-                if(cc.isValid(self.node_coin))
-                    self.node_coin.updateUI();
+                storage.setStorageVideoTime(10);
+                if(cc.isValid(self.node_role))
+                {
+                    self.node_role.updateTime();
+                    self.node_role.updateCoin(coin);
+                }
+                if(cc.isValid(self.node_gun))
+                {
+                    self.node_gun.updateTime();
+                    self.node_gun.updateCoin(coin);
+                }
+
+                self.res.showToast("金币+100");
             }
             else if(type == 2)
             {
@@ -4406,6 +4604,22 @@ cc.Class({
             {
                 if(cc.isValid(this.node_coinx2))
                     this.node_coinx2.lingquSuc();
+            }
+            else if(type == 9)
+            {
+                var gunInviteNum = storage.getStorageGunInviteNum();
+                storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
+                if(cc.isValid(this.node_linggun))
+                    this.node_linggun.updateUI();
+            }
+            else if(type == 10)
+            {
+                self.res.showToast("获取到一个防弹衣");
+
+                var cardnum = storage.getStorageCard();
+                cardnum = parseInt(cardnum) + 1;
+                storage.setStorageCard(cardnum);
+                self.node_card.updateUI();
             }
             storage.resumeMusic();
         }

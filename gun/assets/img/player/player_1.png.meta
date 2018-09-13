@@ -7,7 +7,7 @@
   "subMetas": {
     "player_1": {
       "ver": "1.0.3",
-      "uuid": "903c5b1f-f78a-46a3-a311-6540b8a00cad",
+      "uuid": "cc59dec1-50fe-4316-adc2-4ea75c8e84ad",
       "rawTextureUuid": "2826dd59-3782-4574-b91c-eae4064a8bb7",
       "trimType": "auto",
       "trimThreshold": 1,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 78,
-      "height": 97,
-      "rawWidth": 78,
-      "rawHeight": 97,
+      "width": 55,
+      "height": 84,
+      "rawWidth": 55,
+      "rawHeight": 84,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

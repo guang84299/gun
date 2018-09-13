@@ -35,6 +35,7 @@ cc.Class({
     {
         this.node_qiandao = this.node;
         this.node_qiandao_vedio = cc.find("bg/vedio",this.node_qiandao);
+        this.node_qiandao_vedio.getComponent("cc.Toggle").isChecked = false;
 
         this.riqiId = 0;
         this.updateUI();

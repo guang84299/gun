@@ -67,7 +67,7 @@ cc.Class({
         }
         else
         {
-            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "邀请好友";
+            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "看视频";
         }
     },
 
@@ -104,11 +104,11 @@ cc.Class({
         {
             if(storage.getStorageGun(16) == 1)
             {
-                storage.setStorageCoin(parseInt(storage.getStorageCoin())+2000);
+                storage.setStorageCoin(parseInt(storage.getStorageCoin())+400);
 
                 storage.setStorageGunInviteAwardNum(1);
                 this.main.uploadData();
-                this.res.showToast("金币+"+2000);
+                this.res.showToast("金币+"+400);
                 this.updateUI();
                 this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
                 storage.playSound(this.res.audio_coin);
@@ -176,8 +176,9 @@ cc.Class({
         }
         else
         {
-            var gunInviteNum = storage.getStorageGunInviteNum();
-            storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
+            this.main.wxVideoShow(9);
+            //var gunInviteNum = storage.getStorageGunInviteNum();
+            //storage.setStorageGunInviteNum(parseInt(gunInviteNum)+1);
         }
     }
     

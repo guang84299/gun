@@ -521,6 +521,28 @@ module.exports = {
         return Number(level);
     },
 
+    setStorageAdNum: function(adnum)
+    {
+        cc.sys.localStorage.setItem("adnum",adnum);
+    },
+    getStorageAdNum: function()
+    {
+        var adnum = cc.sys.localStorage.getItem("adnum");
+        adnum = adnum ? adnum : 0;
+        return Number(adnum);
+    },
+
+    setStorageAdTime: function(adtime)
+    {
+        cc.sys.localStorage.setItem("adtime",adtime);
+    },
+    getStorageAdTime: function()
+    {
+        var adtime = cc.sys.localStorage.getItem("adtime");
+        adtime = adtime ? adtime : 0;
+        return Number(adtime);
+    },
+
     judgeShareGroupState: function(openGId,timestamp)
     {
         var shareGroupList = this.getStorageShareGroupList();

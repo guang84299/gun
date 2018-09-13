@@ -73,7 +73,8 @@ cc.Class({
         }
         else if(data == "sendcard")
         {
-            this.main.wxGropShareCard();
+            //this.main.wxGropShareCard();
+            this.main.wxVideoShow(10);
             this.main.qianqista.event("btn_fangdanyi_qiuzu");
         }
        

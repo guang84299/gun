@@ -42,14 +42,16 @@ cc.Class({
         this.node_gun_page1 = cc.find("page/view/content/page_1",this.node_gun);
         this.node_gun_page2 = cc.find("page/view/content/page_2",this.node_gun);
         this.node_gun_page3 = cc.find("page/view/content/page_3",this.node_gun);
-        this.node_gun_page4 = cc.find("page/view/content/page_4",this.node_gun);
+        //this.node_gun_page4 = cc.find("page/view/content/page_4",this.node_gun);
         this.node_roleyaoqing = cc.find("roleyaoqing",this.node_gun);
+        this.node_roleyaoqing_time = cc.find("roleyaoqing/time",this.node_gun);
 
         this.updateUI();
     },
 
     updateUI: function()
     {
+        this.updateTime();
         var s = cc.winSize;
         var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
 
@@ -57,7 +59,8 @@ cc.Class({
         if(this.main.openduizhan)
             currGun = storage.getStorageCurrPkGun();
 
-        if(this.main.GAME.sharecard == 1 && index < 2)
+        //if(this.main.GAME.sharecard == 1 && index < 2)
+        if(index < 2)
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
@@ -156,7 +159,7 @@ cc.Class({
             }
         }
         this.updateGunRiQi();
-        this.updateGunJifen();
+        //this.updateGunJifen();
 
         storage.playSound(this.res.audio_role);
     },
@@ -205,8 +208,9 @@ cc.Class({
         }
         else if(data == "roleyaoqing")
         {
-            this.main.openstore = true;
-            this.main.openAward();
+            //this.main.openstore = true;
+            //this.main.openAward();
+            this.main.wxVideoShow(1);
         }
         cc.log(data);
     },
@@ -218,11 +222,12 @@ cc.Class({
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
             if(index < 2)
             {
-                if(this.main.GAME.fangdanyi)
-                {
-                    cc.find("roleyaoqing",this.node_gun).active = true;
-                }
+                //if(this.main.GAME.fangdanyi)
+                //{
+                //    cc.find("roleyaoqing",this.node_gun).active = true;
+                //}
                 cc.find("gunjiesuo",this.node_gun).active = true;
+                cc.find("roleyaoqing",this.node_gun).active = true;
                 if(index == 0)
                 {
                     cc.find("gunjiesuo/coin",this.node_gun).getComponent("cc.Label").string = (storage.getStorageGunJieSuoNum()*50 + 200);
@@ -544,5 +549,21 @@ cc.Class({
     updateCoin: function(num)
     {
         this.node_gun_coin.getComponent("cc.Label").string = num+"";
+    },
+
+    updateTime: function()
+    {
+        var videoTime = storage.getStorageVideoTime();
+        if(videoTime<0)
+        {
+            this.node_roleyaoqing_time.active = false;
+            this.node_roleyaoqing.getComponent("cc.Button").interactable = true;
+        }
+        else
+        {
+            this.node_roleyaoqing.getComponent("cc.Button").interactable = false;
+            this.node_roleyaoqing_time.active = true;
+            this.node_roleyaoqing_time.getComponent("cc.Label").string = "0:"+videoTime;
+        }
     }
 });

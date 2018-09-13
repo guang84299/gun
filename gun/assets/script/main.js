@@ -40,12 +40,13 @@ cc.Class({
 
          this.adapt();
 
-         this.wxGetUserInfo();
-         this.wxOpenQuan();
+
+         //this.wxGetUserInfo();
+         //this.wxOpenQuan();
 
          storage.playMusic(this.res.audio_bgm);
          storage.preloadSound();
-         this.wxVideoLoad();
+         //this.wxVideoLoad();
 
          //var self = this;
          //qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
@@ -3739,17 +3740,17 @@ cc.Class({
 
     vibrate: function(isLong)
     {
-        if(storage.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
-        {
-            if(isLong)
-            {
-                wx.vibrateLong({});
-            }
-            else
-            {
-                wx.vibrateShort({});
-            }
-        }
+        //if(storage.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
+        //{
+        //    if(isLong)
+        //    {
+        //        wx.vibrateLong({});
+        //    }
+        //    else
+        //    {
+        //        wx.vibrateShort({});
+        //    }
+        //}
     },
 
     
@@ -3986,19 +3987,19 @@ cc.Class({
     },
 
     _updaetSubDomainCanvas: function() {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            if (!this.tex) {
-                return;
-            }
-            var openDataContext = wx.getOpenDataContext();
-            var sharedCanvas = openDataContext.canvas;
-            this.tex.initWithElement(sharedCanvas);
-            this.tex.handleLoadedTexture();
-            this.display.spriteFrame = new cc.SpriteFrame(this.tex);
-            if(this.display.node.scale == 1)
-                this.display.node.scale = (this.dsize.width / this.display.node.width);
-        }
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    if (!this.tex) {
+        //        return;
+        //    }
+        //    var openDataContext = wx.getOpenDataContext();
+        //    var sharedCanvas = openDataContext.canvas;
+        //    this.tex.initWithElement(sharedCanvas);
+        //    this.tex.handleLoadedTexture();
+        //    this.display.spriteFrame = new cc.SpriteFrame(this.tex);
+        //    if(this.display.node.scale == 1)
+        //        this.display.node.scale = (this.dsize.width / this.display.node.width);
+        //}
     },
 
     wxOpenQuan: function()
@@ -4026,13 +4027,13 @@ cc.Class({
 
     wxQuanState: function(active)
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            if(active)
-                this.quan_button.show();
-            else
-                this.quan_button.hide();
-        }
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    if(active)
+        //        this.quan_button.show();
+        //    else
+        //        this.quan_button.hide();
+        //}
     },
 
     wxCloseOver: function()
@@ -4040,51 +4041,51 @@ cc.Class({
         if(cc.isValid(this.node_over))
             this.node_over.hide();
         this.display_gray.active = false;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            wx.postMessage({ message: "closeOver" });
-        }
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    wx.postMessage({ message: "closeOver" });
+        //}
     },
 
     wxCloseRank: function()
     {
         this.display_gray_rank.active = false;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "closeRank" });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "closeRank" });
     },
 
     wxCloseFuhuo: function()
     {
         this.display_gray.active = false;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "closeFuhuo" });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "closeFuhuo" });
     },
 
     wxRank: function()
     {
         this.display_gray_rank.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "friendRank",worldrank:this.worldrank });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "friendRank",worldrank:this.worldrank });
     },
 
     wxOverRank: function(score,playerId,gunId)
     {
         this.display_gray.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxFuhuoRank: function(score,playerId,gunId)
     {
         this.display_gray.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxUploadScore: function(score,playerId,gunId)
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxGropShare: function()
@@ -4363,26 +4364,26 @@ cc.Class({
         var self = this;
         storage.pauseMusic();
         this.GAME.VIDEOAD_TYPE = type;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            if(type == 1)
-            {
-                this.rewardedVideoAd.show().catch(function(err){
-                    self.rewardedVideoAd.load().then(function(){
-                        self.rewardedVideoAd.show();
-                    });
-                });
-            }
-            else
-            {
-                this.rewardedVideoAd2.show().catch(function(err){
-                    self.rewardedVideoAd2.load().then(function(){
-                        self.rewardedVideoAd2.show();
-                    });
-                });
-            }
-        }
-        else if(cc.sys.isBrowser)
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    if(type == 1)
+        //    {
+        //        this.rewardedVideoAd.show().catch(function(err){
+        //            self.rewardedVideoAd.load().then(function(){
+        //                self.rewardedVideoAd.show();
+        //            });
+        //        });
+        //    }
+        //    else
+        //    {
+        //        this.rewardedVideoAd2.show().catch(function(err){
+        //            self.rewardedVideoAd2.load().then(function(){
+        //                self.rewardedVideoAd2.show();
+        //            });
+        //        });
+        //    }
+        //}
+        if(cc.sys.isBrowser)
         {
             var adnum = storage.getStorageAdNum();
             if(adnum>=10)
@@ -4627,39 +4628,39 @@ cc.Class({
 
     wxBannerShow: function()
     {
-        this.wxBannerHide();
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            var openDataContext = wx.getOpenDataContext();
-            var sharedCanvas = openDataContext.canvas;
-            var sc = sharedCanvas.width/this.dsize.width;
-            var dpi = cc.view._devicePixelRatio;
-            this.bannerAd = wx.createBannerAd({
-                adUnitId: 'adunit-805ad9676746d8d2',
-                style: {
-                    left: 0,
-                    top: sharedCanvas.height/dpi-300/3.5,
-                    width: 300,
-                }
-            });
-            var bannerAd = this.bannerAd;
-            this.bannerAd.onResize(function(res){
-                // console.log(res.width, res.height)
-                // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
-                bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
-                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
-            });
-            this.bannerAd.show();
-        }
+        //this.wxBannerHide();
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    var openDataContext = wx.getOpenDataContext();
+        //    var sharedCanvas = openDataContext.canvas;
+        //    var sc = sharedCanvas.width/this.dsize.width;
+        //    var dpi = cc.view._devicePixelRatio;
+        //    this.bannerAd = wx.createBannerAd({
+        //        adUnitId: 'adunit-805ad9676746d8d2',
+        //        style: {
+        //            left: 0,
+        //            top: sharedCanvas.height/dpi-300/3.5,
+        //            width: 300,
+        //        }
+        //    });
+        //    var bannerAd = this.bannerAd;
+        //    this.bannerAd.onResize(function(res){
+        //        // console.log(res.width, res.height)
+        //        // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
+        //        bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
+        //        bannerAd.style.top = sharedCanvas.height/dpi-res.height;
+        //    });
+        //    this.bannerAd.show();
+        //}
     },
 
     wxBannerHide: function()
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            if(this.bannerAd)
-                this.bannerAd.hide();
-        }
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    if(this.bannerAd)
+        //        this.bannerAd.hide();
+        //}
     },
 
     

@@ -28,7 +28,7 @@
   "renderMode": "0",
   "startScene": "af092c72-7cfe-4c69-a3fb-0d770d2028a1",
   "title": "gun",
-  "webOrientation": "auto",
+  "webOrientation": "portrait",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wx5fbc3c48bb79327b",

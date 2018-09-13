@@ -554,7 +554,7 @@ cc.Class({
     updateTime: function()
     {
         var videoTime = storage.getStorageVideoTime();
-        if(videoTime<0)
+        if(videoTime<=0)
         {
             this.node_roleyaoqing_time.active = false;
             this.node_roleyaoqing.getComponent("cc.Button").interactable = true;

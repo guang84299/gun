@@ -114,7 +114,7 @@ cc.Class({
         {
             this.wxGropShareFuhuo();
             this.main.qianqista.event("fuhuo_coin");
-            this.hide();
+            //this.hide();
         }
         else if(data == "fuhuo_video")
         {

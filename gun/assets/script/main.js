@@ -225,6 +225,10 @@ cc.Class({
         //        cc.scaleTo(0.5,1).easing(cc.easeSineOut())
         //    )));
 
+        this.node_main_morebabg = cc.find("morebabg",this.node_main);
+        this.node_main_morebabg_morebaarrow = cc.find("morebabg/morebaarrow",this.node_main);
+
+
         var videoTime = storage.getStorageVideoTime();
         if(videoTime>0)
         {
@@ -267,6 +271,7 @@ cc.Class({
     {
         this.node_main_more.active = false;
         //this.node_main_more2.active = false;
+        this.node_main_morebabg.active = false;
         
         cc.find("fangdanyi",this.node_main).active = false;
         cc.find("bottom/lingjiang",this.node_main).active = false;
@@ -282,6 +287,8 @@ cc.Class({
         this.GAME.sharetiaozhan_txt = null;
         this.GAME.sharecoinx2 = false;
         this.GAME.shareqiandao = false;
+        this.GAME.moreba = false;
+        this.GAME.moreba_items = "";
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
@@ -337,6 +344,17 @@ cc.Class({
                     {
                         this.GAME.shareqiandao = true;
                     }
+                }
+                else if(con.id == "moreba")
+                {
+                    if(con.value == "1")
+                    {
+                        this.GAME.moreba = true;
+                    }
+                }
+                else if(con.id == "moreba_items")
+                {
+                    this.GAME.moreba_items = con.value;
                 }
                 else if(con.id == "publish")
                 {
@@ -394,6 +412,17 @@ cc.Class({
         //    this.loadPic(this.node_main_more2,pic);
         //}
 
+        if(this.GAME.moreba)
+        {
+            this.node_main_morebabg.active = true;
+            this.node_main_morebabg_morebaarrow.runAction(cc.repeatForever(cc.sequence(
+                cc.moveBy(0.4,6,0).easing(cc.easeSineIn()),
+                cc.moveBy(0.4,-6,0).easing(cc.easeSineIn())
+            )));
+
+            this.initMoreBaItems();
+        }
+
         this.updateDian();
 
         if(this.GAME.control.length>0)
@@ -404,6 +433,34 @@ cc.Class({
             if(currQianDao < 7 && currQianDaoTime != now)
             {
                 this.openQianDao();
+            }
+        }
+    },
+
+    initMoreBaItems: function()
+    {
+        var items = [];
+        if(this.GAME.moreba_items)
+            items = this.GAME.moreba_items.split("---");
+        for(var i=0;i<8;i++)
+        {
+            var uitem = cc.find("item"+(i+1),this.node_main_morebabg);
+            if(i<items.length)
+            {
+                uitem.active = true;
+                uitem.itemid = i;
+
+                var icon = cc.find("iconbg/icon",uitem);
+                var name = cc.find("name",uitem);
+
+                var item = items[i];
+                var pic = item.split("--")[1];
+                this.loadPic(icon,pic);
+                name.getComponent("cc.Label").string = item.split("--")[0];
+            }
+            else
+            {
+                uitem.active = false;
             }
         }
     },
@@ -918,7 +975,36 @@ cc.Class({
         {
             this.wxGongZhongHao();
         }
+        else if(data == "moreba")
+        {
+            this.openMoreBa();
+        }
+        else if(data == "morebaitem")
+        {
+            this.wxMore3(event.target.itemid);
+        }
         cc.log(data);
+    },
+
+    openMoreBa: function()
+    {
+        var action = this.node_main_morebabg.getActionByTag(1);
+        if(action && !action.isDone())
+            return;
+        if(this.node_main_morebabg_morebaarrow.active)
+        {
+            this.node_main_morebabg_morebaarrow.active = false;
+            var ac = cc.moveBy(0.5,227,0).easing(cc.easeSineOut());
+            ac.setTag(1);
+            this.node_main_morebabg.runAction(ac);
+        }
+        else
+        {
+            this.node_main_morebabg_morebaarrow.active = true;
+            var ac = cc.moveBy(0.5,-227,0).easing(cc.easeSineIn());
+            ac.setTag(1);
+            this.node_main_morebabg.runAction(ac);
+        }
     },
 
     openCoinx2: function(coin)
@@ -4520,6 +4606,34 @@ cc.Class({
               success: function(res) {
                 // 打开成功
               }
+            });
+        }
+    },
+
+    wxMore3: function(itemid)
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var appIdstr = 'wx604f780b017da7df';
+            var pathstr = 'pages/main/main';
+            if(this.GAME.moreba_items)
+            {
+                var item = this.GAME.moreba_items[itemid];
+                var ss = item.split("--");
+                appIdstr = ss[2];
+                pathstr = ss[3];
+            }
+
+            wx.navigateToMiniProgram({
+                appId: appIdstr,
+                path: pathstr,
+                extraData: {
+                    foo: 'bar'
+                },
+                // envVersion: 'develop',
+                success: function(res) {
+                    // 打开成功
+                }
             });
         }
     },

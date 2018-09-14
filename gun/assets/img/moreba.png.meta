@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "6a070119-fed2-4ff7-b56b-8c90ff099158",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "moreba": {
+      "ver": "1.0.3",
+      "uuid": "0d04f697-801e-4620-a674-34b882afa06d",
+      "rawTextureUuid": "6a070119-fed2-4ff7-b56b-8c90ff099158",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 69,
+      "height": 92,
+      "rawWidth": 69,
+      "rawHeight": 92,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -24,71 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="websocket.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/websocket.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3750" max-vertical-offset="6255">
-              <caret line="287" column="0" selection-start-line="287" selection-start-column="0" selection-end-line="287" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gun/assets/script/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.444445" vertical-offset="4800" max-vertical-offset="68235">
-              <caret line="337" column="46" selection-start-line="337" selection-start-column="34" selection-end-line="337" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.7069272" vertical-offset="69097" max-vertical-offset="69945">
+              <caret line="4633" column="40" selection-start-line="4633" selection-start-column="40" selection-end-line="4633" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="coinx2.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/coinx2.js">
+      <file leaf-file-name="gun.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/gun.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1602" max-vertical-offset="2340">
-              <caret line="139" column="9" selection-start-line="92" selection-start-column="8" selection-end-line="139" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qiandao.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/qiandao.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5771144" vertical-offset="2532" max-vertical-offset="3135">
-              <caret line="192" column="29" selection-start-line="192" selection-start-column="29" selection-end-line="192" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="star.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/star.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3448" max-vertical-offset="4065">
-              <caret line="141" column="9" selection-start-line="141" selection-start-column="9" selection-end-line="141" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="creator.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/creator.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="175979" max-vertical-offset="309615">
-              <caret line="11746" column="21" selection-start-line="11746" selection-start-column="8" selection-end-line="11746" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="storage.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gun/assets/script/storage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="32" max-vertical-offset="8370">
-              <caret line="18" column="31" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2610" max-vertical-offset="8310">
+              <caret line="200" column="35" selection-start-line="200" selection-start-column="12" selection-end-line="200" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -123,8 +73,8 @@
         <option value="$PROJECT_DIR$/gun/build/he/web-mobile/style-mobile.css" />
         <option value="$PROJECT_DIR$/gun/assets/script/ui/star.js" />
         <option value="$PROJECT_DIR$/gun/assets/script/ui/coin.js" />
-        <option value="$PROJECT_DIR$/gun/assets/script/main.js" />
         <option value="$PROJECT_DIR$/gun/assets/script/ui/qiandao.js" />
+        <option value="$PROJECT_DIR$/gun/assets/script/main.js" />
       </list>
     </option>
   </component>
@@ -366,14 +316,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/qianqista.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1657" max-vertical-offset="6870">
-          <caret line="135" column="44" selection-start-line="135" selection-start-column="44" selection-end-line="135" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/websocket.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3597" max-vertical-offset="4200">
@@ -595,14 +537,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/gun.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58474576" vertical-offset="1815" max-vertical-offset="8310">
-          <caret line="144" column="24" selection-start-line="144" selection-start-column="24" selection-end-line="144" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gun/assets/script/res.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23050848" vertical-offset="13289" max-vertical-offset="15315">
@@ -661,20 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gun/build/he/web-mobile/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.833333" vertical-offset="589" max-vertical-offset="1170">
-          <caret line="63" column="34" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="34" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gun/build/he/web-mobile/style-mobile.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7135417" vertical-offset="1419" max-vertical-offset="2010">
@@ -695,14 +615,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="175979" max-vertical-offset="309615">
           <caret line="11746" column="21" selection-start-line="11746" selection-start-column="8" selection-end-line="11746" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/star.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3448" max-vertical-offset="4065">
-          <caret line="141" column="9" selection-start-line="141" selection-start-column="9" selection-end-line="141" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -739,18 +651,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/main.js">
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/qiandao.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.444445" vertical-offset="4800" max-vertical-offset="68235">
-          <caret line="337" column="46" selection-start-line="337" selection-start-column="34" selection-end-line="337" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2532" max-vertical-offset="3135">
+          <caret line="184" column="17" selection-start-line="184" selection-start-column="17" selection-end-line="184" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/qiandao.js">
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/star.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5771144" vertical-offset="2532" max-vertical-offset="3135">
-          <caret line="192" column="29" selection-start-line="192" selection-start-column="29" selection-end-line="192" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.3018242" vertical-offset="1723" max-vertical-offset="4065">
+          <caret line="127" column="44" selection-start-line="127" selection-start-column="44" selection-end-line="127" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/build/web-mobile/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6166078" vertical-offset="349" max-vertical-offset="915">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/build/he/web-mobile/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33745584" vertical-offset="574" max-vertical-offset="1170">
+          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
+          <folding>
+            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1536837238895" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/ui/gun.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2610" max-vertical-offset="8310">
+          <caret line="200" column="35" selection-start-line="200" selection-start-column="12" selection-end-line="200" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gun/assets/script/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7069272" vertical-offset="69097" max-vertical-offset="69945">
+          <caret line="4633" column="40" selection-start-line="4633" selection-start-column="40" selection-end-line="4633" selection-end-column="40" />
           <folding />
         </state>
       </provider>

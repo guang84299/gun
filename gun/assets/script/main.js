@@ -281,6 +281,7 @@ cc.Class({
         this.GAME.sharetiaozhan_pic = null;
         this.GAME.sharetiaozhan_txt = null;
         this.GAME.sharecoinx2 = false;
+        this.GAME.shareqiandao = false;
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
         if(this.GAME.control.length>0)
@@ -328,6 +329,13 @@ cc.Class({
                     if(con.value == "1")
                     {
                         this.GAME.sharecoinx2 = true;
+                    }
+                }
+                else if(con.id == "shareqiandao")
+                {
+                    if(con.value == "1")
+                    {
+                        this.GAME.shareqiandao = true;
                     }
                 }
                 else if(con.id == "publish")
@@ -3061,7 +3069,7 @@ cc.Class({
         } else {
             hit = cc.instantiate(this.res.hit);
         }
-        hit.scale = 0;
+        hit.scale = 0.3;
         hit.color = this.enemy.enemycolor;
         hit.position = this.enemy.position;
         hit.y += this.enemy.height/2;
@@ -3082,14 +3090,15 @@ cc.Class({
                 this.addCoin();
 
             this.node_game_ui.hitbg.runAction(cc.sequence(
-                cc.fadeIn(0.05),
+                cc.fadeTo(0.05,150),
+                cc.delayTime(0.1),
                 cc.fadeOut(0.05)
             ));
             this.node_game.runAction(cc.sequence(
-                cc.moveBy(0.05,cc.v2(20,10)).easing(cc.easeSineIn()),
-                cc.moveBy(0.05,cc.v2(-20,-10)).easing(cc.easeSineOut()),
-                cc.moveBy(0.05,cc.v2(0,10)).easing(cc.easeSineIn()),
-                cc.moveBy(0.05,cc.v2(0,-10)).easing(cc.easeSineOut())
+                cc.moveBy(0.05,cc.v2(10,5)).easing(cc.easeSineIn()),
+                cc.moveBy(0.05,cc.v2(-10,-5)).easing(cc.easeSineOut()),
+                cc.moveBy(0.05,cc.v2(0,5)).easing(cc.easeSineIn()),
+                cc.moveBy(0.05,cc.v2(0,-5)).easing(cc.easeSineOut())
             ));
 
             this.vibrate();
@@ -3159,8 +3168,10 @@ cc.Class({
                 this.tiaozhandata.baoTou = this.GAME.killhead;
             }
         }
+        hit.opacity = 120;
         var seq = cc.sequence(
-            cc.scaleTo(0.3,sct,sct).easing(cc.easeSineIn()),
+            cc.scaleTo(0.1,sct,sct).easing(cc.easeSineIn()),
+            cc.fadeOut(0.06),
             cc.callFunc(function(){
                 self.poolhits.put(hit);
             })
@@ -3608,6 +3619,11 @@ cc.Class({
                     cc.callFunc(function(){
                         se.poolbloods.put(par);
                     })
+                ));
+
+                this.node_game.runAction(cc.sequence(
+                    cc.moveBy(0.05,cc.v2(5,2)).easing(cc.easeSineIn()),
+                    cc.moveBy(0.05,cc.v2(-5,-2)).easing(cc.easeSineOut())
                 ));
             }
             else if(other.node.group == "player")
@@ -4233,7 +4249,8 @@ cc.Class({
                     if(self.GAME.VIDEOAD_TYPE == 1)
                         self.res.showToast("金币获取失败");
                 }
-                storage.resumeMusic();
+                //storage.resumeMusic();
+                storage.playMusic(self.res.audio_bgm);
             });
 
             this.rewardedVideoAd2 = wx.createRewardedVideoAd({ adUnitId:'adunit-4bc6de7bc3426c18'});
@@ -4318,7 +4335,8 @@ cc.Class({
                     }
 
                 }
-                storage.resumeMusic();
+                //storage.resumeMusic();
+                storage.playMusic(self.res.audio_bgm);
             });
 
 
@@ -4407,7 +4425,8 @@ cc.Class({
                 if(cc.isValid(this.node_coinx2))
                     this.node_coinx2.lingquSuc();
             }
-            storage.resumeMusic();
+            //storage.resumeMusic();
+            storage.playMusic(self.res.audio_bgm);
         }
     },
 

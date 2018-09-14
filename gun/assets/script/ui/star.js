@@ -63,6 +63,7 @@ cc.Class({
         this.rankdata2 = null;
         this.subTime = 0;
         this.subDt =  0;
+        this.addItemDt = 0;
 
         var self = this;
         this.main.qianqista.subTime(function(res){
@@ -87,14 +88,14 @@ cc.Class({
         {
             if(this.rankdata1)
             {
-                self.updateItems(this.rankdata1);
+                self.updateMeItem(this.rankdata1);
             }
             else
             {
                 this.main.qianqista.rankStar(function(res){
                     var datas = res.data;
                     self.rankdata1 = datas;
-                    self.updateItems(datas);
+                    self.updateMeItem(datas);
                 });
             }
         }
@@ -102,14 +103,14 @@ cc.Class({
         {
             if(this.rankdata2)
             {
-                self.updateItems(this.rankdata2);
+                self.updateMeItem(this.rankdata2);
             }
             else
             {
                 this.main.qianqista.rankStarLast(function(res){
                     var datas = res.data;
                     self.rankdata2 = datas;
-                    self.updateItems(datas);
+                    self.updateMeItem(datas);
                 });
             }
 
@@ -117,39 +118,17 @@ cc.Class({
 
     },
 
-    updateItems: function(datas)
+    updateMeItem: function(datas)
     {
-
         if(datas && datas.length>0)
         {
             var selfdata = datas[datas.length-1];
-            for(var i=0;i<datas.length-1;i++)
-            {
-                var data = datas[i];
-                var item = cc.instantiate(this.item_star);
-                var bg = cc.find("bg",item);
-                var rank = cc.find("rank",bg);
-                var icon = cc.find("icon",bg);
-                var nike = cc.find("nike",bg);
-                var score = cc.find("score",bg);
-                var award = cc.find("award",bg);
-
-                rank.getComponent("cc.Label").string = (i+1)+"";
-                if(data.avatarUrl && data.avatarUrl.length>10)
-                    this.loadPic(icon,data.avatarUrl);
-                nike.getComponent("cc.Label").string = data.nick;
-                if(this.ranktype == 1)
-                    score.getComponent("cc.Label").string = data.star;
-                else
-                    score.getComponent("cc.Label").string = data.lastStar;
-                award.getComponent("cc.Label").string = data.award+"￥";
-
-                this.node_star_scroll_content.addChild(item);
-            }
-
             if(selfdata)
             {
-                this.node_star_item_me_rank.getComponent("cc.Label").string = selfdata.id+"";
+                var rankme = selfdata.id+"";
+                if(selfdata.id > 50 || selfdata.id == 0)
+                    rankme = "落榜";
+                this.node_star_item_me_rank.getComponent("cc.Label").string = rankme;
                 if(selfdata.avatarUrl && selfdata.avatarUrl.length>10)
                     this.loadPic(this.node_star_item_me_icon,selfdata.avatarUrl);
                 this.node_star_item_me_nike.getComponent("cc.Label").string = selfdata.nick;
@@ -160,6 +139,34 @@ cc.Class({
                 this.node_star_item_me_award.getComponent("cc.Label").string = selfdata.award+"￥";
 
             }
+        }
+    },
+
+    addItems: function(datas)
+    {
+        var num = this.node_star_scroll_content.childrenCount;
+        if(datas && datas.length>1 && num < datas.length-1)
+        {
+            var data = datas[num];
+            var item = cc.instantiate(this.item_star);
+            var bg = cc.find("bg",item);
+            var rank = cc.find("rank",bg);
+            var icon = cc.find("icon",bg);
+            var nike = cc.find("nike",bg);
+            var score = cc.find("score",bg);
+            var award = cc.find("award",bg);
+
+            rank.getComponent("cc.Label").string = (num+1)+"";
+            if(data.avatarUrl && data.avatarUrl.length>10)
+                this.loadPic(icon,data.avatarUrl);
+            nike.getComponent("cc.Label").string = data.nick;
+            if(this.ranktype == 1)
+                score.getComponent("cc.Label").string = data.star;
+            else
+                score.getComponent("cc.Label").string = data.lastStar;
+            award.getComponent("cc.Label").string = data.award+"￥";
+
+            this.node_star_scroll_content.addChild(item);
         }
     },
 
@@ -244,5 +251,15 @@ cc.Class({
             this.node_star_time.string = "剩余时间 "+sh+":"+sm+":"+ss;
         }
 
+        this.addItemDt += dt;
+        if(this.addItemDt >= 0.06)
+        {
+            this.addItemDt = 0;
+
+            if(this.ranktype == 1)
+                this.addItems(this.rankdata1);
+            else
+                this.addItems(this.rankdata2);
+        }
     }
 });

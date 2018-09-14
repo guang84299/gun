@@ -43,7 +43,7 @@ cc.Class({
     updateUI: function()
     {
         var videoTime = storage.getStorageVideoTime();
-        if(videoTime<0)
+        if(videoTime<=0)
         {
             this.node_coin_time.active = false;
             this.node_coin_vedio.getComponent("cc.Button").interactable = true;

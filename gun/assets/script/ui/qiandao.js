@@ -97,7 +97,10 @@ cc.Class({
                 if(this.node_qiandao_vedio.getComponent("cc.Toggle").isChecked)
                 {
                     this.riqiId = event.target.riqiId;
-                    this.main.wxVideoShow(7);
+                    if(this.main.GAME.shareqiandao)
+                        this.share();
+                    else
+                        this.main.wxVideoShow(7);
                 }
                 else
                 {
@@ -137,6 +140,58 @@ cc.Class({
         this.main.uploadData();
         this.main.updateDian();
         storage.playSound(this.res.audio_coin);
+    },
+
+    share: function()
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var query = "channel=shareqiandao&fromid="+this.main.qianqista.openid;
+            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            if(this.main.GAME.shares.coinmenu_txt1 && this.main.GAME.shares.coinmenu_pic1)
+            {
+                if(Math.random()>0.5)
+                {
+                    title = this.main.GAME.shares.coinmenu_txt1;
+                    imageUrl = this.main.GAME.shares.coinmenu_pic1;
+                }
+                else
+                {
+                    title = this.main.GAME.shares.coinmenu_txt2;
+                    imageUrl = this.main.GAME.shares.coinmenu_pic2;
+                }
+            }
+            wx.shareAppMessage({
+                query:query,
+                title: title,
+                imageUrl: imageUrl,
+                success: function(res)
+                {
+
+                    if(res.shareTickets && res.shareTickets.length>0)
+                    {
+                        self.vedioRiqi();
+                    }
+                    else
+                    {
+                        self.res.showToast("请分享到群");
+                    }
+                    self.main.qianqista.share(true);
+                    cc.log(res);
+                },
+                fail: function()
+                {
+                    self.main.qianqista.share(false);
+                    self.res.showToast("分享失败！");
+                }
+            });
+        }
+        else
+        {
+            this.vedioRiqi();
+        }
     },
 
     vedioRiqi: function()

@@ -39,7 +39,7 @@ cc.Class({
          this.addListener();
 
          this.adapt();
-
+         this.wxUpdate();
          this.wxGetUserInfo();
          this.wxOpenQuan();
 
@@ -297,7 +297,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard")
+                if(con.id == "sharecard2")
                 {
                     if(con.value == "1")
                     {
@@ -460,7 +460,8 @@ cc.Class({
             }
             else
             {
-                uitem.active = false;
+                uitem.itemid = -1;
+                uitem.active = true;
             }
         }
     },
@@ -542,6 +543,26 @@ cc.Class({
                 storage.setStoragePlayer(8,parseInt(datas.player_8));
             if(datas.player_9)
                 storage.setStoragePlayer(9,parseInt(datas.player_9));
+            if(datas.player_10)
+                storage.setStoragePlayer(10,parseInt(datas.player_10));
+            if(datas.player_11)
+                storage.setStoragePlayer(11,parseInt(datas.player_11));
+            if(datas.player_12)
+                storage.setStoragePlayer(12,parseInt(datas.player_12));
+            if(datas.player_13)
+                storage.setStoragePlayer(13,parseInt(datas.player_13));
+            if(datas.player_14)
+                storage.setStoragePlayer(14,parseInt(datas.player_14));
+            if(datas.player_15)
+                storage.setStoragePlayer(15,parseInt(datas.player_15));
+            if(datas.player_16)
+                storage.setStoragePlayer(16,parseInt(datas.player_16));
+            if(datas.player_17)
+                storage.setStoragePlayer(17,parseInt(datas.player_17));
+            if(datas.player_18)
+                storage.setStoragePlayer(18,parseInt(datas.player_18));
+            if(datas.player_19)
+                storage.setStoragePlayer(19,parseInt(datas.player_19));
 
             if(datas.gun_1)
                 storage.setStorageGun(1,parseInt(datas.gun_1));
@@ -637,6 +658,7 @@ cc.Class({
         {
             this.uploadData();
         }
+
     },
 
     updateData: function()
@@ -669,6 +691,16 @@ cc.Class({
         datas.player_7 = storage.getStoragePlayer(7);
         datas.player_8 = storage.getStoragePlayer(8);
         datas.player_9 = storage.getStoragePlayer(9);
+        datas.player_10 = storage.getStoragePlayer(10);
+        datas.player_11 = storage.getStoragePlayer(11);
+        datas.player_12 = storage.getStoragePlayer(12);
+        datas.player_13 = storage.getStoragePlayer(13);
+        datas.player_14 = storage.getStoragePlayer(14);
+        datas.player_15 = storage.getStoragePlayer(15);
+        datas.player_16 = storage.getStoragePlayer(16);
+        datas.player_17 = storage.getStoragePlayer(17);
+        datas.player_18 = storage.getStoragePlayer(18);
+        datas.player_19 = storage.getStoragePlayer(19);
         datas.gun_1 = storage.getStorageGun(1);
         datas.gun_2 = storage.getStorageGun(2);
         datas.gun_3 = storage.getStorageGun(3);
@@ -3172,7 +3204,7 @@ cc.Class({
             this.node_game_ui.killhead.active = true;
             sct = 1;
             this.addCoin();
-            if(disnum>7)
+            if(disnum>12)
                 this.addCoin();
 
             this.node_game_ui.hitbg.runAction(cc.sequence(
@@ -3906,6 +3938,38 @@ cc.Class({
     },
 
 
+    //更新
+    wxUpdate: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var updateManager = wx.getUpdateManager();
+
+            updateManager.onCheckForUpdate(function (res) {
+                // 请求完新版本信息的回调
+                console.log(res.hasUpdate)
+            });
+
+            updateManager.onUpdateReady(function () {
+                wx.showModal({
+                    title: '更新提示',
+                    content: '新版本已经准备好，是否重启应用？',
+                    success: function (res) {
+                        if (res.confirm) {
+                            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                            updateManager.applyUpdate();
+                        }
+                    }
+                })
+            });
+
+            updateManager.onUpdateFailed(function () {
+                // 新版本下载失败
+            });
+        }
+    },
+
+
     wxGetUserInfo: function()
     {
         var self = this;
@@ -4616,11 +4680,12 @@ cc.Class({
         {
             var appIdstr = 'wx604f780b017da7df';
             var pathstr = 'pages/main/main';
-            if(this.GAME.moreba_items)
+            if(this.GAME.moreba_items && itemid>=0)
             {
-                var item = this.GAME.moreba_items[itemid];
+                var item = this.GAME.moreba_items.split("---")[itemid];
                 var ss = item.split("--");
                 appIdstr = ss[2];
+                if(ss[3])
                 pathstr = ss[3];
             }
 
@@ -4635,6 +4700,17 @@ cc.Class({
                     // 打开成功
                 }
             });
+        }
+        else
+        {
+            if(this.GAME.moreba_items  && itemid>=0)
+            {
+                var item = this.GAME.moreba_items.split("---")[itemid];
+                console.log(item);
+                var ss = item.split("--");
+                console.log(ss);
+
+            }
         }
     },
 

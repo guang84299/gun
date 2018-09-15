@@ -506,6 +506,7 @@ cc.Class({
         self.node_paiming_item_me2.active = true;
 
         this.node_paiming_content.removeAllChildren();
+        this.node_paiming_content.stopAllActions();
         this.node_paiming_lv2.active = false;
         if(this.ranktype == 1)
         {
@@ -516,48 +517,22 @@ cc.Class({
             if(this.worldrank.pk && this.worldrank.pk.length>0)
             {
                 selfrank = this.worldrank.pk[this.worldrank.pk.length-1];
-                for(var i=0;i<this.worldrank.pk.length-1;i++)
-                {
-                    var data = this.worldrank.pk[i];
-
-                    var item = cc.instantiate(this.paimingItem2);
-                    var bg = cc.find("bg",item);
-                    var num = cc.find("rank",bg);
-                    var icon = cc.find("icon",bg);
-                    var nick = cc.find("nike",bg);
-                    var score = cc.find("score",bg);
-                    var role = cc.find("role",bg);
-                    var lv = cc.find("lv",bg);
-                    lv.active = true;
-
-
-                    num.getComponent("cc.Label").string = (i+1)+"";
-                    if(data.avatarUrl && data.avatarUrl.length>10)
-                        this.loadPic(icon,data.avatarUrl);
-                    nick.getComponent("cc.Label").string = data.nick;
-                    score.getComponent("cc.Label").string = data.jscore;
-                    lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.jscore,i+1);
-
-                    role.removeAllChildren();
-
-                    var player = cc.instantiate(this.GAME.players[data.playerId]);
-                    role.addChild(player);
-
-                    var gunConf = this.GAME.gunsconfig[data.gunId];
-                    var gun = cc.instantiate(this.GAME.guns[data.gunId]);
-                    gun.y = player.height*0.3 + gunConf.y;
-                    player.addChild(gun);
-
-                    this.node_paiming_content.addChild(item);
-                }
                 if(selfrank)
                 {
                     this.node_paiming_lv2.active = true;
-                    this.node_paiming_num2.getComponent("cc.Label").string = selfrank.id+"";
+                    var rans = selfrank.id+"";
+                    var srank = selfrank.id;
+                    if(selfrank.id > 50 || selfrank.id == 0)
+                    {
+                        rans = "落榜";
+                        srank = 100;
+                    }
+
+                    this.node_paiming_num2.getComponent("cc.Label").string = rans;
                     this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
                     this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nick;
                     this.node_paiming_score2.getComponent("cc.Label").string = selfrank.jscore;
-                    this.node_paiming_lv2.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.jscore,selfrank.id);
+                    this.node_paiming_lv2.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.jscore,srank);
 
                     this.node_paiming_role2.removeAllChildren();
 
@@ -569,7 +544,7 @@ cc.Class({
                     gun.y = player.height*0.3 + gunConf.y;
                     player.addChild(gun);
                 }
-
+                this.addworldrankpk(this.worldrank.pk);
             }
         }
         else
@@ -647,6 +622,54 @@ cc.Class({
 
     },
 
+    addworldrankpk: function(datas)
+    {
+        var self = this;
+        var rnum = this.node_paiming_content.childrenCount;
+        if(rnum < datas.length-1)
+        {
+            var data = datas[rnum];
+
+            var item = cc.instantiate(this.paimingItem2);
+            var bg = cc.find("bg",item);
+            var num = cc.find("rank",bg);
+            var icon = cc.find("icon",bg);
+            var nick = cc.find("nike",bg);
+            var score = cc.find("score",bg);
+            var role = cc.find("role",bg);
+            var lv = cc.find("lv",bg);
+            lv.active = true;
+
+
+            num.getComponent("cc.Label").string = (rnum+1)+"";
+            if(data.avatarUrl && data.avatarUrl.length>10)
+                this.loadPic(icon,data.avatarUrl);
+            nick.getComponent("cc.Label").string = data.nick;
+            score.getComponent("cc.Label").string = data.jscore;
+            lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.jscore,rnum+1);
+
+            role.removeAllChildren();
+
+            var player = cc.instantiate(this.GAME.players[data.playerId]);
+            role.addChild(player);
+
+            var gunConf = this.GAME.gunsconfig[data.gunId];
+            var gun = cc.instantiate(this.GAME.guns[data.gunId]);
+            gun.y = player.height*0.3 + gunConf.y;
+            player.addChild(gun);
+
+            this.node_paiming_content.addChild(item);
+
+            this.node_paiming_content.runAction(cc.sequence(
+                cc.delayTime(0.06),
+                cc.callFunc(function(){
+                    self.addworldrankpk(datas);
+                })
+            ));
+        }
+
+    },
+
 
     showPaiming: function()
     {
@@ -664,6 +687,7 @@ cc.Class({
         self.node_paiming_item_me2.active = false;
         this.node_paiming_lv.active = false;
         this.node_paiming_content.removeAllChildren();
+        this.node_paiming_content.stopAllActions();
 
         if(this.ranktype == 1)
         {
@@ -675,48 +699,22 @@ cc.Class({
             {
 
                 selfrank = this.worldrank.wujin[this.worldrank.wujin.length-1];
-                for(var i=0;i<this.worldrank.wujin.length-1;i++)
-                {
-                    var data = this.worldrank.wujin[i];
 
-                    var item = cc.instantiate(this.paimingItem);
-                    var bg = cc.find("bg",item);
-                    var num = cc.find("rank",bg);
-                    var icon = cc.find("icon",bg);
-                    var nick = cc.find("nike",bg);
-                    var score = cc.find("score",bg);
-                    var role = cc.find("role",bg);
-                    var lv = cc.find("lv",bg);
-                    lv.active = true;
-
-                    num.getComponent("cc.Label").string = (i+1)+"";
-                    if(data.avatarUrl && data.avatarUrl.length>10)
-                        this.loadPic(icon,data.avatarUrl);
-                    nick.getComponent("cc.Label").string = data.nick;
-                    score.getComponent("cc.Label").string = data.score+"";
-                    lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.score,i+1);
-
-
-                    role.removeAllChildren();
-
-                    var player = cc.instantiate(this.GAME.players[data.playerId]);
-                    role.addChild(player);
-
-                    var gunConf = this.GAME.gunsconfig[data.gunId];
-                    var gun = cc.instantiate(this.GAME.guns[data.gunId]);
-                    gun.y = player.height*0.3 + gunConf.y;
-                    player.addChild(gun);
-
-                    this.node_paiming_content.addChild(item);
-                }
                 if(selfrank)
                 {
                     this.node_paiming_lv.active = true;
-                    this.node_paiming_num.getComponent("cc.Label").string = selfrank.id+"";
+                    var rans = selfrank.id+"";
+                    var srank = selfrank.id;
+                    if(selfrank.id > 50 || selfrank.id == 0)
+                    {
+                        rans = "落榜";
+                        srank = 100;
+                    }
+                    this.node_paiming_num.getComponent("cc.Label").string = rans;
                     this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
                     this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
                     this.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
-                    this.node_paiming_lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.score,selfrank.id);
+                    this.node_paiming_lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(selfrank.score,srank);
 
                     this.node_paiming_role.removeAllChildren();
 
@@ -728,6 +726,8 @@ cc.Class({
                     gun.y = player.height*0.3 + gunConf.y;
                     player.addChild(gun);
                 }
+
+                this.addworldrankwujin(this.worldrank.wujin);
 
             }
 
@@ -832,6 +832,55 @@ cc.Class({
 
             }
         }
+    },
+
+
+    addworldrankwujin: function(datas)
+    {
+        var self = this;
+        var rnum = this.node_paiming_content.childrenCount;
+        if(rnum < datas.length-1)
+        {
+            var data = datas[rnum];
+
+            var item = cc.instantiate(this.paimingItem);
+            var bg = cc.find("bg",item);
+            var num = cc.find("rank",bg);
+            var icon = cc.find("icon",bg);
+            var nick = cc.find("nike",bg);
+            var score = cc.find("score",bg);
+            var role = cc.find("role",bg);
+            var lv = cc.find("lv",bg);
+            lv.active = true;
+
+            num.getComponent("cc.Label").string = (rnum+1)+"";
+            if(data.avatarUrl && data.avatarUrl.length>10)
+                this.loadPic(icon,data.avatarUrl);
+            nick.getComponent("cc.Label").string = data.nick;
+            score.getComponent("cc.Label").string = data.score+"";
+            lv.getComponent("cc.Sprite").spriteFrame = this.getPkLvSp(data.score,rnum+1);
+
+
+            role.removeAllChildren();
+
+            var player = cc.instantiate(this.GAME.players[data.playerId]);
+            role.addChild(player);
+
+            var gunConf = this.GAME.gunsconfig[data.gunId];
+            var gun = cc.instantiate(this.GAME.guns[data.gunId]);
+            gun.y = player.height*0.3 + gunConf.y;
+            player.addChild(gun);
+
+            this.node_paiming_content.addChild(item);
+
+            this.node_paiming_content.runAction(cc.sequence(
+                cc.delayTime(0.06),
+                cc.callFunc(function(){
+                    self.addworldrankwujin(datas);
+                })
+            ));
+        }
+
     },
 
     getUserRank: function()

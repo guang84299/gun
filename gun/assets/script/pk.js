@@ -245,6 +245,8 @@ cc.Class({
         var pk = this.main.worldrank.pk;
         if(pk.length > 0)
             rank = pk[pk.length-1].id;
+        if(rank == 0)
+            rank = 1000;
         this.node_sel_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
         this.node_sel_lv_num.string = storage.getStorageMaxJScore();
 
@@ -1053,6 +1055,8 @@ cc.Class({
         var pk = this.main.worldrank.pk;
         if(pk.length > 0)
             rank = pk[pk.length-1].id;
+        if(rank == 0)
+            rank = 1000;
         this.node_sel_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
         this.node_sel_lv_num.string = storage.getStorageMaxJScore();
 
@@ -1119,7 +1123,8 @@ cc.Class({
         var pk = this.main.worldrank.pk;
         if(pk.length > 0)
             rank = pk[pk.length-1].id;
-
+        if(rank == 0)
+            rank = 1000;
         this.node_sel2_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
         this.node_sel2_lv_num.string = storage.getStorageMaxJScore();
     },
@@ -1467,11 +1472,17 @@ cc.Class({
         }
 
 
-        var h = this.dsize.height/5;
-        this.taizi_a.y = h*3;
-        this.taizi_b.y = h*2;
-        this.taizi_c.y = h*2;
-        this.taizi_d.y = h*3;
+        var dh = this.dsize.height/2;
+        var h = 50;
+
+        //this.taizi_a.y = dh + h*3;
+        //this.taizi_b.y = dh + h*2;
+        //this.taizi_c.y = dh + h*2;
+        //this.taizi_d.y = dh + h*3;
+        this.taizi_a.y = dh + h*3;
+        this.taizi_b.y = dh - h*3;
+        this.taizi_c.y = dh - h*3;
+        this.taizi_d.y = dh + h*3;
 
         var jishibg = new cc.Node();
         var jishi = jishibg.addComponent("cc.Label");
@@ -1566,21 +1577,23 @@ cc.Class({
         if(this.state != "start")
             return;
         this.isBgScroll = true;
-        this.bg_1_1.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
-        this.bg_1_2.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
-        this.bg_1_3.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
-        this.bg_1_4.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
+        //this.bg_1_1.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
+        //this.bg_1_2.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
+        //this.bg_1_3.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
+        //this.bg_1_4.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
+        //
+        //this.bg_2_1.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
+        //this.bg_2_2.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
+        //this.bg_2_3.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
+        //this.bg_2_4.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
 
-        this.bg_2_1.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
-        this.bg_2_2.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
-        this.bg_2_3.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
-        this.bg_2_4.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
+        var dh = this.dsize.height/2;
+        var h = 50;
 
-        var h = this.dsize.height/5;
-        this.taizi_a.y = h*3;
-        this.taizi_b.y = h*2;
-        this.taizi_c.y = h*2;
-        this.taizi_d.y = h*3;
+        this.taizi_a.y = dh + h*3;
+        this.taizi_b.y = dh - h*3;
+        this.taizi_c.y = dh - h*3;
+        this.taizi_d.y = dh + h*3;
 
         this.playerToMove();
         this.playerToRotate();
@@ -1702,7 +1715,9 @@ cc.Class({
     playerMove: function(data)
     {
         var self = this;
-        var h = this.dsize.height/5;
+        var h = 300;
+
+        var move_time = 3;
 
         var selfData = this.findSelfPlayerData();
         var control = this.isControlRobot();
@@ -1712,8 +1727,8 @@ cc.Class({
             this.taizi_a.stopAllActions();
             this.taizi_a.y = data.y;
             this.taizi_a.runAction(cc.sequence(
-                cc.moveBy(4,0,-h),
-                cc.moveBy(4,0,h),
+                cc.moveBy(move_time,0,-h),
+                cc.moveBy(move_time,0,h),
                 cc.callFunc(function(){
                     if(issend)
                         websocket.move(self.taizi_a.y,self.playerData.playerA.uid);
@@ -1726,8 +1741,8 @@ cc.Class({
             this.taizi_b.stopAllActions();
             this.taizi_b.y = data.y;
             this.taizi_b.runAction(cc.sequence(
-                cc.moveBy(4,0,h),
-                cc.moveBy(4,0,-h),
+                cc.moveBy(move_time,0,h),
+                cc.moveBy(move_time,0,-h),
                 cc.callFunc(function(){
                     if(issend)
                         websocket.move(self.taizi_b.y,self.playerData.playerB.uid);
@@ -1740,8 +1755,8 @@ cc.Class({
             this.taizi_c.stopAllActions();
             this.taizi_c.y = data.y;
             this.taizi_c.runAction(cc.sequence(
-                cc.moveBy(4,0,h),
-                cc.moveBy(4,0,-h),
+                cc.moveBy(move_time,0,h),
+                cc.moveBy(move_time,0,-h),
                 cc.callFunc(function(){
                     if(issend)
                         websocket.move(self.taizi_c.y,self.playerData.playerC.uid);
@@ -1754,8 +1769,8 @@ cc.Class({
             this.taizi_d.stopAllActions();
             this.taizi_d.y = data.y;
             this.taizi_d.runAction(cc.sequence(
-                cc.moveBy(4,0,-h),
-                cc.moveBy(4,0,h),
+                cc.moveBy(move_time,0,-h),
+                cc.moveBy(move_time,0,h),
                 cc.callFunc(function(){
                     if(issend)
                         websocket.move(self.taizi_d.y,self.playerData.playerD.uid);
@@ -1856,11 +1871,13 @@ cc.Class({
         this.taizi_c.stopAllActions();
         this.taizi_d.stopAllActions();
 
-        var h = this.dsize.height/5;
-        this.taizi_a.y = h*3;
-        this.taizi_b.y = h*2;
-        this.taizi_c.y = h*2;
-        this.taizi_d.y = h*3;
+        var dh = this.dsize.height/2;
+        var h = 50;
+
+        this.taizi_a.y = dh + h*3;
+        this.taizi_b.y = dh - h*3;
+        this.taizi_c.y = dh - h*3;
+        this.taizi_d.y = dh + h*3;
     },
 
     updateScroll: function(dt)
@@ -2858,10 +2875,18 @@ cc.Class({
 
             if(selfPlayer.hp>enemyPlayer.hp)
             {
+                if(!selfPlayer.winNum)
+                    selfPlayer.winNum = 1;
+                else
+                    selfPlayer.winNum += 1;
+
+                if(!enemyPlayer.winNum)
+                    enemyPlayer.winNum = 0;
+
                 this.GAME.isWin = true;
                 this.node_over_title.string = "恭喜！获得胜利";
                 this.node_over_guang.position = this.node_over_box_1.position;
-                this.node_over_bili.string = "1 : 0";
+                this.node_over_bili.string = selfPlayer.winNum+" : "+enemyPlayer.winNum;
                 this.node_over_fanhui_str.string = "改天再战";
                 this.node_over_again_str.string = "再来一局";
                 cc.find("str",this.node_over_jifenx2).active = true;
@@ -2908,10 +2933,18 @@ cc.Class({
             }
             else
             {
+                if(!selfPlayer.winNum)
+                    selfPlayer.winNum = 0;
+
+                if(!enemyPlayer.winNum)
+                    enemyPlayer.winNum = 1;
+                else
+                    enemyPlayer.winNum += 1;
+
                 this.GAME.isWin = false;
                 this.node_over_title.string = "遗憾！失败了";
                 this.node_over_guang.position = this.node_over_box_2.position;
-                this.node_over_bili.string = "0 : 1";
+                this.node_over_bili.string = selfPlayer.winNum+" : "+enemyPlayer.winNum;
                 this.node_over_fanhui_str.string = "溜了";
                 this.node_over_again_str.string = "不服再来";
 

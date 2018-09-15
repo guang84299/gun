@@ -35,6 +35,7 @@ cc.Class({
     {
         this.node_qiandao = this.node;
         this.node_qiandao_vedio = cc.find("bg/vedio",this.node_qiandao);
+        this.node_qiandao_vedio_txt = cc.find("bg/vedio/txt",this.node_qiandao).getComponent("cc.Label");
 
         this.riqiId = 0;
         this.updateUI();
@@ -70,6 +71,10 @@ cc.Class({
                 state.getComponent("cc.Label").string = "未领取";
             }
         }
+        if(this.main.GAME.shareqiandao)
+            this.node_qiandao_vedio_txt.string = "分享到群获取双倍奖励";
+        else
+            this.node_qiandao_vedio_txt.string = "观看视频获取双倍奖励";
     },
 
     show: function()

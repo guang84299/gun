@@ -22,7 +22,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 155
@@ -4487,7 +4487,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Label",
+    "_name": "txt",
     "_objFlags": 0,
     "_parent": {
       "__id__": 135

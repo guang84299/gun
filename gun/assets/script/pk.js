@@ -573,29 +573,55 @@ cc.Class({
         {
             self.isShare = true;
 
-            var query = "channel=shareonline&fromid="+this.playerData.playerA.roomId +"&roomType="+this.playerData.roomType;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.duizhan_txt1 && this.main.GAME.shares.duizhan_pic1)
-            {
-                title = this.main.GAME.shares.duizhan_txt1;
-                imageUrl = this.main.GAME.shares.duizhan_pic1;
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    //self.res.showToast("分享成功，等待好友上线吧");
-                    cc.log(res);
-                },
-                fail: function()
-                {
+            var info = {};
+            info.channel = "shareonline";
+            info.fromid = this.playerData.playerA.roomId;
+            info.roomType = this.playerData.roomType;
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query   //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
+                }
+                else {
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     self.main.qianqista.share(false);
                     self.res.showToast("分享失败！");
                 }
+
             });
+
+
+            //var query = "channel=shareonline&fromid="+this.playerData.playerA.roomId +"&roomType="+this.playerData.roomType;
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            //if(this.main.GAME.shares.duizhan_txt1 && this.main.GAME.shares.duizhan_pic1)
+            //{
+            //    title = this.main.GAME.shares.duizhan_txt1;
+            //    imageUrl = this.main.GAME.shares.duizhan_pic1;
+            //}
+            //wx.shareAppMessage({
+            //    query:query,
+            //    title: title,
+            //    imageUrl: imageUrl,
+            //    success: function(res)
+            //    {
+            //        //self.res.showToast("分享成功，等待好友上线吧");
+            //        cc.log(res);
+            //    },
+            //    fail: function()
+            //    {
+            //        self.main.qianqista.share(false);
+            //        self.res.showToast("分享失败！");
+            //    }
+            //});
         }
         else
         {
@@ -733,9 +759,9 @@ cc.Class({
     {
         if(this.playerData.playerA && this.playerData.playerA.onLine && this.playerData.playerA.uid == this.qianqista.openid)
             return true;
-        else if(this.playerData.playerB && this.playerData.playerB.onLine && this.playerData.playerB.uid == this.qianqista.openid)
+        else if(!this.playerData.playerA.onLine && this.playerData.playerB && this.playerData.playerB.onLine && this.playerData.playerB.uid == this.qianqista.openid)
             return true;
-        else if(this.playerData.playerC && this.playerData.playerC.onLine && this.playerData.playerC.uid == this.qianqista.openid)
+        else if(!this.playerData.playerA.onLine && this.playerData.playerC && this.playerData.playerC.onLine && this.playerData.playerC.uid == this.qianqista.openid)
             return true;
         return false;
     },
@@ -1720,16 +1746,17 @@ cc.Class({
         var move_time = 3;
 
         var selfData = this.findSelfPlayerData();
-        var control = this.isControlRobot();
+
         if(this.playerData.playerA && data.uid == this.playerData.playerA.uid)
         {
-            var issend = (data.uid == selfData.uid) || (this.playerData.playerA.robot == 1 && control);
             this.taizi_a.stopAllActions();
             this.taizi_a.y = data.y;
             this.taizi_a.runAction(cc.sequence(
                 cc.moveBy(move_time,0,-h),
                 cc.moveBy(move_time,0,h),
                 cc.callFunc(function(){
+                    var control = self.isControlRobot();
+                    var issend = (data.uid == selfData.uid) || (self.playerData.playerA.robot == 1 && control);
                     if(issend)
                         websocket.move(self.taizi_a.y,self.playerData.playerA.uid);
                 })
@@ -1737,13 +1764,14 @@ cc.Class({
         }
         else if(this.playerData.playerB && data.uid == this.playerData.playerB.uid)
         {
-            var issend = (data.uid == selfData.uid) || (this.playerData.playerB.robot == 1 && control);
             this.taizi_b.stopAllActions();
             this.taizi_b.y = data.y;
             this.taizi_b.runAction(cc.sequence(
                 cc.moveBy(move_time,0,h),
                 cc.moveBy(move_time,0,-h),
                 cc.callFunc(function(){
+                    var control = self.isControlRobot();
+                    var issend = (data.uid == selfData.uid) || (self.playerData.playerB.robot == 1 && control);
                     if(issend)
                         websocket.move(self.taizi_b.y,self.playerData.playerB.uid);
                 })
@@ -1751,13 +1779,14 @@ cc.Class({
         }
         else if(this.playerData.playerC && data.uid == this.playerData.playerC.uid)
         {
-            var issend = (data.uid == selfData.uid) || (this.playerData.playerC.robot == 1 && control);
             this.taizi_c.stopAllActions();
             this.taizi_c.y = data.y;
             this.taizi_c.runAction(cc.sequence(
                 cc.moveBy(move_time,0,h),
                 cc.moveBy(move_time,0,-h),
                 cc.callFunc(function(){
+                    var control = self.isControlRobot();
+                    var issend = (data.uid == selfData.uid) || (self.playerData.playerC.robot == 1 && control);
                     if(issend)
                         websocket.move(self.taizi_c.y,self.playerData.playerC.uid);
                 })
@@ -1765,13 +1794,14 @@ cc.Class({
         }
         else if(this.playerData.playerD && data.uid == this.playerData.playerD.uid)
         {
-            var issend = (data.uid == selfData.uid) || (this.playerData.playerD.robot == 1 && control);
             this.taizi_d.stopAllActions();
             this.taizi_d.y = data.y;
             this.taizi_d.runAction(cc.sequence(
                 cc.moveBy(move_time,0,-h),
                 cc.moveBy(move_time,0,h),
                 cc.callFunc(function(){
+                    var control = self.isControlRobot();
+                    var issend = (data.uid == selfData.uid) || (self.playerData.playerD.robot == 1 && control);
                     if(issend)
                         websocket.move(self.taizi_d.y,self.playerData.playerD.uid);
                 })
@@ -2714,6 +2744,7 @@ cc.Class({
         if(this.playerData.roomType == 3)
         {
             this.node_over2.active = true;
+            this.node_over2_jifenx2.active = true;
             this.node_over2_fanhui.getComponent("cc.Button").interactable = true;
             this.node_over2_again.getComponent("cc.Button").interactable = true;
             this.node_over2_home.getComponent("cc.Button").interactable = true;
@@ -2774,7 +2805,7 @@ cc.Class({
                     var jscore = this.winJscore();
                     var star = this.winStarNum();
                     this.node_over2_jifen.string = "积分+"+jscore;
-                    this.node_over2_star.string = "星辉+"+star;
+                    this.node_over2_star.string = "星星+"+star;
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
@@ -2783,9 +2814,11 @@ cc.Class({
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+                    this.laststar = star;
 
                     if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                        wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+                        this.main.wxUploadScore(0,selfPlayer.jscore);
+                        //wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
                 {
@@ -2832,15 +2865,16 @@ cc.Class({
                 this.node_over2_fanhui_str.string = "溜了";
                 this.node_over2_again_str.string = "不服再来";
 
-                cc.find("str",this.node_over2_jifenx2).active = false;
+                this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over2_jifenx2).active = true;
                 cc.find("suiji",this.node_over2_jifenx2).active = false;
-                cc.find("str2",this.node_over2_jifenx2).active = true;
+                //cc.find("str2",this.node_over2_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
                     this.node_over2_jifen.string = "积分-"+jscore;
-                    this.node_over2_star.string = "星辉+"+0;
+                    this.node_over2_star.string = "星星+"+0;
 
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
@@ -2858,11 +2892,13 @@ cc.Class({
         else
         {
             this.node_over.active = true;
+            this.node_over_jifenx2.active = true;
             this.node_over_fanhui.getComponent("cc.Button").interactable = true;
             this.node_over_again.getComponent("cc.Button").interactable = true;
             this.node_over_jifenx2.getComponent("cc.Button").interactable = true;
             this.node_over_home.getComponent("cc.Button").interactable = true;
             this.node_over_home.color = cc.color(255,255,255);
+
 
             var enemyPlayer = this.findEnemyPlayerData();
 
@@ -2899,7 +2935,7 @@ cc.Class({
                     var jscore = this.winJscore();
                     var star = this.winStarNum();
                     this.node_over_jifen.string = "积分+"+jscore;
-                    this.node_over_star.string = "星辉+"+star;
+                    this.node_over_star.string = "星星+"+star;
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
@@ -2909,9 +2945,11 @@ cc.Class({
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+                    this.laststar = star;
 
                     if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                        wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
+                        this.main.wxUploadScore(0,selfPlayer.jscore);
+                        //wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
                 {
@@ -2948,15 +2986,16 @@ cc.Class({
                 this.node_over_fanhui_str.string = "溜了";
                 this.node_over_again_str.string = "不服再来";
 
-                cc.find("str",this.node_over_jifenx2).active = false;
+                this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over_jifenx2).active = true;
                 cc.find("suiji",this.node_over_jifenx2).active = false;
-                cc.find("str2",this.node_over_jifenx2).active = true;
+                //cc.find("str2",this.node_over_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
                     this.node_over_jifen.string = "积分-"+jscore;
-                    this.node_over_star.string = "星辉+"+0;
+                    this.node_over_star.string = "星星+"+0;
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
@@ -3003,15 +3042,17 @@ cc.Class({
     jifenx2: function()
     {
         var selfData = this.findSelfPlayerData();
-        selfData.jscore += this.lastjscore;
-        websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
-        this.res.showToast("积分+"+this.lastjscore);
-        if(this.lastjscore > 0)
-        {
-            storage.setStorageJScore(selfData.jscore);
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
-        }
+        var star = this.laststar;
+        //websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
+        websocket.updateUser(selfData.jscore,star,selfData.gunId,selfData.skinId);
+        this.res.showToast("星星+"+this.laststar);
+        //if(this.laststar > 0)
+        //{
+        //    storage.setStorageJScore(selfData.jscore);
+        //    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //        this.main.wxUploadScore(0,selfData.jscore);
+        //        //wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
+        //}
     },
 
     winStarNum: function()
@@ -3049,7 +3090,8 @@ cc.Class({
         else
         {
             var enemyData = this.findEnemyPlayerData();
-            if(enemyData.matchRoomId == 0)
+            var selfData = this.findSelfPlayerData();
+            if(enemyData.matchRoomId == 0 && selfData.matchRoomId == 0)
                 r = true;
         }
         return r;

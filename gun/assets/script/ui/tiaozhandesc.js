@@ -152,9 +152,10 @@ cc.Class({
 
     startGame: function(level)
     {
+        this.hide();
         this.main.tiaozhanlv = level;
         this.main.again();
         this.main.startTiaoZhan();
-        this.hide();
+
     }
 });

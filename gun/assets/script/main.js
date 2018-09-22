@@ -5,10 +5,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        display: cc.Sprite,
-        display_gray: cc.Node,
-        display_gray_rank: cc.Node,
-        display_bg: cc.Node
+        chaoyueItem: {
+            default: null,
+            type: cc.Prefab
+        }
     },
 
 
@@ -29,6 +29,7 @@ cc.Class({
              wujin:[],
              pk:[]
          };
+         this.chaoyueData = [];
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
@@ -39,50 +40,66 @@ cc.Class({
          this.addListener();
 
          this.adapt();
-         this.wxUpdate();
-         this.wxGetUserInfo();
-         this.wxOpenQuan();
+         //this.wxUpdate();
+         //this.wxGetUserInfo();
+         //this.wxOpenQuan();
 
          storage.playMusic(this.res.audio_bgm);
          storage.preloadSound();
-         this.wxVideoLoad();
+         //this.wxVideoLoad();
 
          var self = this;
-         qianqista.init("wx5fbc3c48bb79327b","b827592b68ccb026425e36ca8ae10aee","西部神枪手",function(){
-             qianqista.datas(function(res){
-                 console.log('my datas:', res);
-                 if(res.state == 200)
-                 {
-                     self.updateLocalData(res.data);
-                 }
-             });
-             qianqista.pdatas(function(res){
-                 self.updateLocalData2(res);
-             });
-             qianqista.rankScore(function(res){
-                 self.worldrank.wujin = res.data;
-             });
-             qianqista.rankJScore(function(res){
-                 self.worldrank.pk = res.data;
-             });
-         },function(){
-             self.startDuizhan();
-         });
 
-         qianqista.control(function(res){
-             console.log('my control:', res);
-             if(res.state == 200)
-             {
-                 self.GAME.control = res.data;
-                 self.updateUIControl();
 
-             }
-         });
+         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+             BK.Script.logToConsole = 1;
+         var score = storage.getStorageScore();
+         var jscore = storage.getStorageJScore();
+         this.wxUploadScore(score,jscore,1);
 
          // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
 
      },
+
+    initNet: function()
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            BK.Script.log(1,1,'---------qianqista.init：');
+        qianqista.init("101486189","西部神枪手",function(){
+            qianqista.datas(function(res){
+                console.log('my datas:', res);
+                if(res.state == 200)
+                {
+                    self.updateLocalData(res.data);
+                }
+            });
+            qianqista.pdatas(function(res){
+                self.updateLocalData2(res);
+            });
+            qianqista.rankScore(function(res){
+                self.worldrank.wujin = res.data;
+            });
+            qianqista.rankJScore(function(res){
+                self.worldrank.pk = res.data;
+            });
+        },function(){
+            self.startDuizhan();
+        });
+
+        qianqista.control(function(res){
+            console.log('my control:', res);
+            if(res.state == 200)
+            {
+                self.GAME.control = res.data;
+                self.updateUIControl();
+
+            }
+        });
+
+
+    },
 
     initPhysics: function()
     {
@@ -297,7 +314,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard2")
+                if(con.id == "sharecard")
                 {
                     if(con.value == "1")
                     {
@@ -483,10 +500,16 @@ cc.Class({
 
     updateLocalData2: function(res)
     {
+        var self = this;
         if(res.state == 1)
         {
             qianqista.paddUser(function(res){
-
+                qianqista.rankScore(function(res2){
+                    self.worldrank.wujin = res2.data;
+                });
+                qianqista.rankJScore(function(res2){
+                    self.worldrank.pk = res2.data;
+                });
             },storage.getStorageScore());
         }
         else
@@ -3797,33 +3820,33 @@ cc.Class({
                 {
                     this.uploadScoreDt = 0;
                     if(!this.opentiaozhan)
-                        this.wxUploadScore(Math.floor(this.GAME.score),this.GAME.currPlayer,this.GAME.currGun);
+                        this.wxUpdateScore(Math.floor(this.GAME.score));
                 }
             }
             this.subdt += dt;
             var sdd = 0.02;
 
-            if(this.GAME.state == "start")
-            {
-                sdd = 0.5;
-                if(this.player.ismove)
-                {
-                    if(this.subdt > sdd)
-                    {
-                        this.subdt = 0;
-                        if(!this.opentiaozhan)
-                            this._updaetSubDomainCanvas();
-                    }
-                }
-            }
-            else
-            {
-                if(this.subdt > sdd)
-                {
-                    this.subdt = 0;
-                    this._updaetSubDomainCanvas();
-                }
-            }
+            //if(this.GAME.state == "start")
+            //{
+            //    sdd = 0.5;
+            //    if(this.player.ismove)
+            //    {
+            //        if(this.subdt > sdd)
+            //        {
+            //            this.subdt = 0;
+            //            if(!this.opentiaozhan)
+            //                this._updaetSubDomainCanvas();
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if(this.subdt > sdd)
+            //    {
+            //        this.subdt = 0;
+            //        this._updaetSubDomainCanvas();
+            //    }
+            //}
 
             this.videoTimeDt += dt;
             if(this.node_main_lingqu_time.active && this.videoTimeDt>1)
@@ -3853,14 +3876,14 @@ cc.Class({
     {
         if(storage.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
         {
-            if(isLong)
-            {
-                wx.vibrateLong({});
-            }
-            else
-            {
-                wx.vibrateShort({});
-            }
+            //if(isLong)
+            //{
+            //    wx.vibrateLong({});
+            //}
+            //else
+            //{
+            //    wx.vibrateShort({});
+            //}
         }
     },
 
@@ -4172,10 +4195,10 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(active)
-                this.quan_button.show();
-            else
-                this.quan_button.hide();
+            //if(active)
+            //    this.quan_button.show();
+            //else
+            //    this.quan_button.hide();
         }
     },
 
@@ -4183,90 +4206,271 @@ cc.Class({
     {
         if(cc.isValid(this.node_over))
             this.node_over.hide();
-        this.display_gray.active = false;
+        //this.display_gray.active = false;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            wx.postMessage({ message: "closeOver" });
+            //wx.postMessage({ message: "closeOver" });
         }
     },
 
     wxCloseRank: function()
     {
-        this.display_gray_rank.active = false;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "closeRank" });
+        //this.display_gray_rank.active = false;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "closeRank" });
     },
 
     wxCloseFuhuo: function()
     {
-        this.display_gray.active = false;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "closeFuhuo" });
+        //this.display_gray.active = false;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "closeFuhuo" });
     },
 
     wxRank: function()
     {
-        this.display_gray_rank.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "friendRank",worldrank:this.worldrank });
+        //this.display_gray_rank.active = true;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "friendRank",worldrank:this.worldrank });
     },
 
     wxOverRank: function(score,playerId,gunId)
     {
-        this.display_gray.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
+        this.chaoyueData = [];
+        this.ranking_list = null;
+        //this.display_gray.active = true;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //wx.postMessage({ message: "overRank",score:score,playerId:playerId,gunId:gunId });
     },
 
     wxFuhuoRank: function(score,playerId,gunId)
     {
-        this.display_gray.active = true;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
+        //this.display_gray.active = true;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //    wx.postMessage({ message: "fuhuoRank",score:score,playerId:playerId,gunId:gunId });
     },
 
-    wxUploadScore: function(score,playerId,gunId)
+    wxUploadScore: function(score,jscore,callback)
     {
+        var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
+        {
+            if(!score)
+                score = 0;
+            if(!jscore)
+                jscore = 0;
+            // wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
+            var data = {
+                userData: [
+                    {
+                        openId: GameStatusInfo.openId,
+                        startMs: ((new Date()).getTime()-24*60*60*1000).toString(),    //必填。 游戏开始时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
+                        endMs: ((new Date()).getTime()+3000*24*60*60*1000).toString(),  //必填。 游戏结束时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
+                        scoreInfo: {
+                            score: score, //分数，类型必须是整型数
+                            a1: jscore
+                        }
+                    }
+                ],
+                // type 描述附加属性的用途
+                // order 排序的方式，
+                // 1: 从大到小，即每次上报的分数都会与本周期的最高得分比较，如果大于最高得分则覆盖，否则忽略
+                // 2: 从小到大，即每次上报的分数都会与本周期的最低得分比较，如果低于最低得分则覆盖，否则忽略（比如酷跑类游戏的耗时，时间越短越好）
+                // 3: 累积，即每次上报的积分都会累积到本周期已上报过的积分上
+                // 4: 直接覆盖，每次上报的积分都会将本周期的得分覆盖，不管大小
+                // 如score字段对应，上个属性.
+                attr: {
+                    score: {
+                        type: 'rank',
+                        order: 1
+                    },
+                    a1: {
+                        type: 'rank',
+                        order: 1
+                    }
+                }
+            };
+
+            // gameMode: 游戏模式，如果没有模式区分，直接填 1
+            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
+            BK.Script.log(1,1,'---------上传分数 --------' + callback);
+            BK.QQ.uploadScoreWithoutRoom(1, data, function(errCode, cmd, data) {
+                // 返回错误码信息
+                BK.Script.log(1,1,'------111---上传分数失败!错误码：' + errCode);
+                if(callback && callback == 1)
+                {
+                    BK.Script.log(1,1,'---------上传分数失败!  1' + callback);
+                    self.initNet();
+                }
+                else
+                {
+                    BK.Script.log(1,1,'---------上传分数失败!  2' + callback);
+                }
+
+                if (errCode !== 0) {
+                    BK.Script.log(1,1,'---------上传分数失败!错误码：' + errCode);
+                }
+
+            });
+
+        }
+        else
+        {
+            if(callback)
+                self.initNet();
+        }
+    },
+
+
+    existChaoYue: function(data)
+    {
+        for(var i=0;i<this.chaoyueData.length;i++)
+        {
+            var data2 = this.chaoyueData[i];
+            if(data.nick == data2.nick &&
+                data.url == data2.url)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    wxUpdateScore: function(score)
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            if(!this.ranking_list)
+            {
+                var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
+                var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
+                var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
+                // 必须配置好周期规则后，才能使用数据上报和排行榜功能
+                BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
+                    BK.Script.log(1,1,"-------wxUpdateScore callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
+                    // 返回错误码信息
+                    if (errCode !== 0) {
+                        BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
+                        return;
+                    }
+                    // 解析数据
+                    if (data) {
+                        self.ranking_list = data.data.ranking_list;
+                    }
+                });
+            }
+            else
+            {
+                var chaoyue = null;
+                for(var i=0; i < this.ranking_list.length; ++i)
+                {
+                    var rd = this.ranking_list[i];
+                    if(!rd.selfFlag && !this.existChaoYue(rd))
+                    {
+                        if(score > rd.score)
+                        {
+                            chaoyue = rd;
+                            break;
+                        }
+                    }
+                }
+                if(chaoyue)
+                {
+                    this.chaoyueData.push(chaoyue);
+
+                    var item = cc.instantiate(this.chaoyueItem);
+                    var icon = cc.find("icon",item);
+                    var nick = cc.find("nick",item);
+
+                    this.loadPic(icon,chaoyue.url);
+                    nick.getComponent("cc.Label").string = "超越"+chaoyue.nick;
+
+                    this.node_game_ui.addChild(item);
+
+                    var seq = cc.sequence(
+                        cc.fadeOut(0),
+                        cc.moveTo(0,cc.v2(20,this.dsize.height*0.7)),
+                        cc.spawn(
+                            cc.fadeIn(0.5),
+                            cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.75)).easing(cc.easeSineIn())
+                        ),
+                        cc.delayTime(2),
+                        cc.spawn(
+                            cc.fadeOut(0.5),
+                            cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.8)).easing(cc.easeSineOut())
+                        ),
+                        cc.removeSelf()
+                    );
+
+                    item.runAction(seq);
+
+                    this.wxUploadScore(score);
+                }
+
+            }
+        }
     },
 
     wxGropShare: function()
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=groupsharemenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.GAME.shares.groupsharemenu_txt1 && this.GAME.shares.groupsharemenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=groupsharemenu_1";
-                    title = this.GAME.shares.groupsharemenu_txt1;
-                    imageUrl = this.GAME.shares.groupsharemenu_pic1;
-                }
-                else
-                {
-                    query = "channel=groupsharemenu_2";
-                    title = this.GAME.shares.groupsharemenu_txt2;
-                    imageUrl = this.GAME.shares.groupsharemenu_pic2;
-                }
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
+            var info = {};
+            info.channel = "groupsharemenu";
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query   //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
                     qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
+                }
+                else {
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     qianqista.share(false);
                 }
+
             });
+            //
+            //var query = "channel=groupsharemenu";
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            //if(this.GAME.shares.groupsharemenu_txt1 && this.GAME.shares.groupsharemenu_pic1)
+            //{
+            //    if(Math.random()>0.5)
+            //    {
+            //        query = "channel=groupsharemenu_1";
+            //        title = this.GAME.shares.groupsharemenu_txt1;
+            //        imageUrl = this.GAME.shares.groupsharemenu_pic1;
+            //    }
+            //    else
+            //    {
+            //        query = "channel=groupsharemenu_2";
+            //        title = this.GAME.shares.groupsharemenu_txt2;
+            //        imageUrl = this.GAME.shares.groupsharemenu_pic2;
+            //    }
+            //}
+            //wx.shareAppMessage({
+            //    query:query,
+            //    title: title,
+            //    imageUrl: imageUrl,
+            //    success: function(res)
+            //    {
+            //        qianqista.share(true);
+            //        cc.log(res);
+            //    },
+            //    fail: function()
+            //    {
+            //        qianqista.share(false);
+            //    }
+            //});
         }
 
     },
@@ -4277,70 +4481,37 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharecardmenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.GAME.shares.cardmenu_txt1 && this.GAME.shares.cardmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharecardmenu_1";
-                    title = this.GAME.shares.cardmenu_txt1;
-                    imageUrl = this.GAME.shares.cardmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharecardmenu_2";
-                    title = this.GAME.shares.cardmenu_txt2;
-                    imageUrl = this.GAME.shares.cardmenu_pic2;
-                }
-            }
+            var info = {};
+            info.channel = "sharecardmenu";
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query   //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
+                    self.res.showToast("获取到一个防弹衣");
 
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    if(res.shareTickets && res.shareTickets.length>0)
-                    {
-                        wx.getShareInfo({
-                            shareTicket: res.shareTickets[0],
-                            success: function(res)
-                            {
-                                console.log("------",res);
-                                qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
-                                    if(b==true && storage.judgeShareGroupState(openGId,timestamp))
-                                    {
-                                        self.res.showToast("获取到一个防弹衣");
-
-                                        var cardnum = storage.getStorageCard();
-                                        cardnum = parseInt(cardnum) + 1;
-                                        storage.setStorageCard(cardnum);
-                                        self.node_card.updateUI();
-                                        self.uploadData();
-                                    }
-                                    else
-                                    {
-                                        self.res.showToast("每个群每天只能转发一次");
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    else
-                    {
-                        self.res.showToast("请分享到群");
-                    }
+                    var cardnum = storage.getStorageCard();
+                    cardnum = parseInt(cardnum) + 1;
+                    storage.setStorageCard(cardnum);
+                    self.node_card.updateUI();
+                    self.uploadData();
 
                     qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
+                }
+                else{
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     qianqista.share(false);
                 }
+
             });
+
         }
         else
         {
@@ -4349,6 +4520,79 @@ cc.Class({
             storage.setStorageCard(cardnum);
             self.node_card.updateUI();
         }
+
+        //    var query = "channel=sharecardmenu";
+        //    var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+        //    var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+        //    if(this.GAME.shares.cardmenu_txt1 && this.GAME.shares.cardmenu_pic1)
+        //    {
+        //        if(Math.random()>0.5)
+        //        {
+        //            query = "channel=sharecardmenu_1";
+        //            title = this.GAME.shares.cardmenu_txt1;
+        //            imageUrl = this.GAME.shares.cardmenu_pic1;
+        //        }
+        //        else
+        //        {
+        //            query = "channel=sharecardmenu_2";
+        //            title = this.GAME.shares.cardmenu_txt2;
+        //            imageUrl = this.GAME.shares.cardmenu_pic2;
+        //        }
+        //    }
+        //
+        //    wx.shareAppMessage({
+        //        query:query,
+        //        title: title,
+        //        imageUrl: imageUrl,
+        //        success: function(res)
+        //        {
+        //            if(res.shareTickets && res.shareTickets.length>0)
+        //            {
+        //                wx.getShareInfo({
+        //                    shareTicket: res.shareTickets[0],
+        //                    success: function(res)
+        //                    {
+        //                        console.log("------",res);
+        //                        qianqista.getGrpupId(res.encryptedData,res.iv,function(b,openGId,timestamp){
+        //                            if(b==true && storage.judgeShareGroupState(openGId,timestamp))
+        //                            {
+        //                                self.res.showToast("获取到一个防弹衣");
+        //
+        //                                var cardnum = storage.getStorageCard();
+        //                                cardnum = parseInt(cardnum) + 1;
+        //                                storage.setStorageCard(cardnum);
+        //                                self.node_card.updateUI();
+        //                                self.uploadData();
+        //                            }
+        //                            else
+        //                            {
+        //                                self.res.showToast("每个群每天只能转发一次");
+        //                            }
+        //                        });
+        //                    }
+        //                });
+        //            }
+        //            else
+        //            {
+        //                self.res.showToast("请分享到群");
+        //            }
+        //
+        //            qianqista.share(true);
+        //            cc.log(res);
+        //        },
+        //        fail: function()
+        //        {
+        //            qianqista.share(false);
+        //        }
+        //    });
+        //}
+        //else
+        //{
+        //    var cardnum = storage.getStorageCard();
+        //    cardnum = parseInt(cardnum) + 1;
+        //    storage.setStorageCard(cardnum);
+        //    self.node_card.updateUI();
+        //}
     },
 
 
@@ -4500,22 +4744,130 @@ cc.Class({
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(type == 1)
-            {
-                this.rewardedVideoAd.show().catch(function(err){
-                    self.rewardedVideoAd.load().then(function(){
-                        self.rewardedVideoAd.show();
-                    });
-                });
-            }
-            else
-            {
-                this.rewardedVideoAd2.show().catch(function(err){
-                    self.rewardedVideoAd2.load().then(function(){
-                        self.rewardedVideoAd2.show();
-                    });
-                });
-            }
+            BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
+                if (retCode == 0) {
+
+                    handle.setEventCallack(function (code, msg) {
+                        BK.Script.log(1, 1, "closeGame"); //关闭游戏
+
+                    }.bind(this), function (code, msg) {
+                        //code ==0
+                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //视频结束
+                        handle.jiangli = true;
+                    }.bind(this), function (code, msg) {
+                        //code ==0
+                        if(handle.jiangli)
+                        {
+                            if(self.GAME.VIDEOAD_TYPE == 1)
+                            {
+                                var coin = storage.getStorageCoin();
+                                coin = parseInt(coin) + 100;
+                                storage.setStorageCoin(coin);
+                                self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                                self.uploadData();
+
+                                self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                                self.node_main_lingqu_time.active = true;
+                                self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                                storage.setStorageVideoTime(30);
+
+                                if(cc.isValid(self.node_coin))
+                                    self.node_coin.updateUI();
+
+                                self.res.showToast("金币+100");
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 2)
+                            {
+                                self.fuhuo(false,false,true);
+                                self.res.showToast("复活成功");
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 3)
+                            {
+                                storage.setStorageHasZhanShi(5);
+                                if(cc.isValid(self.node_zhanshi))
+                                    self.node_zhanshi.updateUI();
+                                else if(cc.isValid(self.node_tryzhanshi))
+                                    self.node_tryzhanshi.useZhanshiStart();
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 4)
+                            {
+                                self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                                storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                                self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2);
+                                self.node_tiaozhan_sus.updateCoin();
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 5)
+                            {
+                                self.node_tiaozhan_fail.updateJumpNum();
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 6)
+                            {
+                                if(self.openduizhan)
+                                {
+                                    self.node_duizhan.jifenx2();
+                                }
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 7)
+                            {
+                                if(cc.isValid(self.node_qiandao))
+                                    self.node_qiandao.vedioRiqi();
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 8)
+                            {
+                                if(cc.isValid(self.node_coinx2))
+                                    self.node_coinx2.lingquSuc();
+                            }
+                        }
+                        else
+                        {
+                            if(self.GAME.VIDEOAD_TYPE == 1)
+                            {
+                                self.res.showToast("金币获取失败");
+                            }
+                            if(self.GAME.VIDEOAD_TYPE == 2)
+                            {
+                                self.res.showToast("复活失败");
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 3)
+                            {
+                                self.res.showToast("体验失败");
+                            }
+                            else
+                            {
+                                self.res.showToast("获取失败");
+                            }
+                        }
+                        storage.playMusic(self.res.audio_bgm);
+                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
+                    }.bind(this), function (code, msg) {
+                        //code ==0
+                        handle.jiangli = false;
+                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //开始播放视频
+                    }.bind(this));
+                    //跳转至播放界面
+                    handle.jump();
+                }
+                else {
+                    BK.Script.log(1, 1, "error:" + retCode + " msg:" + msg);
+                }
+            }.bind(this));
+            //if(type == 1)
+            //{
+            //    this.rewardedVideoAd.show().catch(function(err){
+            //        self.rewardedVideoAd.load().then(function(){
+            //            self.rewardedVideoAd.show();
+            //        });
+            //    });
+            //}
+            //else
+            //{
+            //    this.rewardedVideoAd2.show().catch(function(err){
+            //        self.rewardedVideoAd2.load().then(function(){
+            //            self.rewardedVideoAd2.show();
+            //        });
+            //    });
+            //}
         }
         else
         {
@@ -4582,38 +4934,69 @@ cc.Class({
 
     wxBannerShow: function()
     {
+        var self = this;
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var openDataContext = wx.getOpenDataContext();
-            var sharedCanvas = openDataContext.canvas;
-            var sc = sharedCanvas.width/this.dsize.width;
-            var dpi = cc.view._devicePixelRatio;
-            this.bannerAd = wx.createBannerAd({
-                adUnitId: 'adunit-805ad9676746d8d2',
-                style: {
-                    left: 0,
-                    top: sharedCanvas.height/dpi-300/3.5,
-                    width: 300,
+            BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
+                if (retCode == 0) {
+                    //2.开发者 使用adBannerHanlde
+                    //2.1 决定是否展示
+                    self.bannerAd = adBannerHandle;
+                    adBannerHandle.show(function (succCode, msg, handle) {
+                        if (succCode == 0) {
+                            //
+                        }
+                        else {
+                            BK.Script.log(1, 1, "展示失败 msg:" + msg);
+                        }
+                    });
+                    //2.2 开发者主动关闭广告。
+                    //adBannerHandle.close();
+                    //2.3 开发者监听事件
+                    adBannerHandle.onClickContent(function () {
+                        //用户点击了落地页
+                    });
+                    adBannerHandle.onClickClose(function () {
+                        //用户点击了X关闭广告
+                    });
                 }
-            });
-            var bannerAd = this.bannerAd;
-            this.bannerAd.onResize(function(res){
-                // console.log(res.width, res.height)
-                // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
-                bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
-                bannerAd.style.top = sharedCanvas.height/dpi-res.height;
-            });
-            this.bannerAd.show();
+                else {
+                    BK.Script.log(1, 1, "fetchBannerAd failed. retCode:" + retCode);
+                }
+            }.bind(this));
+            //var openDataContext = wx.getOpenDataContext();
+            //var sharedCanvas = openDataContext.canvas;
+            //var sc = sharedCanvas.width/this.dsize.width;
+            //var dpi = cc.view._devicePixelRatio;
+            //this.bannerAd = wx.createBannerAd({
+            //    adUnitId: 'adunit-805ad9676746d8d2',
+            //    style: {
+            //        left: 0,
+            //        top: sharedCanvas.height/dpi-300/3.5,
+            //        width: 300,
+            //    }
+            //});
+            //var bannerAd = this.bannerAd;
+            //this.bannerAd.onResize(function(res){
+            //    // console.log(res.width, res.height)
+            //    // console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
+            //    bannerAd.style.left = (sharedCanvas.width/dpi-res.width)/2;
+            //    bannerAd.style.top = sharedCanvas.height/dpi-res.height;
+            //});
+            //this.bannerAd.show();
         }
     },
 
     wxBannerHide: function()
     {
+        var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(this.bannerAd)
-                this.bannerAd.hide();
+            if(self.bannerAd)
+                self.bannerAd.close();
+            //if(this.bannerAd)
+            //    this.bannerAd.hide();
         }
     },
 
@@ -4623,26 +5006,29 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var appIdstr = 'wx604f780b017da7df';
-            var pathstr = 'pages/main/main';
-            if(this.GAME.more)
-            {
-                var ss = this.GAME.more.split("--");
-                appIdstr = ss[1];
-                pathstr = ss[2];
-            }
-
-            wx.navigateToMiniProgram({
-              appId: appIdstr,
-              path: pathstr,
-              extraData: {
-                foo: 'bar'
-              },
-              // envVersion: 'develop',
-              success: function(res) {
-                // 打开成功
-              }
-            });
+            var desGameId = 2904; //跳转的gameid，必须为数字
+            var extendInfo = "2903"; //额外参数，必须为字符串
+            BK.QQ.skipGame(desGameId, extendInfo);
+            //var appIdstr = 'wx604f780b017da7df';
+            //var pathstr = 'pages/main/main';
+            //if(this.GAME.more)
+            //{
+            //    var ss = this.GAME.more.split("--");
+            //    appIdstr = ss[1];
+            //    pathstr = ss[2];
+            //}
+            //
+            //wx.navigateToMiniProgram({
+            //  appId: appIdstr,
+            //  path: pathstr,
+            //  extraData: {
+            //    foo: 'bar'
+            //  },
+            //  // envVersion: 'develop',
+            //  success: function(res) {
+            //    // 打开成功
+            //  }
+            //});
 
         }
     },
@@ -4651,26 +5037,29 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var appIdstr = 'wx604f780b017da7df';
-            var pathstr = 'pages/main/main';
-            if(this.GAME.more2)
-            {
-                var ss = this.GAME.more2.split("--");
-                appIdstr = ss[1];
-                pathstr = ss[2];
-            }
-
-            wx.navigateToMiniProgram({
-              appId: appIdstr,
-              path: pathstr,
-              extraData: {
-                foo: 'bar'
-              },
-              // envVersion: 'develop',
-              success: function(res) {
-                // 打开成功
-              }
-            });
+            var desGameId = 2832; //跳转的gameid，必须为数字
+            var extendInfo = "101483649"; //额外参数，必须为字符串
+            BK.QQ.skipGame(desGameId, extendInfo);
+            //var appIdstr = 'wx604f780b017da7df';
+            //var pathstr = 'pages/main/main';
+            //if(this.GAME.more2)
+            //{
+            //    var ss = this.GAME.more2.split("--");
+            //    appIdstr = ss[1];
+            //    pathstr = ss[2];
+            //}
+            //
+            //wx.navigateToMiniProgram({
+            //  appId: appIdstr,
+            //  path: pathstr,
+            //  extraData: {
+            //    foo: 'bar'
+            //  },
+            //  // envVersion: 'develop',
+            //  success: function(res) {
+            //    // 打开成功
+            //  }
+            //});
         }
     },
 
@@ -4678,28 +5067,39 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var appIdstr = 'wx604f780b017da7df';
-            var pathstr = 'pages/main/main';
+            var desGameId = 2832; //跳转的gameid，必须为数字
+            var extendInfo = "101483649"; //额外参数，必须为字符串
             if(this.GAME.moreba_items && itemid>=0)
             {
                 var item = this.GAME.moreba_items.split("---")[itemid];
                 var ss = item.split("--");
-                appIdstr = ss[2];
-                if(ss[3])
-                pathstr = ss[3];
-            }
+                desGameId = ss[2];
 
-            wx.navigateToMiniProgram({
-                appId: appIdstr,
-                path: pathstr,
-                extraData: {
-                    foo: 'bar'
-                },
-                // envVersion: 'develop',
-                success: function(res) {
-                    // 打开成功
-                }
-            });
+            }
+            BK.QQ.skipGame(desGameId, extendInfo);
+
+            //var appIdstr = 'wx604f780b017da7df';
+            //var pathstr = 'pages/main/main';
+            //if(this.GAME.moreba_items && itemid>=0)
+            //{
+            //    var item = this.GAME.moreba_items.split("---")[itemid];
+            //    var ss = item.split("--");
+            //    appIdstr = ss[2];
+            //    if(ss[3])
+            //    pathstr = ss[3];
+            //}
+            //
+            //wx.navigateToMiniProgram({
+            //    appId: appIdstr,
+            //    path: pathstr,
+            //    extraData: {
+            //        foo: 'bar'
+            //    },
+            //    // envVersion: 'develop',
+            //    success: function(res) {
+            //        // 打开成功
+            //    }
+            //});
         }
         else
         {
@@ -4718,14 +5118,15 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            wx.previewImage({
-                 urls: ["https://77qqup.com:442/img/wxgame/192b9782835246449b8f4e62f3ed568c.jpg?="+Math.random()],
-                 success: function (res) {
-                 },
-                 fail: function (res) {
-                     return;
-                 }
-            });
+            BK.QQ.enterPubAccountCard("1290239091");
+            //wx.previewImage({
+            //     urls: ["https://77qqup.com:442/img/wxgame/192b9782835246449b8f4e62f3ed568c.jpg?="+Math.random()],
+            //     success: function (res) {
+            //     },
+            //     fail: function (res) {
+            //         return;
+            //     }
+            //});
         }
     }
 

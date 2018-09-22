@@ -40,6 +40,10 @@ cc.Class({
         this.node_over_more = cc.find("more",this.node_over);
         this.node_over_more2 = cc.find("more2",this.node_over);
 
+        this.node_over_icon = cc.find("icon",this.node_over);
+        this.node_over_nick = cc.find("nick",this.node_over);
+        this.node_over_no = cc.find("no",this.node_over);
+
         this.updateControl();
         // this.updateUI();
     },
@@ -61,7 +65,7 @@ cc.Class({
         cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
         cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
         this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
-
+        this.wxOverRank(Math.floor(this.main.GAME.score));
 
         if(this.main.GAME.useZhanShi)
         {
@@ -76,6 +80,68 @@ cc.Class({
         this.main.updateDian();
         this.main.wxBannerHide();
         this.main.qianqista.event("ui_jiesuan");
+    },
+
+    wxOverRank: function(score)
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            this.main.wxUploadScore(score);
+
+            var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
+            var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
+            var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
+            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
+            BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
+                BK.Script.log(1,1,"-------wxOverRank callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
+                // 返回错误码信息
+                if (errCode !== 0) {
+                    BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
+                    return;
+                }
+                // 解析数据
+                if (data) {
+                    var chaoyue = null;
+                    for(var i=0; i < data.data.ranking_list.length; ++i) {
+                        var rd = data.data.ranking_list[i];
+                        // rd 的字段如下:
+                        //var rd = {
+                        //    url: '',            // 头像的 url
+                        //    nick: '',           // 昵称
+                        //    score: 1,           // 分数
+                        //    selfFlag: false,    // 是否是自己
+                        //};
+                        if(!rd.selfFlag)
+                        {
+                            if(score < rd.score)
+                            {
+                                chaoyue = rd;
+                                break;
+                            }
+                        }
+                    }
+
+                    if(chaoyue)
+                    {
+                        self.node_over_icon.active = true;
+                        self.node_over_nick.active = true;
+                        self.node_over_no.active = false;
+
+
+                        self.main.loadPic(self.node_over_icon,chaoyue.url);
+                        self.node_over_nick.getComponent("cc.Label").string = chaoyue.nick;
+                    }
+                    else
+                    {
+                        self.node_over_icon.active = false;
+                        self.node_over_nick.active = false;
+                        self.node_over_no.active = true;
+                    }
+
+                }
+            });
+        }
     },
 
     updateDian: function(visible)
@@ -171,41 +237,65 @@ cc.Class({
 
     wxGropShareChange: function()
     {
+        var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharechangemenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.changemenu_txt1 && this.main.GAME.shares.changemenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharechangemenu_1";
-                    title = this.main.GAME.shares.changemenu_txt1;
-                    imageUrl = this.main.GAME.shares.changemenu_pic1;
+            var info = {};
+            info.channel = "sharechangemenu";
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query,    //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
+                    self.main.qianqista.share(true);
                 }
-                else
-                {
-                    query = "channel=sharechangemenu_2";
-                    title = this.main.GAME.shares.changemenu_txt2;
-                    imageUrl = this.main.GAME.shares.changemenu_pic2;
+                else{
+                    BK.Script.log(1, 1, "分享失败" + retCode);
+                    self.main.qianqista.share(false);
                 }
-            }
 
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    this.main.qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
-                    this.main.qianqista.share(false);
-                }
             });
+
+            //var query = "channel=sharechangemenu";
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            //if(this.main.GAME.shares.changemenu_txt1 && this.main.GAME.shares.changemenu_pic1)
+            //{
+            //    if(Math.random()>0.5)
+            //    {
+            //        query = "channel=sharechangemenu_1";
+            //        title = this.main.GAME.shares.changemenu_txt1;
+            //        imageUrl = this.main.GAME.shares.changemenu_pic1;
+            //    }
+            //    else
+            //    {
+            //        query = "channel=sharechangemenu_2";
+            //        title = this.main.GAME.shares.changemenu_txt2;
+            //        imageUrl = this.main.GAME.shares.changemenu_pic2;
+            //    }
+            //}
+            //
+            //wx.shareAppMessage({
+            //    query:query,
+            //    title: title,
+            //    imageUrl: imageUrl,
+            //    success: function(res)
+            //    {
+            //        this.main.qianqista.share(true);
+            //        cc.log(res);
+            //    },
+            //    fail: function()
+            //    {
+            //        this.main.qianqista.share(false);
+            //    }
+            //});
         }
 
     },

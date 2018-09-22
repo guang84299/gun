@@ -42,6 +42,10 @@ cc.Class({
         this.node_fuhuo_fu_xuming = cc.find("fuhuo_xuming",this.node_fuhuo_share);
         this.node_fuhuo_guang = cc.find("zhanshibg/guang",this.node_fuhuo);
 
+        this.node_fuhuo_icon = cc.find("fuhuo_share/icon",this.node_fuhuo);
+        this.node_fuhuo_nick = cc.find("fuhuo_share/nick",this.node_fuhuo);
+        this.node_fuhuo_score = cc.find("fuhuo_share/score",this.node_fuhuo);
+        this.node_fuhuo_no = cc.find("fuhuo_share/no",this.node_fuhuo);
     },
 
     updateUI: function()
@@ -87,8 +91,67 @@ cc.Class({
             this.node_fuhuo_fu_xuming.active = false;
             this.node_fuhuo_fu_coin.active = true;
         }
-        this.main.wxFuhuoRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
+        //this.main.wxFuhuoRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
+        this.wxFuhuoRank(Math.floor(this.main.GAME.score));
         this.main.wxBannerShow();
+
+
+    },
+
+    wxFuhuoRank: function(score)
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
+            var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
+            var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
+            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
+            BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
+                BK.Script.log(1,1,"-------wxFuhuoRank callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
+                // 返回错误码信息
+                if (errCode !== 0) {
+                    BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
+                    return;
+                }
+                // 解析数据
+                if (data) {
+                    var chaoyue = null;
+                    for(var i=0; i < data.data.ranking_list.length; ++i) {
+                        var rd = data.data.ranking_list[i];
+
+                        if(!rd.selfFlag)
+                        {
+                            if(score < rd.score)
+                            {
+                                chaoyue = rd;
+                                break;
+                            }
+                        }
+                    }
+
+                    if(chaoyue)
+                    {
+                        self.node_fuhuo_no.active = false;
+                        self.node_fuhuo_nick.active = true;
+                        self.node_fuhuo_score.active = true;
+                        self.node_fuhuo_icon.active = true;
+
+                        self.main.loadPic(self.node_fuhuo_icon,chaoyue.url);
+                        self.node_fuhuo_nick.getComponent("cc.Label").string = chaoyue.nick;
+                        self.node_fuhuo_score.getComponent("cc.Label").string = "得分:"+chaoyue.score;
+                    }
+                    else
+                    {
+                        self.node_fuhuo_no.active = true;
+                        self.node_fuhuo_nick.active = false;
+                        self.node_fuhuo_score.active = false;
+                        self.node_fuhuo_icon.active = false;
+                    }
+
+                }
+            });
+        }
     },
 
     show: function()
@@ -114,7 +177,7 @@ cc.Class({
         {
             this.wxGropShareFuhuo();
             this.main.qianqista.event("fuhuo_coin");
-            this.hide();
+            //this.hide();
         }
         else if(data == "fuhuo_video")
         {
@@ -127,8 +190,8 @@ cc.Class({
         }
         else if(data == "skip")
         {
-            this.main.skip();
             this.hide();
+            this.main.skip();
         }
         cc.log(data);
     },

@@ -72,51 +72,78 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharexumingmenu";
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.cardmenu_txt1 && this.main.GAME.shares.cardmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharexumingmenu_1";
-                    title = this.main.GAME.shares.cardmenu_txt1;
-                    imageUrl = this.main.GAME.shares.cardmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharexumingmenu_2";
-                    title = this.main.GAME.shares.cardmenu_txt2;
-                    imageUrl = this.main.GAME.shares.cardmenu_pic2;
-                }
-            }
-
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-                    if(res.shareTickets && res.shareTickets.length>0)
-                    {
-                        self.res.showToast("续命成功");
-                        self.main.fuhuo(false,true,false);
-                    }
-                    else
-                    {
-                        self.res.showToast("请分享到群");
-                    }
-
+            var info = {};
+            info.channel = "sharexumingmenu";
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query,    //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
+                    self.res.showToast("续命成功");
+                    self.main.fuhuo(false,true,false);
                     self.main.qianqista.share(true);
                     self.hide();
-                    cc.log(res);
-                },
-                fail: function()
-                {
+                }
+                else{
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     self.main.qianqista.share(false);
                     self.hide();
                 }
+
             });
+
+            //var query = "channel=sharexumingmenu";
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            //if(this.main.GAME.shares.cardmenu_txt1 && this.main.GAME.shares.cardmenu_pic1)
+            //{
+            //    if(Math.random()>0.5)
+            //    {
+            //        query = "channel=sharexumingmenu_1";
+            //        title = this.main.GAME.shares.cardmenu_txt1;
+            //        imageUrl = this.main.GAME.shares.cardmenu_pic1;
+            //    }
+            //    else
+            //    {
+            //        query = "channel=sharexumingmenu_2";
+            //        title = this.main.GAME.shares.cardmenu_txt2;
+            //        imageUrl = this.main.GAME.shares.cardmenu_pic2;
+            //    }
+            //}
+            //
+            //wx.shareAppMessage({
+            //    query:query,
+            //    title: title,
+            //    imageUrl: imageUrl,
+            //    success: function(res)
+            //    {
+            //        if(res.shareTickets && res.shareTickets.length>0)
+            //        {
+            //            self.res.showToast("续命成功");
+            //            self.main.fuhuo(false,true,false);
+            //        }
+            //        else
+            //        {
+            //            self.res.showToast("请分享到群");
+            //        }
+            //
+            //        self.main.qianqista.share(true);
+            //        self.hide();
+            //        cc.log(res);
+            //    },
+            //    fail: function()
+            //    {
+            //        self.main.qianqista.share(false);
+            //        self.hide();
+            //    }
+            //});
         }
         else
         {

@@ -169,48 +169,74 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            var query = "channel=sharecoinmenu&fromid="+this.main.qianqista.openid;
-            var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
-            var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
-            if(this.main.GAME.shares.coinmenu_txt1 && this.main.GAME.shares.coinmenu_pic1)
-            {
-                if(Math.random()>0.5)
-                {
-                    query = "channel=sharecoinmenu_1&fromid="+this.main.qianqista.openid;
-                    title = this.main.GAME.shares.coinmenu_txt1;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic1;
-                }
-                else
-                {
-                    query = "channel=sharecoinmenu_2&fromid="+this.main.qianqista.openid;
-                    title = this.main.GAME.shares.coinmenu_txt2;
-                    imageUrl = this.main.GAME.shares.coinmenu_pic2;
-                }
-            }
-            wx.shareAppMessage({
-                query:query,
-                title: title,
-                imageUrl: imageUrl,
-                success: function(res)
-                {
-
+            var info = {};
+            info.channel = "sharecoinmenu";
+            var query = JSON.stringify(info);
+            var title = "请问，这是你掉的98k么？";
+            var imageUrl = "http://www.qiqiup.com/gun.gif";
+            var shareInfo = {
+                summary:title,          //QQ聊天消息标题
+                picUrl:imageUrl,               //QQ聊天消息图片
+                extendInfo:query,    //QQ聊天消息扩展字段
+            };
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
                     self.res.showToast("分享成功，等待好友上线吧");
 
-                    //var cardnum = self.getStorageCoin();
-                    //cardnum = parseInt(cardnum) + 100;
-                    //self.setStorageCoin(cardnum);
-                    //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
-                    //self.uploadData();
                     self.main.qianqista.share(true);
-                    cc.log(res);
-                },
-                fail: function()
-                {
+                }
+                else{
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     self.main.qianqista.share(false);
                     self.res.showToast("分享失败！");
                 }
+
             });
+
+            //var query = "channel=sharecoinmenu&fromid="+this.main.qianqista.openid;
+            //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
+            //var imageUrl = cc.url.raw("resources/zhuanfa.jpg");
+            //if(this.main.GAME.shares.coinmenu_txt1 && this.main.GAME.shares.coinmenu_pic1)
+            //{
+            //    if(Math.random()>0.5)
+            //    {
+            //        query = "channel=sharecoinmenu_1&fromid="+this.main.qianqista.openid;
+            //        title = this.main.GAME.shares.coinmenu_txt1;
+            //        imageUrl = this.main.GAME.shares.coinmenu_pic1;
+            //    }
+            //    else
+            //    {
+            //        query = "channel=sharecoinmenu_2&fromid="+this.main.qianqista.openid;
+            //        title = this.main.GAME.shares.coinmenu_txt2;
+            //        imageUrl = this.main.GAME.shares.coinmenu_pic2;
+            //    }
+            //}
+            //wx.shareAppMessage({
+            //    query:query,
+            //    title: title,
+            //    imageUrl: imageUrl,
+            //    success: function(res)
+            //    {
+            //
+            //        self.res.showToast("分享成功，等待好友上线吧");
+            //
+            //        //var cardnum = self.getStorageCoin();
+            //        //cardnum = parseInt(cardnum) + 100;
+            //        //self.setStorageCoin(cardnum);
+            //        //self.node_role_coin.getComponent("cc.Label").string = cardnum+"";
+            //        //self.node_gun_coin.getComponent("cc.Label").string = cardnum+"";
+            //        //self.uploadData();
+            //        self.main.qianqista.share(true);
+            //        cc.log(res);
+            //    },
+            //    fail: function()
+            //    {
+            //        self.main.qianqista.share(false);
+            //        self.res.showToast("分享失败！");
+            //    }
+            //});
         }
         else
         {

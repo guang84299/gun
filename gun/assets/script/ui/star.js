@@ -82,6 +82,7 @@ cc.Class({
         //this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
         //this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
+        this.node_star_scroll_content.stopAllActions();
         this.node_star_scroll_content.destroyAllChildren();
 
         if(this.ranktype == 1)
@@ -89,6 +90,7 @@ cc.Class({
             if(this.rankdata1)
             {
                 self.updateMeItem(this.rankdata1);
+                self.addItems(this.rankdata1);
             }
             else
             {
@@ -96,6 +98,7 @@ cc.Class({
                     var datas = res.data;
                     self.rankdata1 = datas;
                     self.updateMeItem(datas);
+                    self.addItems(datas);
                 });
             }
         }
@@ -104,6 +107,7 @@ cc.Class({
             if(this.rankdata2)
             {
                 self.updateMeItem(this.rankdata2);
+                self.addItems(this.rankdata2);
             }
             else
             {
@@ -111,6 +115,7 @@ cc.Class({
                     var datas = res.data;
                     self.rankdata2 = datas;
                     self.updateMeItem(datas);
+                    self.addItems(datas);
                 });
             }
 
@@ -144,6 +149,7 @@ cc.Class({
 
     addItems: function(datas)
     {
+        var self = this;
         var num = this.node_star_scroll_content.childrenCount;
         if(datas && datas.length>1 && num < datas.length-1)
         {
@@ -167,7 +173,15 @@ cc.Class({
             award.getComponent("cc.Label").string = data.award+"￥";
 
             this.node_star_scroll_content.addChild(item);
+
+            this.node_star_scroll_content.runAction(cc.sequence(
+                cc.delayTime(0.06),
+                cc.callFunc(function(){
+                    self.addItems(datas);
+                })
+            ));
         }
+
     },
 
     show: function()
@@ -250,16 +264,16 @@ cc.Class({
             var ss = s < 10 ? "0"+s : s;
             this.node_star_time.string = "剩余时间 "+sh+":"+sm+":"+ss;
         }
-
-        this.addItemDt += dt;
-        if(this.addItemDt >= 0.06)
-        {
-            this.addItemDt = 0;
-
-            if(this.ranktype == 1)
-                this.addItems(this.rankdata1);
-            else
-                this.addItems(this.rankdata2);
-        }
+        //
+        //this.addItemDt += dt;
+        //if(this.addItemDt >= 0.06)
+        //{
+        //    this.addItemDt = 0;
+        //
+        //    if(this.ranktype == 1)
+        //        this.addItems(this.rankdata1);
+        //    else
+        //        this.addItems(this.rankdata2);
+        //}
     }
 });

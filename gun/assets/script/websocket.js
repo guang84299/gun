@@ -5,10 +5,7 @@ module.exports = {
     ws: null,
     //ip: "wss://0a8ce26f.com",
     //ip: "ws://192.168.129.110:9123",
-    ip: "wss://0a8ce26f.com",
-
-    ip1: "wss://0a8ce26f.com",
-    ip2: "wss://e26f.cn",
+    ip: "ws://wsqqplay.e26f.cn",
 
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,
@@ -53,10 +50,10 @@ module.exports = {
     init: function(pk,callback)
     {
         this.pk = pk;
-        if(this.pk.publish == 1)
-            this.ip = this.ip1;
-        else
-            this.ip = this.ip2;
+        //if(this.pk.publish == 1)
+        //    this.ip = this.ip1;
+        //else
+        //    this.ip = this.ip2;
         if(this.ws == null)
         {
             this.ws = new WebSocket(this.ip);

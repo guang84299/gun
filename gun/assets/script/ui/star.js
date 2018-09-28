@@ -69,6 +69,7 @@ cc.Class({
         this.main.qianqista.subTime(function(res){
             self.subTime = res.data;
         });
+
     },
 
     updateUI: function()
@@ -226,17 +227,23 @@ cc.Class({
 
     loadPic: function(sp,url)
     {
-        cc.loader.load({url: url, type: 'png'}, function (err, tex) {
-            if(err)
-            {
-                cc.log(err);
-            }
-            else
-            {
-                var spriteFrame = new cc.SpriteFrame(tex);
-                sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
-            }
-        });
+        if(url && url.length>10)
+        {
+            cc.loader.load({url: url, type: 'png'}, function (err, tex) {
+                if (err) {
+                    cc.log(err);
+                }
+                else {
+                    if (cc.isValid(sp)) {
+                        var spriteFrame = new cc.SpriteFrame(tex);
+                        var spf = sp.getComponent("cc.Sprite");
+                        if(spf)
+                            spf.spriteFrame = spriteFrame;
+                    }
+                }
+            });
+        }
+
     },
 
     update: function(dt)

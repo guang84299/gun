@@ -3,9 +3,9 @@
  */
 module.exports = {
     ws: null,
-    //ip: "wss://0a8ce26f.com",
+    ip: "ws://wsqqplay.0a8ce26f.com",
     //ip: "ws://192.168.129.110:9123",
-    ip: "ws://wsqqplay.e26f.cn",
+    //ip: "ws://wsqqplay.e26f.cn",
 
     state: 0,//状态 0：未登录 1：登录成功
     pk: null,

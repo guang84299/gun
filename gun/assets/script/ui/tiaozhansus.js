@@ -133,6 +133,7 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerHide();
     },
 
     hide: function()

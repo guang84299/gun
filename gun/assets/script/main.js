@@ -542,6 +542,8 @@ cc.Class({
                 storage.setStorageCoin(parseInt(datas.coin));
             if(datas.score)
                 storage.setStorageScore(parseInt(datas.score));
+            if(datas.upscore)
+                storage.setStorageUpScore(parseInt(datas.upscore));
             if(datas.card)
                 storage.setStorageCard(parseInt(datas.card));
             if(datas.qiandao)
@@ -676,12 +678,40 @@ cc.Class({
             this.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
             this.node_main_score.getComponent("cc.Label").string = storage.getStorageScore();
             this.updateDitu();
+
+            //this.wxUpdateUpInviteNum();
         }
         else
         {
             this.uploadData();
         }
 
+    },
+
+    wxUpdateUpInviteNum: function()
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var invitenum = storage.getStorageInviteNum();
+            var gameResultData = {
+                "infoList": [              //通用数据上报列表
+                    {
+                        "type": 8,         //必选。数据类型。
+                        "op": 2,           //必选。运营类型。1表示增量，2表示存量。
+                        "num": invitenum,          //必选。数目。不超过32位有符号数。
+                        "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
+                    }
+                ]
+            };
+            BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
+                if (errCode !== 0) {
+                    //上报运营结果失败
+                }else{
+                    //上报运营结果成功
+                }
+            });
+        }
     },
 
     updateData: function()
@@ -702,6 +732,7 @@ cc.Class({
         datas.first = storage.getStorageFirst();
         datas.coin = storage.getStorageCoin();
         datas.score = storage.getStorageScore();
+        datas.upscore = storage.getStorageUpScore();
         datas.card = storage.getStorageCard();
         datas.winNum = storage.getStorageWinNum();
         datas.qiandao = storage.getStorageQianDao();
@@ -1110,6 +1141,8 @@ cc.Class({
                 self.node.addChild(tiaozhanfail);
                 self.node_tiaozhan_fail = tiaozhanfail.getComponent("tiaozhanfail");
                 self.node_tiaozhan_fail.show(a,b);
+
+                self.wxBannerHide();
             })
         ));
 
@@ -1132,6 +1165,8 @@ cc.Class({
                 self.node.addChild(tiaozhansus);
                 self.node_tiaozhan_sus = tiaozhansus.getComponent("tiaozhansus");
                 self.node_tiaozhan_sus.show();
+
+                self.wxBannerHide();
             })
         ));
 
@@ -1140,6 +1175,7 @@ cc.Class({
     openTiaoZhan: function()
     {
         this.wxQuanState(false);
+        this.wxBannerHide();
         this.opentiaozhan = true;
         //this.node_game.active = false;
         this.node_game_ui.active = false;
@@ -1564,6 +1600,7 @@ cc.Class({
             })
         ));
 
+        if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -3675,6 +3712,7 @@ cc.Class({
             ));
         }
 
+        if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -3820,7 +3858,11 @@ cc.Class({
                 {
                     this.uploadScoreDt = 0;
                     if(!this.opentiaozhan)
+                    {
                         this.wxUpdateScore(Math.floor(this.GAME.score));
+                        this.wxUpdateScore2(Math.floor(this.GAME.score));
+                    }
+
                 }
             }
             this.subdt += dt;
@@ -4412,6 +4454,36 @@ cc.Class({
         }
     },
 
+    wxUpdateScore2: function(score)
+    {
+        var self = this;
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            if(score > storage.getStorageUpScore())
+            {
+                storage.setStorageUpScore(score);
+
+                var gameResultData = {
+                    "infoList": [              //通用数据上报列表
+                        {
+                            "type": 8,         //必选。数据类型。
+                            "op": 2,           //必选。运营类型。1表示增量，2表示存量。
+                            "num": score,          //必选。数目。不超过32位有符号数。
+                            "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
+                        }
+                    ]
+                };
+                BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
+                    if (errCode !== 0) {
+                        //上报运营结果失败
+                    }else{
+                        //上报运营结果成功
+                    }
+                });
+            }
+        }
+    },
+
     wxGropShare: function()
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
@@ -4995,6 +5067,7 @@ cc.Class({
         {
             if(self.bannerAd)
                 self.bannerAd.close();
+            self.bannerAd = null;
             //if(this.bannerAd)
             //    this.bannerAd.hide();
         }

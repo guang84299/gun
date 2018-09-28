@@ -86,6 +86,17 @@ module.exports = {
         return Number(currscore);
     },
 
+    setStorageUpScore: function(upscore)
+    {
+        cc.sys.localStorage.setItem("upscore",upscore);
+    },
+    getStorageUpScore: function()
+    {
+        var currscore = cc.sys.localStorage.getItem("upscore");
+        currscore = currscore ? currscore : 0;
+        return Number(currscore);
+    },
+
     setStorageUnionid: function(unionid)
     {
         cc.sys.localStorage.setItem("unionid",unionid);

@@ -63,7 +63,7 @@ module.exports = {
     session_key: "",
     power: 1,//授权状态
     url: "http://qqplay.77qqup.com:8082/sta/",
-    url2: "http://qqplay.e26f.cn/gun/",
+    url2: "http://qqplay.0a8ce26f.com/gun/",
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
     initcallback: null,
@@ -169,7 +169,7 @@ module.exports = {
             }
             else{
                 self.userName = "测试用户名";
-                self.avatarUrl = "http://qqplay.e26f.cn/img/avatar/0.jpg";
+                self.avatarUrl = "http://thirdqq.qlogo.cn/g?b=sdk&k=woicoWCwib0xzYz7zoUtResA&s=100&t=1507643904";
                 this.initdata();
             }
 
@@ -490,7 +490,9 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            this.httpPost2("addUser",{openid:this.openid,nick:this.userName,avatarUrl:this.avatarUrl,score:score},function(res){
+            var aurl = this.avatarUrl;
+            aurl = aurl.replace(/&/g,"---");
+            this.httpPost2("addUser",{openid:this.openid,nick:this.userName,avatarUrl:aurl,score:score},function(res){
                 console.log("addUser:",res);
                 if(callback)
                     callback(res);

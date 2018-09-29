@@ -67,7 +67,7 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             BK.Script.log(1,1,'---------qianqista.init：');
-        qianqista.init("101486189","西部神枪手",function(){
+        qianqista.init("239014983452998","西部神枪手",function(){
             qianqista.datas(function(res){
                 console.log('my datas:', res);
                 if(res.state == 200)
@@ -3260,7 +3260,7 @@ cc.Class({
             var killhscore = this.GAME.killhead*10;
             if(this.GAME.killhead>=2)
                 killhscore += 5*this.GAME.killhead;
-            this.node_game_ui.killhead.getComponent("cc.Label").string = "爆头x"+this.GAME.killhead+" 得分"+killhscore;
+            this.node_game_ui.killhead.getComponent("cc.Label").string = "Headshot x"+this.GAME.killhead+" Score "+killhscore;
             this.node_game_ui.killhead.active = true;
             sct = 1;
             this.addCoin();
@@ -3993,8 +3993,8 @@ cc.Class({
     },
     getChaoyue3: function()
     {
-        var per = ["盲人也玩游戏？","和瞎了差不多","斜眼","超级近视眼","近视眼","多练练，会好的","见习枪手",
-            "实习枪手","轻松吃鸡","英雄枪手","超级神枪手","无敌神枪手","神一样的枪手"];
+        var per = ["Rookie","New hand","Better","Almost","Get it？","Practice more!","Intern gunner",
+            "Professional gunner","I think I did okay！","Super shooter ","Dead shot","Invincible marksman","God like!"];
         return per[this.getChaoyue()-1];
     },
     getChaoyue4: function()

@@ -62,8 +62,8 @@ module.exports = {
     userName: "",
     session_key: "",
     power: 1,//授权状态
-    url: "http://qqplay.77qqup.com:8082/sta/",
-    url2: "http://qqplay.0a8ce26f.com/gun/",
+    url: "https://www.qiqiup.top:442/sta/",
+    url2: "http://192.168.30.221:8080/gun/",
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
     initcallback: null,

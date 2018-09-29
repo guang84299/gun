@@ -549,154 +549,154 @@ cc.Class({
 
         this.levels = [
             [
-                {type:1,desc:"连续击败5个敌人",val:5,num:5}
+                {type:1,desc:"Beat 5 enemies in a row",val:5,num:5}
             ],
             [
-                {type:1,desc:"连续击败10个敌人",val:10,num:10}
+                {type:1,desc:"Beat 10 enemies in a row",val:10,num:10}
             ],
             [
-                {type:2,desc:"连续爆头2次",val:2,num:10}
+                {type:2,desc:"Continuous headshot 2 times",val:2,num:10}
             ],
             [
-                {type:1,desc:"连续击败15个敌人",val:15,num:15}
+                {type:1,desc:"Beat 15 enemies in a row",val:15,num:15}
             ],
             [
-                {type:5,desc:"击败2个boss",val:2,num:2}
+                {type:5,desc:"Beat 2 bosses",val:2,num:2}
             ],
             [
-                {type:2,desc:"连续爆头3次",val:3,num:15}
+                {type:2,desc:"Continuous headshot 3 times",val:3,num:15}
             ],
             [
-                {type:3,desc:"使用乌兹",desc2:"击败10个敌人",val:10,num:10,gunId:3}
+                {type:3,desc:"Using Uzi",desc2:"Beat 10 enemies",val:10,num:10,gunId:3}
             ],
             [
-                {type:2,desc:"连续爆头4次",val:4,num:15}
+                {type:2,desc:"Continuous headshot 4 times",val:4,num:15}
             ],
             [
-                {type:1,desc:"连续击败20个敌人",val:20,num:20}
+                {type:1,desc:"Beat 20 enemies in a row",val:20,num:20}
             ],
             [
-                {type:5,desc:"击败3个boss",val:3,num:3}
+                {type:5,desc:"Beat 3 bosses",val:3,num:3}
             ],
             [
-                {type:3,desc:"使用沙漠之鹰",desc2:"击败12个敌人",val:12,num:12,gunId:2}
+                {type:3,desc:"Using Desert eagle",desc2:"Beat 12 enemies",val:12,num:12,gunId:2}
             ],
             [
-                {type:1,desc:"连续击败25个敌人",val:25,num:25}
+                {type:1,desc:"Beat 25 enemies in a row",val:25,num:25}
             ],
             [
-                {type:2,desc:"连续爆头5次",val:5,num:15}
+                {type:2,desc:"Continuous headshot 5 times",val:5,num:15}
             ],
             [
-                {type:5,desc:"击败4个boss",val:4,num:4}
+                {type:5,desc:"Beat 4 bosses",val:4,num:4}
             ],
             [
-                {type:3,desc:"使用M4",desc2:"击败15个敌人",val:15,num:15,gunId:4}
+                {type:3,desc:"Using M4",desc2:"Beat 15 enemies",val:15,num:15,gunId:4}
             ],
             [
-                {type:1,desc:"连续击败30个敌人",val:30,num:30}
+                {type:1,desc:"Beat 30 enemies in a row",val:30,num:30}
             ],
             [
-                {type:2,desc:"连续爆头6次",val:6,num:15}
+                {type:2,desc:"Continuous headshot 6 times",val:6,num:15}
             ],
             [
-                {type:5,desc:"击败5个boss",val:5,num:5}
+                {type:5,desc:"Beat 5 bosses",val:5,num:5}
             ],
             [
-                {type:3,desc:"使用AK-47",desc2:"击败20个敌人",val:20,num:20,gunId:5}
+                {type:3,desc:"Using AK-47",desc2:"Beat 20 enemies",val:20,num:20,gunId:5}
             ],
             [
-                {type:1,desc:"连续击败35个敌人",val:35,num:35}
+                {type:1,desc:"Beat 35 enemies in a row",val:35,num:35}
             ],
             [
-                {type:2,desc:"连续爆头7次",val:7,num:15}
+                {type:2,desc:"Continuous headshot 7 times",val:7,num:15}
             ],
             [
-                {type:5,desc:"击败6个boss",val:6,num:6}
+                {type:5,desc:"Beat 6 bosses",val:6,num:6}
             ],
             [
-                {type:3,desc:"使用侦察者",desc2:"击败20个敌人",val:20,num:20,gunId:6}
+                {type:3,desc:"Using Scout",desc2:"Beat 20 enemies",val:20,num:20,gunId:6}
             ],
             [
-                {type:6,desc:"连续击败30个敌人",desc2:"30%以上爆头率",val:0.3,num:30}
+                {type:6,desc:"Beat 30 enemies in a row",desc2:"More than 30% headshot rate",val:0.3,num:30}
             ],
             [
-                {type:2,desc:"连续爆头8次",val:8,num:15}
+                {type:2,desc:"Continuous headshot 8 times",val:8,num:15}
             ],
             [
-                {type:4,desc:"击败5个boss",desc2:"30%以上爆头率",val:0.3,num:5}
+                {type:4,desc:"Beat 5 bosses",desc2:"More than 30% headshot rate",val:0.3,num:5}
             ],
             [
-                {type:3,desc:"使用M240",desc2:"击败25个敌人",val:25,num:25,gunId:8}
+                {type:3,desc:"Using M240",desc2:"Beat 25 enemies",val:25,num:25,gunId:8}
             ],
             [
-                {type:6,desc:"连续击败30个敌人",desc2:"50%以上爆头率",val:0.5,num:30}
+                {type:6,desc:"Beat 30 enemies in a row",desc2:"More than 50% headshot rate",val:0.5,num:30}
             ],
             [
-                {type:2,desc:"连续爆头9次",val:9,num:15}
+                {type:2,desc:"Continuous headshot 9 times",val:9,num:15}
             ],
             [
-                {type:4,desc:"击败5个boss",desc2:"40%以上爆头率",val:0.4,num:5}
+                {type:4,desc:"Beat 5 bosses",desc2:"More than 40% headshot rate",val:0.4,num:5}
             ],
             [
-                {type:3,desc:"使用AWP",desc2:"击败20个敌人",val:20,num:20,gunId:9}
+                {type:3,desc:"Using AWP",desc2:"Beat 20 enemies",val:20,num:20,gunId:9}
             ],
             [
-                {type:6,desc:"连续击败30个敌人",desc2:"60%以上爆头率",val:0.6,num:30}
+                {type:6,desc:"Beat 30 enemies in a row",desc2:"More than 60% headshot rate",val:0.6,num:30}
             ],
             [
-                {type:2,desc:"连续爆头10次",val:10,num:14}
+                {type:2,desc:"Continuous headshot 10 times",val:10,num:14}
             ],
             [
-                {type:4,desc:"击败6个boss",desc2:"50%以上爆头率",val:0.5,num:6}
+                {type:4,desc:"Beat 6 bosses",desc2:"More than 50% headshot rate",val:0.5,num:6}
             ],
             [
-                {type:3,desc:"使用神力",desc2:"击败20个敌人",val:20,num:20,gunId:17}
+                {type:3,desc:"Using Divine power",desc2:"Beat 20 enemies",val:20,num:20,gunId:17}
             ],
             [
-                {type:6,desc:"连续击败30个敌人",desc2:"70%以上爆头率",val:0.7,num:30}
+                {type:6,desc:"Beat 30 enemies in a row",desc2:"More than 70% headshot rate",val:0.7,num:30}
             ],
             [
-                {type:2,desc:"连续爆头10次",val:10,num:13}
+                {type:2,desc:"Continuous headshot 10 times",val:10,num:13}
             ],
             [
-                {type:4,desc:"击败6个boss",desc2:"60%以上爆头率",val:0.6,num:6}
+                {type:4,desc:"Beat 6 bosses",desc2:"More than 60% headshot rate",val:0.6,num:6}
             ],
             [
-                {type:3,desc:"使用巨人",desc2:"击败20个敌人",val:20,num:20,gunId:19}
+                {type:3,desc:"Using Giant",desc2:"Beat 20 enemies",val:20,num:20,gunId:19}
             ],
             [
-                {type:6,desc:"连续击败30个敌人",desc2:"80%以上爆头率",val:0.8,num:30}
+                {type:6,desc:"Beat 30 enemies in a row",desc2:"More than 80% headshot rate",val:0.8,num:30}
             ],
             [
-                {type:2,desc:"连续爆头10次",val:10,num:12}
+                {type:2,desc:"Continuous headshot 10 times",val:10,num:12}
             ],
             [
-                {type:4,desc:"击败6个boss",desc2:"70%以上爆头率",val:0.7,num:6}
+                {type:4,desc:"Beat 6 bosses",desc2:"More than 70% headshot rate",val:0.7,num:6}
             ],
             [
-                {type:2,desc:"连续爆头10次",val:10,num:10}
+                {type:2,desc:"Continuous headshot 10 times",val:10,num:10}
             ],
             [
-                {type:2,desc:"连续爆头15次",val:15,num:15}
+                {type:2,desc:"Continuous headshot 15 times",val:15,num:15}
             ],
             [
-                {type:2,desc:"连续爆头20次",val:20,num:20}
+                {type:2,desc:"Continuous headshot 20 times",val:20,num:20}
             ],
             [
-                {type:2,desc:"连续爆头25次",val:25,num:25}
+                {type:2,desc:"Continuous headshot 25 times",val:25,num:25}
             ],
             [
-                {type:2,desc:"连续爆头30次",val:30,num:30}
+                {type:2,desc:"Continuous headshot 30 times",val:30,num:30}
             ],
             [
-                {type:2,desc:"连续爆头35次",val:35,num:35}
+                {type:2,desc:"Continuous headshot 35 times",val:35,num:35}
             ],
             [
-                {type:2,desc:"连续爆头40次",val:40,num:40}
+                {type:2,desc:"Continuous headshot 40 times",val:40,num:40}
             ],
             [
-                {type:2,desc:"连续爆头50次",val:50,num:50}
+                {type:2,desc:"Continuous headshot 50 times",val:50,num:50}
             ]
         ];
     },
@@ -912,7 +912,7 @@ cc.Class({
     showToastRW: function()
     {
         var toast = cc.instantiate(this.toast_cj);
-        cc.find("str",toast).getComponent("cc.Label").string = "任务已达成！";
+        cc.find("str",toast).getComponent("cc.Label").string = "Mission completed！";
         toast.opacity = 0;
         toast.y = cc.winSize.height/2 - 50;
         this.node.addChild(toast,1000);

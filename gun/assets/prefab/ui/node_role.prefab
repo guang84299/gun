@@ -927,7 +927,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 147,
       "height": 30
     },
     "_rotationX": 0,
@@ -962,7 +962,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "历史最高分",
+    "_N$string": "Best Score",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1793,7 +1793,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 60,
+      "width": 95,
       "height": 30
     },
     "_rotationX": 0,
@@ -1828,7 +1828,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "默认",
+    "_N$string": "Default",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2299,7 +2299,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 157,
       "height": 30
     },
     "_rotationX": 0,
@@ -2334,7 +2334,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "跳得更快",
+    "_N$string": "Jump faster",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2892,7 +2892,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 127,
       "height": 30
     },
     "_rotationX": 0,
@@ -2927,7 +2927,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得金币",
+    "_N$string": "Get coins",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3485,7 +3485,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 127,
       "height": 30
     },
     "_rotationX": 0,
@@ -3520,7 +3520,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得金币",
+    "_N$string": "Get coins",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -4078,7 +4078,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 152,
       "height": 30
     },
     "_rotationX": 0,
@@ -4113,7 +4113,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度",
+    "_N$string": "Aim Length",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -4671,7 +4671,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 173,
       "height": 30
     },
     "_rotationX": 0,
@@ -4699,14 +4699,14 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 26,
+    "_fontSize": 26,
     "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "攻击火力",
+    "_N$string": "Attack damage",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -5264,7 +5264,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 152,
       "height": 30
     },
     "_rotationX": 0,
@@ -5299,7 +5299,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度",
+    "_N$string": "Aim Length",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -5857,7 +5857,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 147,
       "height": 30
     },
     "_rotationX": 0,
@@ -5892,7 +5892,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度",
+    "_N$string": "Aim Speed",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -6450,7 +6450,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 147,
       "height": 30
     },
     "_rotationX": 0,
@@ -6485,7 +6485,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度",
+    "_N$string": "Aim Speed",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -7132,7 +7132,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 117,
       "height": 48
     },
     "_rotationX": 0,
@@ -7167,7 +7167,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度\n+10%",
+    "_N$string": "Aim Length \n+10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -7219,7 +7219,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -7254,7 +7254,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-5%",
+    "_N$string": "Aim Speed \n-5%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -7725,7 +7725,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 111,
       "height": 48
     },
     "_rotationX": 0,
@@ -7760,7 +7760,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度\n+10%",
+    "_N$string": "Aim Length\n+10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -7812,7 +7812,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 93,
       "height": 48
     },
     "_rotationX": 0,
@@ -7847,7 +7847,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得金币\n+10%",
+    "_N$string": "Get coins\n+10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -8318,7 +8318,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 111,
       "height": 48
     },
     "_rotationX": 0,
@@ -8353,7 +8353,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度\n+10%",
+    "_N$string": "Aim Length\n+10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -8405,7 +8405,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -8440,7 +8440,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-10%",
+    "_N$string": "Aim Speed \n-10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -8911,7 +8911,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -8946,7 +8946,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-10%",
+    "_N$string": "Aim Speed \n-10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -8998,7 +8998,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 147,
       "height": 48
     },
     "_rotationX": 0,
@@ -9033,7 +9033,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "攻击火力\n+1",
+    "_N$string": "Attack damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -9504,7 +9504,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -9539,7 +9539,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-10%",
+    "_N$string": "Aim Speed \n-10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -9591,7 +9591,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 93,
       "height": 48
     },
     "_rotationX": 0,
@@ -9626,7 +9626,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得金币\n+10%",
+    "_N$string": "Get coins\n+10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10097,7 +10097,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 111,
       "height": 48
     },
     "_rotationX": 0,
@@ -10132,7 +10132,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度\n+15%",
+    "_N$string": "Aim Length\n+15%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10184,7 +10184,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -10219,7 +10219,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-10%",
+    "_N$string": "Aim Speed \n-10%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10690,7 +10690,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 111,
       "height": 48
     },
     "_rotationX": 0,
@@ -10725,7 +10725,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线长度\n+15%",
+    "_N$string": "Aim Length\n+15%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10777,7 +10777,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 147,
       "height": 48
     },
     "_rotationX": 0,
@@ -10812,7 +10812,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "攻击火力\n+1",
+    "_N$string": "Attack damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -11283,7 +11283,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 93,
       "height": 48
     },
     "_rotationX": 0,
@@ -11318,7 +11318,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得金币\n+20%",
+    "_N$string": "Get coins\n+20%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -11370,7 +11370,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 147,
       "height": 48
     },
     "_rotationX": 0,
@@ -11405,7 +11405,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "攻击火力\n+1",
+    "_N$string": "Attack damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -11876,7 +11876,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -11911,7 +11911,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线速度\n-20%",
+    "_N$string": "Aim Speed \n-20%",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -11963,7 +11963,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 147,
       "height": 48
     },
     "_rotationX": 0,
@@ -11998,7 +11998,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "攻击火力\n+1",
+    "_N$string": "Attack damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -12395,7 +12395,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
+      "width": 360,
       "height": 60
     },
     "_rotationX": 0,
@@ -12430,7 +12430,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "超级战士",
+    "_N$string": "Super warrior",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -13198,7 +13198,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 90,
+      "width": 143,
       "height": 30
     },
     "_rotationX": 0,
@@ -13207,7 +13207,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -60,
+      "x": -29,
       "y": 79
     },
     "_skewX": 0,
@@ -13233,7 +13233,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "属性：",
+    "_N$string": "Property：",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -13289,7 +13289,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 184,
+      "width": 182,
       "height": 28
     },
     "_rotationX": 0,
@@ -13408,14 +13408,14 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 22,
+    "_fontSize": 22,
     "_lineHeight": 28,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线加20%+",
+    "_N$string": "Line of sight +20%",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -13471,7 +13471,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 196,
+      "width": 176,
       "height": 28
     },
     "_rotationX": 0,
@@ -13534,7 +13534,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 215,
+      "x": 202,
       "y": 0
     },
     "_skewX": 0,
@@ -13590,14 +13590,14 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 28,
-    "_fontSize": 28,
+    "_actualFontSize": 22,
+    "_fontSize": 22,
     "_lineHeight": 28,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "瞄准线减速10%",
+    "_N$string": "Line of sight -20%",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -13653,7 +13653,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 128,
+      "width": 146,
       "height": 28
     },
     "_rotationX": 0,
@@ -13716,7 +13716,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 151,
+      "x": 164,
       "y": 0
     },
     "_skewX": 0,
@@ -13779,7 +13779,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "跳得更快+",
+    "_N$string": "Jump faster",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -14327,7 +14327,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 120,
       "height": 40
     },
     "_rotationX": 0,
@@ -14362,7 +14362,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "返回",
+    "_N$string": "Return",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -14914,7 +14914,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
+      "width": 259,
       "height": 30
     },
     "_rotationX": 0,
@@ -14942,14 +14942,14 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 20,
+    "_fontSize": 20,
     "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "随机解锁一个角色",
+    "_N$string": "Randomly unlock a character",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -15458,7 +15458,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 120,
+      "width": 170,
       "height": 30
     },
     "_rotationX": 0,
@@ -15493,7 +15493,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "邀请好友",
+    "_N$string": "Invite friends",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -15545,7 +15545,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 60,
+      "width": 48,
       "height": 30
     },
     "_rotationX": 0,
@@ -15580,7 +15580,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "获得",
+    "_N$string": "Get",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

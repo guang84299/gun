@@ -58,23 +58,23 @@ cc.Class({
             if(i<currQianDao)
             {
                 item.color = cc.color(100,100,100);
-                state.getComponent("cc.Label").string = "已领取";
+                state.getComponent("cc.Label").string = "Received";
             }
             else if(i==currQianDao && now != currQianDaoTime)
             {
                 item.color = cc.color(243,180,69);
-                state.getComponent("cc.Label").string = "待领取";
+                state.getComponent("cc.Label").string = "Unclaimed";
                 item.canset = true;
             }
             else
             {
-                state.getComponent("cc.Label").string = "未领取";
+                state.getComponent("cc.Label").string = "Unclaimed";
             }
         }
         if(this.main.GAME.shareqiandao)
-            this.node_qiandao_vedio_txt.string = "分享到群获取双倍奖励";
+            this.node_qiandao_vedio_txt.string = "Share to group to get double reward";
         else
-            this.node_qiandao_vedio_txt.string = "观看视频获取双倍奖励";
+            this.node_qiandao_vedio_txt.string = "Watch the video for double rewards";
     },
 
     show: function()
@@ -139,7 +139,7 @@ cc.Class({
             award *= 2;
 
         storage.setStorageCoin(parseInt(storage.getStorageCoin()) + award);
-        this.res.showToast("金币+"+award);
+        this.res.showToast("Coin+"+award);
         this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
         this.main.uploadData();

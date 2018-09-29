@@ -80,7 +80,7 @@ cc.Class({
         //var currLevel = storage.getStorageLevel();
 
         this.node_tiaozhan_coin.string = storage.getStorageCoin();
-        this.node_tiaozhan_title.string = "第"+(lv+1)+"关";
+        this.node_tiaozhan_title.string = "Level "+(lv+1)+"";
 
         this.node_tiaozhan_desc2.active = false;
         var lvdata = this.res.levels[lv][0];

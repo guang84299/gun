@@ -419,7 +419,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 240,
+      "width": 437,
       "height": 64
     },
     "_rotationX": 0,
@@ -454,7 +454,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "挑战模式",
+    "_N$string": "Challenge mode",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1109,7 +1109,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 128,
+      "width": 68,
       "height": 34
     },
     "_rotationX": 0,
@@ -1144,7 +1144,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "开始挑战",
+    "_N$string": "Start",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1313,8 +1313,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 143,
-      "height": 115
+      "width": 144,
+      "height": 136
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1484,8 +1484,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 143,
-      "height": 115
+      "width": 144,
+      "height": 136
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1825,7 +1825,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 80,
+      "width": 120,
       "height": 40
     },
     "_rotationX": 0,
@@ -1860,7 +1860,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "返回",
+    "_N$string": "Return",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

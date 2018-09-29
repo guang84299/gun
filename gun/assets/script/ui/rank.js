@@ -170,8 +170,8 @@ cc.Class({
         this.node_paiming_lv2.active = false;
         if(this.ranktype == 1)
         {
-            self.node_paiming_title.string = "世界排行榜";
-            self.node_paiming_ranktype_txt.string = "好友";
+            self.node_paiming_title.string = "World rank";
+            self.node_paiming_ranktype_txt.string = "Friend";
 
             var selfrank = null;
             if(this.worldrank.pk && this.worldrank.pk.length>0)
@@ -209,8 +209,8 @@ cc.Class({
         }
         else
         {
-            self.node_paiming_title.string = "好友排行榜";
-            self.node_paiming_ranktype_txt.string = "世界";
+            self.node_paiming_title.string = "Friend rank";
+            self.node_paiming_ranktype_txt.string = "World";
 
             var attr = "a1";//使用哪一种上报数据做排行，可传入score，a1，a2等
             var order = 1;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
@@ -362,8 +362,8 @@ cc.Class({
 
         if(this.ranktype == 1)
         {
-            self.node_paiming_title.string = "世界排行榜";
-            self.node_paiming_ranktype_txt.string = "好友";
+            self.node_paiming_title.string = "World rank";
+            self.node_paiming_ranktype_txt.string = "Friend";
 
             var selfrank = null;
             if(this.worldrank.wujin && this.worldrank.wujin.length>0)
@@ -405,8 +405,8 @@ cc.Class({
         }
         else
         {
-            self.node_paiming_title.string = "好友排行榜";
-            self.node_paiming_ranktype_txt.string = "世界";
+            self.node_paiming_title.string = "Friend rank";
+            self.node_paiming_ranktype_txt.string = "World";
 
             var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
             var order = 1;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]

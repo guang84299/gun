@@ -138,7 +138,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 349,
+      "width": 335,
       "height": 34
     },
     "_rotationX": 0,
@@ -173,7 +173,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "下一个即将超越的好友:",
+    "_N$string": "Next friend to be over:",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -493,7 +493,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 348,
+      "width": 405,
       "height": 42
     },
     "_rotationX": 0,
@@ -605,7 +605,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "查看QQ好友排行  >",
+    "_N$string": "View friends ranking  >",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
@@ -1014,7 +1014,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -187,
+      "x": -177,
       "y": -222
     },
     "_skewX": 0,
@@ -1735,7 +1735,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 72,
+      "width": 94,
       "height": 36
     },
     "_rotationX": 0,
@@ -1770,7 +1770,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "得分",
+    "_N$string": "Score",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2367,7 +2367,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 180,
       "height": 40
     },
     "_rotationX": 0,
@@ -2402,7 +2402,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "发起挑战",
+    "_N$string": "Challenge",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2723,7 +2723,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 102,
       "height": 40
     },
     "_rotationX": 0,
@@ -2758,7 +2758,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "再来一次",
+    "_N$string": "Again",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3766,7 +3766,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 107,
       "height": 40
     },
     "_rotationX": 0,
@@ -3801,7 +3801,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "返回主页",
+    "_N$string": "Home",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

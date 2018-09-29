@@ -178,7 +178,7 @@ module.exports = {
 
     send: function(protocol,body)
     {
-        if (this.ws.readyState === WebSocket.OPEN) {
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
 
             var data = {};
             data.mode = protocol;

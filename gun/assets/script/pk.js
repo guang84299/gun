@@ -68,6 +68,13 @@ cc.Class({
         websocket.init(this,function(){
             websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
          });
+
+        this.subTime = 0;
+        this.subDt =  0;
+        var self = this;
+        this.main.qianqista.subTime(function(res){
+            self.subTime = res.data;
+        });
     },
 
     initUI: function()
@@ -318,17 +325,29 @@ cc.Class({
     {
         if(data == "danren")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             this.node_sel_mode.active = false;
             this.node_sel.active = true;
         }
         else if(data == "shuangren")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             this.isClickSuiji2 = false;
             this.node_sel_mode.active = false;
             this.node_sel2.active = true;
         }
         else if(data == "suiji")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             var coin = storage.getStorageCoin();
             if(coin < 30)
             {
@@ -356,6 +375,10 @@ cc.Class({
         }
         else if(data == "duizhan")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             if(websocket.state != 1)
             {
                 var self = this;
@@ -383,6 +406,10 @@ cc.Class({
         }
         else if(data == "suiji2")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             this.isFromShare = false;
             if(this.state == "pipei")
             {
@@ -423,6 +450,10 @@ cc.Class({
         }
         else if(data == "duizhan2")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             this.isFromShare = false;
             if(websocket.state != 1)
             {
@@ -480,6 +511,10 @@ cc.Class({
         }
         else if(data == "again")
         {
+            if(this.judgeJiesuan())
+            {
+                return;
+            }
             if(this.playerData && this.playerData.roomType == 1)
             {
                 var coin = storage.getStorageCoin();
@@ -520,8 +555,33 @@ cc.Class({
         cc.log(data);
     },
 
+    judgeJiesuan: function()
+    {
+        if(this.subTime > -2*60*1000 && this.subTime < 5*60*1000)
+        {
+            var t = 1;
+            if(this.subTime>=0)
+                t = Math.floor(this.subTime/60/1000)+2;
+            else
+                t = Math.floor((this.subTime + 2*60*1000)/60/1000);
+            if(t<=0)
+                t = 1;
+            this.res.showToast("奖励结算中，请稍等"+t+"分钟.");
+
+            websocket.close();
+
+            return true;
+        }
+
+        return false;
+    },
+
     sharePk: function()
     {
+        if(this.judgeJiesuan())
+        {
+            return;
+        }
         this.node_sel_mode.active = false;
         if(this.qianqista.pkroomtype == 2)
             this.node_sel.active = true;
@@ -3010,7 +3070,7 @@ cc.Class({
             }
 
             var coin = storage.getStorageCoin();
-            if(enemyPlayer.robot == 1 && coin >= 30)
+            if(enemyPlayer.robot == 1 && coin >= 30 && !this.judgeJiesuan())
             {
                 if(Math.random()<=0.4)
                 {
@@ -3258,6 +3318,13 @@ cc.Class({
         {
             this.isHide = false;
             this.goHome();
+        }
+
+        this.subDt += dt;
+        if(this.subDt >= 1) {
+            this.subDt = 0;
+
+            this.subTime -= 1000;
         }
     },
 

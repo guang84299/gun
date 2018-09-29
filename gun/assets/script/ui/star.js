@@ -91,7 +91,6 @@ cc.Class({
             if(this.rankdata1)
             {
                 self.updateMeItem(this.rankdata1);
-                self.addItems(this.rankdata1);
             }
             else
             {
@@ -99,7 +98,6 @@ cc.Class({
                     var datas = res.data;
                     self.rankdata1 = datas;
                     self.updateMeItem(datas);
-                    self.addItems(datas);
                 });
             }
         }
@@ -108,7 +106,6 @@ cc.Class({
             if(this.rankdata2)
             {
                 self.updateMeItem(this.rankdata2);
-                self.addItems(this.rankdata2);
             }
             else
             {
@@ -116,7 +113,6 @@ cc.Class({
                     var datas = res.data;
                     self.rankdata2 = datas;
                     self.updateMeItem(datas);
-                    self.addItems(datas);
                 });
             }
 
@@ -126,6 +122,7 @@ cc.Class({
 
     updateMeItem: function(datas)
     {
+        var self = this;
         if(datas && datas.length>0)
         {
             var selfdata = datas[datas.length-1];
@@ -145,6 +142,13 @@ cc.Class({
                 this.node_star_item_me_award.getComponent("cc.Label").string = selfdata.award+"￥";
 
             }
+
+            this.node_star_scroll_content.runAction(cc.sequence(
+                cc.delayTime(0.06),
+                cc.callFunc(function(){
+                    self.addItems(datas);
+                })
+            ));
         }
     },
 
@@ -205,8 +209,22 @@ cc.Class({
         }
         else if(data == "vs")
         {
-            this.main.openDuizhan();
-            this.hide();
+            if(this.subTime > -2*60*1000 && this.subTime < 5*60*1000)
+            {
+                var t = 1;
+                if(this.subTime>=0)
+                    t = Math.floor(this.subTime/60/1000)+2;
+                else
+                    t = Math.floor((this.subTime + 2*60*1000)/60/1000);
+                if(t<=0)
+                    t = 1;
+                this.res.showToast("奖励结算中，请稍等"+t+"分钟.");
+            }
+            else
+            {
+                this.main.openDuizhan();
+                this.hide();
+            }
         }
         else if(data == "rank_curr")
         {
@@ -254,17 +272,18 @@ cc.Class({
             this.subDt = 0;
 
             this.subTime -= 1000;
-            if(this.subTime < 0)
-                this.subTime = 0;
+            var dtime = this.subTime;
+            if(dtime < 0)
+                dtime = 0;
 
 
             //var d = Math.floor(this.subTime/(24*60*60*1000));
             //var h = Math.floor((this.subTime - d*24*60*60*1000)/(60*60*1000));
             //var m = Math.floor((this.subTime - d*24*60*60*1000 - h*60*60*1000)/(60*1000));
             //var s = Math.floor(((this.subTime - d*24*60*60*1000 - h*60*60*1000 - m*60*1000))/1000);
-            var h = Math.floor(this.subTime/(60*60*1000));
-            var m = Math.floor((this.subTime - h*60*60*1000)/(60*1000));
-            var s = Math.floor(((this.subTime - h*60*60*1000 - m*60*1000))/1000);
+            var h = Math.floor(dtime/(60*60*1000));
+            var m = Math.floor((dtime - h*60*60*1000)/(60*1000));
+            var s = Math.floor(((dtime - h*60*60*1000 - m*60*1000))/1000);
             //var sd = "0"+d;
             var sh = h < 10 ? "0"+h : h;
             var sm = m < 10 ? "0"+m : m;

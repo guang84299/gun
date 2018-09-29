@@ -288,6 +288,7 @@ cc.Class({
         this.GAME.sharecoinx2 = false;
         this.GAME.shareqiandao = false;
         this.GAME.moreba = false;
+        this.GAME.pvphuodong = false;
         this.GAME.moreba_items = "";
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
@@ -297,7 +298,7 @@ cc.Class({
             for(var i=0;i<this.GAME.control.length;i++)
             {
                 var con = this.GAME.control[i];
-                if(con.id == "sharecard2")
+                if(con.id == "sharecard")
                 {
                     if(con.value == "1")
                     {
@@ -343,6 +344,13 @@ cc.Class({
                     if(con.value == "1")
                     {
                         this.GAME.shareqiandao = true;
+                    }
+                }
+                else if(con.id == "pvphuodong")
+                {
+                    if(con.value == "1")
+                    {
+                        this.GAME.pvphuodong = true;
                     }
                 }
                 else if(con.id == "moreba")

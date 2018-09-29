@@ -45,6 +45,7 @@ cc.Class({
         this.node_star_rank_curr = cc.find("bg/rank_curr",this.node_star).getComponent("cc.Button");
         this.node_star_rank_last = cc.find("bg/rank_last",this.node_star).getComponent("cc.Button");
         this.node_star_time = cc.find("bg/time",this.node_star).getComponent("cc.Label");
+        this.node_star_desc = cc.find("desc/desc",this.node_star).getComponent("cc.Label");
         this.node_star_item_me_bg = cc.find("bg/item_me/bg",this.node_star);
         this.node_star_item_me_rank = cc.find("rank",this.node_star_item_me_bg);
         this.node_star_item_me_icon = cc.find("icon",this.node_star_item_me_bg);
@@ -69,6 +70,11 @@ cc.Class({
         this.main.qianqista.subTime(function(res){
             self.subTime = res.data;
         });
+
+        if(!this.main.GAME.pvphuodong)
+        {
+            this.node_star_desc.string = "亲爱的枪手们，本期星辉联赛红包活动已经结束啦，后续我们将不定期开启活动，敬请期待哦~";
+        }
     },
 
     updateUI: function()
@@ -82,6 +88,7 @@ cc.Class({
         //this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
         //this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
+        this.node_star_scroll_content.stopAllActions();
         this.node_star_scroll_content.destroyAllChildren();
 
         if(this.ranktype == 1)
@@ -120,6 +127,7 @@ cc.Class({
 
     updateMeItem: function(datas)
     {
+        var self = this;
         if(datas && datas.length>0)
         {
             var selfdata = datas[datas.length-1];
@@ -139,11 +147,19 @@ cc.Class({
                 this.node_star_item_me_award.getComponent("cc.Label").string = selfdata.award+"￥";
 
             }
+
+            this.node_star_scroll_content.runAction(cc.sequence(
+                cc.delayTime(0.08),
+                cc.callFunc(function(){
+                    self.addItems(datas);
+                })
+            ));
         }
     },
 
     addItems: function(datas)
     {
+        var self = this;
         var num = this.node_star_scroll_content.childrenCount;
         if(datas && datas.length>1 && num < datas.length-1)
         {
@@ -167,6 +183,12 @@ cc.Class({
             award.getComponent("cc.Label").string = data.award+"￥";
 
             this.node_star_scroll_content.addChild(item);
+            this.node_star_scroll_content.runAction(cc.sequence(
+                cc.delayTime(0.06),
+                cc.callFunc(function(){
+                    self.addItems(datas);
+                })
+            ));
         }
     },
 
@@ -190,8 +212,22 @@ cc.Class({
         }
         else if(data == "vs")
         {
-            this.main.openDuizhan();
-            this.hide();
+            if(this.subTime > -2*60*1000 && this.subTime < 5*60*1000)
+            {
+                var t = 1;
+                if(this.subTime>=0)
+                    t = Math.floor(this.subTime/60/1000)+2;
+                else
+                    t = Math.floor((this.subTime + 2*60*1000)/60/1000);
+                if(t<=0)
+                    t = 1;
+                this.res.showToast("奖励结算中，请稍等"+t+"分钟.");
+            }
+            else
+            {
+                this.main.openDuizhan();
+                this.hide();
+            }
         }
         else if(data == "rank_curr")
         {
@@ -233,17 +269,18 @@ cc.Class({
             this.subDt = 0;
 
             this.subTime -= 1000;
-            if(this.subTime < 0)
-                this.subTime = 0;
+            var dtime = this.subTime;
+            if(dtime < 0)
+                dtime = 0;
 
 
             //var d = Math.floor(this.subTime/(24*60*60*1000));
             //var h = Math.floor((this.subTime - d*24*60*60*1000)/(60*60*1000));
             //var m = Math.floor((this.subTime - d*24*60*60*1000 - h*60*60*1000)/(60*1000));
             //var s = Math.floor(((this.subTime - d*24*60*60*1000 - h*60*60*1000 - m*60*1000))/1000);
-            var h = Math.floor(this.subTime/(60*60*1000));
-            var m = Math.floor((this.subTime - h*60*60*1000)/(60*1000));
-            var s = Math.floor(((this.subTime - h*60*60*1000 - m*60*1000))/1000);
+            var h = Math.floor(dtime/(60*60*1000));
+            var m = Math.floor((dtime - h*60*60*1000)/(60*1000));
+            var s = Math.floor(((dtime - h*60*60*1000 - m*60*1000))/1000);
             //var sd = "0"+d;
             var sh = h < 10 ? "0"+h : h;
             var sm = m < 10 ? "0"+m : m;
@@ -251,15 +288,15 @@ cc.Class({
             this.node_star_time.string = "剩余时间 "+sh+":"+sm+":"+ss;
         }
 
-        this.addItemDt += dt;
-        if(this.addItemDt >= 0.06)
-        {
-            this.addItemDt = 0;
-
-            if(this.ranktype == 1)
-                this.addItems(this.rankdata1);
-            else
-                this.addItems(this.rankdata2);
-        }
+        //this.addItemDt += dt;
+        //if(this.addItemDt >= 0.06)
+        //{
+        //    this.addItemDt = 0;
+        //
+        //    if(this.ranktype == 1)
+        //        this.addItems(this.rankdata1);
+        //    else
+        //        this.addItems(this.rankdata2);
+        //}
     }
 });

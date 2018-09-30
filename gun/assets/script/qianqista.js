@@ -76,17 +76,15 @@ module.exports = {
     init: function(appId,gameName,initcallback,showcallback)
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
             this.gameId = appId + "";
             this.openid = FBInstant.player.getID();
         }
         else
         {
-            //this.gameId = appId + "001";
-            //this.openid = "wx00001";
-            this.gameId = appId + "";
-            this.openid = FBInstant.player.getID();
+            this.gameId = appId + "001";
+            this.openid = "wx00001";
         }
 
         this.appId = appId;
@@ -98,7 +96,7 @@ module.exports = {
         if(this.gameId && this.openid && this.openid.length>0)
         {
             this.state = 1;
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
             {
                 //var query = GameStatusInfo.gameParam;
                 //if(query && query.length>0)

@@ -408,6 +408,18 @@ cc.Class({
             self.node_paiming_title.string = "Friend rank";
             self.node_paiming_ranktype_txt.string = "World";
 
+            FBInstant.getLeaderboardAsync('wscore')
+                .then(function(leaderboard) {
+                    return leaderboard.getConnectedPlayerEntriesAsync();
+                })
+                .then(function(entries) {
+                    console.log(entries.length); // 10
+                    console.log(entries[0].getRank()); // 1
+                    console.log(entries[0].getScore()); // 42
+                    console.log(entries[1].getRank()); // 2
+                    console.log(entries[1].getScore()); // 40
+                });
+
             var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
             var order = 1;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
             var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)

@@ -139,7 +139,7 @@ cc.Class({
 
                         self.main.loadPic(self.node_fuhuo_icon,chaoyue.url);
                         self.node_fuhuo_nick.getComponent("cc.Label").string = chaoyue.nick;
-                        self.node_fuhuo_score.getComponent("cc.Label").string = "得分:"+chaoyue.score;
+                        self.node_fuhuo_score.getComponent("cc.Label").string = "Score:"+chaoyue.score;
                     }
                     else
                     {

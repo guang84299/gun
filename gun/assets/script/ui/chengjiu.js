@@ -323,7 +323,7 @@ cc.Class({
         }
 
         this.main.uploadData();
-        this.res.showToast("金币+"+coin);
+        this.res.showToast("Coin+"+coin);
         this.updateUI();
         this.main.updateDian();
         storage.playSound(this.res.audio_coin);

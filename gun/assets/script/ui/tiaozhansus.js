@@ -167,7 +167,7 @@ cc.Class({
                 this.startGame(this.main.tiaozhanlv + 1);
             else
             {
-                this.res.showToast("全部挑战完成！");
+                this.res.showToast("All challenges are completed!");
             }
         }
         cc.log(data);
@@ -196,7 +196,7 @@ cc.Class({
                           BK.Script.log(1, 1, "分享成功：" + retCode);
                           self.node_tiaozhan_xuanyao.interactable = false;
                           storage.setStorageCoin(storage.getStorageCoin()+self.award*2);
-                          self.res.showToast("金币+"+self.award*2);
+                          self.res.showToast("Coin+"+self.award*2);
                           self.main.qianqista.share(true);
                       }
                       else{
@@ -246,7 +246,7 @@ cc.Class({
               {
                   this.node_tiaozhan_xuanyao.interactable = false;
                   storage.setStorageCoin(storage.getStorageCoin()+this.award*2);
-                  this.res.showToast("金币+"+this.award*2);
+                  this.res.showToast("Coin+"+this.award*2);
                   this.updateCoin();
               }
           }

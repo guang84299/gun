@@ -63,11 +63,11 @@ cc.Class({
         }
         if(gunInviteNum>=4 && gunInviteAwardNum < 1)
         {
-            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "领取";
+            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "Receive";
         }
         else
         {
-            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "邀请好友";
+            cc.find("bg/linggunshare/Label",this.node_linggun).getComponent("cc.Label").string = "Invite friends";
         }
     },
 
@@ -108,7 +108,7 @@ cc.Class({
 
                 storage.setStorageGunInviteAwardNum(1);
                 this.main.uploadData();
-                this.res.showToast("金币+"+2000);
+                this.res.showToast("Coin+"+2000);
                 this.updateUI();
                 this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
                 storage.playSound(this.res.audio_coin);
@@ -118,7 +118,7 @@ cc.Class({
                 storage.setStorageGun(16,1);
                 storage.setStorageGunInviteAwardNum(1);
                 this.main.uploadData();
-                this.res.showToast("恭喜获取幻灭");
+                this.res.showToast("Congratulations on getting disillusioned");
                 this.updateUI();
             }
         }

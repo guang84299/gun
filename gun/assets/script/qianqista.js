@@ -63,7 +63,7 @@ module.exports = {
     session_key: "",
     power: 1,//授权状态
     url: "https://www.qiqiup.top:442/sta/",
-    url2: "http://192.168.30.221:8080/gun/",
+    url2: "https://www.qiqiup.top:442/gun/",
     state: 0, //0 未初始化 1已经初始化
     updatePower: false,
     initcallback: null,
@@ -78,13 +78,15 @@ module.exports = {
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            this.gameId = GameStatusInfo.gameId + "";
-            this.openid = GameStatusInfo.openId;
+            this.gameId = appId + "";
+            this.openid = FBInstant.player.getID();
         }
         else
         {
-            this.gameId = appId + "001";
-            this.openid = "wx00001";
+            //this.gameId = appId + "001";
+            //this.openid = "wx00001";
+            this.gameId = appId + "";
+            this.openid = FBInstant.player.getID();
         }
 
         this.appId = appId;
@@ -98,26 +100,26 @@ module.exports = {
             this.state = 1;
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             {
-                var query = GameStatusInfo.gameParam;
-                if(query && query.length>0)
-                {
-                    var datas = JSON.parse(query);
-                    if(datas.channel)
-                        this.channel = datas.channel;
-                    if(datas.fromid)
-                    {
-                        this.fromid = datas.fromid;
-                        this.pkfromid = datas.fromid;
-                    }
-                    if(datas.roomType)
-                        this.pkroomtype = datas.roomType;
-
-                    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
-                    {
-                        if(this.showcallback)
-                            this.showcallback();
-                    }
-                }
+                //var query = GameStatusInfo.gameParam;
+                //if(query && query.length>0)
+                //{
+                //    var datas = JSON.parse(query);
+                //    if(datas.channel)
+                //        this.channel = datas.channel;
+                //    if(datas.fromid)
+                //    {
+                //        this.fromid = datas.fromid;
+                //        this.pkfromid = datas.fromid;
+                //    }
+                //    if(datas.roomType)
+                //        this.pkroomtype = datas.roomType;
+                //
+                //    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
+                //    {
+                //        if(this.showcallback)
+                //            this.showcallback();
+                //    }
+                //}
 
 
                 //var query = res.query;
@@ -135,41 +137,15 @@ module.exports = {
 //                        self.showcallback();
 //                }
 
-                BK.MQQ.Account.getNick(this.openid,function(openID,nick){
-                    self.userName = nick;
-                    self.getAvatarUrl(function(){
-                        self.initdata();
-                    });
-                });
+                self.userName = FBInstant.player.getName();
+                self.avatarUrl = FBInstant.player.getPhoto();
+                self.initdata();
 
-                new BK.Game({
-                    onLoad: function()
-                    {
-                        BK.Script.log(1,1,"---onLoad----");
-                    },
-                    onMinmize: function()
-                    {
-                        BK.Script.log(1,1,"---onMinmize----");
-                    },
-                    onClose: function()
-                    {
-                        BK.Script.log(1,1,"---onClose----");
-                    },
-                    onEnterbackground: function()
-                    {
-                        BK.Script.log(1,1,"---onEnterbackground----");
-                    },
-                    onEnterforeground: function()
-                    {
-                        BK.Script.log(1,1,"---onEnterforeground----");
-                    }
-                });
 
-                BK.Script.log(1,1,"---1111111----:" + query);
             }
             else{
-                self.userName = "测试用户名";
-                self.avatarUrl = "http://thirdqq.qlogo.cn/g?b=sdk&k=woicoWCwib0xzYz7zoUtResA&s=100&t=1507643904";
+                self.userName = "Test";
+                self.avatarUrl = "https://www.0a8ce26f.com/img/avatar/102.jpg";
                 this.initdata();
             }
 
@@ -600,6 +576,28 @@ module.exports = {
                 console.log("myMony:",res);
                 if(callback)
                     callback(res);
+            });
+        }
+    },
+
+    randRobot: function(callback)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("randRobot",{},function(res){
+                console.log("randRobot:",res);
+                if(callback)
+                    callback(res);
+            });
+        }
+    },
+
+    updateGunAndSkin: function(gunId,skinId)
+    {
+        if(this.state == 1)
+        {
+            this.sendRequest2("updateGunAndSkin",{openid:this.openid,gunId:gunId,skinId:skinId},function(res){
+                console.log("updateGunAndSkin:",res);
             });
         }
     },

@@ -18,6 +18,7 @@ cc.Class({
         this.res = cc.find("Canvas").getComponent("res");
 
         this.qianqista = this.main.qianqista;
+        this.storage = storage;
         this.currPkGun = storage.getStorageCurrPkGun()-1;
         this.publish = storage.getStoragePublish();
 
@@ -63,11 +64,13 @@ cc.Class({
         this.isClickSuiji2 = false;
         this.isSuiJiMatch = false;
         this.isFromShare = false;
+        this.pktime = 99;
+        this.pktimedt = 0;
         var self = this;
 
         websocket.init(this,function(){
             websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-         });
+        });
     },
 
     initUI: function()
@@ -228,7 +231,7 @@ cc.Class({
             else
             {
                 self.isHide = true;
-                websocket.close();
+                //websocket.close();
             }
         });
     },
@@ -309,7 +312,7 @@ cc.Class({
     {
         this.node.stopAllActions();
         this.main.wxQuanState(true);
-        websocket.close();
+        //websocket.close();
         this.main.goMain();
         this.hide();
     },
@@ -348,27 +351,27 @@ cc.Class({
             {
                 this.res.showToast("服务器登录失败！重新登录中...");
                 var self = this;
-                websocket.close();
-                websocket.init(this,function(){
-                    websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-                });
+                //websocket.close();
+                //websocket.init(this,function(){
+                //    websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+                //});
             }
         }
         else if(data == "duizhan")
         {
-            if(websocket.state != 1)
-            {
-                var self = this;
-                this.res.showToast("服务器登录失败！重新登录中...");
-                websocket.close();
-                websocket.init(this,function(){
-                    websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-                });
-            }
-            else
-            {
-                websocket.match(2,this.main.GAME.currPlayer,this.currPkGun,0);
-            }
+            //if(websocket.state != 1)
+            //{
+            //    var self = this;
+            //    this.res.showToast("服务器登录失败！重新登录中...");
+            //    websocket.close();
+            //    websocket.init(this,function(){
+            //        websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+            //    });
+            //}
+            //else
+            //{
+            //    websocket.match(2,this.main.GAME.currPlayer,this.currPkGun,0);
+            //}
         }
         else if(data == "sel_fanhui")
         {
@@ -383,67 +386,81 @@ cc.Class({
         }
         else if(data == "suiji2")
         {
-            this.isFromShare = false;
-            if(this.state == "pipei")
+            var coin = storage.getStorageCoin();
+            if(coin < 30)
             {
-                this.isSuiJiMatch = true;
-                websocket.matchRoom();
-                this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
-                this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
-                this.node_sel2_willstart_la.active = true;
+                //this.res.showToast("金币不足");
+                var coin = cc.instantiate(this.res.node_coin);
+                coin.position = cc.v2(0,0);
+                this.node.addChild(coin);
+                this.node_coin = coin.getComponent("coin");
+                this.node_coin.show();
+                return;
             }
-            else
-            {
-                var coin = storage.getStorageCoin();
-                if(coin < 30)
-                {
-                    //this.res.showToast("金币不足");
-                    var coin = cc.instantiate(this.res.node_coin);
-                    coin.position = cc.v2(0,0);
-                    this.node.addChild(coin);
-                    this.node_coin = coin.getComponent("coin");
-                    this.node_coin.show();
-                    return;
-                }
-                if(websocket.state == 1)
-                {
-                    this.isClickSuiji2 = true;
-                    websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
-                }
-                else
-                {
-                    this.res.showToast("服务器登录失败！重新登录中...");
-                    var self = this;
-                    websocket.close();
-                    websocket.init(this,function(){
-                        websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-                    });
-                }
-            }
+            this.isClickSuiji2 = true;
+            websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
+
+            //this.isFromShare = false;
+            //if(this.state == "pipei")
+            //{
+            //    this.isSuiJiMatch = true;
+            //    websocket.matchRoom();
+            //    this.node_sel2_suiji.getComponent("cc.Button").interactable = false;
+            //    this.node_sel2_duizhan.getComponent("cc.Button").interactable = false;
+            //    this.node_sel2_willstart_la.active = true;
+            //}
+            //else
+            //{
+            //    var coin = storage.getStorageCoin();
+            //    if(coin < 30)
+            //    {
+            //        //this.res.showToast("金币不足");
+            //        var coin = cc.instantiate(this.res.node_coin);
+            //        coin.position = cc.v2(0,0);
+            //        this.node.addChild(coin);
+            //        this.node_coin = coin.getComponent("coin");
+            //        this.node_coin.show();
+            //        return;
+            //    }
+            //    if(websocket.state == 1)
+            //    {
+            //        this.isClickSuiji2 = true;
+            //        websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
+            //    }
+            //    else
+            //    {
+            //        this.res.showToast("服务器登录失败！重新登录中...");
+            //        var self = this;
+            //        websocket.close();
+            //        websocket.init(this,function(){
+            //            websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+            //        });
+            //    }
+            //}
         }
         else if(data == "duizhan2")
         {
-            this.isFromShare = false;
-            if(websocket.state != 1)
-            {
-                var self = this;
-                this.res.showToast("服务器登录失败！重新登录中...");
-                websocket.close();
-                websocket.init(this,function(){
-                    websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-                });
-            }
-            else
-            {
-                if(this.state == "pipei")
-                {
-                    this.wxGropSharePk();
-                }
-                else
-                {
-                    websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
-                }
-            }
+            //this.isFromShare = false;
+            //if(websocket.state != 1)
+            //{
+            //    var self = this;
+            //    this.res.showToast("服务器登录失败！重新登录中...");
+            //    websocket.close();
+            //    websocket.init(this,function(){
+            //        websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
+            //    });
+            //}
+            //else
+            //{
+            //    if(this.state == "pipei")
+            //    {
+            //        this.wxGropSharePk();
+            //    }
+            //    else
+            //    {
+            //        websocket.match(3,this.main.GAME.currPlayer,this.currPkGun,0);
+            //    }
+            //}
         }
         else if(data == "sel2_fanhui")
         {
@@ -462,7 +479,7 @@ cc.Class({
 
             this.node.stopAllActions();
             this.main.wxQuanState(true);
-            websocket.close();
+            //websocket.close();
             this.main.goMain();
             this.hide();
         }
@@ -638,7 +655,7 @@ cc.Class({
             this.node_sel_suiji.getComponent("cc.Button").interactable = false;
             this.node_sel_duizhan.getComponent("cc.Button").interactable = false;
             this.node_sel_gun.getComponent("cc.Button").interactable = false;
-            this.node_sel_title.string = "匹配中";
+            this.node_sel_title.string = "……";
             this.node_sel_box_2_name.string = "(30)";
             var pipeiTime = 30;
             var num = 31;
@@ -676,7 +693,7 @@ cc.Class({
                 this.node_sel2_willstart_la.active = true;
             }
             this.node_sel2_gun.getComponent("cc.Button").interactable = false;
-            this.node_sel2_title.string = "匹配中";
+            this.node_sel2_title.string = "……";
             this.node_sel2_willstart.string = "(60)";
             var pipeiTime = 300;
             var num = 301;
@@ -833,8 +850,8 @@ cc.Class({
                 this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
                 this.node_sel_box_2_name.string = enemyPlayer.name;
                 this.node_sel_box_2_wenhao.active = false;
-                this.node_sel_title.string = "匹配成功";
-                this.node_sel_willstart.string = "即将开始游戏...3";
+                this.node_sel_title.string = "Success";
+                this.node_sel_willstart.string = "Ready to start...3";
 
                 this.state = "willstart";
                 var willStartTime = 3;
@@ -843,7 +860,7 @@ cc.Class({
                     cc.delayTime(1),
                     cc.callFunc(function(){
                         willStartTime -= 1;
-                        self.node_sel_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        self.node_sel_willstart.string = "Ready to start..."+Math.floor(willStartTime);
                         if(Math.floor(willStartTime) == 0)
                         {
 
@@ -874,8 +891,8 @@ cc.Class({
                 this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
                 this.node_sel_box_2_name.string = enemyPlayer.name;
                 this.node_sel_box_2_wenhao.active = false;
-                this.node_sel_title.string = "匹配成功";
-                this.node_sel_willstart.string = "即将开始游戏...3";
+                this.node_sel_title.string = "Success";
+                this.node_sel_willstart.string = "Ready to start...3";
 
                 this.state = "willstart";
                 var willStartTime = 3;
@@ -884,7 +901,7 @@ cc.Class({
                     cc.delayTime(1),
                     cc.callFunc(function(){
                         willStartTime -= 1;
-                        self.node_sel_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        self.node_sel_willstart.string = "Ready to start..."+Math.floor(willStartTime);
                         if(Math.floor(willStartTime) == 0)
                         {
 
@@ -953,7 +970,7 @@ cc.Class({
             }
             else
             {
-                this.node_sel2_box_2_name.string = "等待加入";
+                this.node_sel2_box_2_name.string = "Waiting";
                 this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                 this.node_sel2_box_2_wenhao.active = true;
             }
@@ -965,7 +982,7 @@ cc.Class({
             }
             else
             {
-                this.node_sel2_box_3_name.string = "等待加入";
+                this.node_sel2_box_3_name.string = "Waiting";
                 this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                 this.node_sel2_box_3_wenhao.active = true;
             }
@@ -977,7 +994,7 @@ cc.Class({
             }
             else
             {
-                this.node_sel2_box_4_name.string = "等待加入";
+                this.node_sel2_box_4_name.string = "Waiting";
                 this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                 this.node_sel2_box_4_wenhao.active = true;
             }
@@ -987,8 +1004,8 @@ cc.Class({
                 this.initRobot();
 
                 this.node_sel2_willstart_la.active = true;
-                this.node_sel2_title.string = "匹配成功";
-                this.node_sel2_willstart.string = "即将开始游戏...3";
+                this.node_sel2_title.string = "Success";
+                this.node_sel2_willstart.string = "Ready to start...3";
 
                 this.state = "willstart";
                 var willStartTime = 3;
@@ -997,7 +1014,7 @@ cc.Class({
                     cc.delayTime(1),
                     cc.callFunc(function(){
                         willStartTime -= 1;
-                        self.node_sel2_willstart.string = "即将开始游戏..."+Math.floor(willStartTime);
+                        self.node_sel2_willstart.string = "Ready to start..."+Math.floor(willStartTime);
                         if(Math.floor(willStartTime) == 0)
                         {
 
@@ -1042,7 +1059,7 @@ cc.Class({
         }
         else
         {
-            this.res.showToast("离开房间");
+            this.res.showToast("Leave the room");
         }
 
         this.node_sel_suiji.getComponent("cc.Button").interactable = true;
@@ -1050,8 +1067,8 @@ cc.Class({
         this.node_sel_gun.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.color = cc.color(255,255,255);
-        this.node_sel_title.string = "等待开战";
-        this.node_sel_box_2_name.string = "等待加入";
+        this.node_sel_title.string = "Ready";
+        this.node_sel_box_2_name.string = "Waiting";
         this.node_sel_willstart.string = "";
         this.node_sel_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
 
@@ -1072,8 +1089,8 @@ cc.Class({
         this.node_sel_gun.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.getComponent("cc.Button").interactable = true;
         //this.node_sel_home.color = cc.color(255,255,255);
-        this.node_sel_title.string = "等待开战";
-        this.node_sel_box_2_name.string = "等待加入";
+        this.node_sel_title.string = "Ready";
+        this.node_sel_box_2_name.string = "Waiting";
         this.node_sel_willstart.string = "";
         this.node_sel_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
 
@@ -1100,16 +1117,16 @@ cc.Class({
         this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
         this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
         this.node_sel2_gun.getComponent("cc.Button").interactable = true;
-        this.node_sel2_title.string = "等待开战";
+        this.node_sel2_title.string = "Ready";
         this.node_sel2_willstart.string = "";
 
         this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
         this.node_sel2_box_1_name.string = this.qianqista.userName;
-        this.node_sel2_box_2_name.string = "等待加入";
+        this.node_sel2_box_2_name.string = "Waiting";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
-        this.node_sel2_box_3_name.string = "等待加入";
+        this.node_sel2_box_3_name.string = "Waiting";
         this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
-        this.node_sel2_box_4_name.string = "等待加入";
+        this.node_sel2_box_4_name.string = "Waiting";
         this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
 
         this.node_sel2_box_2_wenhao.active = true;
@@ -1129,16 +1146,16 @@ cc.Class({
         this.node_sel2_suiji.getComponent("cc.Button").interactable = true;
         this.node_sel2_duizhan.getComponent("cc.Button").interactable = true;
         this.node_sel2_gun.getComponent("cc.Button").interactable = true;
-        this.node_sel2_title.string = "等待开战";
+        this.node_sel2_title.string = "Ready";
         this.node_sel2_willstart.string = "";
 
         this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
         this.node_sel2_box_1_name.string = this.qianqista.userName;
-        this.node_sel2_box_2_name.string = "等待加入";
+        this.node_sel2_box_2_name.string = "Waiting";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
-        this.node_sel2_box_3_name.string = "等待加入";
+        this.node_sel2_box_3_name.string = "Waiting";
         this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
-        this.node_sel2_box_4_name.string = "等待加入";
+        this.node_sel2_box_4_name.string = "Waiting";
         this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
 
         this.node_sel2_box_2_wenhao.active = true;
@@ -1174,7 +1191,7 @@ cc.Class({
                 if(enemyPlayer.againNum && enemyPlayer.againNum == 1)
                     websocket.again(0);
                 else
-                    this.res.showToast("对方已离开");
+                    this.res.showToast("quit");
             }
             else
             {
@@ -1188,11 +1205,11 @@ cc.Class({
         var self = this;
         if(data.againType == 1)
         {
-            this.res.showToast("房间解散");
+            this.res.showToast("dismiss");
         }
         else if(data.againType == 2)
         {
-            this.res.showToast("对方已离开");
+            this.res.showToast("quit");
         }
         else if(data.againType == 3)
         {
@@ -1201,15 +1218,15 @@ cc.Class({
             this.playerData.playerA.hp = 50;
             this.playerData.playerB.hp = 50;
 
-            if(this.playerData.playerA.maxJscore > 180)
-                this.playerData.playerA.hp = 75;
-            if(this.playerData.playerB.maxJscore > 180)
-                this.playerData.playerB.hp = 75;
+            //if(this.playerData.playerA.maxJscore > 180)
+            //    this.playerData.playerA.hp = 75;
+            //if(this.playerData.playerB.maxJscore > 180)
+            //    this.playerData.playerB.hp = 75;
             if(this.GAME.isWin)
             {
-                this.node_over_again_str.string = "再来一局(8)";
+                this.node_over_again_str.string = "Again(8)";
 
-                var str = "再来一局";
+                var str = "Again";
                 this.state = "willagain";
                 var willStartTime = 8;
                 this.node.stopAllActions();
@@ -1237,9 +1254,9 @@ cc.Class({
             }
             else
             {
-                this.node_over_again_str.string = "不服再来(8)";
+                this.node_over_again_str.string = "Restart(8)";
 
-                var str = "不服再来";
+                var str = "Restart";
                 this.state = "willagain";
                 var willStartTime = 8;
                 this.node.stopAllActions();
@@ -1268,7 +1285,7 @@ cc.Class({
                 ),8));
             }
 
-            this.node_over_fanhui_str.string = "赶紧溜";
+            this.node_over_fanhui_str.string = "Back";
 
 
         }
@@ -1278,10 +1295,10 @@ cc.Class({
             this.playerData.playerA.hp = 50;
             this.playerData.playerB.hp = 50;
 
-            if(this.playerData.playerA.maxJscore > 180)
-                this.playerData.playerA.hp = 75;
-            if(this.playerData.playerB.maxJscore > 180)
-                this.playerData.playerB.hp = 75;
+            //if(this.playerData.playerA.maxJscore > 180)
+            //    this.playerData.playerA.hp = 75;
+            //if(this.playerData.playerB.maxJscore > 180)
+            //    this.playerData.playerB.hp = 75;
 
             this.node.stopAllActions();
             this.state = "stop";
@@ -1332,28 +1349,28 @@ cc.Class({
                 if(leaveData && leaveData.onLine)
                 {
                     leaveData.onLine = false;
-                    this.res.showToast(leaveData.name + " 离开！");
+                    this.res.showToast(leaveData.name + " Leave the room！");
 
                     if(this.playerData.playerA && this.playerData.playerA.uid == data.uid)
                     {
-                        this.node_sel2_box_1_name.string = "等待加入";
+                        this.node_sel2_box_1_name.string = "Waiting";
                         this.node_sel2_box_1.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                     }
                     else if(this.playerData.playerB && this.playerData.playerB.uid == data.uid)
                     {
-                        this.node_sel2_box_2_name.string = "等待加入";
+                        this.node_sel2_box_2_name.string = "Waiting";
                         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                         this.node_sel2_box_2_wenhao.active = true;
                     }
                     else if(this.playerData.playerC && this.playerData.playerC.uid == data.uid)
                     {
-                        this.node_sel2_box_3_name.string = "等待加入";
+                        this.node_sel2_box_3_name.string = "Waiting";
                         this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                         this.node_sel2_box_3_wenhao.active = true;
                     }
                     else if(this.playerData.playerD && this.playerData.playerD.uid == data.uid)
                     {
-                        this.node_sel2_box_4_name.string = "等待加入";
+                        this.node_sel2_box_4_name.string = "Waiting";
                         this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                         this.node_sel2_box_4_wenhao.active = true;
                     }
@@ -1365,7 +1382,7 @@ cc.Class({
             {
                 websocket.questLeaveRoom(this.qianqista.openid);
                 this.node.stopAllActions();
-                this.res.showToast("对方离开！");
+                this.res.showToast("quit！");
             }
         }
 
@@ -1398,28 +1415,28 @@ cc.Class({
                     {
                         leaveData.onLine = false;
 
-                        this.res.showToast(leaveData.name + " 离开！");
+                        this.res.showToast(leaveData.name + " Leave the room！");
 
                         if(this.playerData.playerA && this.playerData.playerA.uid == data.uid)
                         {
-                            this.node_sel2_box_1_name.string = "等待加入";
+                            this.node_sel2_box_1_name.string = "Waiting";
                             this.node_sel2_box_1.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                         }
                         else if(this.playerData.playerB && this.playerData.playerB.uid == data.uid)
                         {
-                            this.node_sel2_box_2_name.string = "等待加入";
+                            this.node_sel2_box_2_name.string = "Waiting";
                             this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                             this.node_sel2_box_2_wenhao.active = true;
                         }
                         else if(this.playerData.playerC && this.playerData.playerC.uid == data.uid)
                         {
-                            this.node_sel2_box_3_name.string = "等待加入";
+                            this.node_sel2_box_3_name.string = "Waiting";
                             this.node_sel2_box_3.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                             this.node_sel2_box_3_wenhao.active = true;
                         }
                         else if(this.playerData.playerD && this.playerData.playerD.uid == data.uid)
                         {
-                            this.node_sel2_box_4_name.string = "等待加入";
+                            this.node_sel2_box_4_name.string = "Waiting";
                             this.node_sel2_box_4.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
                             this.node_sel2_box_4_wenhao.active = true;
                         }
@@ -1600,18 +1617,19 @@ cc.Class({
 
     bgscroll: function()
     {
+        this.pktime = 99;
         if(this.state != "start")
             return;
         this.isBgScroll = true;
-        //this.bg_1_1.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
-        //this.bg_1_2.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
-        //this.bg_1_3.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
-        //this.bg_1_4.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
-        //
-        //this.bg_2_1.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
-        //this.bg_2_2.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
-        //this.bg_2_3.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
-        //this.bg_2_4.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
+        this.bg_1_1.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
+        this.bg_1_2.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
+        this.bg_1_3.runAction(cc.repeatForever(cc.moveBy(8,0,-1920)));
+        this.bg_1_4.runAction(cc.repeatForever(cc.moveBy(16,0,-1920*2)));
+
+        this.bg_2_1.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
+        this.bg_2_2.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
+        this.bg_2_3.runAction(cc.repeatForever(cc.moveBy(5,0,-1920)));
+        this.bg_2_4.runAction(cc.repeatForever(cc.moveBy(10,0,-1920*2)));
 
         var dh = this.dsize.height/2;
         var h = 50;
@@ -2790,11 +2808,11 @@ cc.Class({
             if(winpos > 0)
             {
                 this.GAME.isWin = true;
-                this.node_over2_title.string = "恭喜！获得胜利";
+                this.node_over2_title.string = "You win！";
                 this.node_over2_guang.position = guangpos;
                 this.node_over2_bili.string = "1 : 0";
-                this.node_over2_fanhui_str.string = "改天再战";
-                this.node_over2_again_str.string = "再来一局";
+                this.node_over2_fanhui_str.string = "Back";
+                this.node_over2_again_str.string = "Again";
 
                 cc.find("str",this.node_over2_jifenx2).active = true;
                 cc.find("suiji",this.node_over2_jifenx2).active = true;
@@ -2804,8 +2822,8 @@ cc.Class({
                 {
                     var jscore = this.winJscore();
                     var star = this.winStarNum();
-                    this.node_over2_jifen.string = "积分+"+jscore;
-                    this.node_over2_star.string = "星星+"+star;
+                    this.node_over2_jifen.string = "pvp point+"+jscore;
+                    this.node_over2_star.string = "";
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
@@ -2859,22 +2877,22 @@ cc.Class({
                 }
 
                 this.GAME.isWin = false;
-                this.node_over2_title.string = "遗憾！失败了";
+                this.node_over2_title.string = "You lost！";
                 this.node_over2_guang.position = guangpos;
                 this.node_over2_bili.string = "0 : 1";
-                this.node_over2_fanhui_str.string = "溜了";
-                this.node_over2_again_str.string = "不服再来";
+                this.node_over2_fanhui_str.string = "Back";
+                this.node_over2_again_str.string = "Restart";
 
-                this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
-                cc.find("str",this.node_over2_jifenx2).active = true;
+                //this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over2_jifenx2).active = false;
                 cc.find("suiji",this.node_over2_jifenx2).active = false;
-                //cc.find("str2",this.node_over2_jifenx2).active = true;
+                cc.find("str2",this.node_over2_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
-                    this.node_over2_jifen.string = "积分-"+jscore;
-                    this.node_over2_star.string = "星星+"+0;
+                    this.node_over2_jifen.string = "pvp point-"+jscore;
+                    this.node_over2_star.string = "";
 
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
@@ -2920,11 +2938,11 @@ cc.Class({
                     enemyPlayer.winNum = 0;
 
                 this.GAME.isWin = true;
-                this.node_over_title.string = "恭喜！获得胜利";
+                this.node_over_title.string = "You win！";
                 this.node_over_guang.position = this.node_over_box_1.position;
                 this.node_over_bili.string = selfPlayer.winNum+" : "+enemyPlayer.winNum;
-                this.node_over_fanhui_str.string = "改天再战";
-                this.node_over_again_str.string = "再来一局";
+                this.node_over_fanhui_str.string = "Back";
+                this.node_over_again_str.string = "Again";
                 cc.find("str",this.node_over_jifenx2).active = true;
                 cc.find("suiji",this.node_over_jifenx2).active = true;
                 cc.find("str2",this.node_over_jifenx2).active = false;
@@ -2934,8 +2952,8 @@ cc.Class({
                 {
                     var jscore = this.winJscore();
                     var star = this.winStarNum();
-                    this.node_over_jifen.string = "积分+"+jscore;
-                    this.node_over_star.string = "星星+"+star;
+                    this.node_over_jifen.string = "pvp point+"+jscore;
+                    this.node_over_star.string = "";
                     selfPlayer.jscore += jscore;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
@@ -2980,22 +2998,22 @@ cc.Class({
                     enemyPlayer.winNum += 1;
 
                 this.GAME.isWin = false;
-                this.node_over_title.string = "遗憾！失败了";
+                this.node_over_title.string = "You lost！";
                 this.node_over_guang.position = this.node_over_box_2.position;
                 this.node_over_bili.string = selfPlayer.winNum+" : "+enemyPlayer.winNum;
-                this.node_over_fanhui_str.string = "溜了";
-                this.node_over_again_str.string = "不服再来";
+                this.node_over_fanhui_str.string = "Back";
+                this.node_over_again_str.string = "Restart";
 
-                this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
-                cc.find("str",this.node_over_jifenx2).active = true;
+                //this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over_jifenx2).active = false;
                 cc.find("suiji",this.node_over_jifenx2).active = false;
-                //cc.find("str2",this.node_over_jifenx2).active = true;
+                cc.find("str2",this.node_over_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
-                    this.node_over_jifen.string = "积分-"+jscore;
-                    this.node_over_star.string = "星星+"+0;
+                    this.node_over_jifen.string = "pvp point-"+jscore;
+                    this.node_over_star.string = "";
                     selfPlayer.jscore -= jscore;
                     websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
 
@@ -3017,7 +3035,7 @@ cc.Class({
                     this.node.runAction(cc.sequence(
                         cc.delayTime(2),
                         cc.callFunc(function(){
-                            websocket.again(0);
+                            websocket.again(2);
                         })
                     ));
                 }
@@ -3042,17 +3060,17 @@ cc.Class({
     jifenx2: function()
     {
         var selfData = this.findSelfPlayerData();
-        var star = this.laststar;
-        //websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
-        websocket.updateUser(selfData.jscore,star,selfData.gunId,selfData.skinId);
-        this.res.showToast("星星+"+this.laststar);
-        //if(this.laststar > 0)
-        //{
-        //    storage.setStorageJScore(selfData.jscore);
-        //    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        //        this.main.wxUploadScore(0,selfData.jscore);
-        //        //wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
-        //}
+        selfData.jscore += this.lastjscore;
+        websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
+        //websocket.updateUser(selfData.jscore,star,selfData.gunId,selfData.skinId);
+        this.res.showToast("pvp point+"+this.lastjscore);
+        if(this.lastjscore > 0)
+        {
+            storage.setStorageJScore(selfData.jscore);
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+                this.main.wxUploadScore(0,selfData.jscore);
+                //wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
+        }
     },
 
     winStarNum: function()
@@ -3173,6 +3191,7 @@ cc.Class({
     roomTimeOut: function()
     {
         this.gameOver();
+        this.time.string = 99;
     },
 
     addListener: function()
@@ -3251,6 +3270,21 @@ cc.Class({
             {
                 this.updateScroll(dt);
                 this.updateRobot(dt);
+
+                this.pktimedt += dt;
+                if(this.pktimedt>=1 && this.isBgScroll)
+                {
+                    this.pktimedt = 0;
+                    this.pktime -= 1;
+
+                    var body = {};
+                    body.time = this.pktime*1000;
+                    websocket.roomCountDownResult(JSON.stringify(body));
+                    if(this.pktime<=0)
+                    {
+                        websocket.roomTimeOutResult();
+                    }
+                }
             }
         }
 

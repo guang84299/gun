@@ -144,7 +144,7 @@ cc.Class({
 
         storage.setStorageInviteAwardNum(parseInt(inviteAwardNum)+1);
         this.main.uploadData();
-        this.res.showToast("金币+"+coin);
+        this.res.showToast("Coin+"+coin);
         this.updateUI();
         this.main.node_main_coin.getComponent("cc.Label").string = storage.getStorageCoin();
         this.main.updateDian();
@@ -156,7 +156,7 @@ cc.Class({
             this.node.runAction(cc.sequence(
                 cc.delayTime(1),
                 cc.callFunc(function(){
-                    self.res.showToast("继续邀请，奖励翻倍");
+                    self.res.showToast("Continue to invite, double reward");
                 })
             ));
         }

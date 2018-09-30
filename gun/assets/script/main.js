@@ -50,9 +50,6 @@ cc.Class({
 
          var self = this;
 
-
-         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-             BK.Script.logToConsole = 1;
          var score = storage.getStorageScore();
          var jscore = storage.getStorageJScore();
          this.wxUploadScore(score,jscore,1);
@@ -65,9 +62,8 @@ cc.Class({
     initNet: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            BK.Script.log(1,1,'---------qianqista.init：');
-        qianqista.init("239014983452998","西部神枪手",function(){
+
+        qianqista.init("239014983452998","Western Shooter",function(){
             qianqista.datas(function(res){
                 console.log('my datas:', res);
                 if(res.state == 200)
@@ -1051,7 +1047,7 @@ cc.Class({
         }
         else if(data == "duizhan")
         {
-            this.openStar();
+            this.openDuizhan();
         }
         else if(data == "tiaozhan")
         {
@@ -1637,20 +1633,20 @@ cc.Class({
         this.initGmae();
 
 
-        var showMonyTime = cc.sys.localStorage.getItem("showMonyTime");
-        showMonyTime = showMonyTime ? showMonyTime : 0;
-        if(new Date().getTime() - showMonyTime > 10*60*1000)
-        {
-            cc.sys.localStorage.setItem("showMonyTime",new Date().getTime());
-            var self = this;
-            qianqista.myMony(function(res){
-                if(res.data && res.data >= 1)
-                {
-                    self.res.showToastMony(res.data);
-                    storage.playSound(self.res.audio_chengjiu);
-                }
-            });
-        }
+        //var showMonyTime = cc.sys.localStorage.getItem("showMonyTime");
+        //showMonyTime = showMonyTime ? showMonyTime : 0;
+        //if(new Date().getTime() - showMonyTime > 10*60*1000)
+        //{
+        //    cc.sys.localStorage.setItem("showMonyTime",new Date().getTime());
+        //    var self = this;
+        //    qianqista.myMony(function(res){
+        //        if(res.data && res.data >= 1)
+        //        {
+        //            self.res.showToastMony(res.data);
+        //            storage.playSound(self.res.audio_chengjiu);
+        //        }
+        //    });
+        //}
 
     },
 
@@ -4297,63 +4293,67 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(!score)
-                score = 0;
-            if(!jscore)
-                jscore = 0;
-            // wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
-            var data = {
-                userData: [
-                    {
-                        openId: GameStatusInfo.openId,
-                        startMs: ((new Date()).getTime()-24*60*60*1000).toString(),    //必填。 游戏开始时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
-                        endMs: ((new Date()).getTime()+3000*24*60*60*1000).toString(),  //必填。 游戏结束时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
-                        scoreInfo: {
-                            score: score, //分数，类型必须是整型数
-                            a1: jscore
-                        }
-                    }
-                ],
-                // type 描述附加属性的用途
-                // order 排序的方式，
-                // 1: 从大到小，即每次上报的分数都会与本周期的最高得分比较，如果大于最高得分则覆盖，否则忽略
-                // 2: 从小到大，即每次上报的分数都会与本周期的最低得分比较，如果低于最低得分则覆盖，否则忽略（比如酷跑类游戏的耗时，时间越短越好）
-                // 3: 累积，即每次上报的积分都会累积到本周期已上报过的积分上
-                // 4: 直接覆盖，每次上报的积分都会将本周期的得分覆盖，不管大小
-                // 如score字段对应，上个属性.
-                attr: {
-                    score: {
-                        type: 'rank',
-                        order: 1
-                    },
-                    a1: {
-                        type: 'rank',
-                        order: 1
-                    }
-                }
-            };
-
-            // gameMode: 游戏模式，如果没有模式区分，直接填 1
-            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
-            BK.Script.log(1,1,'---------上传分数 --------' + callback);
-            BK.QQ.uploadScoreWithoutRoom(1, data, function(errCode, cmd, data) {
-                // 返回错误码信息
-                BK.Script.log(1,1,'------111---上传分数失败!错误码：' + errCode);
-                if(callback && callback == 1)
-                {
-                    BK.Script.log(1,1,'---------上传分数失败!  1' + callback);
-                    self.initNet();
-                }
-                else
-                {
-                    BK.Script.log(1,1,'---------上传分数失败!  2' + callback);
-                }
-
-                if (errCode !== 0) {
-                    BK.Script.log(1,1,'---------上传分数失败!错误码：' + errCode);
-                }
-
-            });
+            if(callback && callback == 1)
+            {
+                self.initNet();
+            }
+            //if(!score)
+            //    score = 0;
+            //if(!jscore)
+            //    jscore = 0;
+            //// wx.postMessage({ message: "updateScore",score:score,playerId:playerId,gunId:gunId });
+            //var data = {
+            //    userData: [
+            //        {
+            //            openId: GameStatusInfo.openId,
+            //            startMs: ((new Date()).getTime()-24*60*60*1000).toString(),    //必填。 游戏开始时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
+            //            endMs: ((new Date()).getTime()+3000*24*60*60*1000).toString(),  //必填。 游戏结束时间。单位为毫秒，<font color=#ff0000>类型必须是字符串</font>
+            //            scoreInfo: {
+            //                score: score, //分数，类型必须是整型数
+            //                a1: jscore
+            //            }
+            //        }
+            //    ],
+            //    // type 描述附加属性的用途
+            //    // order 排序的方式，
+            //    // 1: 从大到小，即每次上报的分数都会与本周期的最高得分比较，如果大于最高得分则覆盖，否则忽略
+            //    // 2: 从小到大，即每次上报的分数都会与本周期的最低得分比较，如果低于最低得分则覆盖，否则忽略（比如酷跑类游戏的耗时，时间越短越好）
+            //    // 3: 累积，即每次上报的积分都会累积到本周期已上报过的积分上
+            //    // 4: 直接覆盖，每次上报的积分都会将本周期的得分覆盖，不管大小
+            //    // 如score字段对应，上个属性.
+            //    attr: {
+            //        score: {
+            //            type: 'rank',
+            //            order: 1
+            //        },
+            //        a1: {
+            //            type: 'rank',
+            //            order: 1
+            //        }
+            //    }
+            //};
+            //
+            //// gameMode: 游戏模式，如果没有模式区分，直接填 1
+            //// 必须配置好周期规则后，才能使用数据上报和排行榜功能
+            //BK.Script.log(1,1,'---------上传分数 --------' + callback);
+            //BK.QQ.uploadScoreWithoutRoom(1, data, function(errCode, cmd, data) {
+            //    // 返回错误码信息
+            //    BK.Script.log(1,1,'------111---上传分数失败!错误码：' + errCode);
+            //    if(callback && callback == 1)
+            //    {
+            //        BK.Script.log(1,1,'---------上传分数失败!  1' + callback);
+            //        self.initNet();
+            //    }
+            //    else
+            //    {
+            //        BK.Script.log(1,1,'---------上传分数失败!  2' + callback);
+            //    }
+            //
+            //    if (errCode !== 0) {
+            //        BK.Script.log(1,1,'---------上传分数失败!错误码：' + errCode);
+            //    }
+            //
+            //});
 
         }
         else
@@ -4385,22 +4385,22 @@ cc.Class({
         {
             if(!this.ranking_list)
             {
-                var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
-                var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
-                var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
-                // 必须配置好周期规则后，才能使用数据上报和排行榜功能
-                BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
-                    BK.Script.log(1,1,"-------wxUpdateScore callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
-                    // 返回错误码信息
-                    if (errCode !== 0) {
-                        BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
-                        return;
-                    }
-                    // 解析数据
-                    if (data) {
-                        self.ranking_list = data.data.ranking_list;
-                    }
-                });
+                //var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
+                //var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
+                //var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
+                //// 必须配置好周期规则后，才能使用数据上报和排行榜功能
+                //BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
+                //    BK.Script.log(1,1,"-------wxUpdateScore callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
+                //    // 返回错误码信息
+                //    if (errCode !== 0) {
+                //        BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
+                //        return;
+                //    }
+                //    // 解析数据
+                //    if (data) {
+                //        self.ranking_list = data.data.ranking_list;
+                //    }
+                //});
             }
             else
             {
@@ -4426,7 +4426,7 @@ cc.Class({
                     var nick = cc.find("nick",item);
 
                     this.loadPic(icon,chaoyue.url);
-                    nick.getComponent("cc.Label").string = "超越"+chaoyue.nick;
+                    nick.getComponent("cc.Label").string = "exceed "+chaoyue.nick;
 
                     this.node_game_ui.addChild(item);
 
@@ -4459,28 +4459,28 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(score > storage.getStorageUpScore())
-            {
-                storage.setStorageUpScore(score);
-
-                var gameResultData = {
-                    "infoList": [              //通用数据上报列表
-                        {
-                            "type": 8,         //必选。数据类型。
-                            "op": 2,           //必选。运营类型。1表示增量，2表示存量。
-                            "num": score,          //必选。数目。不超过32位有符号数。
-                            "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
-                        }
-                    ]
-                };
-                BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
-                    if (errCode !== 0) {
-                        //上报运营结果失败
-                    }else{
-                        //上报运营结果成功
-                    }
-                });
-            }
+            //if(score > storage.getStorageUpScore())
+            //{
+            //    storage.setStorageUpScore(score);
+            //
+            //    var gameResultData = {
+            //        "infoList": [              //通用数据上报列表
+            //            {
+            //                "type": 8,         //必选。数据类型。
+            //                "op": 2,           //必选。运营类型。1表示增量，2表示存量。
+            //                "num": score,          //必选。数目。不超过32位有符号数。
+            //                "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
+            //            }
+            //        ]
+            //    };
+            //    BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
+            //        if (errCode !== 0) {
+            //            //上报运营结果失败
+            //        }else{
+            //            //上报运营结果成功
+            //        }
+            //    });
+            //}
         }
     },
 
@@ -4698,7 +4698,7 @@ cc.Class({
                         if(cc.isValid(self.node_coin))
                             self.node_coin.updateUI();
 
-                        self.res.showToast("金币+100");
+                        self.res.showToast("Coin+100");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
@@ -4713,7 +4713,7 @@ cc.Class({
                 else {
                     // 播放中途退出，不下发游戏奖励
                     if(self.GAME.VIDEOAD_TYPE == 1)
-                        self.res.showToast("金币获取失败");
+                        self.res.showToast("Failed to get coins");
                 }
                 //storage.resumeMusic();
                 storage.playMusic(self.res.audio_bgm);
@@ -4730,7 +4730,7 @@ cc.Class({
                     if(self.GAME.VIDEOAD_TYPE == 2)
                     {
                         self.fuhuo(false,false,true);
-                        self.res.showToast("复活成功");
+                        self.res.showToast("Revive success");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
@@ -4744,7 +4744,7 @@ cc.Class({
                     {
                         self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
                         storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
-                        self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2);
+                        self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
                         self.node_tiaozhan_sus.updateCoin();
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 5)
@@ -4773,32 +4773,21 @@ cc.Class({
                     // 播放中途退出，不下发游戏奖励
                     if(self.GAME.VIDEOAD_TYPE == 2)
                     {
-                        self.res.showToast("复活失败");
+                        self.res.showToast("Revive failure");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 3)
                     {
-                        self.res.showToast("体验失败");
+                        self.res.showToast("Failed");
                     }
                     else if(self.GAME.VIDEOAD_TYPE == 4)
                     {
-                        self.res.showToast("获取失败");
+                        self.res.showToast("Failed");
                     }
-                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    else
                     {
-                        self.res.showToast("获取失败");
+                        self.res.showToast("Failed");
                     }
-                    else if(self.GAME.VIDEOAD_TYPE == 6)
-                    {
-                        self.res.showToast("获取失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 7)
-                    {
-                        self.res.showToast("获取失败");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 8)
-                    {
-                        self.res.showToast("获取失败");
-                    }
+
 
                 }
                 //storage.resumeMusic();
@@ -4847,12 +4836,12 @@ cc.Class({
                                 if(cc.isValid(self.node_coin))
                                     self.node_coin.updateUI();
 
-                                self.res.showToast("金币+100");
+                                self.res.showToast("Coin+100");
                             }
                             else if(self.GAME.VIDEOAD_TYPE == 2)
                             {
                                 self.fuhuo(false,false,true);
-                                self.res.showToast("复活成功");
+                                self.res.showToast("Revive success");
                             }
                             else if(self.GAME.VIDEOAD_TYPE == 3)
                             {
@@ -4866,7 +4855,7 @@ cc.Class({
                             {
                                 self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
                                 storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
-                                self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2);
+                                self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
                                 self.node_tiaozhan_sus.updateCoin();
                             }
                             else if(self.GAME.VIDEOAD_TYPE == 5)
@@ -4895,19 +4884,19 @@ cc.Class({
                         {
                             if(self.GAME.VIDEOAD_TYPE == 1)
                             {
-                                self.res.showToast("金币获取失败");
+                                self.res.showToast("Failed to get coins");
                             }
                             if(self.GAME.VIDEOAD_TYPE == 2)
                             {
-                                self.res.showToast("复活失败");
+                                self.res.showToast("Revive failure");
                             }
                             else if(self.GAME.VIDEOAD_TYPE == 3)
                             {
-                                self.res.showToast("体验失败");
+                                self.res.showToast("Failed");
                             }
                             else
                             {
-                                self.res.showToast("获取失败");
+                                self.res.showToast("Failed");
                             }
                         }
                         storage.playMusic(self.res.audio_bgm);
@@ -4975,7 +4964,7 @@ cc.Class({
             {
                 this.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
                 storage.setStorageCoin(storage.getStorageCoin()+this.node_tiaozhan_sus.award*2);
-                this.res.showToast("金币+"+this.node_tiaozhan_sus.award*2);
+                this.res.showToast("Coin+"+this.node_tiaozhan_sus.award*2);
                 this.node_tiaozhan_sus.updateCoin();
             }
             else if(type == 5)
@@ -5010,33 +4999,33 @@ cc.Class({
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
-                if (retCode == 0) {
-                    //2.开发者 使用adBannerHanlde
-                    //2.1 决定是否展示
-                    self.bannerAd = adBannerHandle;
-                    adBannerHandle.show(function (succCode, msg, handle) {
-                        if (succCode == 0) {
-                            //
-                        }
-                        else {
-                            BK.Script.log(1, 1, "展示失败 msg:" + msg);
-                        }
-                    });
-                    //2.2 开发者主动关闭广告。
-                    //adBannerHandle.close();
-                    //2.3 开发者监听事件
-                    adBannerHandle.onClickContent(function () {
-                        //用户点击了落地页
-                    });
-                    adBannerHandle.onClickClose(function () {
-                        //用户点击了X关闭广告
-                    });
-                }
-                else {
-                    BK.Script.log(1, 1, "fetchBannerAd failed. retCode:" + retCode);
-                }
-            }.bind(this));
+            //BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
+            //    if (retCode == 0) {
+            //        //2.开发者 使用adBannerHanlde
+            //        //2.1 决定是否展示
+            //        self.bannerAd = adBannerHandle;
+            //        adBannerHandle.show(function (succCode, msg, handle) {
+            //            if (succCode == 0) {
+            //                //
+            //            }
+            //            else {
+            //                BK.Script.log(1, 1, "展示失败 msg:" + msg);
+            //            }
+            //        });
+            //        //2.2 开发者主动关闭广告。
+            //        //adBannerHandle.close();
+            //        //2.3 开发者监听事件
+            //        adBannerHandle.onClickContent(function () {
+            //            //用户点击了落地页
+            //        });
+            //        adBannerHandle.onClickClose(function () {
+            //            //用户点击了X关闭广告
+            //        });
+            //    }
+            //    else {
+            //        BK.Script.log(1, 1, "fetchBannerAd failed. retCode:" + retCode);
+            //    }
+            //}.bind(this));
             //var openDataContext = wx.getOpenDataContext();
             //var sharedCanvas = openDataContext.canvas;
             //var sc = sharedCanvas.width/this.dsize.width;

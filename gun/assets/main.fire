@@ -3651,7 +3651,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160,
+      "width": 218,
       "height": 40
     },
     "_rotationX": 0,
@@ -3660,8 +3660,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 360,
-      "y": -92.00000000000006
+      "x": 365,
+      "y": -92
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3686,7 +3686,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "点击射击",
+    "_N$string": "Click to shot",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -4242,8 +4242,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 473,
-      "height": 112
+      "width": 446,
+      "height": 110
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5285,7 +5285,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 136
@@ -5687,7 +5687,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 342,
+      "x": 182,
       "y": 41
     },
     "_skewX": 0,
@@ -6056,7 +6056,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 520,
+      "x": 399,
       "y": 41
     },
     "_skewX": 0,

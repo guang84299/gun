@@ -50,38 +50,40 @@ module.exports = {
     init: function(pk,callback)
     {
         this.pk = pk;
+        if(callback)
+            callback();
         //if(this.pk.publish == 1)
         //    this.ip = this.ip1;
         //else
         //    this.ip = this.ip2;
-        if(this.ws == null)
-        {
-            this.ws = new WebSocket(this.ip);
-            var self = this;
-            this.ws.onopen = function (event) {
-                 console.log("Send Text WS was opened.");
-                 if(callback)
-                    callback();
-             };
-            this.ws.onmessage = function (event) {
-                 self.parse(event.data);
-             };
-            this.ws.onerror = function (event) {
-                 console.log("Send Text fired an error");
-             };
-            this.ws.onclose = function (event) {
-                 console.log("WebSocket instance closed.");
-             };
-        }
+        //if(this.ws == null)
+        //{
+        //    this.ws = new WebSocket(this.ip);
+        //    var self = this;
+        //    this.ws.onopen = function (event) {
+        //         console.log("Send Text WS was opened.");
+        //         if(callback)
+        //            callback();
+        //     };
+        //    this.ws.onmessage = function (event) {
+        //         self.parse(event.data);
+        //     };
+        //    this.ws.onerror = function (event) {
+        //         console.log("Send Text fired an error");
+        //     };
+        //    this.ws.onclose = function (event) {
+        //         console.log("WebSocket instance closed.");
+        //     };
+        //}
     },
 
     close: function()
     {
-        if(this.ws)
-        {
-            this.ws.close();
-            this.ws = null;
-        }
+        //if(this.ws)
+        //{
+        //    this.ws.close();
+        //    this.ws = null;
+        //}
     },
 
     reader : { 
@@ -199,7 +201,9 @@ module.exports = {
         body.uid = uid;
         body.nick = nick;
         body.avatarUrl = avatarUrl;
-        this.send(this.MODE_USER_LOGIN,body);
+        body.result = true;
+        //this.send(this.MODE_USER_LOGIN,body);
+        this.loginResult(JSON.stringify(body));
     },
 
     loginResult: function(result)
@@ -217,13 +221,13 @@ module.exports = {
 
     heartBeat: function()
     {
-        var body = {};
-        this.send(this.MODE_USER_HERTBEAT,body);
+        //var body = {};
+        //this.send(this.MODE_USER_HERTBEAT,body);
     },
     heartBeatResult: function(result)
     {
-        var data = JSON.parse(result);
-        console.log(data);
+        //var data = JSON.parse(result);
+        //console.log(data);
     },
 
     match: function(type,skinId,gunId,roomId)
@@ -235,7 +239,9 @@ module.exports = {
             body.skinId = skinId;
             body.gunId = gunId;
             body.roomId = roomId;
-            this.send(this.MODE_USER_MATCH,body);
+            //this.send(this.MODE_USER_MATCH,body);
+
+            this.matchResult(JSON.stringify(body));
         }
     },
 
@@ -245,6 +251,212 @@ module.exports = {
         this.pk.match(data);
 
         console.log(data);
+
+        var self = this;
+        var r = Math.random()*6+1;
+        console.log(r);
+        this.pk.node.runAction(cc.sequence(
+            cc.delayTime(r),
+            cc.callFunc(function(){
+                self.initPlayerData(data.type);
+            })
+        ));
+
+    },
+
+    initPlayerData: function(type)
+    {
+        var self = this;
+        var body = {};
+        if(type == 1)
+        {
+            body.result = true;
+            body.roomType = 1;
+            body.playerA = {};
+            body.playerA.rotate = 0;
+            body.playerA.avatarUrl = this.pk.qianqista.avatarUrl;
+            body.playerA.maxJscore = this.pk.storage.getStorageMaxJScore();
+            body.playerA.hp = 50;
+            body.playerA.skinId = this.pk.main.GAME.currPlayer;
+            body.playerA.matchRoomId = 0;
+            body.playerA.matchTime = 0;
+            body.playerA.sessionId = 0;
+            body.playerA.jscore = this.pk.storage.getStorageJScore();
+            body.playerA.roomId = 1;
+            body.playerA.robot = 0;
+            body.playerA.uid = this.pk.qianqista.openid;
+            body.playerA.pos = 1;
+            body.playerA.name = this.pk.qianqista.userName;
+            body.playerA.gunId = this.pk.currPkGun;
+            body.playerA.y = 0;
+            body.playerA.state = 0;
+            body.playerA.roomType = 1;
+
+
+            body.playerB = {};
+            body.playerB.rotate = 0;
+            body.playerB.avatarUrl = "https://www.0a8ce26f.com/img/avatar/1.jpg";
+            body.playerB.maxJscore = 0;
+            body.playerB.hp = 50;
+            body.playerB.skinId = this.randSkinId();
+            body.playerB.matchRoomId = 0;
+            body.playerB.matchTime = 0;
+            body.playerB.sessionId = 0;
+            body.playerB.jscore = 0;
+            body.playerB.roomId = 1;
+            body.playerB.robot = 1;
+            body.playerB.uid = "robot001";
+            body.playerB.pos = 2;
+            body.playerB.name = "小猪佩奇";
+            body.playerB.gunId = this.randGunId();
+            body.playerB.y = 0;
+            body.playerB.state = 0;
+            body.playerB.roomType = 1;
+
+            this.pk.qianqista.randRobot(function(res){
+                body.playerB.avatarUrl = res.data.avatarUrl;
+                body.playerB.name = res.data.name;
+                self.joinRoomResult(JSON.stringify(body));
+            });
+
+        }
+        else
+        {
+
+            body.result = true;
+            body.roomType = 3;
+            body.playerA = {};
+            body.playerA.rotate = 0;
+            body.playerA.avatarUrl = this.pk.qianqista.avatarUrl;
+            body.playerA.maxJscore = this.pk.storage.getStorageMaxJScore();
+            body.playerA.hp = 50;
+            body.playerA.skinId = this.pk.main.GAME.currPlayer;
+            body.playerA.matchRoomId = 0;
+            body.playerA.matchTime = 0;
+            body.playerA.sessionId = 0;
+            body.playerA.jscore = this.pk.storage.getStorageJScore();
+            body.playerA.roomId = 1;
+            body.playerA.robot = 0;
+            body.playerA.uid = this.pk.qianqista.openid;
+            body.playerA.pos = 1;
+            body.playerA.name = this.pk.qianqista.userName;
+            body.playerA.gunId = this.pk.currPkGun;
+            body.playerA.y = 0;
+            body.playerA.state = 0;
+            body.playerA.roomType = 1;
+
+
+            body.playerB = {};
+            body.playerB.rotate = 0;
+            body.playerB.avatarUrl = "https://www.0a8ce26f.com/img/avatar/1.jpg";
+            body.playerB.maxJscore = 0;
+            body.playerB.hp = 50;
+            body.playerB.skinId = this.randSkinId();
+            body.playerB.matchRoomId = 0;
+            body.playerB.matchTime = 0;
+            body.playerB.sessionId = 0;
+            body.playerB.jscore = 0;
+            body.playerB.roomId = 1;
+            body.playerB.robot = 1;
+            body.playerB.uid = "robot001";
+            body.playerB.pos = 2;
+            body.playerB.name = "小猪佩奇";
+            body.playerB.gunId = this.randGunId();
+            body.playerB.y = 0;
+            body.playerB.state = 0;
+            body.playerB.roomType = 3;
+
+            body.playerC = {};
+            body.playerC.rotate = 0;
+            body.playerC.avatarUrl = "https://www.0a8ce26f.com/img/avatar/1.jpg";
+            body.playerC.maxJscore = 0;
+            body.playerC.hp = 50;
+            body.playerC.skinId = this.randSkinId();
+            body.playerC.matchRoomId = 0;
+            body.playerC.matchTime = 0;
+            body.playerC.sessionId = 0;
+            body.playerC.jscore = 0;
+            body.playerC.roomId = 1;
+            body.playerC.robot = 1;
+            body.playerC.uid = "robot002";
+            body.playerC.pos = 3;
+            body.playerC.name = "小猪佩奇";
+            body.playerC.gunId = this.randGunId();
+            body.playerC.y = 0;
+            body.playerC.state = 0;
+            body.playerC.roomType = 3;
+
+            body.playerD = {};
+            body.playerD.rotate = 0;
+            body.playerD.avatarUrl = "https://www.0a8ce26f.com/img/avatar/1.jpg";
+            body.playerD.maxJscore = 0;
+            body.playerD.hp = 50;
+            body.playerD.skinId = this.randSkinId();
+            body.playerD.matchRoomId = 0;
+            body.playerD.matchTime = 0;
+            body.playerD.sessionId = 0;
+            body.playerD.jscore = 0;
+            body.playerD.roomId = 1;
+            body.playerD.robot = 1;
+            body.playerD.uid = "robot003";
+            body.playerD.pos = 4;
+            body.playerD.name = "小猪佩奇";
+            body.playerD.gunId = this.randGunId();
+            body.playerD.y = 0;
+            body.playerD.state = 0;
+            body.playerD.roomType = 3;
+
+            this.pk.qianqista.randRobot(function(res){
+                body.playerB.avatarUrl = res.data.avatarUrl;
+                body.playerB.name = res.data.name;
+                self.pk.qianqista.randRobot(function(res2){
+                    body.playerC.avatarUrl = res2.data.avatarUrl;
+                    body.playerC.name = res2.data.name;
+                    self.pk.qianqista.randRobot(function(res3){
+                        body.playerD.avatarUrl = res3.data.avatarUrl;
+                        body.playerD.name = res3.data.name;
+                        self.joinRoomResult(JSON.stringify(body));
+                    });
+                });
+            });
+
+        }
+
+
+    },
+
+    randGunId: function()
+    {
+        var r = Math.random();
+        var gunId = 0;
+        if(r <= 0.4)
+        {
+            gunId =  Math.floor(Math.random()*3);
+        }
+        else if(r > 0.4 && r <= 0.7)
+        {
+            gunId = Math.floor(Math.random()*3) + 3;
+        }
+        else if(r > 0.7 && r <= 0.9)
+        {
+            gunId = Math.floor(Math.random()*3) + 6;
+        }
+        else if(r > 0.9)
+        {
+            gunId = Math.floor(Math.random()*9) + 10;
+        }
+        return gunId;
+    },
+
+    randSkinId: function()
+    {
+        var skinId = 0;
+        var r2 = Math.random();
+        if(r2 > 0.4)
+        {
+            skinId = Math.floor(Math.random()*8) + 1;
+        }
+        return skinId;
     },
 
     matchRoom: function()
@@ -252,7 +464,11 @@ module.exports = {
         if(this.state == 1)
         {
             var body = {};
-            this.send(this.MODE_USER_MATCHROOM,body);
+            //this.send(this.MODE_USER_MATCHROOM,body);
+
+            //var data = {};
+            //data.body = JSON.stringify(body);
+            //this.matchResult(JSON.stringify(data));
         }
     },
 
@@ -280,7 +496,9 @@ module.exports = {
     {
         var body = {};
         body.uid = uid;
-        this.send(this.MODE_GAME_QUESTLEAVEROOM,body);
+        //this.send(this.MODE_GAME_QUESTLEAVEROOM,body);
+
+        this.questLeaveRoomResult(JSON.stringify(body));
     },
 
     questLeaveRoomResult: function(result)
@@ -292,7 +510,8 @@ module.exports = {
     startGame: function()
     {
         var body = {};
-        this.send(this.MODE_GAME_STARTGAME,body);
+        //this.send(this.MODE_GAME_STARTGAME,body);
+        this.startGameResult(JSON.stringify(body));
     },
 
     startGameResult: function(result)
@@ -316,7 +535,9 @@ module.exports = {
         var body = {};
         body.y = y;
         body.uid = uid;
-        this.send(this.MODE_GAME_MOVE,body);
+        //this.send(this.MODE_GAME_MOVE,body);
+
+        this.moveResult(JSON.stringify(body));
     },
     moveResult: function(result)
     {
@@ -329,7 +550,9 @@ module.exports = {
         var body = {};
         body.rotate = rotate;
         body.uid = uid;
-        this.send(this.MODE_GAME_ROTATE,body);
+        //this.send(this.MODE_GAME_ROTATE,body);
+
+        this.rotateResult(JSON.stringify(body));
     },
 
     rotateResult: function(result)
@@ -342,7 +565,19 @@ module.exports = {
     {
         var body = {};
         body.uid = uid;
-        this.send(this.MODE_GAME_ATTACK,body);
+        body.r1 = Math.random();
+        body.r2 = Math.random();
+        var r3 =  Math.random();
+        if(r3>0.5)
+            r3 = -r3;
+        body.r3 = r3;
+        var r4 =  Math.random();
+        if(r4>0.5)
+            r4 = -r4;
+        body.r4 = r4;
+        //this.send(this.MODE_GAME_ATTACK,body);
+
+        this.attackResult(JSON.stringify(body));
     },
     attackResult: function(result)
     {
@@ -359,7 +594,15 @@ module.exports = {
         body.isHead = isHead ? 1 : 0;
         body.diedirX = diedirX;
         body.diedirY = diedirY;
-        this.send(this.MODE_GAME_BULLETCOLLISION,body);
+
+        var playerData = this.pk.findPlayerDataByUid(uid);
+        playerData.hp -= hurt;
+        if(playerData.hp<0)
+            playerData.hp = 0;
+        body.hp = playerData.hp;
+        //this.send(this.MODE_GAME_BULLETCOLLISION,body);
+
+        this.bulletCollisionResult(JSON.stringify(body));
     },
     bulletCollisionResult: function(result)
     {
@@ -379,7 +622,25 @@ module.exports = {
         {
             var body = {};
             body.start = start;
-            this.send(this.MODE_USER_AGAIN,body);
+            body.result = true;
+            if(start == 0)
+            {
+                if(Math.random()>0.5)
+                    body.againType = 2;
+                else
+                    body.againType = 3;
+            }
+            else if(start == 1)
+            {
+                body.againType = 4;
+            }
+            else
+            {
+                body.againType = 3;
+            }
+            //this.send(this.MODE_USER_AGAIN,body);
+
+            this.againResult(JSON.stringify(body));
         }
     },
 
@@ -403,7 +664,11 @@ module.exports = {
             body.star = star;
             body.gunId = gunId;
             body.playerId = playerId;
-            this.send(this.MODE_USER_UPDATEUSER,body);
+
+            console.log("-------aa---",jscore,gunId,playerId);
+            this.pk.qianqista.updateJScore(jscore);
+            this.pk.qianqista.updateGunAndSkin(gunId,playerId);
+            //this.send(this.MODE_USER_UPDATEUSER,body);
         }
     }
 };

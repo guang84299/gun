@@ -139,7 +139,7 @@ cc.Class({
                         {
                             suo.active = true;
                             var score = this.res.getJSocreByGunId(i);
-                            cc.find("num",suo).getComponent("cc.Label").string = score +"分解锁";
+                            cc.find("num",suo).getComponent("cc.Label").string = score +" points unlock";
                         }
                     }
                     else
@@ -264,7 +264,7 @@ cc.Class({
             }
             if(uopen.length<=0)
             {
-                this.res.showToast("枪支已经全部开启");
+                this.res.showToast("The guns have all been unlocked");
             }
             else
             {
@@ -515,7 +515,7 @@ cc.Class({
         var box1 = cc.find("box_1",this.node_gun_page4);
         var box2 = cc.find("box_2",this.node_gun_page4);
         var jscore = cc.find("jscore",this.node_gun_page4);
-        jscore.getComponent("cc.Label").string = "最高积分："+maxJscore;
+        jscore.getComponent("cc.Label").string = "Best pvp point："+maxJscore;
         this.node_gun_page4.gunId = 20;
 
         if(20 == currGun)

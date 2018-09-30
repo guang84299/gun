@@ -927,7 +927,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
+      "width": 147,
       "height": 30
     },
     "_rotationX": 0,
@@ -962,7 +962,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "历史最高分",
+    "_N$string": "Best Score",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

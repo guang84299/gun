@@ -44,7 +44,7 @@ cc.Class({
 
     updateUI: function()
     {
-        this.node_coinx2_currcoin.string = "已获得"+this.awardCoin+"金币";
+        this.node_coinx2_currcoin.string = "Get"+this.awardCoin+"coins";
        if(this.main.GAME.sharecoinx2)
        {
            this.node_coinx2_vedio.active = false;
@@ -168,7 +168,7 @@ cc.Class({
     lingquSuc: function()
     {
         storage.setStorageCoin(storage.getStorageCoin()+this.awardCoin);
-        this.res.showToast("金币+"+this.awardCoin);
+        this.res.showToast("Coin+"+this.awardCoin);
         this.hide();
     }
     

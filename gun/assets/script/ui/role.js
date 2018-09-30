@@ -297,7 +297,7 @@ cc.Class({
             }
             if(uopen.length<=0)
             {
-                this.res.showToast("角色已经全部开启");
+                this.res.showToast("The role has all been opened");
             }
             else
             {
@@ -379,7 +379,7 @@ cc.Class({
             }
             if(uopen.length<=0)
             {
-                this.res.showToast("角色已经全部开启");
+                this.res.showToast("The role has all been opened");
             }
             else
             {

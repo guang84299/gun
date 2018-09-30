@@ -61,7 +61,7 @@ cc.Class({
             {
                 this.node_zhanshi_zhanshivedio.active = false;
                 this.node_zhanshi_vediostart.active = true;
-                this.node_zhanshi_vediostart_num.getComponent("cc.Label").string = "剩余使用次数:"+storage.getStorageHasZhanShi();
+                this.node_zhanshi_vediostart_num.getComponent("cc.Label").string = "Remaining usage:"+storage.getStorageHasZhanShi();
             }
             else
             {

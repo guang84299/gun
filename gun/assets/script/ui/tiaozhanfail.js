@@ -154,7 +154,7 @@ cc.Class({
             if(this.main.tiaozhanlv+1 < this.res.levels.length)
             {
                 storage.setStorageCoin(storage.getStorageCoin()+this.award);
-                this.res.showToast("金币+"+this.award);
+                this.res.showToast("Coin+"+this.award);
                 this.main.tiaozhanlv = this.main.tiaozhanlv + 1;
                 this.main.openTiaoZhandesc(this.main.tiaozhanlv);
                 this.hide();
@@ -162,7 +162,7 @@ cc.Class({
         }
         else
         {
-            this.res.showToast("在看一次就能跳过本关啦");
+            this.res.showToast("Look at it again to skip this level");
         }
     },
 

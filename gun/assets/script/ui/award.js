@@ -167,33 +167,24 @@ cc.Class({
     wxGropShareCoin: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            var info = {};
-            info.channel = "sharecoinmenu";
-            var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
-            var imageUrl = "http://www.qiqiup.com/gun.gif";
-            var shareInfo = {
-                summary:title,          //QQ聊天消息标题
-                picUrl:imageUrl,               //QQ聊天消息图片
-                extendInfo:query,    //QQ聊天消息扩展字段
-            };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
-                    self.res.showToast("分享成功，等待好友上线吧");
+            FBInstant.shareAsync({
+                intent: 'REQUEST',
+                image: this.res.getBase64SharePic(),
+                text: 'I am a sharpshooter! I see，I shot，I win.',
+                data: { channel: 'sharecoinmenu',fromid:''+FBInstant.player.getID() }
+            }).then(function() {
+                // continue with the game.
+                self.res.showToast("share success!");
 
-                    self.main.qianqista.share(true);
-                }
-                else{
-                    BK.Script.log(1, 1, "分享失败" + retCode);
-                    self.main.qianqista.share(false);
-                    self.res.showToast("分享失败！");
-                }
-
+                self.main.qianqista.share(true);
+            }).catch(function (error) {
+                self.main.qianqista.share(false);
+                self.res.showToast("share fail！");
             });
+
+
 
             //var query = "channel=sharecoinmenu&fromid="+this.main.qianqista.openid;
             //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";

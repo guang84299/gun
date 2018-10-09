@@ -171,6 +171,7 @@ cc.Class({
         this.node.active = true;
         this.updateUI(a,b);
         this.main.wxBannerHide();
+        this.main.wxSpot();
     },
 
     hide: function()

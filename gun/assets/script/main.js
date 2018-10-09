@@ -3644,6 +3644,7 @@ cc.Class({
     skip: function()
     {
         this.wxCloseFuhuo();
+        this.wxSpot();
         this.gameResult();
     },
 
@@ -4289,9 +4290,12 @@ cc.Class({
 
             if(jscore)
             {
+                var datas = {};
+                datas.jscore = jscore;
+
                 FBInstant.getLeaderboardAsync('wjscore')
                     .then(function(leaderboard) {
-                        return leaderboard.setScoreAsync(jscore, '{}');
+                        return leaderboard.setScoreAsync(new Date().getTime(), JSON.stringify(datas));
                     })
                     .then(function(entry) {
                         console.log(entry.getScore()); // 42
@@ -4315,8 +4319,7 @@ cc.Class({
         for(var i=0;i<this.chaoyueData.length;i++)
         {
             var data2 = this.chaoyueData[i];
-            if(data.nick == data2.nick &&
-                data.url == data2.url)
+            if(data.getPlayer().getID() == data2.getPlayer().getID())
             {
                 return true;
             }
@@ -4333,14 +4336,10 @@ cc.Class({
             {
                 FBInstant.getLeaderboardAsync('wscore')
                     .then(function(leaderboard) {
-                        return leaderboard.getEntriesAsync();
+                        return leaderboard.getConnectedPlayerEntriesAsync();
                     })
                     .then(function(entries) {
-                        //self.ranking_list;
-                        console.log("-----fb---",entries.length); // 10
-                        console.log("-----fb---",entries[0].getRank()); // 1
-                        console.log("-----fb---",entries[0].getScore()); // 42
-                        console.log("-----fb---",entries[0]); // 2
+                        self.ranking_list = entries;
                     });
             }
             else
@@ -4349,9 +4348,9 @@ cc.Class({
                 for(var i=0; i < this.ranking_list.length; ++i)
                 {
                     var rd = this.ranking_list[i];
-                    if(!rd.selfFlag && !this.existChaoYue(rd))
+                    if(rd.getPlayer().getID() != FBInstant.player.getID() && !this.existChaoYue(rd))
                     {
-                        if(score > rd.score)
+                        if(score > rd.getScore())
                         {
                             chaoyue = rd;
                             break;
@@ -4366,8 +4365,8 @@ cc.Class({
                     var icon = cc.find("icon",item);
                     var nick = cc.find("nick",item);
 
-                    this.loadPic(icon,chaoyue.url);
-                    nick.getComponent("cc.Label").string = "exceed "+chaoyue.nick;
+                    this.loadPic(icon,chaoyue.getPlayer().getPhoto());
+                    nick.getComponent("cc.Label").string = "exceed "+chaoyue.getPlayer().getName();
 
                     this.node_game_ui.addChild(item);
 
@@ -4400,28 +4399,19 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            var info = {};
-            info.channel = "groupsharemenu";
-            var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
-            var imageUrl = "http://www.qiqiup.com/gun.gif";
-            var shareInfo = {
-                summary:title,          //QQ聊天消息标题
-                picUrl:imageUrl,               //QQ聊天消息图片
-                extendInfo:query   //QQ聊天消息扩展字段
-            };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
-                    qianqista.share(true);
-                }
-                else {
-                    BK.Script.log(1, 1, "分享失败" + retCode);
-                    qianqista.share(false);
-                }
-
+            FBInstant.shareAsync({
+                intent: 'REQUEST',
+                image: this.res.getBase64SharePic(),
+                text: 'I am a sharpshooter! I see，I shot，I win.',
+                data: { channel: 'groupsharemenu' ,fromid:''+FBInstant.player.getID()}
+            }).then(function() {
+                // continue with the game.
+                qianqista.share(true);
+            }).catch(function (error) {
+                qianqista.share(false);
             });
+
+
             //
             //var query = "channel=groupsharemenu";
             //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";
@@ -4463,38 +4453,59 @@ cc.Class({
     wxGropShareCard: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            var info = {};
-            info.channel = "sharecardmenu";
-            var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
-            var imageUrl = "http://www.qiqiup.com/gun.gif";
-            var shareInfo = {
-                summary:title,          //QQ聊天消息标题
-                picUrl:imageUrl,               //QQ聊天消息图片
-                extendInfo:query   //QQ聊天消息扩展字段
-            };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
-                    self.res.showToast("获取到一个防弹衣");
 
-                    var cardnum = storage.getStorageCard();
-                    cardnum = parseInt(cardnum) + 1;
-                    storage.setStorageCard(cardnum);
-                    self.node_card.updateUI();
-                    self.uploadData();
+            FBInstant.shareAsync({
+                intent: 'REQUEST',
+                image: this.res.getBase64SharePic(),
+                text: 'I am a sharpshooter! I see，I shot，I win.',
+                data: { channel: 'sharecardmenu',fromid:''+FBInstant.player.getID() }
+            }).then(function() {
+                // continue with the game.
+                self.res.showToast("获取到一个防弹衣");
 
-                    qianqista.share(true);
-                }
-                else{
-                    BK.Script.log(1, 1, "分享失败" + retCode);
-                    qianqista.share(false);
-                }
+                var cardnum = storage.getStorageCard();
+                cardnum = parseInt(cardnum) + 1;
+                storage.setStorageCard(cardnum);
+                self.node_card.updateUI();
+                self.uploadData();
 
+                qianqista.share(true);
+            }).catch(function (error) {
+                qianqista.share(false);
             });
+
+            //var info = {};
+            //info.channel = "sharecardmenu";
+            //var query = JSON.stringify(info);
+            //var title = "请问，这是你掉的98k么？";
+            //var imageUrl = "http://www.qiqiup.com/gun.gif";
+            //var shareInfo = {
+            //    summary:title,          //QQ聊天消息标题
+            //    picUrl:imageUrl,               //QQ聊天消息图片
+            //    extendInfo:query   //QQ聊天消息扩展字段
+            //};
+            //BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+            //    BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+            //    if (retCode == 0) {
+            //        BK.Script.log(1, 1, "分享成功：" + retCode);
+            //        self.res.showToast("获取到一个防弹衣");
+            //
+            //        var cardnum = storage.getStorageCard();
+            //        cardnum = parseInt(cardnum) + 1;
+            //        storage.setStorageCard(cardnum);
+            //        self.node_card.updateUI();
+            //        self.uploadData();
+            //
+            //        qianqista.share(true);
+            //    }
+            //    else{
+            //        BK.Script.log(1, 1, "分享失败" + retCode);
+            //        qianqista.share(false);
+            //    }
+            //
+            //});
 
         }
         else
@@ -4715,116 +4726,130 @@ cc.Class({
         var self = this;
         storage.pauseMusic();
         this.GAME.VIDEOAD_TYPE = type;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
         {
-            BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
-                if (retCode == 0) {
+            var ad = null;
+            FBInstant.getRewardedVideoAsync(
+                '239014983452998_245435116144318'
+            ).then(function(rewardedVideo) {
+                    ad = rewardedVideo;
+                    return ad.loadAsync();
+                }).then(function() {
+                    // Ad loaded
+                    return ad.showAsync();
+                }).then(function() {
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        var coin = storage.getStorageCoin();
+                        coin = parseInt(coin) + 100;
+                        storage.setStorageCoin(coin);
+                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                        self.uploadData();
 
-                    handle.setEventCallack(function (code, msg) {
-                        BK.Script.log(1, 1, "closeGame"); //关闭游戏
+                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                        self.node_main_lingqu_time.active = true;
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //视频结束
-                        handle.jiangli = true;
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        if(handle.jiangli)
+                        storage.setStorageVideoTime(30);
+
+                        if(cc.isValid(self.node_coin))
+                            self.node_coin.updateUI();
+
+                        self.res.showToast("Coin+100");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.fuhuo(false,false,true);
+                        self.res.showToast("Revive success");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        storage.setStorageHasZhanShi(5);
+                        if(cc.isValid(self.node_zhanshi))
+                            self.node_zhanshi.updateUI();
+                        else if(cc.isValid(self.node_tryzhanshi))
+                            self.node_tryzhanshi.useZhanshiStart();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    {
+                        self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                        storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                        self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
+                        self.node_tiaozhan_sus.updateCoin();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.node_tiaozhan_fail.updateJumpNum();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 6)
+                    {
+                        if(self.openduizhan)
                         {
-                            if(self.GAME.VIDEOAD_TYPE == 1)
-                            {
-                                var coin = storage.getStorageCoin();
-                                coin = parseInt(coin) + 100;
-                                storage.setStorageCoin(coin);
-                                self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                                self.uploadData();
-
-                                self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                                self.node_main_lingqu_time.active = true;
-                                self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
-
-                                storage.setStorageVideoTime(30);
-
-                                if(cc.isValid(self.node_coin))
-                                    self.node_coin.updateUI();
-
-                                self.res.showToast("Coin+100");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 2)
-                            {
-                                self.fuhuo(false,false,true);
-                                self.res.showToast("Revive success");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 3)
-                            {
-                                storage.setStorageHasZhanShi(5);
-                                if(cc.isValid(self.node_zhanshi))
-                                    self.node_zhanshi.updateUI();
-                                else if(cc.isValid(self.node_tryzhanshi))
-                                    self.node_tryzhanshi.useZhanshiStart();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 4)
-                            {
-                                self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
-                                storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
-                                self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
-                                self.node_tiaozhan_sus.updateCoin();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 5)
-                            {
-                                self.node_tiaozhan_fail.updateJumpNum();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 6)
-                            {
-                                if(self.openduizhan)
-                                {
-                                    self.node_duizhan.jifenx2();
-                                }
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 7)
-                            {
-                                if(cc.isValid(self.node_qiandao))
-                                    self.node_qiandao.vedioRiqi();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 8)
-                            {
-                                if(cc.isValid(self.node_coinx2))
-                                    self.node_coinx2.lingquSuc();
-                            }
+                            self.node_duizhan.jifenx2();
                         }
-                        else
-                        {
-                            if(self.GAME.VIDEOAD_TYPE == 1)
-                            {
-                                self.res.showToast("Failed to get coins");
-                            }
-                            if(self.GAME.VIDEOAD_TYPE == 2)
-                            {
-                                self.res.showToast("Revive failure");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 3)
-                            {
-                                self.res.showToast("Failed");
-                            }
-                            else
-                            {
-                                self.res.showToast("Failed");
-                            }
-                        }
-                        storage.playMusic(self.res.audio_bgm);
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        handle.jiangli = false;
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //开始播放视频
-                    }.bind(this));
-                    //跳转至播放界面
-                    handle.jump();
-                }
-                else {
-                    BK.Script.log(1, 1, "error:" + retCode + " msg:" + msg);
-                }
-            }.bind(this));
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 7)
+                    {
+                        if(cc.isValid(self.node_qiandao))
+                            self.node_qiandao.vedioRiqi();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 8)
+                    {
+                        if(cc.isValid(self.node_coinx2))
+                            self.node_coinx2.lingquSuc();
+                    }
+                    storage.playMusic(self.res.audio_bgm);
+                });
+
+            //BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
+            //    if (retCode == 0) {
+            //
+            //        handle.setEventCallack(function (code, msg) {
+            //            BK.Script.log(1, 1, "closeGame"); //关闭游戏
+            //
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //视频结束
+            //            handle.jiangli = true;
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            if(handle.jiangli)
+            //            {
+            //
+            //            }
+            //            else
+            //            {
+            //                if(self.GAME.VIDEOAD_TYPE == 1)
+            //                {
+            //                    self.res.showToast("Failed to get coins");
+            //                }
+            //                if(self.GAME.VIDEOAD_TYPE == 2)
+            //                {
+            //                    self.res.showToast("Revive failure");
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 3)
+            //                {
+            //                    self.res.showToast("Failed");
+            //                }
+            //                else
+            //                {
+            //                    self.res.showToast("Failed");
+            //                }
+            //            }
+            //            storage.playMusic(self.res.audio_bgm);
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            handle.jiangli = false;
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //开始播放视频
+            //        }.bind(this));
+            //        //跳转至播放界面
+            //        handle.jump();
+            //    }
+            //    else {
+            //        BK.Script.log(1, 1, "error:" + retCode + " msg:" + msg);
+            //    }
+            //}.bind(this));
             //if(type == 1)
             //{
             //    this.rewardedVideoAd.show().catch(function(err){
@@ -4972,6 +4997,21 @@ cc.Class({
             //if(this.bannerAd)
             //    this.bannerAd.hide();
         }
+    },
+
+    wxSpot: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
+        {
+            FBInstant.getInterstitialAdAsync(
+                '239014983452998_245624492792047'
+            ).then(function(interstitial) {
+                    return interstitial.loadAsync();
+                }).then(function() {
+                    // Ad loaded
+                });
+        }
+
     },
 
     

@@ -98,26 +98,26 @@ module.exports = {
             this.state = 1;
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
             {
-                //var query = GameStatusInfo.gameParam;
-                //if(query && query.length>0)
-                //{
-                //    var datas = JSON.parse(query);
-                //    if(datas.channel)
-                //        this.channel = datas.channel;
-                //    if(datas.fromid)
-                //    {
-                //        this.fromid = datas.fromid;
-                //        this.pkfromid = datas.fromid;
-                //    }
-                //    if(datas.roomType)
-                //        this.pkroomtype = datas.roomType;
-                //
-                //    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
-                //    {
-                //        if(this.showcallback)
-                //            this.showcallback();
-                //    }
-                //}
+                var query = FBInstant.getEntryPointData();
+                if(query)
+                {
+                    var datas = query;
+                    if(datas.channel)
+                        this.channel = datas.channel;
+                    if(datas.fromid)
+                    {
+                        this.fromid = datas.fromid;
+                        this.pkfromid = datas.fromid;
+                    }
+                    if(datas.roomType)
+                        this.pkroomtype = datas.roomType;
+
+                    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
+                    {
+                        if(this.showcallback)
+                            this.showcallback();
+                    }
+                }
 
 
                 //var query = res.query;
@@ -137,6 +137,7 @@ module.exports = {
 
                 self.userName = FBInstant.player.getName();
                 self.avatarUrl = FBInstant.player.getPhoto();
+                console.log("self.avatarUrl:"+self.avatarUrl);
                 self.initdata();
 
 

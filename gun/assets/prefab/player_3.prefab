@@ -47,8 +47,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 74,
-      "height": 93
+      "width": 64,
+      "height": 86
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -123,13 +123,13 @@
     "tag": 1,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": -61,
-      "y": 66
+      "x": -63.2,
+      "y": 64.3
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 195,
-      "height": 55
+      "width": 190.6,
+      "height": 51.5
     }
   },
   {

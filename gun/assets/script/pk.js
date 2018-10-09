@@ -238,10 +238,10 @@ cc.Class({
 
     updateUI: function()
     {
-        this.loadPic(this.node_sel_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.loadPic(this.node_sel_box_1,this.qianqista.avatarUrl);
         this.node_sel_box_1_name.string = this.qianqista.userName;
 
-        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl);
         this.node_sel2_box_1_name.string = this.qianqista.userName;
 
         var rank = 1000;
@@ -959,7 +959,7 @@ cc.Class({
 
             if(this.playerData.playerA)
             {
-                this.loadPic(this.node_sel2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
+                this.loadPic(this.node_sel2_box_1,this.playerData.playerA.avatarUrl);
                 this.node_sel2_box_1_name.string = this.playerData.playerA.name;
             }
             if(this.playerData.playerB)
@@ -1120,7 +1120,7 @@ cc.Class({
         this.node_sel2_title.string = "Ready";
         this.node_sel2_willstart.string = "";
 
-        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl);
         this.node_sel2_box_1_name.string = this.qianqista.userName;
         this.node_sel2_box_2_name.string = "Waiting";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
@@ -1149,7 +1149,7 @@ cc.Class({
         this.node_sel2_title.string = "Ready";
         this.node_sel2_willstart.string = "";
 
-        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl);
         this.node_sel2_box_1_name.string = this.qianqista.userName;
         this.node_sel2_box_2_name.string = "Waiting";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
@@ -1483,7 +1483,7 @@ cc.Class({
 
         if(this.playerData.playerA)
         {
-            this.loadPic(this.a_icon,this.playerData.playerA.avatarUrl+"?"+Math.random());
+            this.loadPic(this.a_icon,this.playerData.playerA.avatarUrl);
             this.a_name.string = this.playerData.playerA.name;
             this.a_pro.progress = 1;
             this.a_pro_bar.color = cc.color(0,160,233);
@@ -2769,7 +2769,7 @@ cc.Class({
             this.node_over2_home.color = cc.color(255,255,255);
             this.node_over2_jifenx2.getComponent("cc.Button").interactable = true;
 
-            this.loadPic(this.node_over2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over2_box_1,this.playerData.playerA.avatarUrl);
             this.loadPic(this.node_over2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
@@ -2834,8 +2834,7 @@ cc.Class({
                     this.lastjscore = jscore;
                     this.laststar = star;
 
-                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                        this.main.wxUploadScore(0,selfPlayer.jscore);
+                    this.main.wxUploadScore(0,selfPlayer.jscore);
                         //wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
@@ -2899,6 +2898,8 @@ cc.Class({
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
+                    this.main.wxUploadScore(0,selfPlayer.jscore);
+
                     this.lastjscore = jscore;
                 }
                 else
@@ -2920,7 +2921,7 @@ cc.Class({
 
             var enemyPlayer = this.findEnemyPlayerData();
 
-            this.loadPic(this.node_over_box_1,selfPlayer.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_over_box_1,selfPlayer.avatarUrl);
             this.loadPic(this.node_over_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
             this.node_over_box_1_name.string = selfPlayer.name;
             this.node_over_box_2_name.string = enemyPlayer.name;
@@ -2965,8 +2966,7 @@ cc.Class({
                     this.lastjscore = jscore;
                     this.laststar = star;
 
-                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                        this.main.wxUploadScore(0,selfPlayer.jscore);
+                    this.main.wxUploadScore(0,selfPlayer.jscore);
                         //wx.postMessage({ message: "updateWinNum",winNum:selfPlayer.jscore,playerId:selfPlayer.skinId,gunId:selfPlayer.gunId });
                 }
                 else
@@ -3019,6 +3019,8 @@ cc.Class({
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
+                    this.main.wxUploadScore(0,selfPlayer.jscore);
+
                     this.lastjscore = jscore;
                 }
                 else
@@ -3055,6 +3057,7 @@ cc.Class({
             self.main.worldrank.pk = res.data;
         });
 
+        this.main.wxSpot();
     },
 
     jifenx2: function()
@@ -3067,8 +3070,7 @@ cc.Class({
         if(this.lastjscore > 0)
         {
             storage.setStorageJScore(selfData.jscore);
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-                this.main.wxUploadScore(0,selfData.jscore);
+            this.main.wxUploadScore(0,selfData.jscore);
                 //wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
         }
     },

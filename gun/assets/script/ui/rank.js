@@ -212,29 +212,30 @@ cc.Class({
             self.node_paiming_title.string = "Friend rank";
             self.node_paiming_ranktype_txt.string = "World";
 
-            var attr = "a1";//使用哪一种上报数据做排行，可传入score，a1，a2等
-            var order = 1;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
-            var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
-            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
-            BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
-                BK.Script.log(1,1,"-------rank a1 callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
-                // 返回错误码信息
-                if (errCode !== 0) {
-                    BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
-                    return;
-                }
-                // 解析数据
-                if (data) {
+            FBInstant.getLeaderboardAsync('wjscore')
+                .then(function(leaderboard) {
+                    return leaderboard.getConnectedPlayerEntriesAsync();
+                })
+                .then(function(entries) {
                     var selfrank = null;
-                    for(var i=0; i < data.data.ranking_list.length; ++i) {
-                        var rd = data.data.ranking_list[i];
-                        // rd 的字段如下:
-                        //var rd = {
-                        //    url: '',            // 头像的 url
-                        //    nick: '',           // 昵称
-                        //    a1: 1,           // 分数
-                        //    selfFlag: false,    // 是否是自己
-                        //};
+
+                    if(entries && entries.length>0)
+                    {
+                        entries.sort(function(a,b){
+                            var a_rank =JSON.parse(a.getExtraData());
+                            var AMaxScore=a_rank.jscore;
+
+                            var b_rank =JSON.parse(b.getExtraData());
+                            var BMaxScore = b_rank.jscore;
+
+                            return parseInt(BMaxScore) - parseInt(AMaxScore);
+                        });
+                    }
+
+                    for(var i=0; i < entries.length; ++i) {
+                        var rd = entries[i];
+                        var edata = rd.getExtraData();
+                        var jscore = JSON.parse(edata).jscore;
                         var item = cc.instantiate(self.paimingItem2);
                         var bg = cc.find("bg",item);
                         var num = cc.find("rank",bg);
@@ -244,15 +245,15 @@ cc.Class({
                         var role = cc.find("role",bg);
 
                         num.getComponent("cc.Label").string = (i+1)+"";
-                        if(rd.url && rd.url.length>0)
-                            self.loadPic(icon,rd.url);
-                        nick.getComponent("cc.Label").string = rd.nick;
-                        score.getComponent("cc.Label").string = rd.a1+"";
+                        self.loadPic(icon,rd.getPlayer().getPhoto());
+                        nick.getComponent("cc.Label").string = rd.getPlayer().getName();
+                        score.getComponent("cc.Label").string = jscore+"";
 
-                        if(rd.selfFlag)
+                        if(rd.getPlayer().getID() == FBInstant.player.getID())
                         {
                             selfrank = rd;
-                            selfrank.num = (i+1);
+                            selfrank.num = i+1;
+                            selfrank.jscore = jscore;
                         }
 
                         // role.destroyAllChildren();
@@ -271,23 +272,13 @@ cc.Class({
 
                     if(selfrank)
                     {
-                        self.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
-                        self.loadPic(self.node_paiming_icon,selfrank.url);
-                        self.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
-                        self.node_paiming_score.getComponent("cc.Label").string = selfrank.a1+"";
+                        self.node_paiming_num2.getComponent("cc.Label").string = selfrank.num+"";
+                        self.loadPic(self.node_paiming_icon2,selfrank.getPlayer().getPhoto());
+                        self.node_paiming_nick2.getComponent("cc.Label").string = selfrank.getPlayer().getName();
+                        self.node_paiming_score2.getComponent("cc.Label").string =  selfrank.jscore+"";
 
-                        // self.node_paiming_role.destroyAllChildren();
-
-                        // var player = cc.instantiate(self.GAME.players[selfrank.playerId]);
-                        // self.node_paiming_role.addChild(player);
-
-                        // var gunConf = self.GAME.gunsconfig[selfrank.gunId];
-                        // var gun = cc.instantiate(self.GAME.guns[selfrank.gunId]);
-                        // gun.y = player.height*0.3 + gunConf.y;
-                        // player.addChild(gun);
                     }
-                }
-            });
+                });
 
         }
 
@@ -413,36 +404,10 @@ cc.Class({
                     return leaderboard.getConnectedPlayerEntriesAsync();
                 })
                 .then(function(entries) {
-                    console.log(entries.length); // 10
-                    console.log(entries[0].getRank()); // 1
-                    console.log(entries[0].getScore()); // 42
-                    console.log(entries[1].getRank()); // 2
-                    console.log(entries[1].getScore()); // 40
-                });
-
-            var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
-            var order = 1;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
-            var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
-            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
-            BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
-                BK.Script.log(1,1,"-------rank score callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
-                // 返回错误码信息
-                if (errCode !== 0) {
-                    BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
-                    return;
-                }
-                // 解析数据
-                if (data) {
                     var selfrank = null;
-                    for(var i=0; i < data.data.ranking_list.length; ++i) {
-                        var rd = data.data.ranking_list[i];
-                        // rd 的字段如下:
-                        //var rd = {
-                        //    url: '',            // 头像的 url
-                        //    nick: '',           // 昵称
-                        //    score: 1,           // 分数
-                        //    selfFlag: false,    // 是否是自己
-                        //};
+                    for(var i=0; i < entries.length; ++i) {
+                        var rd = entries[i];
+
                         var item = cc.instantiate(self.paimingItem);
                         var bg = cc.find("bg",item);
                         var num = cc.find("rank",bg);
@@ -451,16 +416,14 @@ cc.Class({
                         var score = cc.find("score",bg);
                         var role = cc.find("role",bg);
 
-                        num.getComponent("cc.Label").string = (i+1)+"";
-                        if(rd.url && rd.url.length>0)
-                            self.loadPic(icon,rd.url);
-                        nick.getComponent("cc.Label").string = rd.nick;
-                        score.getComponent("cc.Label").string = rd.score+"";
+                        num.getComponent("cc.Label").string = rd.getRank()+"";
+                        self.loadPic(icon,rd.getPlayer().getPhoto());
+                        nick.getComponent("cc.Label").string = rd.getPlayer().getName();
+                        score.getComponent("cc.Label").string = rd.getScore()+"";
 
-                        if(rd.selfFlag)
+                        if(rd.getPlayer().getID() == FBInstant.player.getID())
                         {
                             selfrank = rd;
-                            selfrank.num = (i+1);
                         }
 
                         // role.destroyAllChildren();
@@ -479,10 +442,10 @@ cc.Class({
 
                     if(selfrank)
                     {
-                        self.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
-                        self.loadPic(self.node_paiming_icon,selfrank.url);
-                        self.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
-                        self.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
+                        self.node_paiming_num.getComponent("cc.Label").string = selfrank.getRank()+"";
+                        self.loadPic(self.node_paiming_icon,selfrank.getPlayer().getPhoto());
+                        self.node_paiming_nick.getComponent("cc.Label").string = selfrank.getPlayer().getName();
+                        self.node_paiming_score.getComponent("cc.Label").string = selfrank.getScore()+"";
 
                         // self.node_paiming_role.destroyAllChildren();
 
@@ -494,8 +457,7 @@ cc.Class({
                         // gun.y = player.height*0.3 + gunConf.y;
                         // player.addChild(gun);
                     }
-                }
-            });
+                });
         }
     },
 

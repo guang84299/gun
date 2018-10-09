@@ -85,36 +85,22 @@ cc.Class({
     wxOverRank: function(score)
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
             this.main.wxUploadScore(score);
 
-            var attr = "score";//使用哪一种上报数据做排行，可传入score，a1，a2等
-            var order = 2;     //排序的方法：[ 1: 从大到小(单局)，2: 从小到大(单局)，3: 由大到小(累积)]
-            var rankType = 0; //要查询的排行榜类型，0: 好友排行榜，1: 群排行榜，2: 讨论组排行榜，3: C2C二人转 (手Q 7.6.0以上支持)
-            // 必须配置好周期规则后，才能使用数据上报和排行榜功能
-            BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
-                BK.Script.log(1,1,"-------wxOverRank callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
-                // 返回错误码信息
-                if (errCode !== 0) {
-                    BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
-                    return;
-                }
-                // 解析数据
-                if (data) {
+            FBInstant.getLeaderboardAsync('wscore')
+                .then(function(leaderboard) {
+                    return leaderboard.getConnectedPlayerEntriesAsync();
+                })
+                .then(function(entries) {
                     var chaoyue = null;
-                    for(var i=0; i < data.data.ranking_list.length; ++i) {
-                        var rd = data.data.ranking_list[i];
-                        // rd 的字段如下:
-                        //var rd = {
-                        //    url: '',            // 头像的 url
-                        //    nick: '',           // 昵称
-                        //    score: 1,           // 分数
-                        //    selfFlag: false,    // 是否是自己
-                        //};
-                        if(!rd.selfFlag)
+                    for(var i=0; i < entries.length; ++i) {
+                        var rd = entries[i];
+
+                        if(rd.getPlayer().getID() != FBInstant.player.getID())
                         {
-                            if(score < rd.score)
+                            if(score < rd.getScore())
                             {
                                 chaoyue = rd;
                                 break;
@@ -129,8 +115,8 @@ cc.Class({
                         self.node_over_no.active = false;
 
 
-                        self.main.loadPic(self.node_over_icon,chaoyue.url);
-                        self.node_over_nick.getComponent("cc.Label").string = chaoyue.nick;
+                        self.main.loadPic(self.node_over_icon,chaoyue.getPlayer().getPhoto());
+                        self.node_over_nick.getComponent("cc.Label").string = chaoyue.getPlayer().getName();
                     }
                     else
                     {
@@ -138,9 +124,7 @@ cc.Class({
                         self.node_over_nick.active = false;
                         self.node_over_no.active = true;
                     }
-
-                }
-            });
+                });
         }
     },
 
@@ -238,30 +222,24 @@ cc.Class({
     wxGropShareChange: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            var info = {};
-            info.channel = "sharechangemenu";
-            var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
-            var imageUrl = "http://www.qiqiup.com/gun.gif";
-            var shareInfo = {
-                summary:title,          //QQ聊天消息标题
-                picUrl:imageUrl,               //QQ聊天消息图片
-                extendInfo:query,    //QQ聊天消息扩展字段
-            };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
-                    self.main.qianqista.share(true);
-                }
-                else{
-                    BK.Script.log(1, 1, "分享失败" + retCode);
-                    self.main.qianqista.share(false);
-                }
+            FBInstant.shareAsync({
+                intent: 'REQUEST',
+                image: this.res.getBase64SharePic(),
+                text: 'I am a sharpshooter! I see，I shot，I win.',
+                data: { channel: 'sharechangemenu',fromid:''+FBInstant.player.getID() }
+            }).then(function() {
+                // continue with the game.
+                self.res.showToast("share success!");
 
+                self.main.qianqista.share(true);
+            }).catch(function (error) {
+                self.main.qianqista.share(false);
+                self.res.showToast("share fail！");
             });
+
+
 
             //var query = "channel=sharechangemenu";
             //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";

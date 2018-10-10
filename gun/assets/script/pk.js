@@ -331,6 +331,8 @@ cc.Class({
             }
             this.node_sel_mode.active = false;
             this.node_sel.active = true;
+
+            this.main.wxBannerShow();
         }
         else if(data == "shuangren")
         {
@@ -341,6 +343,8 @@ cc.Class({
             this.isClickSuiji2 = false;
             this.node_sel_mode.active = false;
             this.node_sel2.active = true;
+
+            this.main.wxBannerShow();
         }
         else if(data == "suiji")
         {
@@ -483,6 +487,7 @@ cc.Class({
         }
         else if(data == "home")
         {
+            this.main.wxBannerHide();
             this.isSuiJiMatch = false;
             if(this.state == "willagain")
             {
@@ -540,6 +545,7 @@ cc.Class({
         }
         else if(data == "gun")
         {
+            this.main.wxBannerHide();
             this.main.openGun();
             this.showGunUI(true);
         }
@@ -638,7 +644,7 @@ cc.Class({
             info.fromid = this.playerData.playerA.roomId;
             info.roomType = this.playerData.roomType;
             var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
+            var title = "[ QQ 红包 ] 恭喜发财 玩星辉联赛，百元红包等你来领！";
             var imageUrl = "http://www.qiqiup.com/gun.gif";
             var shareInfo = {
                 summary:title,          //QQ聊天消息标题
@@ -1146,6 +1152,8 @@ cc.Class({
         this.node_sel_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
         this.node_sel_lv_num.string = storage.getStorageMaxJScore();
 
+        this.main.wxBannerShow();
+
     },
 
     sel2_fanhui: function()
@@ -1175,6 +1183,8 @@ cc.Class({
         this.node_sel2_box_2_wenhao.active = true;
         this.node_sel2_box_3_wenhao.active = true;
         this.node_sel2_box_4_wenhao.active = true;
+
+        this.main.wxBannerShow();
     },
 
     over2_fanhui: function()
@@ -1213,6 +1223,8 @@ cc.Class({
             rank = 1000;
         this.node_sel2_lv.spriteFrame = this.res.getPkLvSp(storage.getStorageMaxJScore(),rank);
         this.node_sel2_lv_num.string = storage.getStorageMaxJScore();
+
+        this.main.wxBannerShow();
     },
 
     again: function()
@@ -1498,6 +1510,8 @@ cc.Class({
 
     startGame: function()
     {
+        this.main.wxBannerHide();
+
         this.state = "start";
         this.isBgScroll = false;
         this.node_sel.active = false;
@@ -2867,6 +2881,7 @@ cc.Class({
                     this.node_over2_jifen.string = "积分+"+jscore;
                     this.node_over2_star.string = "星星+"+star;
                     selfPlayer.jscore += jscore;
+                    //selfPlayer.star += star;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
                     websocket.updateUser(selfPlayer.jscore,star,selfPlayer.gunId,selfPlayer.skinId);
@@ -2925,23 +2940,28 @@ cc.Class({
                 this.node_over2_fanhui_str.string = "溜了";
                 this.node_over2_again_str.string = "不服再来";
 
-                this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
-                cc.find("str",this.node_over2_jifenx2).active = true;
+                //this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over2_jifenx2).active = false;
                 cc.find("suiji",this.node_over2_jifenx2).active = false;
-                //cc.find("str2",this.node_over2_jifenx2).active = true;
+                cc.find("str2",this.node_over2_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
+                    var star = this.winStarNum();
+                    //if(star > selfPlayer.star)
+                    //    star = selfPlayer.star;
                     this.node_over2_jifen.string = "积分-"+jscore;
-                    this.node_over2_star.string = "星星+"+0;
+                    this.node_over2_star.string = "星星-"+star;
 
                     selfPlayer.jscore -= jscore;
-                    websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
+                    //selfPlayer.star -= star;
+                    websocket.updateUser(selfPlayer.jscore,-star,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+                    this.laststar = star;
                 }
                 else
                 {
@@ -2997,6 +3017,7 @@ cc.Class({
                     this.node_over_jifen.string = "积分+"+jscore;
                     this.node_over_star.string = "星星+"+star;
                     selfPlayer.jscore += jscore;
+                    //selfPlayer.star += star;
                     if(selfPlayer.jscore > selfPlayer.maxJscore)
                         selfPlayer.maxJscore = selfPlayer.jscore;
 
@@ -3046,22 +3067,27 @@ cc.Class({
                 this.node_over_fanhui_str.string = "溜了";
                 this.node_over_again_str.string = "不服再来";
 
-                this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
-                cc.find("str",this.node_over_jifenx2).active = true;
+                //this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
+                cc.find("str",this.node_over_jifenx2).active = false;
                 cc.find("suiji",this.node_over_jifenx2).active = false;
-                //cc.find("str2",this.node_over_jifenx2).active = true;
+                cc.find("str2",this.node_over_jifenx2).active = true;
 
                 if(this.isCanJScore())
                 {
                     var jscore = this.failJscore();
+                    var star = this.winStarNum();
+                    //if(star > selfPlayer.star)
+                    //    star = selfPlayer.star;
                     this.node_over_jifen.string = "积分-"+jscore;
-                    this.node_over_star.string = "星星+"+0;
+                    this.node_over_star.string = "星星-"+star;
                     selfPlayer.jscore -= jscore;
-                    websocket.updateUser(selfPlayer.jscore,0,selfPlayer.gunId,selfPlayer.skinId);
+                    //selfPlayer.star -= star;
+                    websocket.updateUser(selfPlayer.jscore,-star,selfPlayer.gunId,selfPlayer.skinId);
 
                     storage.setStorageJScore(selfPlayer.jscore);
 
                     this.lastjscore = jscore;
+                    this.laststar = star;
                 }
                 else
                 {
@@ -3103,6 +3129,7 @@ cc.Class({
     {
         var selfData = this.findSelfPlayerData();
         var star = this.laststar;
+        //selfData.star += star;
         //websocket.updateUser(selfData.jscore,0,selfData.gunId,selfData.skinId);
         websocket.updateUser(selfData.jscore,star,selfData.gunId,selfData.skinId);
         this.res.showToast("星星+"+this.laststar);

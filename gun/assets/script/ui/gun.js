@@ -179,6 +179,7 @@ cc.Class({
             this.main.openstore = false;
             if(this.main.openduizhan)
             {
+                this.main.wxBannerShow();
                 this.main.node_duizhan.showGunUI(false);
                 this.hide();
                 return;

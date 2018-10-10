@@ -397,7 +397,7 @@ module.exports = {
     {
         if(this.state == 1)
         {
-            star = star ? star : 0;
+            //star = star ? star : 0;
             var body = {};
             body.jscore = jscore;
             body.star = star;

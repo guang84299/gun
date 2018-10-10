@@ -1600,7 +1600,7 @@ cc.Class({
             })
         ));
 
-        if(!this.opentiaozhan)
+        //if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -3712,7 +3712,7 @@ cc.Class({
             ));
         }
 
-        if(!this.opentiaozhan)
+        //if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -3860,7 +3860,7 @@ cc.Class({
                     if(!this.opentiaozhan)
                     {
                         this.wxUpdateScore(Math.floor(this.GAME.score));
-                        this.wxUpdateScore2(Math.floor(this.GAME.score));
+                        //this.wxUpdateScore2(Math.floor(this.GAME.score));
                     }
 
                 }
@@ -4491,7 +4491,7 @@ cc.Class({
             var info = {};
             info.channel = "groupsharemenu";
             var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
+            var title = "[ QQ 红包 ] 恭喜发财 玩星辉联赛，百元红包等你来领！";
             var imageUrl = "http://www.qiqiup.com/gun.gif";
             var shareInfo = {
                 summary:title,          //QQ聊天消息标题
@@ -4556,7 +4556,7 @@ cc.Class({
             var info = {};
             info.channel = "sharecardmenu";
             var query = JSON.stringify(info);
-            var title = "请问，这是你掉的98k么？";
+            var title = "[ QQ 红包 ] 恭喜发财 玩星辉联赛，百元红包等你来领！";
             var imageUrl = "http://www.qiqiup.com/gun.gif";
             var shareInfo = {
                 summary:title,          //QQ聊天消息标题

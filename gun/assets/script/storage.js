@@ -5,13 +5,25 @@ module.exports = {
     playMusic: function(music)
     {
         if(this.getStorageMusic() == 1)
-            cc.audioEngine.play(music,true,0.6);
+        {
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            {
+                BK.Audio.switch = true;
+                var handle = new BK.Audio(0,"GameRes:///res/raw-assets/audio/bg_1.mp3",-1);
+                handle.startMusic();
+            }
+            else
+            {
+                cc.audioEngine.playMusic(music,true);
+            }
+        }
+
     },
 
     pauseMusic: function()
     {
         if(this.getStorageMusic() == 1)
-            cc.audioEngine.pauseAll();
+            cc.audioEngine.pauseMusic();
     },
 
     resumeMusic: function()
@@ -22,7 +34,15 @@ module.exports = {
 
     stopMusic: function()
     {
-        cc.audioEngine.stopAll();
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            BK.Audio.switch = false;
+        }
+        else
+        {
+            cc.audioEngine.stopMusic();
+        }
+
     },
 
     playSound: function(sound)

@@ -48,6 +48,8 @@ cc.Class({
          storage.playMusic(this.res.audio_bgm);
          storage.preloadSound();
          //this.wxVideoLoad();
+         this.wxVideoShow();
+         this.wxSpot();
 
          var self = this;
 
@@ -3605,7 +3607,29 @@ cc.Class({
             else
             {
                 if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
+                {
+                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
+                    {
+                        if(storage.getStorageShortcut()==0)
+                        {
+                            FBInstant.canCreateShortcutAsync()
+                                .then(function(canCreateShortcut) {
+                                    if (canCreateShortcut) {
+                                        FBInstant.createShortcutAsync()
+                                            .then(function() {
+                                                // Shortcut created
+                                                storage.setStorageShortcut(1);
+                                            })
+                                            .catch(function() {
+                                                // Shortcut not created
+                                            });
+                                    }
+                                });
+                        }
+
+                    }
                     this.judgeFuHuo();
+                }
                 else
                 {
                     this.gameResult();
@@ -3624,6 +3648,9 @@ cc.Class({
         qianqista.rankScore(function(res){
             self.worldrank.wujin = res.data;
         });
+
+
+
     },
 
     judgeFuHuo: function()
@@ -3638,6 +3665,7 @@ cc.Class({
         this.node.addChild(fuhuo);
         this.node_fuhuo = fuhuo.getComponent("fuhuo");
         this.node_fuhuo.show();
+
 
     },
 
@@ -3965,8 +3993,8 @@ cc.Class({
     },
     getChaoyue3: function()
     {
-        var per = ["Rookie","New hand","Better","Almost","Get it？","Practice more!","Intern gunner",
-            "Professional gunner","I think I did okay！","Super shooter ","Dead shot","Invincible marksman","God like!"];
+        var per = ["Rookie","Newcomer","Better","Almost","Get it？","Practice more!","Intern shooter",
+            "Professional shooter","Trouble shooter","Super shooter ","Dead shot","Invincible","God like!"];
         return per[this.getChaoyue()-1];
     },
     getChaoyue4: function()
@@ -4724,82 +4752,104 @@ cc.Class({
     wxVideoShow: function(type)
     {
         var self = this;
-        storage.pauseMusic();
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
         {
-            var ad = null;
-            FBInstant.getRewardedVideoAsync(
-                '239014983452998_245435116144318'
-            ).then(function(rewardedVideo) {
-                    ad = rewardedVideo;
-                    return ad.loadAsync();
-                }).then(function() {
-                    // Ad loaded
-                    return ad.showAsync();
-                }).then(function() {
-                    if(self.GAME.VIDEOAD_TYPE == 1)
-                    {
-                        var coin = storage.getStorageCoin();
-                        coin = parseInt(coin) + 100;
-                        storage.setStorageCoin(coin);
-                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                        self.uploadData();
+            if(!self.preloadedRewardedVideo || !self.preloadedRewardedVideoisload)
+            {
+                self.preloadedRewardedVideoisload = false;
 
-                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                        self.node_main_lingqu_time.active = true;
-                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                FBInstant.getRewardedVideoAsync(
+                    '1429552683843017_1429571757174443' // Your Ad Placement Id
+                ).then(function(rewarded) {
+                        // Load the Ad asynchronously
+                        self.preloadedRewardedVideo = rewarded;
+                        return self.preloadedRewardedVideo.loadAsync();
+                    }).then(function() {
+                        console.log('Rewarded video preloaded');
+                        self.preloadedRewardedVideoisload = true;
+                    }).catch(function(err){
+                        console.error('Rewarded video failed to preload: ' + err.message);
+                    });
+            }
 
-                        storage.setStorageVideoTime(30);
-
-                        if(cc.isValid(self.node_coin))
-                            self.node_coin.updateUI();
-
-                        self.res.showToast("Coin+100");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 2)
-                    {
-                        self.fuhuo(false,false,true);
-                        self.res.showToast("Revive success");
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 3)
-                    {
-                        storage.setStorageHasZhanShi(5);
-                        if(cc.isValid(self.node_zhanshi))
-                            self.node_zhanshi.updateUI();
-                        else if(cc.isValid(self.node_tryzhanshi))
-                            self.node_tryzhanshi.useZhanshiStart();
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 4)
-                    {
-                        self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
-                        storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
-                        self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
-                        self.node_tiaozhan_sus.updateCoin();
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 5)
-                    {
-                        self.node_tiaozhan_fail.updateJumpNum();
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 6)
-                    {
-                        if(self.openduizhan)
+            if(self.preloadedRewardedVideo && self.preloadedRewardedVideoisload)
+            {
+                storage.pauseMusic();
+                self.preloadedRewardedVideoisload = false;
+                self.preloadedRewardedVideo.showAsync()
+                    .then(function() {
+                        // Perform post-ad success operation
+                        if(self.GAME.VIDEOAD_TYPE == 1)
                         {
-                            self.node_duizhan.jifenx2();
+                            var coin = storage.getStorageCoin();
+                            coin = parseInt(coin) + 100;
+                            storage.setStorageCoin(coin);
+                            self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                            self.uploadData();
+
+                            self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                            self.node_main_lingqu_time.active = true;
+                            self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                            storage.setStorageVideoTime(30);
+
+                            if(cc.isValid(self.node_coin))
+                                self.node_coin.updateUI();
+
+                            self.res.showToast("Coin+100");
                         }
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 7)
-                    {
-                        if(cc.isValid(self.node_qiandao))
-                            self.node_qiandao.vedioRiqi();
-                    }
-                    else if(self.GAME.VIDEOAD_TYPE == 8)
-                    {
-                        if(cc.isValid(self.node_coinx2))
-                            self.node_coinx2.lingquSuc();
-                    }
-                    storage.playMusic(self.res.audio_bgm);
-                });
+                        else if(self.GAME.VIDEOAD_TYPE == 2)
+                        {
+                            self.fuhuo(false,false,true);
+                            self.res.showToast("Revive success");
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 3)
+                        {
+                            storage.setStorageHasZhanShi(5);
+                            if(cc.isValid(self.node_zhanshi))
+                                self.node_zhanshi.updateUI();
+                            else if(cc.isValid(self.node_tryzhanshi))
+                                self.node_tryzhanshi.useZhanshiStart();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 4)
+                        {
+                            self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                            storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                            self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
+                            self.node_tiaozhan_sus.updateCoin();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 5)
+                        {
+                            self.node_tiaozhan_fail.updateJumpNum();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 6)
+                        {
+                            if(self.openduizhan)
+                            {
+                                self.node_duizhan.jifenx2();
+                            }
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 7)
+                        {
+                            if(cc.isValid(self.node_qiandao))
+                                self.node_qiandao.vedioRiqi();
+                        }
+                        else if(self.GAME.VIDEOAD_TYPE == 8)
+                        {
+                            if(cc.isValid(self.node_coinx2))
+                                self.node_coinx2.lingquSuc();
+                        }
+                        storage.playMusic(self.res.audio_bgm);
+                        self.wxVideoShow();
+                    })
+                    .catch(function(e) {
+                        console.error(e.message);
+                        storage.playMusic(self.res.audio_bgm);
+                        self.wxVideoShow();
+                    });
+            }
+
 
             //BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
             //    if (retCode == 0) {
@@ -5001,15 +5051,36 @@ cc.Class({
 
     wxSpot: function()
     {
+        var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
         {
-            FBInstant.getInterstitialAdAsync(
-                '239014983452998_245624492792047'
-            ).then(function(interstitial) {
-                    return interstitial.loadAsync();
-                }).then(function() {
-                    // Ad loaded
-                });
+            if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
+            {
+                self.preloadedInterstitialisload = false;
+                FBInstant.getInterstitialAdAsync(
+                    '1429552683843017_1429585197173099'
+                ).then(function(interstitial) {
+                        self.preloadedInterstitial = interstitial;
+                        return self.preloadedInterstitial.loadAsync();
+                    }).then(function() {
+                        // Ad loaded
+                        self.preloadedInterstitialisload = true;
+                    });
+            }
+
+            if(self.preloadedInterstitial && self.preloadedInterstitialisload)
+            {
+                self.preloadedInterstitialisload = false;
+                self.preloadedInterstitial.showAsync()
+                    .then(function() {
+                    // Perform post-ad success operation
+                        self.wxSpot();
+                    })
+                    .catch(function(e) {
+                        self.wxSpot();
+                    });
+            }
+
         }
 
     },

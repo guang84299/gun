@@ -1476,7 +1476,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -220,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1982,7 +1982,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2575,7 +2575,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 220,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4671,7 +4671,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 173,
+      "width": 98,
       "height": 30
     },
     "_rotationX": 0,
@@ -4706,7 +4706,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Attack damage",
+    "_N$string": "Damage",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -4947,7 +4947,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -220,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -5540,7 +5540,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -6133,7 +6133,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 220,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -6815,7 +6815,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -220,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -7408,7 +7408,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -8001,7 +8001,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 220,
-      "y": 211
+      "y": 190
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -8998,7 +8998,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
+      "width": 83,
       "height": 48
     },
     "_rotationX": 0,
@@ -9033,7 +9033,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Attack damage\n+1",
+    "_N$string": "Damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10373,7 +10373,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -220,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -10777,7 +10777,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
+      "width": 83,
       "height": 48
     },
     "_rotationX": 0,
@@ -10812,7 +10812,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Attack damage\n+1",
+    "_N$string": "Damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -10966,7 +10966,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -11370,7 +11370,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
+      "width": 83,
       "height": 48
     },
     "_rotationX": 0,
@@ -11405,7 +11405,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Attack damage\n+1",
+    "_N$string": "Damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -11559,7 +11559,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 220,
-      "y": -193
+      "y": -172
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -11963,7 +11963,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
+      "width": 83,
       "height": 48
     },
     "_rotationX": 0,
@@ -11998,7 +11998,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Attack damage\n+1",
+    "_N$string": "Damage\n+1",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -12164,8 +12164,8 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 0.95,
+    "_scaleY": 0.95,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 1800,
@@ -13289,7 +13289,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 182,
+      "width": 171,
       "height": 28
     },
     "_rotationX": 0,
@@ -13415,7 +13415,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Line of sight +20%",
+    "_N$string": "Line length +20%",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -13471,7 +13471,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 176,
+      "width": 165,
       "height": 28
     },
     "_rotationX": 0,
@@ -13597,7 +13597,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Line of sight -20%",
+    "_N$string": "Line speed -20%",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -14021,7 +14021,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -315
+      "y": -302
     },
     "_skewX": 0,
     "_skewY": 0,

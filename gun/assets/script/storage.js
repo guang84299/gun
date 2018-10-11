@@ -250,6 +250,17 @@ module.exports = {
         return Number(vibrate);
     },
 
+    setStorageShortcut: function(shortcut)
+    {
+        cc.sys.localStorage.setItem("shortcut",shortcut);
+    },
+    getStorageShortcut: function()
+    {
+        var shortcut = cc.sys.localStorage.getItem("shortcut");
+        shortcut = shortcut ? shortcut : 0;
+        return Number(shortcut);
+    },
+
     setStorageCard: function(card)
     {
         cc.sys.localStorage.setItem("card",card);

@@ -4243,7 +4243,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 446,
-      "height": 110
+      "height": 106
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5678,7 +5678,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 150,
       "height": 70
     },
     "_rotationX": 0,
@@ -6047,7 +6047,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 200,
       "height": 70
     },
     "_rotationX": 0,

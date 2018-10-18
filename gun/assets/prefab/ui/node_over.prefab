@@ -138,7 +138,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 335,
+      "width": 251,
       "height": 34
     },
     "_rotationX": 0,
@@ -173,7 +173,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Next friend to be over:",
+    "_N$string": "Will be overtake:",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -493,8 +493,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 405,
-      "height": 42
+      "width": 291,
+      "height": 44
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -600,12 +600,12 @@
     "_useOriginalSize": false,
     "_actualFontSize": 40,
     "_fontSize": 40,
-    "_lineHeight": 42,
+    "_lineHeight": 44,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "View friends ranking  >",
+    "_N$string": "Friends' Rank  >",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
@@ -1279,7 +1279,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 446,
-      "height": 110
+      "height": 106
     },
     "_rotationX": 0,
     "_rotationY": 0,

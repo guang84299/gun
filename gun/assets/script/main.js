@@ -34,6 +34,7 @@ cc.Class({
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
+         this.wxSpotNum = 0;
 
          this.initPhysics();
          this.initData();
@@ -4491,7 +4492,7 @@ cc.Class({
                 data: { channel: 'sharecardmenu',fromid:''+FBInstant.player.getID() }
             }).then(function() {
                 // continue with the game.
-                self.res.showToast("获取到一个防弹衣");
+                self.res.showToast("Body armor +1");
 
                 var cardnum = storage.getStorageCard();
                 cardnum = parseInt(cardnum) + 1;
@@ -5070,16 +5071,25 @@ cc.Class({
 
             if(self.preloadedInterstitial && self.preloadedInterstitialisload)
             {
-                self.preloadedInterstitialisload = false;
-                self.preloadedInterstitial.showAsync()
-                    .then(function() {
-                    // Perform post-ad success operation
-                        self.wxSpot();
-                    })
-                    .catch(function(e) {
-                        self.wxSpot();
-                    });
+                if(self.wxSpotNum == 1)
+                {
+                    self.wxSpotNum = 0;
+                    self.preloadedInterstitialisload = false;
+                    self.preloadedInterstitial.showAsync()
+                        .then(function() {
+                            // Perform post-ad success operation
+                            self.wxSpot();
+                        })
+                        .catch(function(e) {
+                            self.wxSpot();
+                        });
+                }
+                else
+                {
+                    self.wxSpotNum = 1;
+                }
             }
+
 
         }
 

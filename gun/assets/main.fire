@@ -5730,7 +5730,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 94,
+      "width": 62,
       "height": 26
     },
     "_rotationX": 0,
@@ -5765,7 +5765,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Receive",
+    "_N$string": "Invite",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

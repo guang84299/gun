@@ -335,7 +335,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 414,
+      "width": 410,
       "height": 60
     },
     "_rotationX": 0,
@@ -370,7 +370,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Free sign-in gift",
+    "_N$string": "Sign-in Reward",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

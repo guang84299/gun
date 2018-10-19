@@ -12,7 +12,7 @@ cc.Class({
 
     onLoad: function()
     {
-        this.dsize = cc.view.getDesignResolutionSize();
+        this.dsize = new cc.size(720, 1584);
         this.main = cc.find("Canvas").getComponent("main");
         this.res = cc.find("Canvas").getComponent("res");
 

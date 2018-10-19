@@ -68,38 +68,41 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_custom": false,
+    "_custom": true,
     "_file": {
       "__uuid__": "7eb37278-28bb-4373-bd47-0c698fcc9730"
+    },
+    "_texture": {
+      "__uuid__": "1f3809ae-ad1b-430c-8a35-85c5d0e52b1c"
     },
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "playOnLoad": true,
     "_autoRemoveOnFinish": false,
-    "_totalParticles": 150,
-    "_duration": -1,
-    "_emissionRate": 10,
-    "_life": 1,
-    "_lifeVar": 0,
+    "_totalParticles": 70,
+    "_duration": 0.1,
+    "_emissionRate": 179.48717948717947,
+    "_life": 0.39,
+    "_lifeVar": 0.4,
     "_startColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
+      "r": 204,
+      "g": 204,
+      "b": 204,
+      "a": 12
     },
     "_startColorVar": {
       "__type__": "cc.Color",
       "r": 0,
       "g": 0,
       "b": 0,
-      "a": 255
+      "a": 0
     },
     "_endColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 102,
+      "g": 102,
+      "b": 102,
       "a": 0
     },
     "_endColorVar": {
@@ -109,11 +112,11 @@
       "b": 0,
       "a": 0
     },
-    "_angle": 90,
-    "_angleVar": 20,
-    "_startSize": 50,
-    "_startSizeVar": 0,
-    "_endSize": 0,
+    "_angle": -180,
+    "_angleVar": 50,
+    "_startSize": 130,
+    "_startSizeVar": 57,
+    "_endSize": 30,
     "_endSizeVar": 0,
     "_startSpin": 0,
     "_startSpinVar": 0,
@@ -126,19 +129,19 @@
     },
     "_posVar": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 1,
+      "y": 1
     },
     "_positionType": 0,
     "_emitterMode": 0,
     "_gravity": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -112,
+      "y": 840
     },
-    "_speed": 180,
-    "_speedVar": 50,
-    "_tangentialAccel": 80,
+    "_speed": 404,
+    "_speedVar": 45,
+    "_tangentialAccel": 0,
     "_tangentialAccelVar": 0,
     "_radialAccel": 0,
     "_radialAccelVar": 0,

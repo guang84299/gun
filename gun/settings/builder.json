@@ -17,7 +17,7 @@
     "landscapeLeft": false,
     "landscapeRight": false,
     "portrait": true,
-    "upsideDown": false
+    "upsideDown": true
   },
   "packageName": "com.qianqi.gun",
   "privateKey": "",

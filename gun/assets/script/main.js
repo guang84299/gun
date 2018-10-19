@@ -13,8 +13,8 @@ cc.Class({
 
 
      onLoad: function() {
-         cc.sys.myweb = true;
-         this.dsize = cc.view.getDesignResolutionSize();
+         cc.sys.myweb = false;
+         this.dsize = new cc.size(720, 1584);
          this.tex = new cc.Texture2D();
          this.subdt = 0;
          this.userInfo = {};
@@ -785,6 +785,7 @@ cc.Class({
 
     adapt: function()
     {
+        //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "log", "(Ljava/lang/String;)V", "adapt");
         var nodes = [this.node_main,this.node_game_ui];
         for(var i=0;i<nodes.length;i++)
         {
@@ -795,6 +796,8 @@ cc.Class({
                 this.adaptItem(item);
             }
         }
+
+
     },
 
     adaptItem: function(node)
@@ -803,6 +806,7 @@ cc.Class({
         var h = (this.dsize.height - s.height)/2;
         var sc = node.y/this.dsize.height;
         node.y = s.height*sc + h;
+
     },
 
     initGameData: function()
@@ -3609,7 +3613,7 @@ cc.Class({
             {
                 if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
                 {
-                    if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
+                    if(cc.sys.myweb)
                     {
                         if(storage.getStorageShortcut()==0)
                         {
@@ -3917,7 +3921,7 @@ cc.Class({
 
     vibrate: function(isLong)
     {
-        if(storage.getStorageVibrate() == 1 && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb))
+        if(storage.getStorageVibrate() == 1 &&  cc.sys.myweb)
         {
             //if(isLong)
             //{
@@ -4007,7 +4011,7 @@ cc.Class({
     //更新
     wxUpdate: function()
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             var updateManager = wx.getUpdateManager();
 
@@ -4236,7 +4240,7 @@ cc.Class({
 
     wxQuanState: function(active)
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             //if(active)
             //    this.quan_button.show();
@@ -4296,7 +4300,7 @@ cc.Class({
     wxUploadScore: function(score,jscore,callback)
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             if(callback && callback == 1)
             {
@@ -4359,7 +4363,7 @@ cc.Class({
     wxUpdateScore: function(score)
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             if(!this.ranking_list)
             {
@@ -4426,7 +4430,7 @@ cc.Class({
 
     wxGropShare: function()
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             FBInstant.shareAsync({
                 intent: 'REQUEST',
@@ -4482,7 +4486,7 @@ cc.Class({
     wxGropShareCard: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
 
             FBInstant.shareAsync({
@@ -4754,7 +4758,7 @@ cc.Class({
     {
         var self = this;
         this.GAME.VIDEOAD_TYPE = type;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             if(!self.preloadedRewardedVideo || !self.preloadedRewardedVideoisload)
             {
@@ -5053,7 +5057,7 @@ cc.Class({
     wxSpot: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS ||  cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
             {

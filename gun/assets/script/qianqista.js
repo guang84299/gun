@@ -76,7 +76,7 @@ module.exports = {
     init: function(appId,gameName,initcallback,showcallback)
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        if(cc.sys.myweb)
         {
             this.gameId = appId + "";
             this.openid = FBInstant.player.getID();
@@ -96,7 +96,7 @@ module.exports = {
         if(this.gameId && this.openid && this.openid.length>0)
         {
             this.state = 1;
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+            if(cc.sys.myweb)
             {
                 var query = FBInstant.getEntryPointData();
                 if(query)

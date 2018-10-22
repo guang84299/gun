@@ -201,6 +201,7 @@ cc.Class({
     jump: function()
     {
         this.main.wxVideoShow(5);
+        this.main.qianqista.event("tiaozhan_jumplv");
     },
 
     startGame: function(level)

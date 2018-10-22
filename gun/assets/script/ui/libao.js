@@ -82,6 +82,7 @@ cc.Class({
         else if(data == "start")
         {
             this.useLiBaoStart();
+            this.main.qianqista.event("libao_success");
         }
         else if(data == "video")
         {
@@ -105,7 +106,7 @@ cc.Class({
         this.main.GAME.currPlayerTmp = this.main.GAME.currPlayer;
         this.main.GAME.currPlayer = 9;
         this.main.GAME.currGunTmp = this.main.GAME.currGun;
-        this.main.GAME.currGun = 14;
+        this.main.GAME.currGun = 15;
         this.main.GAME.useLiBao = true;
 
         this.main.wxQuanState(false);

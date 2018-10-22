@@ -76,6 +76,7 @@ cc.Class({
         else if(data == "vediocoin")
         {
             this.main.wxVideoShow(1);
+            this.main.qianqista.event("nocoin_vedio");
         }
         cc.log(data);
     }

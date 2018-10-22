@@ -504,6 +504,7 @@ module.exports = {
     {
         if(this.state == 1)
         {
+            score = score > 10000000 ? 10000 : score;
             this.sendRequest2("uploadScore",{openid:this.openid,score:score},function(res){
                 console.log("uploadScore:",res);
             });

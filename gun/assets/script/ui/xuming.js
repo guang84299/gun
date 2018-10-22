@@ -82,22 +82,31 @@ cc.Class({
                 picUrl:imageUrl,               //QQ聊天消息图片
                 extendInfo:query,    //QQ聊天消息扩展字段
             };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
+
+            BK.Share.share({
+                qqImgUrl: imageUrl,
+                summary: title,
+                extendInfo: query,
+                success: function(succObj){
+                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+
                     self.res.showToast("续命成功");
                     self.main.fuhuo(false,true,false);
                     self.main.qianqista.share(true);
                     self.hide();
-                }
-                else{
-                    BK.Script.log(1, 1, "分享失败" + retCode);
+                },
+                fail: function(failObj){
+                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+
                     self.main.qianqista.share(false);
                     self.hide();
+                },
+                complete: function(){
+                    BK.Console.log('Waaaah! share complete');
                 }
-
             });
+
+
 
             //var query = "channel=sharexumingmenu";
             //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";

@@ -157,5 +157,6 @@ cc.Class({
         this.main.again();
         this.main.startTiaoZhan();
 
+        this.main.qianqista.event("tiaozhan_start");
     }
 });

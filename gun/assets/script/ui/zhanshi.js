@@ -100,6 +100,7 @@ cc.Class({
         else if(data == "zhanshivedio")
         {
             this.main.wxVideoShow(3);
+            this.main.qianqista.event("zhanshi_vedio");
         }
         cc.log(data);
     },

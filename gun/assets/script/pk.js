@@ -352,6 +352,7 @@ cc.Class({
             {
                 return;
             }
+            this.qianqista.event("pvp_1v1_suiji");
             var coin = storage.getStorageCoin();
             if(coin < 30)
             {
@@ -414,6 +415,7 @@ cc.Class({
             {
                 return;
             }
+            this.qianqista.event("pvp_2v2_suiji");
             this.isFromShare = false;
             if(this.state == "pipei")
             {
@@ -592,6 +594,7 @@ cc.Class({
         {
             return;
         }
+        this.qianqista.event("pvp_yaoqing");
         this.node_sel_mode.active = false;
         if(this.qianqista.pkroomtype == 2)
             this.node_sel.active = true;
@@ -655,17 +658,24 @@ cc.Class({
                 picUrl:imageUrl,               //QQ聊天消息图片
                 extendInfo:query   //QQ聊天消息扩展字段
             };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                if (retCode == 0) {
-                    BK.Script.log(1, 1, "分享成功：" + retCode);
-                }
-                else {
-                    BK.Script.log(1, 1, "分享失败" + retCode);
+
+            BK.Share.share({
+                qqImgUrl: imageUrl,
+                summary: title,
+                extendInfo: query,
+                success: function(succObj){
+                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+
+                },
+                fail: function(failObj){
+                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+
                     self.main.qianqista.share(false);
                     self.res.showToast("分享失败！");
+                },
+                complete: function(){
+                    BK.Console.log('Waaaah! share complete');
                 }
-
             });
 
 
@@ -2981,6 +2991,8 @@ cc.Class({
                     this.node_over2_jifen.string = "";
                 }
             }
+
+            this.qianqista.event("pvp_2v2_num");
         }
         else
         {
@@ -3133,6 +3145,8 @@ cc.Class({
                 }
             }
 
+            this.qianqista.event("pvp_1v1_num");
+
         }
 
 
@@ -3157,6 +3171,8 @@ cc.Class({
         //        this.main.wxUploadScore(0,selfData.jscore);
         //        //wx.postMessage({ message: "updateWinNum",winNum:selfData.jscore,playerId:selfData.skinId,gunId:selfData.gunId });
         //}
+
+        this.qianqista.event("pvp_x2");
     },
 
     winStarNum: function()

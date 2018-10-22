@@ -40,9 +40,25 @@ cc.Class({
         this.node_over_more = cc.find("more",this.node_over);
         this.node_over_more2 = cc.find("more2",this.node_over);
 
-        this.node_over_icon = cc.find("icon",this.node_over);
-        this.node_over_nick = cc.find("nick",this.node_over);
-        this.node_over_no = cc.find("no",this.node_over);
+        this.node_over_bgcoin = cc.find("bg/coin/num",this.node_over);
+        this.node_over_iconme = cc.find("bg/iconme",this.node_over);
+
+        this.node_over_icon = cc.find("bg/icon",this.node_over);
+        this.node_over_nick = cc.find("bg/nick",this.node_over);
+        this.node_over_no = cc.find("bg/no",this.node_over);
+
+        this.node_over_libao = cc.find("libao",this.node_over);
+        this.node_over_libao.active = this.main.node_main_libao.active;
+
+        this.node_over_shouyix2 = cc.find("shouyix2",this.node_over);
+        this.node_over_shouyix2_bg = cc.find("bg",this.node_over_shouyix2);
+        this.node_over_shouyix2_x2 = cc.find("bg/x2",this.node_over_shouyix2);
+        this.node_over_shouyix2_coin = cc.find("bg/shouyix2coin",this.node_over_shouyix2);
+        this.node_over_shouyix2_str = cc.find("bg/str",this.node_over_shouyix2);
+        this.node_over_shouyix2_str_time = this.node_over_shouyix2_str.getComponent("cc.Label");
+        this.node_over_shouyix2.active = this.main.node_main_shouyix2.active;
+        if(this.node_over_shouyix2.active)
+            this.updateShouYi();
 
         this.updateControl();
         // this.updateUI();
@@ -53,17 +69,22 @@ cc.Class({
         if(parseInt(this.main.GAME.score) > storage.getStorageScore())
             storage.setStorageScore(parseInt(this.main.GAME.score));
         storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));
+        if(this.main.GAME.isShouYix2)
+            storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));
         //this.initGmae();
         this.main.node_game_ui.active = false;
         this.main.openover = true;
-        this.node_over_coin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);
+        this.node_over_coin.getComponent("cc.Label").string = storage.getStorageCoin();
+        this.node_over_bgcoin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);
         this.node_over_score.getComponent("cc.Label").string = parseInt(this.main.GAME.score);
-        this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";
+        //this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";
         cc.find("change/sp",this.node_over).color = this.main.ltcolor;
         cc.find("change/txt",this.node_over).color = this.main.ltcolor;
-        cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
-        cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
-        cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
+
+        this.main.loadPic(this.node_over_iconme,this.main.qianqista.avatarUrl);
+        //cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
+        //cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
+        //cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
         this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
         this.wxOverRank(Math.floor(this.main.GAME.score));
 
@@ -76,10 +97,33 @@ cc.Class({
                 storage.setStorageHasZhanShi(-1);
             }
         }
+
+        if(this.main.GAME.useLiBao)
+        {
+            if(storage.getStorageLiBaoNum() == 0)
+            {
+                this.main.GAME.useLiBao = false;
+                this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+                this.main.GAME.currGun = this.main.GAME.currGunTmp;
+                storage.setStorageLiBaoNum(-1);
+                this.main.node_main_libao.active = false;
+            }
+        }
+
         this.main.uploadData();
         this.main.updateDian();
         this.main.wxBannerHide();
         this.main.qianqista.event("ui_jiesuan");
+
+        //结算弹出收益双倍框
+        var boxnum = cc.sys.localStorage.getItem("shouyix2box");
+        boxnum = boxnum ? boxnum : 0;
+        if(boxnum == 0)
+        {
+            cc.sys.localStorage.setItem("shouyix2box",1);
+            this.main.openShouYix2();
+        }
+
     },
 
     wxOverRank: function(score)
@@ -170,10 +214,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.node.destroy();
     },
 
@@ -185,6 +231,13 @@ cc.Class({
             {
                 this.main.GAME.useZhanShi = false;
                 this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+            }
+
+            if(this.main.GAME.useLiBao)
+            {
+                this.main.GAME.useLiBao = false;
+                this.main.GAME.currPlayer = this.main.GAME.currPlayerTmp;
+                this.main.GAME.currGun = this.main.GAME.currGunTmp;
             }
             this.main.goMain();
         }
@@ -228,11 +281,53 @@ cc.Class({
             this.main.wxMore2();
             this.main.qianqista.event("btn_more_over");
         }
-        else if(data == "savepic")
+        else if(data == "libao")
         {
-            this.wxtoTempFilePath();
+            this.main.openLiBao();
         }
+        else if(data == "shouyix2")
+        {
+            this.main.wxVideoShow(10);
+        }
+
         cc.log(data);
+    },
+
+    updateShouYi: function()
+    {
+        this.node_over_shouyix2.active = true;
+        var time = storage.getStorageShouYiDt();
+        if(time > 24*60*60*1000)
+        {
+            this.node_over_shouyix2.getComponent("cc.Button").interactable = true;
+            this.node_over_shouyix2_bg.color = cc.color(255,255,255);
+            this.node_over_shouyix2_x2.color = cc.color(255,255,255);
+            this.node_over_shouyix2_coin.active = true;
+            this.node_over_shouyix2_str.active = false;
+        }
+        else if(time <= 24*60*60*1000 && time >= 2*60*60*1000)
+        {
+            this.node_over_shouyix2.getComponent("cc.Button").interactable = false;
+            this.node_over_shouyix2_bg.color = cc.color(160,160,160);
+            this.node_over_shouyix2_x2.color = cc.color(160,160,160);
+            this.node_over_shouyix2_coin.active = false;
+            this.node_over_shouyix2_str.active = true;
+            this.node_over_shouyix2_str_time.string = "明天再来";
+        }
+        else if(time < 2*60*60*1000 && time >= 0)
+        {
+            this.node_over_shouyix2.getComponent("cc.Button").interactable = false;
+            this.node_over_shouyix2_bg.color = cc.color(160,160,160);
+            this.node_over_shouyix2_x2.color = cc.color(160,160,160);
+            this.node_over_shouyix2_coin.active = false;
+            this.node_over_shouyix2_str.active = true;
+            this.node_over_shouyix2_str_time.string = "2:00:00";
+        }
+    },
+
+    updateShouyix2Time: function(time)
+    {
+        this.node_over_shouyix2_str_time.string = time;
     },
 
     wxGropShareChange: function()

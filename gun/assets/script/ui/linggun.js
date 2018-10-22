@@ -75,10 +75,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.node.destroy();
     },
 
@@ -133,6 +135,7 @@ cc.Class({
         {
             var info = {};
             info.channel = "sharegun";
+            info.fromid = this.main.qianqista.openid;
             var query = JSON.stringify(info);
             var title = "[ QQ 红包 ] 恭喜发财 玩星辉联赛，百元红包等你来领！";
             var imageUrl = "http://www.qiqiup.com/gun.gif";

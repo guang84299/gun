@@ -551,6 +551,10 @@ cc.Class({
         }
         else if(data == "jifenx2")
         {
+            this.state = "stop";
+            websocket.questLeaveRoom(this.qianqista.openid);
+            this.node.stopAllActions();
+
             this.isVedio = true;
             this.main.wxVideoShow(6);
             if(this.node_over.active)
@@ -1270,6 +1274,12 @@ cc.Class({
         {
             if(this.state == "willagain")
                 return;
+
+            if(this.node_over.active)
+                this.node_over_jifenx2.getComponent("cc.Button").interactable = false;
+            else
+                this.node_over2_jifenx2.getComponent("cc.Button").interactable = false;
+
             this.playerData.playerA.hp = 50;
             this.playerData.playerB.hp = 50;
 
@@ -2899,7 +2909,10 @@ cc.Class({
                 {
                     this.node_over2_jifen.string = "";
                 }
-                storage.setStorageCoin(storage.getStorageCoin()+50);
+                var wincoin = 50;
+                if(this.main.GAME.isShouYix2)
+                    wincoin *= 2;
+                storage.setStorageCoin(storage.getStorageCoin()+wincoin);
 
                 this.node.runAction(cc.repeat(cc.sequence(
                     cc.delayTime(0.05),
@@ -3008,7 +3021,11 @@ cc.Class({
                 cc.find("str",this.node_over_jifenx2).active = true;
                 cc.find("suiji",this.node_over_jifenx2).active = true;
                 cc.find("str2",this.node_over_jifenx2).active = false;
-                storage.setStorageCoin(storage.getStorageCoin()+50);
+
+                var wincoin = 50;
+                if(this.main.GAME.isShouYix2)
+                    wincoin *= 2;
+                storage.setStorageCoin(storage.getStorageCoin()+wincoin);
 
                 if(this.isCanJScore())
                 {

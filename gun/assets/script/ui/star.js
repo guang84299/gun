@@ -51,12 +51,16 @@ cc.Class({
         this.node_star_item_me_nike = cc.find("nike",this.node_star_item_me_bg);
         this.node_star_item_me_score = cc.find("score",this.node_star_item_me_bg);
         this.node_star_item_me_award = cc.find("award",this.node_star_item_me_bg);
+        this.node_star_desc = cc.find("desc/desc",this.node_star).getComponent("cc.Label");
 
 
         this.node_star_rank_curr.interactable = false;
-        this.node_star_top_guang.runAction(cc.repeatForever(
-            cc.rotateBy(2,180)
-        ));
+        //this.node_star_top_guang.runAction(cc.repeatForever(
+        //    cc.rotateBy(2,180)
+        //));
+
+        if(this.main.GAME.pvp_gonggao && this.main.GAME.pvp_gonggao.length>2)
+            this.node_star_desc.string = this.main.GAME.pvp_gonggao;
 
         this.ranktype = 1;
         this.rankdata1 = null;

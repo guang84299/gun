@@ -103,6 +103,14 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+        node_libao: {
+            default: null,
+            type: cc.Prefab
+        },
+        node_shouyix2: {
+            default: null,
+            type: cc.Prefab
+        },
         loutis: {
             default: [],
             type: cc.Prefab

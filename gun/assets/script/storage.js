@@ -6,6 +6,7 @@ module.exports = {
     {
         if(this.getStorageMusic() == 1)
         {
+            this.stopMusic();
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             {
                 BK.Audio.switch = true;
@@ -281,6 +282,35 @@ module.exports = {
         return Number(card);
     },
 
+    setStorageUseCard: function(card)
+    {
+        cc.sys.localStorage.setItem("usecard",card);
+    },
+    getStorageUseCard: function()
+    {
+        var card = cc.sys.localStorage.getItem("usecard");
+        card = card ? card : 0;
+        return Number(card);
+    },
+
+    setStorageShouYix2Time: function(time)
+    {
+        cc.sys.localStorage.setItem("sytime",time);
+    },
+    getStorageShouYix2Time: function()
+    {
+        var card = cc.sys.localStorage.getItem("sytime");
+        card = card ? card : 0;
+        return Number(card);
+    },
+
+    getStorageShouYiDt: function()
+    {
+        var now = new Date().getTime();
+        var time = now - this.getStorageShouYix2Time();
+        return Number(time);
+    },
+
     setStorageYindao: function(yindao)
     {
         cc.sys.localStorage.setItem("yindao",yindao);
@@ -537,6 +567,17 @@ module.exports = {
     getStorageHasZhanShi: function()
     {
         var has = cc.sys.localStorage.getItem("HasZhanShi");
+        has = has ? has : 0;
+        return Number(has);
+    },
+
+    setStorageLiBaoNum: function(num)
+    {
+        cc.sys.localStorage.setItem("libaonum",num);
+    },
+    getStorageLiBaoNum: function()
+    {
+        var has = cc.sys.localStorage.getItem("libaonum");
         has = has ? has : 0;
         return Number(has);
     },

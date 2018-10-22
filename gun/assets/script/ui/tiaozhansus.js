@@ -146,7 +146,12 @@ cc.Class({
         if(data == "home")
         {
             if(this.node_tiaozhan_xuanyao.interactable)
+            {
                 storage.setStorageCoin(storage.getStorageCoin()+this.award);
+                if(this.main.GAME.isShouYix2)
+                    storage.setStorageCoin(storage.getStorageCoin()+this.award);
+            }
+
             this.main.goMain();
             if(this.main.opentiaozhan)
                 this.main.openTiaoZhan();
@@ -159,7 +164,11 @@ cc.Class({
         else if(data == "next")
         {
             if(this.node_tiaozhan_xuanyao.interactable)
+            {
                 storage.setStorageCoin(storage.getStorageCoin()+this.award);
+                if(this.main.GAME.isShouYix2)
+                    storage.setStorageCoin(storage.getStorageCoin()+this.award);
+            }
             this.node_tiaozhan_xuanyao.interactable = false;
             this.updateCoin();
 
@@ -195,8 +204,11 @@ cc.Class({
                       if (retCode == 0) {
                           BK.Script.log(1, 1, "分享成功：" + retCode);
                           self.node_tiaozhan_xuanyao.interactable = false;
-                          storage.setStorageCoin(storage.getStorageCoin()+self.award*2);
-                          self.res.showToast("金币+"+self.award*2);
+                          var rt = 1;
+                          if(self.main.GAME.isShouYix2)
+                            rt = 2;
+                          storage.setStorageCoin(storage.getStorageCoin()+self.award*2*rt);
+                          self.res.showToast("金币+"+self.award*2*rt);
                           self.main.qianqista.share(true);
                       }
                       else{
@@ -245,8 +257,11 @@ cc.Class({
               else
               {
                   this.node_tiaozhan_xuanyao.interactable = false;
-                  storage.setStorageCoin(storage.getStorageCoin()+this.award*2);
-                  this.res.showToast("金币+"+this.award*2);
+                  var rt = 1;
+                  if(this.main.GAME.isShouYix2)
+                      rt = 2;
+                  storage.setStorageCoin(storage.getStorageCoin()+this.award*2*rt);
+                  this.res.showToast("金币+"+this.award*2*rt);
                   this.updateCoin();
               }
           }

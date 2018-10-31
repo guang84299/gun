@@ -181,29 +181,21 @@ cc.Class({
                 picUrl:imageUrl,               //QQ聊天消息图片
                 extendInfo:query,    //QQ聊天消息扩展字段
             };
-
-            BK.Share.share({
-                qqImgUrl: imageUrl,
-                summary: title,
-                extendInfo: query,
-                success: function(succObj){
-                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
-
+            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+                BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+                if (retCode == 0) {
+                    BK.Script.log(1, 1, "分享成功：" + retCode);
                     self.res.showToast("分享成功，等待好友上线吧");
 
                     self.main.qianqista.share(true);
-                },
-                fail: function(failObj){
-                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
-
+                }
+                else{
+                    BK.Script.log(1, 1, "分享失败" + retCode);
                     self.main.qianqista.share(false);
                     self.res.showToast("分享失败！");
-                },
-                complete: function(){
-                    BK.Console.log('Waaaah! share complete');
                 }
-            });
 
+            });
 
             //var query = "channel=sharecoinmenu&fromid="+this.main.qianqista.openid;
             //var title = "自从玩了这个游戏，每把吃鸡都能拿98K";

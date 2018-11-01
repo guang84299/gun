@@ -54,8 +54,8 @@ cc.Class({
         var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
 
         var currGun = storage.getStorageCurrGun();
-        if(this.main.openduizhan)
-            currGun = storage.getStorageCurrPkGun();
+        //if(this.main.openduizhan)
+        //    currGun = storage.getStorageCurrPkGun();
 
         if(this.main.GAME.sharecard == 1 && index < 2)
             this.node_roleyaoqing.active = true;
@@ -131,18 +131,18 @@ cc.Class({
                 if(storage.getStorageGun(i) == 1)
                 {
                     box1.color = cc.color(243,180,69);
-                    if(this.main.openduizhan)
-                    {
-                        if(i<=jlv*3)
-                            item.canset = true;
-                        else
-                        {
-                            suo.active = true;
-                            var score = this.res.getJSocreByGunId(i);
-                            cc.find("num",suo).getComponent("cc.Label").string = score +"分解锁";
-                        }
-                    }
-                    else
+                    //if(this.main.openduizhan)
+                    //{
+                    //    if(i<=jlv*3)
+                    //        item.canset = true;
+                    //    else
+                    //    {
+                    //        suo.active = true;
+                    //        var score = this.res.getJSocreByGunId(i);
+                    //        cc.find("num",suo).getComponent("cc.Label").string = score +"分解锁";
+                    //    }
+                    //}
+                    //else
                         item.canset = true;
                 }
                 else
@@ -410,13 +410,17 @@ cc.Class({
     {
         if(this.main.openduizhan)
         {
-            var currGun = storage.getStorageCurrPkGun();
+            var currGun = storage.getStorageCurrGun();//storage.getStorageCurrPkGun();
             if(currGun != id)
             {
                 storage.playSound(this.res.audio_role_huan);
-                storage.setStorageCurrPkGun(id);
+                //storage.setStorageCurrPkGun(id);
+                storage.setStorageCurrGun(id);
+                this.main.GAME.currGun = storage.getStorageCurrGun()-1;
+                this.main.GAME.currGunTmp = this.main.GAME.currGun;
                 this.updateUI();
                 this.main.node_duizhan.updateCurrPkGun();
+                this.main.uploadData();
             }
         }
         else
@@ -458,8 +462,8 @@ cc.Class({
         }
 
         var currGun = storage.getStorageCurrGun();
-        if(this.main.openduizhan)
-            currGun = storage.getStorageCurrPkGun();
+        //if(this.main.openduizhan)
+        //    currGun = storage.getStorageCurrPkGun();
         var jlv = this.res.judgeRobotLv(storage.getStorageMaxJScore());
 
         var box1 = cc.find("box_1",this.node_gun_page3);
@@ -479,14 +483,14 @@ cc.Class({
             if(storage.getStorageGun(10) == 1)
             {
                 box1.color = cc.color(243,180,69);
-                if(this.main.openduizhan)
-                {
-                    if(10<=jlv*3)
-                        this.node_gun_page3.canset = true;
-                    else
-                        box1.color = cc.color(100,100,100);
-                }
-                else
+                //if(this.main.openduizhan)
+                //{
+                //    if(10<=jlv*3)
+                //        this.node_gun_page3.canset = true;
+                //    else
+                //        box1.color = cc.color(100,100,100);
+                //}
+                //else
                 this.node_gun_page3.canset = true;
             }
             else
@@ -510,8 +514,8 @@ cc.Class({
         }
 
         var currGun = storage.getStorageCurrGun();
-        if(this.main.openduizhan)
-            currGun = storage.getStorageCurrPkGun();
+        //if(this.main.openduizhan)
+        //    currGun = storage.getStorageCurrPkGun();
 
         var box1 = cc.find("box_1",this.node_gun_page4);
         var box2 = cc.find("box_2",this.node_gun_page4);

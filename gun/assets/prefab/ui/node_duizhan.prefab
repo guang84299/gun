@@ -6266,7 +6266,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 200
@@ -7127,7 +7127,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 235
@@ -7842,7 +7842,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 260
@@ -12101,7 +12101,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [],
     "_prefab": {
       "__id__": 478
@@ -13528,7 +13528,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 523,
+      "width": 208,
       "height": 26
     },
     "_rotationX": 0,
@@ -13563,7 +13563,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "游戏开始后将扣除门票30金币，好友对战免费",
+    "_N$string": "观看视频随机匹配",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -18791,7 +18791,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [],
     "_prefab": {
       "__id__": 685

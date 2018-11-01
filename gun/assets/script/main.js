@@ -228,6 +228,7 @@ cc.Class({
         this.node_game_ui.tiaozhanitem5 =  cc.find("tiaozhan/item5",this.node_game_ui);
         this.node_game_ui.tiaozhanitem6 =  cc.find("tiaozhan/item6",this.node_game_ui);
         this.node_game_ui.tiaozhanitem7 =  cc.find("tiaozhan/item7",this.node_game_ui);
+        this.node_game_ui.nodefangdanyi =  cc.find("node_fangdanyi",this.node_game_ui);
 
 
         this.node_main = cc.find("Canvas/node_main");
@@ -332,7 +333,7 @@ cc.Class({
                 {
                     if(con.value == "1")
                     {
-                        cc.find("fangdanyi",this.node_main).active = true;
+                        //cc.find("fangdanyi",this.node_main).active = true;
                         cc.find("bottom/lingjiang",this.node_main).active = true;
                         cc.find("linggunbg",this.node_main).active = true;
                         this.GAME.fangdanyi = true;
@@ -717,6 +718,7 @@ cc.Class({
             storage.setStorageCard(cardnum);
 
             this.updateShouyix2();
+
         }
         else
         {
@@ -912,6 +914,12 @@ cc.Class({
         this.GAME.playerfangdanyi = true;
         this.GAME.playerfuhuovideo = true;//看视频
         this.GAME.yindao = storage.getStorageYindao();
+
+        this.baoxiangAim = 0;//宝箱瞄准线，只对本关有效
+        this.baoxiangFangDanyi = 0;
+        this.baoxiangFangDanyiUseNum = 0;
+        this.baoxiangGun = 0;
+        this.choujiangbossnum = 1;
     },
 
     initGmae: function()
@@ -947,12 +955,15 @@ cc.Class({
         this.ltcolor = this.res.bgcolor[Math.floor(Math.random()*this.res.bgcolor.length)];
         this.currLoutis = [];
         this.GAME.state = "stop";
-        this.GAME.enemy_num = 3 + Math.floor(Math.random() * 3 + 1);
+        this.GAME.enemy_num = 4 + Math.floor(Math.random() * 3 + 1);
         this.GAME.killhead = 0;
         this.node_game.destroyAllChildren();
         this.node_game.y = -792;
         this.node_game_ui.boss.active = false;
         this.node_game_ui.killhead.active = false;
+
+        this.baoxiangAim = 0;//宝箱瞄准线，只对本关有效
+        this.choujiangbossnum += 1;
 
         this.initLouTis();
         this.initPlayer();
@@ -1099,7 +1110,8 @@ cc.Class({
         }
         else if(data == "duizhan")
         {
-            this.openStar();
+            //this.openStar();
+            this.openDuizhan();
         }
         else if(data == "tiaozhan")
         {
@@ -1125,6 +1137,12 @@ cc.Class({
         {
             this.wxVideoShow(10);
         }
+        else if(data == "buluo")
+        {
+            this.wxBuluo();
+        }
+
+
         cc.log(data);
     },
 
@@ -1225,6 +1243,22 @@ cc.Class({
         }
 
         qianqista.event("shouyix2");
+    },
+
+    openChouJiang: function()
+    {
+        var choujiang = cc.instantiate(this.res.node_choujiang);
+        this.node.addChild(choujiang);
+        this.node_choujiang = choujiang.getComponent("choujiang");
+        this.node_choujiang.show();
+    },
+
+    openBaoXiang: function(type,gunId)
+    {
+        var baoxiang = cc.instantiate(this.res.node_baoxiang);
+        this.node.addChild(baoxiang);
+        this.node_baoxiang = baoxiang.getComponent("baoxiang");
+        this.node_baoxiang.show(type,gunId);
     },
 
     openLiBao: function()
@@ -2080,6 +2114,8 @@ cc.Class({
                 this.node_game.addChild(louti,this.ltzorder);
                 this.currLoutis.push(louti);
 
+                louti.index = this.currLoutis.length;
+
                 //添加物品
                 var r = Math.random();
                 if(r>0.6)
@@ -2111,6 +2147,20 @@ cc.Class({
 
             this.loutis.splice(0,index+1);
         }
+
+        //随机宝箱
+        var num = Math.floor(Math.random()*2+1);
+        this.baoxiangs = [];
+        this.baoxiangsps = [];
+        if(num==1)
+        {
+            this.baoxiangs[0] = Math.floor(Math.random()*5+3);
+        }
+        else
+        {
+            this.baoxiangs[0] = Math.floor(Math.random()*2+2);
+            this.baoxiangs[1] = Math.floor(Math.random()*3+5);
+        }
     },
     addLouTis: function()
     {
@@ -2141,6 +2191,8 @@ cc.Class({
             b.color = this.ltcolor;
             this.node_game.addChild(louti,this.ltzorder);
             this.currLoutis.push(louti);
+
+            louti.index = this.currLoutis.length;
 
             //添加物品
             var r = Math.random();
@@ -2260,6 +2312,112 @@ cc.Class({
 
             this.player.gun.runAction(ac);
         }
+
+        if(this.baoxiangsps && this.baoxiangsps.length>0)
+        {
+            this.baoxiangsps[0].destroy();
+            this.baoxiangsps.splice(0,1);
+
+            var type = "";
+            var gunId = 0;
+            var r = Math.random();
+            if(r<0.4)
+                type = "coin";
+            else if(r<0.6)
+            {
+                type = "card";
+            }
+            else if(r<0.85)
+            {
+                type = "aim";
+            }
+            else {
+                type = "gun";
+                var ids = [5,6,7,11,13,15,17,18];
+                gunId = ids[Math.floor(Math.random()*ids.length)];
+                this.baoxiangGun = gunId;
+            }
+
+            this.openBaoXiang(type,gunId);
+        }
+    },
+
+    updateBaoXiangCoin: function()
+    {
+        var coin = storage.getStorageCoin();
+        coin = parseInt(coin) + 120;
+        storage.setStorageCoin(coin);
+        this.node_main_coin.getComponent("cc.Label").string = coin+"";
+        this.uploadData();
+
+        this.res.showToast("金币+120");
+    },
+
+    updateBaoXiangAim: function()
+    {
+        this.baoxiangAim = 1;//宝箱瞄准线，只对本关有效
+        var gunConf = this.res.gunsconfig[this.GAME.currGun];
+        var playerConf = this.res.playersconfig[this.GAME.currPlayer];
+        this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/4*(1+this.baoxiangAim)+0.1;
+
+        this.res.showToast("获取成功");
+    },
+
+    updateBaoXiangFangDanyi: function()
+    {
+        this.baoxiangFangDanyi += 1;
+        if(this.baoxiangFangDanyi>0 ) //&& this.baoxiangFangDanyiUseNum < 3
+            this.player.fangdanyi.active = true;
+
+        if(this.baoxiangFangDanyi <= 3)
+            this.res.showToast("获取成功");
+        else
+        {
+            this.baoxiangFangDanyi = 3;
+            this.res.showToast("防弹衣最多携带3个");
+        }
+
+       this.updateBaoXiangFangDanyiNum();
+    },
+
+    updateBaoXiangFangDanyiNum: function()
+    {
+        var fs = this.node_game_ui.nodefangdanyi.children;
+        for(var i=0;i<fs.length;i++)
+        {
+            if(this.baoxiangFangDanyi>i)
+                fs[i].color = cc.color(255,255,255);
+            else
+                fs[i].color = cc.color(80,80,80);
+        }
+    },
+
+    updateBaoXiangGun: function()
+    {
+        if(this.baoxiangGun>0)
+        {
+            this.GAME.currGun = this.baoxiangGun-1;
+            var gunConf = this.res.gunsconfig[this.GAME.currGun];
+            var playerConf = this.res.playersconfig[this.GAME.currPlayer];
+
+            this.player.gun.destroy();
+
+            this.player.gun = cc.instantiate(this.res.guns[this.GAME.currGun]);
+            this.player.gun.y = this.player.height*0.3 + gunConf.y;
+            this.player.addChild(this.player.gun,1);
+
+            this.player.gun_fire = cc.instantiate(this.res.gun_fire);
+            this.player.gun_fire.y = gunConf.y;
+            this.player.gun_fire.x = this.player.gun.width*(1-this.player.gun.anchorX);
+            this.player.gun_fire.active = false;
+            this.player.gun.addChild(this.player.gun_fire,0);
+
+            this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/4*(1+this.baoxiangAim)+0.1;
+
+            this.rotateGun();
+
+            this.res.showToast("获取成功");
+        }
     },
 
     updateLouTiOpa: function(dt)
@@ -2301,11 +2459,13 @@ cc.Class({
         this.player.fangdanyi = cc.instantiate(this.res.fangdanyi);
         this.player.addChild(this.player.fangdanyi,1);
         this.player.fangdanyi.active = false;
-        var cardnum = storage.getStorageCard();
-        if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi && !this.opentiaozhan)
-        {
+        //var cardnum = storage.getStorageCard();
+        //if(this.GAME.fangdanyi && cardnum>0 && this.GAME.playerfangdanyi && !this.opentiaozhan)
+        //{
+        //    this.player.fangdanyi.active = true;
+        //}
+        if(this.baoxiangFangDanyi>0 )//&& this.baoxiangFangDanyiUseNum < 3
             this.player.fangdanyi.active = true;
-        }
 
         var playerConf = this.res.playersconfig[this.GAME.currPlayer];
         var gunConf = this.res.gunsconfig[this.GAME.currGun];
@@ -2320,7 +2480,7 @@ cc.Class({
         this.player.aim.y = this.player.gun.y;
         this.player.aim.active = false;
         this.player.aim.line = cc.find("line",this.player.aim);
-        this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/2;
+        this.player.aim.scale = (gunConf.aimLen+playerConf.aimLen)/4+0.1;
         this.player.addChild(this.player.aim,0);
 
         this.player.aim.line.rotation = 0;
@@ -2631,6 +2791,7 @@ cc.Class({
         }
         if(louti)
         {
+            this.enemy.index = louti.index;
             var data = louti.data;
             var acs = [];
             var ti = cc.find("ti" + data[1], louti);
@@ -3681,6 +3842,27 @@ cc.Class({
             //var enemy = this.copyEnemy();
             //enemy.runAction(ac);
 
+            //掉落宝箱
+            if(this.baoxiangs.length>0 && this.baoxiangs[0] == this.enemy.index)
+            {
+                var baoxiang = cc.instantiate(this.res.baoxiang);
+                var ti = cc.find("ti" + this.enemy.louti.data[1], this.enemy.louti);
+                if(this.enemy.louti.data[0] == 1)//left
+                {
+                    baoxiang.x = (ti.x+ti.width/2)/2;
+                }
+                else
+                {
+                    baoxiang.x = (ti.x-ti.width/2) + (ti.width-(ti.x-ti.width/2))/2;
+                }
+                baoxiang.y = this.enemy.y;
+                this.node_game.addChild(baoxiang,1000000);
+
+                this.baoxiangs.splice(0,1);
+                this.baoxiangsps.push(baoxiang);
+            }
+
+
             this.enemy.die = true;
             this.enemy.runAction(ac);
 
@@ -3757,7 +3939,13 @@ cc.Class({
 
         if(this.player.fangdanyi.active)
         {
-            this.player.fangdanyi.active = false;
+            this.baoxiangFangDanyi -= 1;
+            this.baoxiangFangDanyiUseNum += 1;
+            if(this.baoxiangFangDanyi>0 )//&& this.baoxiangFangDanyiUseNum<3
+                this.player.fangdanyi.active = true;
+            else
+                this.player.fangdanyi.active = false;
+            this.updateBaoXiangFangDanyiNum();
             var ac = cc.sequence(
                 cc.spawn(
                     cc.jumpTo(0.8,pos,cc.winSize.width/2,1),
@@ -3796,7 +3984,10 @@ cc.Class({
         {
             if(Math.floor(this.GAME.score) > storage.getStorageScore())
                 storage.setStorageScore(Math.floor(this.GAME.score));
+            if(this.choujiangbossnum%3 == 0)
+                this.openChouJiang();
             this.nextLevel();
+            this.wxUpdateScore2(1);
         }
         else
         {
@@ -4036,7 +4227,6 @@ cc.Class({
                     if(!this.opentiaozhan)
                     {
                         this.wxUpdateScore(Math.floor(this.GAME.score));
-                        //this.wxUpdateScore2(Math.floor(this.GAME.score));
                     }
 
                 }
@@ -4637,28 +4827,30 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(score > storage.getStorageUpScore())
-            {
-                storage.setStorageUpScore(score);
-
-                var gameResultData = {
-                    "infoList": [              //通用数据上报列表
-                        {
-                            "type": 8,         //必选。数据类型。
-                            "op": 2,           //必选。运营类型。1表示增量，2表示存量。
-                            "num": score,          //必选。数目。不超过32位有符号数。
-                            "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
-                        }
-                    ]
-                };
-                BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
-                    if (errCode !== 0) {
-                        //上报运营结果失败
-                    }else{
-                        //上报运营结果成功
+            var gameResultData = {
+                "infoList": [              //通用数据上报列表
+                    {
+                        "type": 28,         //必选。数据类型。
+                        "op": 1,           //必选。运营类型。1表示增量，2表示存量。
+                        "num": score,          //必选。数目。不超过32位有符号数。
+                        "extId": 1         //可选。扩展Id。用于特殊数据的上报，如果要填，不能是0。1：分 2：邀请
                     }
-                });
-            }
+                ]
+            };
+            BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
+                if (errCode !== 0) {
+                    //上报运营结果失败
+                }else{
+                    //上报运营结果成功
+                }
+            });
+
+            //if(score > storage.getStorageUpScore())
+            //{
+            //    storage.setStorageUpScore(score);
+            //
+            //
+            //}
         }
     },
 
@@ -4905,7 +5097,7 @@ cc.Class({
                         self.node_main_lingqu_time.active = true;
                         self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                        storage.setStorageVideoTime(30);
+                        storage.setStorageVideoTime(1);
 
                         if(cc.isValid(self.node_coin))
                             self.node_coin.updateUI();
@@ -5021,7 +5213,7 @@ cc.Class({
 
         }
     },
-    wxVideoShow: function(type)
+    wxVideoShow: function(type,callback)
     {
         var self = this;
         storage.stopMusic();
@@ -5054,7 +5246,7 @@ cc.Class({
                                 self.node_main_lingqu_time.active = true;
                                 self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                                storage.setStorageVideoTime(30);
+                                storage.setStorageVideoTime(1);
 
                                 if(cc.isValid(self.node_coin))
                                     self.node_coin.updateUI();
@@ -5115,6 +5307,21 @@ cc.Class({
                             {
                                 self.shouyix2();
                             }
+                            else if(self.GAME.VIDEOAD_TYPE == 11)
+                            {
+                                if(callback)
+                                    callback(true);
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 12)
+                            {
+                                if(callback)
+                                    callback(true);
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 13)
+                            {
+                                if(callback)
+                                    callback(true);
+                            }
                         }
                         else
                         {
@@ -5130,10 +5337,27 @@ cc.Class({
                             {
                                 self.res.showToast("体验失败");
                             }
+                            else if(self.GAME.VIDEOAD_TYPE == 11)
+                            {
+                                if(callback)
+                                    callback(false);
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 12)
+                            {
+                                if(callback)
+                                    callback(false);
+                            }
+                            else if(self.GAME.VIDEOAD_TYPE == 13)
+                            {
+                                if(callback)
+                                    callback(false);
+                            }
                             else
                             {
                                 self.res.showToast("获取失败");
                             }
+
+
                         }
                         storage.playMusic(self.res.audio_bgm);
                         BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
@@ -5180,7 +5404,7 @@ cc.Class({
                 this.node_main_lingqu_time.active = true;
                 this.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-                storage.setStorageVideoTime(30);
+                storage.setStorageVideoTime(1);
                 if(cc.isValid(self.node_coin))
                     self.node_coin.updateUI();
             }
@@ -5236,6 +5460,21 @@ cc.Class({
             else if(type == 10)
             {
                 self.shouyix2();
+            }
+            else if(type == 11)
+            {
+                if(callback)
+                    callback(true);
+            }
+            else if(type == 12)
+            {
+                if(callback)
+                    callback(true);
+            }
+            else if(type == 13)
+            {
+                if(callback)
+                    callback(true);
             }
             //storage.resumeMusic();
             storage.playMusic(self.res.audio_bgm);
@@ -5438,6 +5677,15 @@ cc.Class({
             //         return;
             //     }
             //});
+        }
+    },
+
+    wxBuluo: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var buluo = "https://buluo.qq.com/mobile/barindex.html?_bid=128&_wv=1027&bid=408719"
+            BK.MQQ.Webview.open(buluo);
         }
     }
 

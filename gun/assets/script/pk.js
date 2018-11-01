@@ -18,7 +18,7 @@ cc.Class({
         this.res = cc.find("Canvas").getComponent("res");
 
         this.qianqista = this.main.qianqista;
-        this.currPkGun = storage.getStorageCurrPkGun()-1;
+        this.currPkGun = storage.getStorageCurrGun()-1;//storage.getStorageCurrPkGun()-1;
         this.publish = storage.getStoragePublish();
 
         var manager = cc.director.getCollisionManager();
@@ -271,7 +271,7 @@ cc.Class({
 
     updateCurrPkGun: function()
     {
-        this.currPkGun = storage.getStorageCurrPkGun()-1;
+        this.currPkGun = storage.getStorageCurrGun();//storage.getStorageCurrPkGun()-1;
     },
 
     showGunUI: function(active)
@@ -353,25 +353,36 @@ cc.Class({
                 return;
             }
             this.qianqista.event("pvp_1v1_suiji");
-            var coin = storage.getStorageCoin();
-            if(coin < 30)
-            {
-                //this.res.showToast("金币不足");
-                var coin = cc.instantiate(this.res.node_coin);
-                coin.position = cc.v2(0,0);
-                this.node.addChild(coin);
-                this.node_coin = coin.getComponent("coin");
-                this.node_coin.show();
-                return;
-            }
+
+            var self = this;
+
+            //var coin = storage.getStorageCoin();
+            //if(coin < 30)
+            //{
+            //    //this.res.showToast("金币不足");
+            //    var coin = cc.instantiate(this.res.node_coin);
+            //    coin.position = cc.v2(0,0);
+            //    this.node.addChild(coin);
+            //    this.node_coin = coin.getComponent("coin");
+            //    this.node_coin.show();
+            //    return;
+            //}
             if(websocket.state == 1)
             {
-                websocket.match(1,this.main.GAME.currPlayer,this.currPkGun,0);
+                this.main.wxVideoShow(11,function(res){
+                    if(res)
+                    {
+                        websocket.match(1,self.main.GAME.currPlayer,self.currPkGun,0);
+                    }
+                    else
+                    {
+                        self.res.showToast("进入房间失败！");
+                    }
+                });
             }
             else
             {
                 this.res.showToast("服务器登录失败！重新登录中...");
-                var self = this;
                 websocket.close();
                 websocket.init(this,function(){
                     websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
@@ -400,14 +411,29 @@ cc.Class({
         }
         else if(data == "sel_fanhui")
         {
-            if(this.state == "willstart" || this.state == "pipei")
+            this.main.wxBannerHide();
+            this.isSuiJiMatch = false;
+            if(this.state == "willagain")
             {
                 this.state = "stop";
                 websocket.questLeaveRoom(this.qianqista.openid);
                 this.node.stopAllActions();
             }
-            this.node_sel.active = false;
-            this.node_sel_mode.active = true;
+
+            this.node.stopAllActions();
+            this.main.wxQuanState(true);
+            websocket.close();
+            this.main.goMain();
+            this.hide();
+
+            //if(this.state == "willstart" || this.state == "pipei")
+            //{
+            //    this.state = "stop";
+            //    websocket.questLeaveRoom(this.qianqista.openid);
+            //    this.node.stopAllActions();
+            //}
+            //this.node_sel.active = false;
+            //this.node_sel_mode.active = true;
         }
         else if(data == "suiji2")
         {
@@ -522,20 +548,20 @@ cc.Class({
             {
                 return;
             }
-            if(this.playerData && this.playerData.roomType == 1)
-            {
-                var coin = storage.getStorageCoin();
-                if(coin < 30)
-                {
-                    //this.res.showToast("金币不足");
-                    var coin = cc.instantiate(this.res.node_coin);
-                    coin.position = cc.v2(0,0);
-                    this.node.addChild(coin);
-                    this.node_coin = coin.getComponent("coin");
-                    this.node_coin.show();
-                    return;
-                }
-            }
+            //if(this.playerData && this.playerData.roomType == 1)
+            //{
+            //    var coin = storage.getStorageCoin();
+            //    if(coin < 30)
+            //    {
+            //        //this.res.showToast("金币不足");
+            //        var coin = cc.instantiate(this.res.node_coin);
+            //        coin.position = cc.v2(0,0);
+            //        this.node.addChild(coin);
+            //        this.node_coin = coin.getComponent("coin");
+            //        this.node_coin.show();
+            //        return;
+            //    }
+            //}
 
 
             this.again();
@@ -569,21 +595,21 @@ cc.Class({
 
     judgeJiesuan: function()
     {
-        if(this.subTime > -2*60*1000 && this.subTime < 5*60*1000)
-        {
-            var t = 1;
-            if(this.subTime>=0)
-                t = Math.floor(this.subTime/60/1000)+2;
-            else
-                t = Math.floor((this.subTime + 2*60*1000)/60/1000);
-            if(t<=0)
-                t = 1;
-            this.res.showToast("奖励结算中，请稍等"+t+"分钟.");
-
-            websocket.close();
-
-            return true;
-        }
+        //if(this.subTime > -2*60*1000 && this.subTime < 5*60*1000)
+        //{
+        //    var t = 1;
+        //    if(this.subTime>=0)
+        //        t = Math.floor(this.subTime/60/1000)+2;
+        //    else
+        //        t = Math.floor((this.subTime + 2*60*1000)/60/1000);
+        //    if(t<=0)
+        //        t = 1;
+        //    this.res.showToast("奖励结算中，请稍等"+t+"分钟.");
+        //
+        //    websocket.close();
+        //
+        //    return true;
+        //}
 
         return false;
     },
@@ -950,8 +976,8 @@ cc.Class({
                     })
                 ),3));
 
-                storage.setStorageCoin(storage.getStorageCoin()-30);
-                this.getCoin(-30);
+                //storage.setStorageCoin(storage.getStorageCoin()-30);
+                //this.getCoin(-30);
             }
         }
         else if(data.roomType == 2)
@@ -3010,12 +3036,18 @@ cc.Class({
         else
         {
             this.node_over.active = true;
-            this.node_over_jifenx2.active = true;
+            //this.node_over_jifenx2.active = true;
+            this.node_over_jifenx2.active = false;
             this.node_over_fanhui.getComponent("cc.Button").interactable = true;
             this.node_over_again.getComponent("cc.Button").interactable = true;
             this.node_over_jifenx2.getComponent("cc.Button").interactable = true;
             this.node_over_home.getComponent("cc.Button").interactable = true;
             this.node_over_home.color = cc.color(255,255,255);
+
+            if(this.playerData.roomType == 1)
+                this.node_over_again.active = false;
+            else
+                this.node_over_again.active = true;
 
 
             var enemyPlayer = this.findEnemyPlayerData();
@@ -3137,26 +3169,26 @@ cc.Class({
                 }
             }
 
-            var coin = storage.getStorageCoin();
-            if(enemyPlayer.robot == 1 && coin >= 30 && !this.judgeJiesuan())
-            {
-                if(Math.random()<=0.4)
-                {
-                    this.node.runAction(cc.sequence(
-                        cc.delayTime(2),
-                        cc.callFunc(function(){
-                            websocket.again(0);
-                        })
-                    ));
-                }
-                else
-                {
-                    if(Math.random()<=0.4)
-                        enemyPlayer.againNum = 1;
-                    else
-                        enemyPlayer.againNum = 0;
-                }
-            }
+            //var coin = storage.getStorageCoin();
+            //if(enemyPlayer.robot == 1 && coin >= 30 && !this.judgeJiesuan())
+            //{
+            //    if(Math.random()<=0.4)
+            //    {
+            //        this.node.runAction(cc.sequence(
+            //            cc.delayTime(2),
+            //            cc.callFunc(function(){
+            //                websocket.again(0);
+            //            })
+            //        ));
+            //    }
+            //    else
+            //    {
+            //        if(Math.random()<=0.4)
+            //            enemyPlayer.againNum = 1;
+            //        else
+            //            enemyPlayer.againNum = 0;
+            //    }
+            //}
 
             this.qianqista.event("pvp_1v1_num");
 

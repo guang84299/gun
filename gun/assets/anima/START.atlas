@@ -1,0 +1,62 @@
+
+START.png
+size: 511,113
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+开始/图层_2
+  rotate: false
+  xy: 1, 1
+  size: 340, 104
+  orig: 340, 104
+  offset: 0, 0
+  index: -1
+开始/图层_3
+  rotate: false
+  xy: 343, 1
+  size: 162, 48
+  orig: 162, 48
+  offset: 0, 0
+  index: -1
+开始/图层_4
+  rotate: false
+  xy: 493, 73
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+开始/图层_4_拷贝
+  rotate: false
+  xy: 493, 51
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+开始/图层_4_拷贝_2
+  rotate: false
+  xy: 343, 91
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+开始/图层_5
+  rotate: false
+  xy: 393, 51
+  size: 48, 38
+  orig: 48, 38
+  offset: 0, 0
+  index: -1
+开始/图层_5_拷贝
+  rotate: false
+  xy: 343, 51
+  size: 48, 38
+  orig: 48, 38
+  offset: 0, 0
+  index: -1
+开始/图层_5_拷贝_2
+  rotate: false
+  xy: 443, 51
+  size: 48, 38
+  orig: 48, 38
+  offset: 0, 0
+  index: -1

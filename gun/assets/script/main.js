@@ -45,11 +45,11 @@ cc.Class({
          //this.wxOpenQuan();
 
          storage.playMusic(this.res.audio_bgm);
-         storage.preloadSound();
+         //storage.preloadSound();
          //this.wxVideoLoad();
 
          var self = this;
-
+         this.bannerAd = null;
 
          if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
              BK.Script.logToConsole = 1;
@@ -65,8 +65,6 @@ cc.Class({
     initNet: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            BK.Script.log(1,1,'---------qianqista.init：');
         qianqista.init("101486189","西部神枪手",function(){
             qianqista.datas(function(res){
                 console.log('my datas:', res);
@@ -98,7 +96,15 @@ cc.Class({
             }
         });
 
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            BK.Script.log(1,1,'---------qianqista.init：');
+            BK.onEnterForeground(function(){
+                BK.Script.log(1,1,"---onEnterForeground----");
 
+                storage.playMusic(self.res.audio_bgm);
+            });
+        }
     },
 
     initPhysics: function()
@@ -4838,11 +4844,15 @@ cc.Class({
                 ]
             };
             BK.QQ.reportGameResult(gameResultData, function(errCode, cmd, data) {
+                var datas = JSON.stringify(data);
                 if (errCode !== 0) {
                     //上报运营结果失败
+                    BK.Script.log(1,1,"---reportGameResult fial----"+datas);
                 }else{
                     //上报运营结果成功
+                    BK.Script.log(1,1,"---reportGameResult succes----"+datas);
                 }
+
             });
 
             //if(score > storage.getStorageUpScore())
@@ -4868,36 +4878,36 @@ cc.Class({
                 picUrl:imageUrl,               //QQ聊天消息图片
                 extendInfo:query   //QQ聊天消息扩展字段
             };
-            BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-                    BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-                    if (retCode == 0) {
-                        BK.Script.log(1, 1, "分享成功：" + retCode);
-                        qianqista.share(true);
-                    }
-                    else {
-                        BK.Script.log(1, 1, "分享失败" + retCode);
-                        qianqista.share(false);
-                    }
-            });
-
-            //BK.Share.share({
-            //    qqImgUrl: imageUrl,
-            //    summary: title,
-            //    extendInfo: query,
-            //    success: function(succObj){
-            //        BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
-            //
-            //        qianqista.share(true);
-            //    },
-            //    fail: function(failObj){
-            //        BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
-            //
-            //        qianqista.share(false);
-            //    },
-            //    complete: function(){
-            //        BK.Console.log('Waaaah! share complete');
-            //    }
+            //BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
+            //        BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
+            //        if (retCode == 0) {
+            //            BK.Script.log(1, 1, "分享成功：" + retCode);
+            //            qianqista.share(true);
+            //        }
+            //        else {
+            //            BK.Script.log(1, 1, "分享失败" + retCode);
+            //            qianqista.share(false);
+            //        }
             //});
+
+            BK.Share.share({
+                qqImgUrl: imageUrl,
+                summary: title,
+                extendInfo: query,
+                success: function(succObj){
+                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+
+                    qianqista.share(true);
+                },
+                fail: function(failObj){
+                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+
+                    qianqista.share(false);
+                },
+                complete: function(){
+                    BK.Console.log('Waaaah! share complete');
+                }
+            });
 
 
             //
@@ -5220,159 +5230,316 @@ cc.Class({
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
-                if (retCode == 0) {
+            var videoAd = BK.Advertisement.createVideoAd();
+            videoAd.onLoad(function () {
+                //加载成功
+                BK.Script.log(1,1,"onLoad")
+            });
 
-                    handle.setEventCallack(function (code, msg) {
-                        BK.Script.log(1, 1, "closeGame"); //关闭游戏
+            videoAd.onPlayStart(function () {
+                //开始播放
+                videoAd.jiangli = false;
+                BK.Script.log(1,1,"onPlayStart")
+            });
 
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //视频结束
-                        handle.jiangli = true;
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        if(handle.jiangli)
+            videoAd.onPlayFinish(function () {
+                //播放结束
+                videoAd.jiangli = true;
+                BK.Script.log(1,1,"onPlayFinish")
+            });
+
+            videoAd.onError(function (err) {
+                //加载失败
+                BK.Script.log(1,1,"onError code:"+err.code+" msg:"+err.msg);
+            });
+
+            videoAd.onClose(function (err) {
+                if(videoAd.jiangli)
+                {
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        var coin = storage.getStorageCoin();
+                        coin = parseInt(coin) + 100;
+                        storage.setStorageCoin(coin);
+                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                        self.uploadData();
+
+                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                        self.node_main_lingqu_time.active = true;
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+
+                        storage.setStorageVideoTime(1);
+
+                        if(cc.isValid(self.node_coin))
+                            self.node_coin.updateUI();
+
+                        self.res.showToast("金币+100");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.fuhuo(false,false,true);
+                        self.res.showToast("复活成功");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        storage.setStorageHasZhanShi(1);
+                        if(cc.isValid(self.node_zhanshi))
+                            self.node_zhanshi.updateUI();
+                        else if(cc.isValid(self.node_tryzhanshi))
+                            self.node_tryzhanshi.useZhanshiStart();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    {
+                        self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                        var fr = 1;
+                        if(self.GAME.isShouYix2)
+                            fr = 2;
+                        storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2*fr);
+                        self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2*fr);
+                        self.node_tiaozhan_sus.updateCoin();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.node_tiaozhan_fail.updateJumpNum();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 6)
+                    {
+                        if(self.openduizhan)
                         {
-                            if(self.GAME.VIDEOAD_TYPE == 1)
-                            {
-                                var coin = storage.getStorageCoin();
-                                coin = parseInt(coin) + 100;
-                                storage.setStorageCoin(coin);
-                                self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                                self.uploadData();
-
-                                self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                                self.node_main_lingqu_time.active = true;
-                                self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
-
-                                storage.setStorageVideoTime(1);
-
-                                if(cc.isValid(self.node_coin))
-                                    self.node_coin.updateUI();
-
-                                self.res.showToast("金币+100");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 2)
-                            {
-                                self.fuhuo(false,false,true);
-                                self.res.showToast("复活成功");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 3)
-                            {
-                                storage.setStorageHasZhanShi(1);
-                                if(cc.isValid(self.node_zhanshi))
-                                    self.node_zhanshi.updateUI();
-                                else if(cc.isValid(self.node_tryzhanshi))
-                                    self.node_tryzhanshi.useZhanshiStart();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 4)
-                            {
-                                self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
-                                var fr = 1;
-                                if(self.GAME.isShouYix2)
-                                    fr = 2;
-                                storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2*fr);
-                                self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2*fr);
-                                self.node_tiaozhan_sus.updateCoin();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 5)
-                            {
-                                self.node_tiaozhan_fail.updateJumpNum();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 6)
-                            {
-                                if(self.openduizhan)
-                                {
-                                    self.node_duizhan.jifenx2();
-                                }
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 7)
-                            {
-                                if(cc.isValid(self.node_qiandao))
-                                    self.node_qiandao.vedioRiqi();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 8)
-                            {
-                                if(cc.isValid(self.node_coinx2))
-                                    self.node_coinx2.lingquSuc();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 9)
-                            {
-                                storage.setStorageLiBaoNum(3);
-                                if(cc.isValid(self.node_libao))
-                                    self.node_libao.updateUI();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 10)
-                            {
-                                self.shouyix2();
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 11)
-                            {
-                                if(callback)
-                                    callback(true);
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 12)
-                            {
-                                if(callback)
-                                    callback(true);
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 13)
-                            {
-                                if(callback)
-                                    callback(true);
-                            }
+                            self.node_duizhan.jifenx2();
                         }
-                        else
-                        {
-                            if(self.GAME.VIDEOAD_TYPE == 1)
-                            {
-                                self.res.showToast("金币获取失败");
-                            }
-                            if(self.GAME.VIDEOAD_TYPE == 2)
-                            {
-                                self.res.showToast("复活失败");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 3)
-                            {
-                                self.res.showToast("体验失败");
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 11)
-                            {
-                                if(callback)
-                                    callback(false);
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 12)
-                            {
-                                if(callback)
-                                    callback(false);
-                            }
-                            else if(self.GAME.VIDEOAD_TYPE == 13)
-                            {
-                                if(callback)
-                                    callback(false);
-                            }
-                            else
-                            {
-                                self.res.showToast("获取失败");
-                            }
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 7)
+                    {
+                        if(cc.isValid(self.node_qiandao))
+                            self.node_qiandao.vedioRiqi();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 8)
+                    {
+                        if(cc.isValid(self.node_coinx2))
+                            self.node_coinx2.lingquSuc();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 9)
+                    {
+                        storage.setStorageLiBaoNum(3);
+                        if(cc.isValid(self.node_libao))
+                            self.node_libao.updateUI();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 10)
+                    {
+                        self.shouyix2();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 11)
+                    {
+                        if(callback)
+                            callback(true);
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 12)
+                    {
+                        if(callback)
+                            callback(true);
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 13)
+                    {
+                        if(callback)
+                            callback(true);
+                    }
+                }
+                else
+                {
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        self.res.showToast("金币获取失败");
+                    }
+                    if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.res.showToast("复活失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        self.res.showToast("体验失败");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 11)
+                    {
+                        if(callback)
+                            callback(false);
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 12)
+                    {
+                        if(callback)
+                            callback(false);
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 13)
+                    {
+                        if(callback)
+                            callback(false);
+                    }
+                    else
+                    {
+                        self.res.showToast("获取失败");
+                    }
 
 
-                        }
-                        storage.playMusic(self.res.audio_bgm);
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
-                    }.bind(this), function (code, msg) {
-                        //code ==0
-                        handle.jiangli = false;
-                        BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //开始播放视频
-                    }.bind(this));
-                    //跳转至播放界面
-                    handle.jump();
                 }
-                else {
-                    BK.Script.log(1, 1, "error:" + retCode + " msg:" + msg);
-                }
-            }.bind(this));
+                storage.stopMusic();
+                storage.playMusic(self.res.audio_bgm);
+            });
+
+            videoAd.show();
+
+            //BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
+            //    if (retCode == 0) {
+            //
+            //        handle.setEventCallack(function (code, msg) {
+            //            BK.Script.log(1, 1, "closeGame"); //关闭游戏
+            //
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //视频结束
+            //            handle.jiangli = true;
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            if(handle.jiangli)
+            //            {
+            //                if(self.GAME.VIDEOAD_TYPE == 1)
+            //                {
+            //                    var coin = storage.getStorageCoin();
+            //                    coin = parseInt(coin) + 100;
+            //                    storage.setStorageCoin(coin);
+            //                    self.node_main_coin.getComponent("cc.Label").string = coin+"";
+            //                    self.uploadData();
+            //
+            //                    self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+            //                    self.node_main_lingqu_time.active = true;
+            //                    self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+            //
+            //                    storage.setStorageVideoTime(1);
+            //
+            //                    if(cc.isValid(self.node_coin))
+            //                        self.node_coin.updateUI();
+            //
+            //                    self.res.showToast("金币+100");
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 2)
+            //                {
+            //                    self.fuhuo(false,false,true);
+            //                    self.res.showToast("复活成功");
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 3)
+            //                {
+            //                    storage.setStorageHasZhanShi(1);
+            //                    if(cc.isValid(self.node_zhanshi))
+            //                        self.node_zhanshi.updateUI();
+            //                    else if(cc.isValid(self.node_tryzhanshi))
+            //                        self.node_tryzhanshi.useZhanshiStart();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 4)
+            //                {
+            //                    self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+            //                    var fr = 1;
+            //                    if(self.GAME.isShouYix2)
+            //                        fr = 2;
+            //                    storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2*fr);
+            //                    self.res.showToast("金币+"+self.node_tiaozhan_sus.award*2*fr);
+            //                    self.node_tiaozhan_sus.updateCoin();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 5)
+            //                {
+            //                    self.node_tiaozhan_fail.updateJumpNum();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 6)
+            //                {
+            //                    if(self.openduizhan)
+            //                    {
+            //                        self.node_duizhan.jifenx2();
+            //                    }
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 7)
+            //                {
+            //                    if(cc.isValid(self.node_qiandao))
+            //                        self.node_qiandao.vedioRiqi();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 8)
+            //                {
+            //                    if(cc.isValid(self.node_coinx2))
+            //                        self.node_coinx2.lingquSuc();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 9)
+            //                {
+            //                    storage.setStorageLiBaoNum(3);
+            //                    if(cc.isValid(self.node_libao))
+            //                        self.node_libao.updateUI();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 10)
+            //                {
+            //                    self.shouyix2();
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 11)
+            //                {
+            //                    if(callback)
+            //                        callback(true);
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 12)
+            //                {
+            //                    if(callback)
+            //                        callback(true);
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 13)
+            //                {
+            //                    if(callback)
+            //                        callback(true);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                if(self.GAME.VIDEOAD_TYPE == 1)
+            //                {
+            //                    self.res.showToast("金币获取失败");
+            //                }
+            //                if(self.GAME.VIDEOAD_TYPE == 2)
+            //                {
+            //                    self.res.showToast("复活失败");
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 3)
+            //                {
+            //                    self.res.showToast("体验失败");
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 11)
+            //                {
+            //                    if(callback)
+            //                        callback(false);
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 12)
+            //                {
+            //                    if(callback)
+            //                        callback(false);
+            //                }
+            //                else if(self.GAME.VIDEOAD_TYPE == 13)
+            //                {
+            //                    if(callback)
+            //                        callback(false);
+            //                }
+            //                else
+            //                {
+            //                    self.res.showToast("获取失败");
+            //                }
+            //
+            //
+            //            }
+            //            storage.playMusic(self.res.audio_bgm);
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //关闭视频webview
+            //        }.bind(this), function (code, msg) {
+            //            //code ==0
+            //            handle.jiangli = false;
+            //            BK.Script.log(1, 1, "endVide code:" + code + " msg:" + msg); //开始播放视频
+            //        }.bind(this));
+            //        //跳转至播放界面
+            //        handle.jump();
+            //    }
+            //    else {
+            //        BK.Script.log(1, 1, "error:" + retCode + " msg:" + msg);
+            //    }
+            //}.bind(this));
             //if(type == 1)
             //{
             //    this.rewardedVideoAd.show().catch(function(err){
@@ -5487,33 +5654,55 @@ cc.Class({
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
-                if (retCode == 0) {
-                    //2.开发者 使用adBannerHanlde
-                    //2.1 决定是否展示
-                    self.bannerAd = adBannerHandle;
-                    adBannerHandle.show(function (succCode, msg, handle) {
-                        if (succCode == 0) {
-                            //
-                        }
-                        else {
-                            BK.Script.log(1, 1, "展示失败 msg:" + msg);
-                        }
-                    });
-                    //2.2 开发者主动关闭广告。
-                    //adBannerHandle.close();
-                    //2.3 开发者监听事件
-                    adBannerHandle.onClickContent(function () {
-                        //用户点击了落地页
-                    });
-                    adBannerHandle.onClickClose(function () {
-                        //用户点击了X关闭广告
-                    });
-                }
-                else {
-                    BK.Script.log(1, 1, "fetchBannerAd failed. retCode:" + retCode);
-                }
-            }.bind(this));
+            if(self.bannerAd == null)
+            {
+                self.bannerAd = BK.Advertisement.createBannerAd({
+                    viewId:1001
+                });
+                self.bannerAd.onLoad(function () {
+                    //广告加载成功
+                });
+                self.bannerAd.onError(function (err) {
+                    //加载失败
+                    var msg = err.msg;
+                    var code = err.code;
+                    BK.Script.log(1, 1, "展示失败 msg:" + msg +"     "+code);
+                });
+                self.bannerAd.isshows = false;
+            }
+            if(!self.bannerAd.isshows)
+            {
+                self.bannerAd.isshows = true;
+                self.bannerAd.show();
+            }
+
+            //BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
+            //    if (retCode == 0) {
+            //        //2.开发者 使用adBannerHanlde
+            //        //2.1 决定是否展示
+            //        self.bannerAd = adBannerHandle;
+            //        adBannerHandle.show(function (succCode, msg, handle) {
+            //            if (succCode == 0) {
+            //                //
+            //            }
+            //            else {
+            //                BK.Script.log(1, 1, "展示失败 msg:" + msg);
+            //            }
+            //        });
+            //        //2.2 开发者主动关闭广告。
+            //        //adBannerHandle.close();
+            //        //2.3 开发者监听事件
+            //        adBannerHandle.onClickContent(function () {
+            //            //用户点击了落地页
+            //        });
+            //        adBannerHandle.onClickClose(function () {
+            //            //用户点击了X关闭广告
+            //        });
+            //    }
+            //    else {
+            //        BK.Script.log(1, 1, "fetchBannerAd failed. retCode:" + retCode);
+            //    }
+            //}.bind(this));
             //var openDataContext = wx.getOpenDataContext();
             //var sharedCanvas = openDataContext.canvas;
             //var sc = sharedCanvas.width/this.dsize.width;
@@ -5542,8 +5731,14 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            //if(self.bannerAd)
+            //{
+            //    self.bannerAd.isshows = false;
+            //    self.bannerAd.hide();
+            //
+            //}
             if(self.bannerAd)
-                self.bannerAd.close();
+                self.bannerAd.destory();
             self.bannerAd = null;
             //if(this.bannerAd)
             //    this.bannerAd.hide();

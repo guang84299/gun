@@ -56,8 +56,6 @@
   "design-resolution-height": 640,
   "design-resolution-width": 960,
   "excluded-modules": [
-    "CCSpriteDistortion",
-    "LabelOutline",
     "TiledMap",
     "Slider",
     "EditorBox",
@@ -69,10 +67,7 @@
     "DragonBones",
     "Physics",
     "StudioComponent",
-    "RenderTexture",
-    "Chipmunk",
-    "Camera",
-    "Native NetWork"
+    "Camera"
   ],
   "fit-height": true,
   "fit-width": false,
@@ -90,5 +85,6 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false
+  "use-project-simulator-setting": false,
+  "start-scene": "current"
 }

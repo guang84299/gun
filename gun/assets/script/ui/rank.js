@@ -26,7 +26,7 @@ cc.Class({
 
         this.worldrank = {};
         this.ranktype = 1;
-        
+
         this.initUI();
 
         var items = this.node.children;
@@ -152,6 +152,7 @@ cc.Class({
             }
         });
     },
+
 
     showWinNumPaiming: function()
     {

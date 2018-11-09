@@ -142,28 +142,29 @@ module.exports = {
                     });
                 });
 
-                new BK.Game({
-                    onLoad: function()
-                    {
-                        BK.Script.log(1,1,"---onLoad----");
-                    },
-                    onMinmize: function()
-                    {
-                        BK.Script.log(1,1,"---onMinmize----");
-                    },
-                    onClose: function()
-                    {
-                        BK.Script.log(1,1,"---onClose----");
-                    },
-                    onEnterbackground: function()
-                    {
-                        BK.Script.log(1,1,"---onEnterbackground----");
-                    },
-                    onEnterforeground: function()
-                    {
-                        BK.Script.log(1,1,"---onEnterforeground----");
-                    }
-                });
+                //new BK.Game({
+                //    onLoad: function()
+                //    {
+                //        BK.Script.log(1,1,"---onLoad----");
+                //    },
+                //    onMinmize: function()
+                //    {
+                //        BK.Script.log(1,1,"---onMinmize----");
+                //    },
+                //    onClose: function()
+                //    {
+                //        BK.Script.log(1,1,"---onClose----");
+                //    },
+                //    onEnterbackground: function()
+                //    {
+                //        BK.Script.log(1,1,"---onEnterbackground----");
+                //    },
+                //    onEnterforeground: function()
+                //    {
+                //        BK.Script.log(1,1,"---onEnterforeground----");
+                //    }
+                //});
+
 
                 BK.Script.log(1,1,"---1111111----:" + query);
             }

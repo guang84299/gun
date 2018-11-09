@@ -2,6 +2,8 @@
  * Created by guang on 18/7/19.
  */
 module.exports = {
+    audioContext: null,
+    effectContext: null,
     playMusic: function(music)
     {
         if(this.getStorageMusic() == 1)
@@ -9,9 +11,14 @@ module.exports = {
             this.stopMusic();
             if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
             {
-                BK.Audio.switch = true;
-                var handle = new BK.Audio(0,"GameRes:///res/raw-assets/audio/bg_1.mp3",-1);
-                handle.startMusic();
+                if(this.audioContext == null)
+                {
+                    this.audioContext = BK.createAudioContext();
+                    this.audioContext.loop = true;
+                    this.audioContext.src = "GameRes:///res/raw-assets/audio/bg_1.mp3";
+                }
+                this.audioContext.play();
+                BK.Script.log(1,1,'---------play.audioContex');
             }
             else
             {
@@ -37,7 +44,9 @@ module.exports = {
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            BK.Audio.switch = false;
+            //BK.Audio.switch = false;
+            if(this.audioContext)
+                this.audioContext.pause();
         }
         else
         {
@@ -49,15 +58,31 @@ module.exports = {
     playSound: function(sound)
     {
         if(this.getStorageSound() == 1)
-            cc.audioEngine.play(sound,false,1);
+        {
+            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            {
+                if(this.effectContext == null)
+                {
+                    this.effectContext = BK.createAudioContext({'type':'effect'});
+                }
+                //播放多个音效
+                this.effectContext.src = "GameRes:///"+sound;
+                this.effectContext.play()
+            }
+            else
+            {
+                cc.audioEngine.play(sound,false,1);
+            }
+        }
+
     },
 
     preloadSound: function()
     {
-        cc.audioEngine.preload(this.audio_coin);
-        cc.audioEngine.preload(this.audio_gun_1);
-        cc.audioEngine.preload(this.audio_hit_head);
-        cc.audioEngine.preload(this.audio_hit_torso);
+        //cc.audioEngine.preload(this.audio_coin);
+        //cc.audioEngine.preload(this.audio_gun_1);
+        //cc.audioEngine.preload(this.audio_hit_head);
+        //cc.audioEngine.preload(this.audio_hit_torso);
     },
     setStorageCoin: function(coin)
     {

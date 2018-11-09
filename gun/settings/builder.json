@@ -25,7 +25,6 @@
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "renderMode": "0",
   "startScene": "af092c72-7cfe-4c69-a3fb-0d770d2028a1",
   "title": "gun",
   "webOrientation": "auto",
@@ -37,5 +36,6 @@
     "subContext": "rank"
   },
   "xxteaKey": "7171e9f9-a6b4-4c",
-  "zipCompressJs": true
+  "zipCompressJs": true,
+  "renderMode": "0"
 }

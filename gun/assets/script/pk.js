@@ -300,10 +300,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.main.openduizhan = false;
         this.node.destroy();
     },
@@ -323,12 +325,14 @@ cc.Class({
         {
             this.node_sel_mode.active = false;
             this.node_sel.active = true;
+            this.main.wxBannerShow();
         }
         else if(data == "shuangren")
         {
             this.isClickSuiji2 = false;
             this.node_sel_mode.active = false;
             this.node_sel2.active = true;
+            this.main.wxBannerShow();
         }
         else if(data == "suiji")
         {
@@ -383,6 +387,7 @@ cc.Class({
             }
             this.node_sel.active = false;
             this.node_sel_mode.active = true;
+            this.main.wxBannerShow();
         }
         else if(data == "suiji2")
         {
@@ -466,6 +471,7 @@ cc.Class({
         {
             this.isSuiJiMatch = false;
             this.sel2_fanhui();
+            this.main.wxBannerShow();
         }
         else if(data == "home")
         {
@@ -490,10 +496,12 @@ cc.Class({
         else if(data == "fanhui")
         {
             this.fanhui();
+            this.main.wxBannerShow();
         }
         else if(data == "over_fanhui")
         {
             this.fanhui();
+            this.main.wxBannerShow();
         }
         else if(data == "again")
         {
@@ -522,6 +530,7 @@ cc.Class({
         }
         else if(data == "gun")
         {
+            this.main.wxBannerHide();
             this.main.openGun();
             this.showGunUI(true);
         }
@@ -847,7 +856,7 @@ cc.Class({
             {
                 this.initRobot();
 
-                this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+                this.loadHead(this.node_sel_box_2,enemyPlayer.avatarUrl);
                 this.node_sel_box_2_name.string = enemyPlayer.name;
                 this.node_sel_box_2_wenhao.active = false;
                 this.node_sel_title.string = "Success";
@@ -888,7 +897,7 @@ cc.Class({
             if(this.findPlayerNum() == 2)
             {
                 var enemyPlayer = this.findEnemyPlayerData();
-                this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+                this.loadHead(this.node_sel_box_2,enemyPlayer.avatarUrl);
                 this.node_sel_box_2_name.string = enemyPlayer.name;
                 this.node_sel_box_2_wenhao.active = false;
                 this.node_sel_title.string = "Success";
@@ -964,7 +973,7 @@ cc.Class({
             }
             if(this.playerData.playerB)
             {
-                this.loadPic(this.node_sel2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
+                this.loadHead(this.node_sel2_box_2,this.playerData.playerB.avatarUrl);
                 this.node_sel2_box_2_name.string = this.playerData.playerB.name;
                 this.node_sel2_box_2_wenhao.active = false;
             }
@@ -976,7 +985,7 @@ cc.Class({
             }
             if(this.playerData.playerC)
             {
-                this.loadPic(this.node_sel2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
+                this.loadHead(this.node_sel2_box_3,this.playerData.playerC.avatarUrl);
                 this.node_sel2_box_3_name.string = this.playerData.playerC.name;
                 this.node_sel2_box_3_wenhao.active = false;
             }
@@ -988,7 +997,7 @@ cc.Class({
             }
             if(this.playerData.playerD)
             {
-                this.loadPic(this.node_sel2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
+                this.loadHead(this.node_sel2_box_4,this.playerData.playerD.avatarUrl);
                 this.node_sel2_box_4_name.string = this.playerData.playerD.name;
                 this.node_sel2_box_4_wenhao.active = false;
             }
@@ -1455,6 +1464,8 @@ cc.Class({
 
     startGame: function()
     {
+        this.main.wxBannerHide();
+
         this.state = "start";
         this.isBgScroll = false;
         this.node_sel.active = false;
@@ -1491,7 +1502,7 @@ cc.Class({
         }
         if(this.playerData.playerB)
         {
-            this.loadPic(this.b_icon,this.playerData.playerB.avatarUrl+"?"+Math.random());
+            this.loadHead(this.b_icon,this.playerData.playerB.avatarUrl);
             this.b_name.string = this.playerData.playerB.name;
             this.b_pro.progress = 1;
             this.b_pro_bar.color = cc.color(0,160,233);
@@ -1499,7 +1510,7 @@ cc.Class({
         }
         if(this.playerData.playerC)
         {
-            this.loadPic(this.c_icon,this.playerData.playerC.avatarUrl+"?"+Math.random());
+            this.loadHead(this.c_icon,this.playerData.playerC.avatarUrl);
             this.c_name.string = this.playerData.playerC.name;
             this.c_pro.progress = 1;
             this.c_pro_bar.color = cc.color(0,160,233);
@@ -1507,7 +1518,7 @@ cc.Class({
         }
         if(this.playerData.playerD)
         {
-            this.loadPic(this.d_icon,this.playerData.playerD.avatarUrl+"?"+Math.random());
+            this.loadHead(this.d_icon,this.playerData.playerD.avatarUrl);
             this.d_name.string = this.playerData.playerD.name;
             this.d_pro.progress = 1;
             this.d_pro_bar.color = cc.color(0,160,233);
@@ -2770,9 +2781,9 @@ cc.Class({
             this.node_over2_jifenx2.getComponent("cc.Button").interactable = true;
 
             this.loadPic(this.node_over2_box_1,this.playerData.playerA.avatarUrl);
-            this.loadPic(this.node_over2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
-            this.loadPic(this.node_over2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
-            this.loadPic(this.node_over2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
+            this.loadHead(this.node_over2_box_2,this.playerData.playerB.avatarUrl);
+            this.loadHead(this.node_over2_box_3,this.playerData.playerC.avatarUrl);
+            this.loadHead(this.node_over2_box_4,this.playerData.playerD.avatarUrl);
             this.node_over2_box_1_name.string = this.playerData.playerA.name;
             this.node_over2_box_2_name.string = this.playerData.playerB.name;
             this.node_over2_box_3_name.string = this.playerData.playerC.name;
@@ -2922,7 +2933,7 @@ cc.Class({
             var enemyPlayer = this.findEnemyPlayerData();
 
             this.loadPic(this.node_over_box_1,selfPlayer.avatarUrl);
-            this.loadPic(this.node_over_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
+            this.loadHead(this.node_over_box_2,enemyPlayer.avatarUrl);
             this.node_over_box_1_name.string = selfPlayer.name;
             this.node_over_box_2_name.string = enemyPlayer.name;
             this.node_over_guang.stopAllActions();
@@ -3310,5 +3321,13 @@ cc.Class({
                 sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
             }
         });
+    },
+    loadHead: function(sp,url)
+    {
+        cc.log(url);
+        cc.loader.loadRes(url, cc.SpriteFrame, function (err, spriteFrame) {
+            sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
+        });
     }
+
 });

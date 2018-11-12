@@ -13,7 +13,7 @@ cc.Class({
 
 
      onLoad: function() {
-         cc.sys.myweb = false;
+         cc.sys.myweb = (cc.sys.os == cc.sys.OS_ANDROID);
          this.dsize = new cc.size(720, 1584);
          this.tex = new cc.Texture2D();
          this.subdt = 0;
@@ -47,27 +47,122 @@ cc.Class({
          //this.wxOpenQuan();
 
          storage.playMusic(this.res.audio_bgm);
-         storage.preloadSound();
+         //storage.preloadSound();
          //this.wxVideoLoad();
-         this.wxVideoShow();
-         this.wxSpot();
+         //this.wxVideoShow();
+         //this.wxSpot();
+
 
          var self = this;
-
-         var score = storage.getStorageScore();
-         var jscore = storage.getStorageJScore();
-         this.wxUploadScore(score,jscore,1);
-
          // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
 
+         cc.game.loginSuccess = function(data)
+         {
+             var datas = JSON.parse(data);
+             self.FBData = datas;
+             var score = storage.getStorageScore();
+             var jscore = storage.getStorageJScore();
+             self.wxUploadScore(score,jscore,1);
+
+         };
+         cc.game.loginFail = function(error)
+         {
+             self.FBData = {};
+             var score = storage.getStorageScore();
+             var jscore = storage.getStorageJScore();
+             self.wxUploadScore(score,jscore,1);
+         };
+
+         this.node.runAction(cc.sequence(
+             cc.delayTime(0.2),
+             cc.callFunc(function(){
+                 if(cc.sys.myweb)
+                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "toLogin", "(Ljava/lang/String;)V","login");
+                 else
+                     cc.game.loginFail();
+             })
+         ));
+
+         this.initShare();
+         this.initVedioAd();
      },
+
+    initShare: function()
+    {
+        cc.game.shareSuccess = function()
+        {
+            qianqista.share(true);
+            if(cc.game.shareCallback)
+                cc.game.shareCallback(true);
+        };
+
+        cc.game.shareFail = function()
+        {
+            qianqista.share(false);
+            if(cc.game.shareCallback)
+                cc.game.shareCallback(false);
+        };
+        cc.game.shareCallback = null;
+    },
+
+    share: function(callback)
+    {
+        cc.game.shareCallback = callback;
+        if(cc.sys.myweb)
+        {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "share", "(Ljava/lang/String;)V","share");
+        }
+        else
+        {
+            cc.log("---vvv---");
+            cc.game.shareSuccess();
+        }
+    },
+
+    initVedioAd: function()
+    {
+        cc.game.vedioSuccess = function()
+        {
+            if(cc.game.vedioCallback)
+                cc.game.vedioCallback(true);
+        };
+
+        cc.game.vedioFail = function()
+        {
+            if(cc.game.vedioCallback)
+                cc.game.vedioCallback(false);
+        };
+        cc.game.vedioCallback = null;
+    },
+
+    showVedioAd: function(callback)
+    {
+        cc.game.vedioCallback = callback;
+        if(cc.sys.myweb)
+        {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showVedio", "(Ljava/lang/String;)V","vedio");
+        }
+        else
+        {
+            cc.game.vedioSuccess();
+        }
+    },
+
+    androidLog: function(str)
+    {
+        if(cc.sys.myweb)
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "log", "(Ljava/lang/String;)V", str);
+        else
+            cc.log(str);
+    },
+
 
     initNet: function()
     {
         var self = this;
 
-        qianqista.init("239014983452998","Western Shooter",function(){
+        qianqista.init("459319284595765","Western Shooter-android",self.FBData,function(){
             qianqista.datas(function(res){
                 console.log('my datas:', res);
                 if(res.state == 200)
@@ -319,8 +414,8 @@ cc.Class({
                     if(con.value == "1")
                     {
                         cc.find("fangdanyi",this.node_main).active = true;
-                        cc.find("bottom/lingjiang",this.node_main).active = true;
-                        cc.find("linggunbg",this.node_main).active = true;
+                        //cc.find("bottom/lingjiang",this.node_main).active = true;
+                        //cc.find("linggunbg",this.node_main).active = true;
                         this.GAME.fangdanyi = true;
                         this.GAME.sharecard = true;
                     }
@@ -1207,17 +1302,17 @@ cc.Class({
 
     openTishi: function()
     {
-        var playnum = cc.sys.localStorage.getItem("playnum");
-        playnum = playnum ? playnum : 0;
-        if(playnum == 1)
-        {
-            var tishi = cc.instantiate(this.res.node_tishi);
-            this.node.addChild(tishi);
-            this.node_tishi = tishi.getComponent("tishi");
-            this.node_tishi.show();
-        }
-        playnum ++;
-        cc.sys.localStorage.setItem("playnum",playnum);
+        //var playnum = cc.sys.localStorage.getItem("playnum");
+        //playnum = playnum ? playnum : 0;
+        //if(playnum == 1)
+        //{
+        //    var tishi = cc.instantiate(this.res.node_tishi);
+        //    this.node.addChild(tishi);
+        //    this.node_tishi = tishi.getComponent("tishi");
+        //    this.node_tishi.show();
+        //}
+        //playnum ++;
+        //cc.sys.localStorage.setItem("playnum",playnum);
     },
 
     openXuming: function()
@@ -1579,7 +1674,7 @@ cc.Class({
             })
         ));
 
-        if(!this.opentiaozhan)
+        //if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -3617,19 +3712,19 @@ cc.Class({
                     {
                         if(storage.getStorageShortcut()==0)
                         {
-                            FBInstant.canCreateShortcutAsync()
-                                .then(function(canCreateShortcut) {
-                                    if (canCreateShortcut) {
-                                        FBInstant.createShortcutAsync()
-                                            .then(function() {
-                                                // Shortcut created
-                                                storage.setStorageShortcut(1);
-                                            })
-                                            .catch(function() {
-                                                // Shortcut not created
-                                            });
-                                    }
-                                });
+                            //FBInstant.canCreateShortcutAsync()
+                            //    .then(function(canCreateShortcut) {
+                            //        if (canCreateShortcut) {
+                            //            FBInstant.createShortcutAsync()
+                            //                .then(function() {
+                            //                    // Shortcut created
+                            //                    storage.setStorageShortcut(1);
+                            //                })
+                            //                .catch(function() {
+                            //                    // Shortcut not created
+                            //                });
+                            //        }
+                            //    });
                         }
 
                     }
@@ -3718,7 +3813,7 @@ cc.Class({
             ));
         }
 
-        if(!this.opentiaozhan)
+        //if(!this.opentiaozhan)
         this.wxBannerShow();
     },
 
@@ -4310,15 +4405,15 @@ cc.Class({
             if(score)
             {
 
-                FBInstant.getLeaderboardAsync('wscore')
-                    .then(function(leaderboard) {
-                        console.log("----:"+leaderboard.getName());
-                        return leaderboard.setScoreAsync(score, '{}');
-                    })
-                    .then(function(entry) {
-                        console.log(entry.getScore()); // 42
-                        console.log(entry.getExtraData()); // '{race: "elf", level: 3}'
-                    });
+                //FBInstant.getLeaderboardAsync('wscore')
+                //    .then(function(leaderboard) {
+                //        console.log("----:"+leaderboard.getName());
+                //        return leaderboard.setScoreAsync(score, '{}');
+                //    })
+                //    .then(function(entry) {
+                //        console.log(entry.getScore()); // 42
+                //        console.log(entry.getExtraData()); // '{race: "elf", level: 3}'
+                //    });
             }
 
             if(jscore)
@@ -4326,14 +4421,14 @@ cc.Class({
                 var datas = {};
                 datas.jscore = jscore;
 
-                FBInstant.getLeaderboardAsync('wjscore')
-                    .then(function(leaderboard) {
-                        return leaderboard.setScoreAsync(new Date().getTime(), JSON.stringify(datas));
-                    })
-                    .then(function(entry) {
-                        console.log(entry.getScore()); // 42
-                        console.log(entry.getExtraData()); // '{race: "elf", level: 3}'
-                    });
+                //FBInstant.getLeaderboardAsync('wjscore')
+                //    .then(function(leaderboard) {
+                //        return leaderboard.setScoreAsync(new Date().getTime(), JSON.stringify(datas));
+                //    })
+                //    .then(function(entry) {
+                //        console.log(entry.getScore()); // 42
+                //        console.log(entry.getExtraData()); // '{race: "elf", level: 3}'
+                //    });
             }
 
 
@@ -4362,69 +4457,69 @@ cc.Class({
 
     wxUpdateScore: function(score)
     {
-        var self = this;
-        if(cc.sys.myweb)
-        {
-            if(!this.ranking_list)
-            {
-                FBInstant.getLeaderboardAsync('wscore')
-                    .then(function(leaderboard) {
-                        return leaderboard.getConnectedPlayerEntriesAsync();
-                    })
-                    .then(function(entries) {
-                        self.ranking_list = entries;
-                    });
-            }
-            else
-            {
-                var chaoyue = null;
-                for(var i=0; i < this.ranking_list.length; ++i)
-                {
-                    var rd = this.ranking_list[i];
-                    if(rd.getPlayer().getID() != FBInstant.player.getID() && !this.existChaoYue(rd))
-                    {
-                        if(score > rd.getScore())
-                        {
-                            chaoyue = rd;
-                            break;
-                        }
-                    }
-                }
-                if(chaoyue)
-                {
-                    this.chaoyueData.push(chaoyue);
-
-                    var item = cc.instantiate(this.chaoyueItem);
-                    var icon = cc.find("icon",item);
-                    var nick = cc.find("nick",item);
-
-                    this.loadPic(icon,chaoyue.getPlayer().getPhoto());
-                    nick.getComponent("cc.Label").string = "exceed "+chaoyue.getPlayer().getName();
-
-                    this.node_game_ui.addChild(item);
-
-                    var seq = cc.sequence(
-                        cc.fadeOut(0),
-                        cc.moveTo(0,cc.v2(20,this.dsize.height*0.7)),
-                        cc.spawn(
-                            cc.fadeIn(0.5),
-                            cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.75)).easing(cc.easeSineIn())
-                        ),
-                        cc.delayTime(2),
-                        cc.spawn(
-                            cc.fadeOut(0.5),
-                            cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.8)).easing(cc.easeSineOut())
-                        ),
-                        cc.removeSelf()
-                    );
-
-                    item.runAction(seq);
-
-                    this.wxUploadScore(score);
-                }
-
-            }
-        }
+        //var self = this;
+        //if(cc.sys.myweb)
+        //{
+        //    if(!this.ranking_list)
+        //    {
+        //        //FBInstant.getLeaderboardAsync('wscore')
+        //        //    .then(function(leaderboard) {
+        //        //        return leaderboard.getConnectedPlayerEntriesAsync();
+        //        //    })
+        //        //    .then(function(entries) {
+        //        //        self.ranking_list = entries;
+        //        //    });
+        //    }
+        //    else
+        //    {
+        //        var chaoyue = null;
+        //        for(var i=0; i < this.ranking_list.length; ++i)
+        //        {
+        //            var rd = this.ranking_list[i];
+        //            if(rd.getPlayer().getID() != FBInstant.player.getID() && !this.existChaoYue(rd))
+        //            {
+        //                if(score > rd.getScore())
+        //                {
+        //                    chaoyue = rd;
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //        if(chaoyue)
+        //        {
+        //            this.chaoyueData.push(chaoyue);
+        //
+        //            var item = cc.instantiate(this.chaoyueItem);
+        //            var icon = cc.find("icon",item);
+        //            var nick = cc.find("nick",item);
+        //
+        //            this.loadPic(icon,chaoyue.getPlayer().getPhoto());
+        //            nick.getComponent("cc.Label").string = "exceed "+chaoyue.getPlayer().getName();
+        //
+        //            this.node_game_ui.addChild(item);
+        //
+        //            var seq = cc.sequence(
+        //                cc.fadeOut(0),
+        //                cc.moveTo(0,cc.v2(20,this.dsize.height*0.7)),
+        //                cc.spawn(
+        //                    cc.fadeIn(0.5),
+        //                    cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.75)).easing(cc.easeSineIn())
+        //                ),
+        //                cc.delayTime(2),
+        //                cc.spawn(
+        //                    cc.fadeOut(0.5),
+        //                    cc.moveTo(0.5,cc.v2(20,this.dsize.height*0.8)).easing(cc.easeSineOut())
+        //                ),
+        //                cc.removeSelf()
+        //            );
+        //
+        //            item.runAction(seq);
+        //
+        //            this.wxUploadScore(score);
+        //        }
+        //
+        //    }
+        //}
     },
 
 
@@ -4432,17 +4527,19 @@ cc.Class({
     {
         if(cc.sys.myweb)
         {
-            FBInstant.shareAsync({
-                intent: 'REQUEST',
-                image: this.res.getBase64SharePic(),
-                text: 'I am a sharpshooter! I see，I shot，I win.',
-                data: { channel: 'groupsharemenu' ,fromid:''+FBInstant.player.getID()}
-            }).then(function() {
-                // continue with the game.
-                qianqista.share(true);
-            }).catch(function (error) {
-                qianqista.share(false);
-            });
+
+            this.share();
+            //FBInstant.shareAsync({
+            //    intent: 'REQUEST',
+            //    image: this.res.getBase64SharePic(),
+            //    text: 'I am a sharpshooter! I see，I shot，I win.',
+            //    data: { channel: 'groupsharemenu' ,fromid:''+FBInstant.player.getID()}
+            //}).then(function() {
+            //    // continue with the game.
+            //    qianqista.share(true);
+            //}).catch(function (error) {
+            //    qianqista.share(false);
+            //});
 
 
             //
@@ -4488,26 +4585,42 @@ cc.Class({
         var self = this;
         if(cc.sys.myweb)
         {
+            this.share(function(res){
+               if(res)
+               {
+                       self.res.showToast("Body armor +1");
 
-            FBInstant.shareAsync({
-                intent: 'REQUEST',
-                image: this.res.getBase64SharePic(),
-                text: 'I am a sharpshooter! I see，I shot，I win.',
-                data: { channel: 'sharecardmenu',fromid:''+FBInstant.player.getID() }
-            }).then(function() {
-                // continue with the game.
-                self.res.showToast("Body armor +1");
+                       var cardnum = storage.getStorageCard();
+                       cardnum = parseInt(cardnum) + 1;
+                       storage.setStorageCard(cardnum);
+                       self.node_card.updateUI();
+                       self.uploadData();
+               }
+               else
+               {
 
-                var cardnum = storage.getStorageCard();
-                cardnum = parseInt(cardnum) + 1;
-                storage.setStorageCard(cardnum);
-                self.node_card.updateUI();
-                self.uploadData();
-
-                qianqista.share(true);
-            }).catch(function (error) {
-                qianqista.share(false);
+               }
             });
+
+            //FBInstant.shareAsync({
+            //    intent: 'REQUEST',
+            //    image: this.res.getBase64SharePic(),
+            //    text: 'I am a sharpshooter! I see，I shot，I win.',
+            //    data: { channel: 'sharecardmenu',fromid:''+FBInstant.player.getID() }
+            //}).then(function() {
+            //    // continue with the game.
+            //    self.res.showToast("Body armor +1");
+            //
+            //    var cardnum = storage.getStorageCard();
+            //    cardnum = parseInt(cardnum) + 1;
+            //    storage.setStorageCard(cardnum);
+            //    self.node_card.updateUI();
+            //    self.uploadData();
+            //
+            //    qianqista.share(true);
+            //}).catch(function (error) {
+            //    qianqista.share(false);
+            //});
 
             //var info = {};
             //info.channel = "sharecardmenu";
@@ -4627,7 +4740,7 @@ cc.Class({
     wxVideoLoad: function()
     {
         var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if((1==2) && (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS))
         {
             this.rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId:'adunit-b9e3b716f84a52de'});
             this.rewardedVideoAd.onLoad(function(){
@@ -4760,101 +4873,102 @@ cc.Class({
         this.GAME.VIDEOAD_TYPE = type;
         if(cc.sys.myweb)
         {
-            if(!self.preloadedRewardedVideo || !self.preloadedRewardedVideoisload)
-            {
-                self.preloadedRewardedVideoisload = false;
+            storage.pauseMusic();
+            this.showVedioAd(function(res){
+                if(res)
+                {
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        var coin = storage.getStorageCoin();
+                        coin = parseInt(coin) + 100;
+                        storage.setStorageCoin(coin);
+                        self.node_main_coin.getComponent("cc.Label").string = coin+"";
+                        self.uploadData();
 
-                FBInstant.getRewardedVideoAsync(
-                    '1429552683843017_1429571757174443' // Your Ad Placement Id
-                ).then(function(rewarded) {
-                        // Load the Ad asynchronously
-                        self.preloadedRewardedVideo = rewarded;
-                        return self.preloadedRewardedVideo.loadAsync();
-                    }).then(function() {
-                        console.log('Rewarded video preloaded');
-                        self.preloadedRewardedVideoisload = true;
-                    }).catch(function(err){
-                        console.error('Rewarded video failed to preload: ' + err.message);
-                    });
-            }
+                        self.node_main_lingqu.getComponent("cc.Button").interactable = false;
+                        self.node_main_lingqu_time.active = true;
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
 
-            if(self.preloadedRewardedVideo && self.preloadedRewardedVideoisload)
-            {
-                storage.pauseMusic();
-                self.preloadedRewardedVideoisload = false;
-                self.preloadedRewardedVideo.showAsync()
-                    .then(function() {
-                        // Perform post-ad success operation
-                        if(self.GAME.VIDEOAD_TYPE == 1)
-                        {
-                            var coin = storage.getStorageCoin();
-                            coin = parseInt(coin) + 100;
-                            storage.setStorageCoin(coin);
-                            self.node_main_coin.getComponent("cc.Label").string = coin+"";
-                            self.uploadData();
+                        storage.setStorageVideoTime(30);
 
-                            self.node_main_lingqu.getComponent("cc.Button").interactable = false;
-                            self.node_main_lingqu_time.active = true;
-                            self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                        if(cc.isValid(self.node_coin))
+                            self.node_coin.updateUI();
 
-                            storage.setStorageVideoTime(30);
+                        self.res.showToast("Coin+100");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.fuhuo(false,false,true);
+                        self.res.showToast("Revive success");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        storage.setStorageHasZhanShi(5);
+                        if(cc.isValid(self.node_zhanshi))
+                            self.node_zhanshi.updateUI();
+                        else if(cc.isValid(self.node_tryzhanshi))
+                            self.node_tryzhanshi.useZhanshiStart();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 4)
+                    {
+                        self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
+                        storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
+                        self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
+                        self.node_tiaozhan_sus.updateCoin();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 5)
+                    {
+                        self.node_tiaozhan_fail.updateJumpNum();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 6)
+                    {
+                        if(self.openduizhan)
+                        {
+                            self.node_duizhan.jifenx2();
+                        }
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 7)
+                    {
+                        if(cc.isValid(self.node_qiandao))
+                            self.node_qiandao.vedioRiqi();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 8)
+                    {
+                        if(cc.isValid(self.node_coinx2))
+                            self.node_coinx2.lingquSuc();
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 9)
+                    {
+                        self.res.showToast("Body armor +1");
 
-                            if(cc.isValid(self.node_coin))
-                                self.node_coin.updateUI();
-
-                            self.res.showToast("Coin+100");
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 2)
-                        {
-                            self.fuhuo(false,false,true);
-                            self.res.showToast("Revive success");
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 3)
-                        {
-                            storage.setStorageHasZhanShi(5);
-                            if(cc.isValid(self.node_zhanshi))
-                                self.node_zhanshi.updateUI();
-                            else if(cc.isValid(self.node_tryzhanshi))
-                                self.node_tryzhanshi.useZhanshiStart();
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 4)
-                        {
-                            self.node_tiaozhan_sus.node_tiaozhan_xuanyao.interactable = false;
-                            storage.setStorageCoin(storage.getStorageCoin()+self.node_tiaozhan_sus.award*2);
-                            self.res.showToast("Coin+"+self.node_tiaozhan_sus.award*2);
-                            self.node_tiaozhan_sus.updateCoin();
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 5)
-                        {
-                            self.node_tiaozhan_fail.updateJumpNum();
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 6)
-                        {
-                            if(self.openduizhan)
-                            {
-                                self.node_duizhan.jifenx2();
-                            }
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 7)
-                        {
-                            if(cc.isValid(self.node_qiandao))
-                                self.node_qiandao.vedioRiqi();
-                        }
-                        else if(self.GAME.VIDEOAD_TYPE == 8)
-                        {
-                            if(cc.isValid(self.node_coinx2))
-                                self.node_coinx2.lingquSuc();
-                        }
-                        storage.playMusic(self.res.audio_bgm);
-                        self.wxVideoShow();
-                    })
-                    .catch(function(e) {
-                        console.error(e.message);
-                        storage.playMusic(self.res.audio_bgm);
-                        self.wxVideoShow();
-                    });
-            }
-
+                        var cardnum = storage.getStorageCard();
+                        cardnum = parseInt(cardnum) + 1;
+                        storage.setStorageCard(cardnum);
+                        self.node_card.updateUI();
+                        self.uploadData();
+                    }
+                }
+                else
+                {
+                    if(self.GAME.VIDEOAD_TYPE == 1)
+                    {
+                        self.res.showToast("Failed to get coins");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 2)
+                    {
+                        self.res.showToast("Revive failure");
+                    }
+                    else if(self.GAME.VIDEOAD_TYPE == 3)
+                    {
+                        self.res.showToast("Failed");
+                    }
+                    else
+                    {
+                        self.res.showToast("Failed");
+                    }
+                }
+                storage.playMusic(self.res.audio_bgm);
+            });
 
             //BK.Advertisement.fetchVideoAd(1 /* resultPage */, function (retCode, msg, handle) {
             //    if (retCode == 0) {
@@ -4980,6 +5094,16 @@ cc.Class({
                 if(cc.isValid(this.node_coinx2))
                     this.node_coinx2.lingquSuc();
             }
+            else if(type == 9)
+            {
+                self.res.showToast("Body armor +1");
+
+                var cardnum = storage.getStorageCard();
+                cardnum = parseInt(cardnum) + 1;
+                storage.setStorageCard(cardnum);
+                self.node_card.updateUI();
+                self.uploadData();
+            }
             //storage.resumeMusic();
             storage.playMusic(self.res.audio_bgm);
         }
@@ -4991,6 +5115,7 @@ cc.Class({
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","1");
             //BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
             //    if (retCode == 0) {
             //        //2.开发者 使用adBannerHanlde
@@ -5046,9 +5171,10 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            if(self.bannerAd)
-                self.bannerAd.close();
-            self.bannerAd = null;
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","0");
+            //if(self.bannerAd)
+            //    self.bannerAd.close();
+            //self.bannerAd = null;
             //if(this.bannerAd)
             //    this.bannerAd.hide();
         }
@@ -5059,40 +5185,41 @@ cc.Class({
         var self = this;
         if(cc.sys.myweb)
         {
-            if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
-            {
-                self.preloadedInterstitialisload = false;
-                FBInstant.getInterstitialAdAsync(
-                    '1429552683843017_1429585197173099'
-                ).then(function(interstitial) {
-                        self.preloadedInterstitial = interstitial;
-                        return self.preloadedInterstitial.loadAsync();
-                    }).then(function() {
-                        // Ad loaded
-                        self.preloadedInterstitialisload = true;
-                    });
-            }
-
-            if(self.preloadedInterstitial && self.preloadedInterstitialisload)
-            {
-                if(self.wxSpotNum == 1)
-                {
-                    self.wxSpotNum = 0;
-                    self.preloadedInterstitialisload = false;
-                    self.preloadedInterstitial.showAsync()
-                        .then(function() {
-                            // Perform post-ad success operation
-                            self.wxSpot();
-                        })
-                        .catch(function(e) {
-                            self.wxSpot();
-                        });
-                }
-                else
-                {
-                    self.wxSpotNum = 1;
-                }
-            }
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showSpot", "(Ljava/lang/String;)V","1");
+            //if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
+            //{
+            //    self.preloadedInterstitialisload = false;
+            //    FBInstant.getInterstitialAdAsync(
+            //        '1429552683843017_1429585197173099'
+            //    ).then(function(interstitial) {
+            //            self.preloadedInterstitial = interstitial;
+            //            return self.preloadedInterstitial.loadAsync();
+            //        }).then(function() {
+            //            // Ad loaded
+            //            self.preloadedInterstitialisload = true;
+            //        });
+            //}
+            //
+            //if(self.preloadedInterstitial && self.preloadedInterstitialisload)
+            //{
+            //    if(self.wxSpotNum == 1)
+            //    {
+            //        self.wxSpotNum = 0;
+            //        self.preloadedInterstitialisload = false;
+            //        self.preloadedInterstitial.showAsync()
+            //            .then(function() {
+            //                // Perform post-ad success operation
+            //                self.wxSpot();
+            //            })
+            //            .catch(function(e) {
+            //                self.wxSpot();
+            //            });
+            //    }
+            //    else
+            //    {
+            //        self.wxSpotNum = 1;
+            //    }
+            //}
 
 
         }

@@ -46,6 +46,12 @@ cc.Class({
         this.node_fuhuo_nick = cc.find("fuhuo_share/nick",this.node_fuhuo);
         this.node_fuhuo_score = cc.find("fuhuo_share/score",this.node_fuhuo);
         this.node_fuhuo_no = cc.find("fuhuo_share/no",this.node_fuhuo);
+        this.node_fuhuo_time = cc.find("fuhuo_share/time",this.node_fuhuo).getComponent("cc.Label");
+        this.node_fuhuo_close = cc.find("fuhuo_share/close",this.node_fuhuo);
+
+        this.node_fuhuo_close.active = false;
+        this.timeval = 9;
+        this.timedt = 0;
     },
 
     updateUI: function()
@@ -96,52 +102,53 @@ cc.Class({
         this.main.wxBannerShow();
 
 
+
     },
 
     wxFuhuoRank: function(score)
     {
-        var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
-        {
-            FBInstant.getLeaderboardAsync('wscore')
-                .then(function(leaderboard) {
-                    return leaderboard.getConnectedPlayerEntriesAsync();
-                })
-                .then(function(entries) {
-                    var chaoyue = null;
-                    for(var i=0; i < entries.length; ++i) {
-                        var rd = entries[i];
-
-                        if(rd.getPlayer().getID() != FBInstant.player.getID())
-                        {
-                            if(score < rd.getScore())
-                            {
-                                chaoyue = rd;
-                                break;
-                            }
-                        }
-                    }
-
-                    if(chaoyue)
-                    {
-                        self.node_fuhuo_no.active = false;
-                        self.node_fuhuo_nick.active = true;
-                        self.node_fuhuo_score.active = true;
-                        self.node_fuhuo_icon.active = true;
-
-                        self.main.loadPic(self.node_fuhuo_icon,chaoyue.getPlayer().getPhoto());
-                        self.node_fuhuo_nick.getComponent("cc.Label").string = chaoyue.getPlayer().getName();
-                        self.node_fuhuo_score.getComponent("cc.Label").string = "Score:"+chaoyue.getScore();
-                    }
-                    else
-                    {
-                        self.node_fuhuo_no.active = true;
-                        self.node_fuhuo_nick.active = false;
-                        self.node_fuhuo_score.active = false;
-                        self.node_fuhuo_icon.active = false;
-                    }
-                });
-        }
+        //var self = this;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        //{
+        //    FBInstant.getLeaderboardAsync('wscore')
+        //        .then(function(leaderboard) {
+        //            return leaderboard.getConnectedPlayerEntriesAsync();
+        //        })
+        //        .then(function(entries) {
+        //            var chaoyue = null;
+        //            for(var i=0; i < entries.length; ++i) {
+        //                var rd = entries[i];
+        //
+        //                if(rd.getPlayer().getID() != FBInstant.player.getID())
+        //                {
+        //                    if(score < rd.getScore())
+        //                    {
+        //                        chaoyue = rd;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //
+        //            if(chaoyue)
+        //            {
+        //                self.node_fuhuo_no.active = false;
+        //                self.node_fuhuo_nick.active = true;
+        //                self.node_fuhuo_score.active = true;
+        //                self.node_fuhuo_icon.active = true;
+        //
+        //                self.main.loadPic(self.node_fuhuo_icon,chaoyue.getPlayer().getPhoto());
+        //                self.node_fuhuo_nick.getComponent("cc.Label").string = chaoyue.getPlayer().getName();
+        //                self.node_fuhuo_score.getComponent("cc.Label").string = "Score:"+chaoyue.getScore();
+        //            }
+        //            else
+        //            {
+        //                self.node_fuhuo_no.active = true;
+        //                self.node_fuhuo_nick.active = false;
+        //                self.node_fuhuo_score.active = false;
+        //                self.node_fuhuo_icon.active = false;
+        //            }
+        //        });
+        //}
     },
 
     show: function()
@@ -201,5 +208,24 @@ cc.Class({
             this.main.openCoinNode();
         }
     },
+
+    update: function(dt)
+    {
+        this.timedt+=dt;
+        if(this.timedt>=1 && this.timeval>0)
+        {
+            this.timedt = 0;
+            this.timeval -= 1;
+            if(this.timeval<=0)
+            {
+                this.timeval = 0;
+                this.hide();
+                this.main.skip();
+            }
+            if(this.timeval<8)
+                this.node_fuhuo_close.active = true;
+            this.node_fuhuo_time.string = this.timeval+"";
+        }
+    }
     
 });

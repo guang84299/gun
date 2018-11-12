@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -971,7 +973,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 30
@@ -1058,7 +1060,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 33
@@ -1149,7 +1151,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 39
@@ -1409,7 +1411,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Label",
+    "_name": "time",
     "_objFlags": 0,
     "_parent": {
       "__id__": 28
@@ -1442,17 +1444,17 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 285,
-      "height": 40
+      "width": 56,
+      "height": 100
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
+    "_scaleX": 2,
+    "_scaleY": 2,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 120
+      "y": 58
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1470,14 +1472,14 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_actualFontSize": 100,
+    "_fontSize": 100,
+    "_lineHeight": 100,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Will be overtake",
+    "_N$string": "9",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

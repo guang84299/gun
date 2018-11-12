@@ -72,22 +72,35 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            FBInstant.shareAsync({
-                intent: 'REQUEST',
-                image: this.res.getBase64SharePic(),
-                text: 'I am a sharpshooter! I see，I shot，I win.',
-                data: { channel: 'sharexumingmenu' ,fromid:''+FBInstant.player.getID()}
-            }).then(function() {
-                // continue with the game.
-                self.res.showToast("success!");
-                self.main.fuhuo(false,true,false);
-                self.main.qianqista.share(true);
-                self.hide();
-            }).catch(function (error) {
-                self.main.qianqista.share(false);
-                self.res.showToast("fail！");
-                self.hide();
+            this.main.share(function(res){
+                if(res)
+                {
+                    self.res.showToast("success!");
+                    self.main.fuhuo(false,true,false);
+                    self.hide();
+                }
+                else{
+                    self.res.showToast("share fail！");
+                    self.hide();
+                }
             });
+
+            //FBInstant.shareAsync({
+            //    intent: 'REQUEST',
+            //    image: this.res.getBase64SharePic(),
+            //    text: 'I am a sharpshooter! I see，I shot，I win.',
+            //    data: { channel: 'sharexumingmenu' ,fromid:''+FBInstant.player.getID()}
+            //}).then(function() {
+            //    // continue with the game.
+            //    self.res.showToast("success!");
+            //    self.main.fuhuo(false,true,false);
+            //    self.main.qianqista.share(true);
+            //    self.hide();
+            //}).catch(function (error) {
+            //    self.main.qianqista.share(false);
+            //    self.res.showToast("fail！");
+            //    self.hide();
+            //});
 
             //var info = {};
             //info.channel = "sharexumingmenu";

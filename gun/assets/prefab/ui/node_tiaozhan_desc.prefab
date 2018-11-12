@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -655,7 +657,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 183,
+      "width": 159,
       "height": 30
     },
     "_rotationX": 0,
@@ -721,7 +723,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -102.48000000000002,
+      "x": -82.68,
       "y": 0
     },
     "_skewX": 0,
@@ -763,11 +765,11 @@
       "__id__": 19
     },
     "_enabled": true,
-    "isAlignOnce": false,
+    "alignMode": 2,
     "_target": null,
     "_alignFlags": 32,
     "_left": 0,
-    "_right": 1.06,
+    "_right": 1.02,
     "_top": 0,
     "_bottom": 0,
     "_verticalCenter": 0,
@@ -801,8 +803,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 26,
+    "_fontSize": 26,
     "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": null,
@@ -864,7 +866,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 183,
+      "width": 159,
       "height": 30
     },
     "_rotationX": 0,
@@ -930,7 +932,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -102.48000000000002,
+      "x": -82.68,
       "y": 0
     },
     "_skewX": 0,
@@ -972,11 +974,11 @@
       "__id__": 26
     },
     "_enabled": true,
-    "isAlignOnce": false,
+    "alignMode": 2,
     "_target": null,
     "_alignFlags": 32,
     "_left": 0,
-    "_right": 1.06,
+    "_right": 1.02,
     "_top": 0,
     "_bottom": 0,
     "_verticalCenter": 0,
@@ -1010,8 +1012,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 26,
+    "_fontSize": 26,
     "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": null,

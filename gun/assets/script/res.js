@@ -196,79 +196,79 @@ cc.Class({
             type: cc.Prefab
         },
         audio_bgm: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_boss_chu: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_boss_hurt_1: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_boss_hurt_2: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_boss_hurt_3: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_coin: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_foot_1: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_foot_boss_1: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_foot_boss_land: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_hit_head_yuyin: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_hit_head: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_hit_torso: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_ricco_1: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_ricco_2: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_jiesuo: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_rand: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_role_huan: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_role: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         },
         audio_chengjiu: {
-            url: cc.AudioClip,
+            type: cc.AudioClip,
             default: null
         }
     },

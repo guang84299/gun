@@ -206,7 +206,8 @@ cc.Class({
         else if(data == "roleyaoqing")
         {
             this.main.openstore = true;
-            this.main.openAward();
+            //this.main.openAward();
+            this.main.wxVideoShow(1);
         }
         cc.log(data);
     },

@@ -73,13 +73,13 @@ module.exports = {
     pkfromid:"",
     pkroomtype: 0,
     avatarUrl: "",//头像
-    init: function(appId,gameName,initcallback,showcallback)
+    init: function(appId,gameName,FBData,initcallback,showcallback)
     {
         var self = this;
         if(cc.sys.myweb)
         {
             this.gameId = appId + "";
-            this.openid = FBInstant.player.getID();
+            this.openid = FBData.id;
         }
         else
         {
@@ -98,26 +98,26 @@ module.exports = {
             this.state = 1;
             if(cc.sys.myweb)
             {
-                var query = FBInstant.getEntryPointData();
-                if(query)
-                {
-                    var datas = query;
-                    if(datas.channel)
-                        this.channel = datas.channel;
-                    if(datas.fromid)
-                    {
-                        this.fromid = datas.fromid;
-                        this.pkfromid = datas.fromid;
-                    }
-                    if(datas.roomType)
-                        this.pkroomtype = datas.roomType;
-
-                    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
-                    {
-                        if(this.showcallback)
-                            this.showcallback();
-                    }
-                }
+                //var query = FBInstant.getEntryPointData();
+                //if(query)
+                //{
+                //    var datas = query;
+                //    if(datas.channel)
+                //        this.channel = datas.channel;
+                //    if(datas.fromid)
+                //    {
+                //        this.fromid = datas.fromid;
+                //        this.pkfromid = datas.fromid;
+                //    }
+                //    if(datas.roomType)
+                //        this.pkroomtype = datas.roomType;
+                //
+                //    if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
+                //    {
+                //        if(this.showcallback)
+                //            this.showcallback();
+                //    }
+                //}
 
 
                 //var query = res.query;
@@ -135,8 +135,8 @@ module.exports = {
 //                        self.showcallback();
 //                }
 
-                self.userName = FBInstant.player.getName();
-                self.avatarUrl = FBInstant.player.getPhoto();
+                self.userName = FBData.name;
+                self.avatarUrl = FBData.icon;
                 console.log("self.avatarUrl:"+self.avatarUrl);
                 self.initdata();
 
@@ -631,7 +631,7 @@ module.exports = {
         };
         // note: In Internet Explorer, the timeout property may be set only after calling the open()
         // method and before calling the send() method.
-        xhr.timeout = 5000; // 5 seconds for timeout
+        xhr.timeout = 15000; // 5 seconds for timeout
         // var btoa = btoa("test:test");
         var btoa = require('buffer').Buffer.from('test:test').toString('base64');
         xhr.setRequestHeader("Authorization", "Basic " + btoa);
@@ -666,7 +666,7 @@ module.exports = {
 
         // note: In Internet Explorer, the timeout property may be set only after calling the open()
         // method and before calling the send() method.
-        xhr.timeout = 5000;// 5 seconds for timeout
+        xhr.timeout = 15000;// 5 seconds for timeout
         //
         var datas = "";
         var i = 0;

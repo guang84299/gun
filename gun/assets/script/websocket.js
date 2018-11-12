@@ -295,7 +295,7 @@ module.exports = {
 
             body.playerB = {};
             body.playerB.rotate = 0;
-            body.playerB.avatarUrl = cc.url.raw("resources/avatar/1.jpg");
+            body.playerB.avatarUrl = "avatar/1.jpg";
             body.playerB.maxJscore = 0;
             body.playerB.hp = 50;
             body.playerB.skinId = this.randSkinId();
@@ -319,7 +319,7 @@ module.exports = {
                 {
                     var num = res.data.avatarUrl.split(".jpg")[0];
                     num = num.split("avatar/")[1];
-                    body.playerB.avatarUrl = cc.url.raw("resources/avatar/"+num+".jpg");
+                    body.playerB.avatarUrl = "avatar/"+num+".jpg";
                 }
                 body.playerB.name = res.data.name;
                 self.joinRoomResult(JSON.stringify(body));
@@ -354,7 +354,7 @@ module.exports = {
 
             body.playerB = {};
             body.playerB.rotate = 0;
-            body.playerB.avatarUrl = cc.url.raw("resources/avatar/1.jpg");
+            body.playerB.avatarUrl = "avatar/1.jpg";
             body.playerB.maxJscore = 0;
             body.playerB.hp = 50;
             body.playerB.skinId = this.randSkinId();
@@ -374,7 +374,7 @@ module.exports = {
 
             body.playerC = {};
             body.playerC.rotate = 0;
-            body.playerC.avatarUrl = cc.url.raw("resources/avatar/1.jpg");
+            body.playerC.avatarUrl = "avatar/1.jpg";
             body.playerC.maxJscore = 0;
             body.playerC.hp = 50;
             body.playerC.skinId = this.randSkinId();
@@ -394,7 +394,7 @@ module.exports = {
 
             body.playerD = {};
             body.playerD.rotate = 0;
-            body.playerD.avatarUrl = cc.url.raw("resources/avatar/1.jpg");
+            body.playerD.avatarUrl = "avatar/1.jpg";
             body.playerD.maxJscore = 0;
             body.playerD.hp = 50;
             body.playerD.skinId = this.randSkinId();
@@ -418,7 +418,7 @@ module.exports = {
                 {
                     var num = res.data.avatarUrl.split(".jpg")[0];
                     num = num.split("avatar/")[1];
-                    body.playerB.avatarUrl = cc.url.raw("resources/avatar/"+num+".jpg");
+                    body.playerB.avatarUrl = "avatar/"+num+".jpg";
                 }
                 body.playerB.name = res.data.name;
                 self.pk.qianqista.randRobot(function(res2){
@@ -427,7 +427,7 @@ module.exports = {
                     {
                         var num = res2.data.avatarUrl.split(".jpg")[0];
                         num = num.split("avatar/")[1];
-                        body.playerC.avatarUrl = cc.url.raw("resources/avatar/"+num+".jpg");
+                        body.playerC.avatarUrl = "avatar/"+num+".jpg";
                     }
                     body.playerC.name = res2.data.name;
                     self.pk.qianqista.randRobot(function(res3){
@@ -436,7 +436,7 @@ module.exports = {
                         {
                             var num = res3.data.avatarUrl.split(".jpg")[0];
                             num = num.split("avatar/")[1];
-                            body.playerD.avatarUrl = cc.url.raw("resources/avatar/"+num+".jpg");
+                            body.playerD.avatarUrl = "avatar/"+num+".jpg";
                         }
                         body.playerD.name = res3.data.name;
                         self.joinRoomResult(JSON.stringify(body));

@@ -84,48 +84,48 @@ cc.Class({
 
     wxOverRank: function(score)
     {
-        var self = this;
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
-        {
-            this.main.wxUploadScore(score);
-
-            FBInstant.getLeaderboardAsync('wscore')
-                .then(function(leaderboard) {
-                    return leaderboard.getConnectedPlayerEntriesAsync();
-                })
-                .then(function(entries) {
-                    var chaoyue = null;
-                    for(var i=0; i < entries.length; ++i) {
-                        var rd = entries[i];
-
-                        if(rd.getPlayer().getID() != FBInstant.player.getID())
-                        {
-                            if(score < rd.getScore())
-                            {
-                                chaoyue = rd;
-                                break;
-                            }
-                        }
-                    }
-
-                    if(chaoyue)
-                    {
-                        self.node_over_icon.active = true;
-                        self.node_over_nick.active = true;
-                        self.node_over_no.active = false;
-
-
-                        self.main.loadPic(self.node_over_icon,chaoyue.getPlayer().getPhoto());
-                        self.node_over_nick.getComponent("cc.Label").string = chaoyue.getPlayer().getName();
-                    }
-                    else
-                    {
-                        self.node_over_icon.active = false;
-                        self.node_over_nick.active = false;
-                        self.node_over_no.active = true;
-                    }
-                });
-        }
+        //var self = this;
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
+        //{
+        //    this.main.wxUploadScore(score);
+        //
+        //    FBInstant.getLeaderboardAsync('wscore')
+        //        .then(function(leaderboard) {
+        //            return leaderboard.getConnectedPlayerEntriesAsync();
+        //        })
+        //        .then(function(entries) {
+        //            var chaoyue = null;
+        //            for(var i=0; i < entries.length; ++i) {
+        //                var rd = entries[i];
+        //
+        //                if(rd.getPlayer().getID() != FBInstant.player.getID())
+        //                {
+        //                    if(score < rd.getScore())
+        //                    {
+        //                        chaoyue = rd;
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //
+        //            if(chaoyue)
+        //            {
+        //                self.node_over_icon.active = true;
+        //                self.node_over_nick.active = true;
+        //                self.node_over_no.active = false;
+        //
+        //
+        //                self.main.loadPic(self.node_over_icon,chaoyue.getPlayer().getPhoto());
+        //                self.node_over_nick.getComponent("cc.Label").string = chaoyue.getPlayer().getName();
+        //            }
+        //            else
+        //            {
+        //                self.node_over_icon.active = false;
+        //                self.node_over_nick.active = false;
+        //                self.node_over_no.active = true;
+        //            }
+        //        });
+        //}
     },
 
     updateDian: function(visible)
@@ -224,20 +224,30 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
         {
-            FBInstant.shareAsync({
-                intent: 'REQUEST',
-                image: this.res.getBase64SharePic(),
-                text: 'I am a sharpshooter! I see，I shot，I win.',
-                data: { channel: 'sharechangemenu',fromid:''+FBInstant.player.getID() }
-            }).then(function() {
-                // continue with the game.
-                self.res.showToast("share success!");
-
-                self.main.qianqista.share(true);
-            }).catch(function (error) {
-                self.main.qianqista.share(false);
-                self.res.showToast("share fail！");
+            this.main.share(function(res){
+                if(res)
+                {
+                    self.res.showToast("share success!");
+                }
+                else{
+                    self.res.showToast("share fail！");
+                }
             });
+
+            //FBInstant.shareAsync({
+            //    intent: 'REQUEST',
+            //    image: this.res.getBase64SharePic(),
+            //    text: 'I am a sharpshooter! I see，I shot，I win.',
+            //    data: { channel: 'sharechangemenu',fromid:''+FBInstant.player.getID() }
+            //}).then(function() {
+            //    // continue with the game.
+            //    self.res.showToast("share success!");
+            //
+            //    self.main.qianqista.share(true);
+            //}).catch(function (error) {
+            //    self.main.qianqista.share(false);
+            //    self.res.showToast("share fail！");
+            //});
 
 
 

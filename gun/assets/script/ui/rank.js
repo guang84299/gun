@@ -91,10 +91,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.node.destroy();
     },
 
@@ -184,7 +186,7 @@ cc.Class({
                     var srank = selfrank.id;
                     if(selfrank.id > 50 || selfrank.id == 0)
                     {
-                        rans = "落榜";
+                        rans = "-";
                         srank = 100;
                     }
 
@@ -369,7 +371,7 @@ cc.Class({
                     var srank = selfrank.id;
                     if(selfrank.id > 50 || selfrank.id == 0)
                     {
-                        rans = "落榜";
+                        rans = "-";
                         srank = 100;
                     }
                     this.node_paiming_num.getComponent("cc.Label").string = rans;

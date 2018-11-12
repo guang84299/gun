@@ -66,11 +66,8 @@
     "WebView",
     "RichText",
     "MotionStreak",
-    "DragonBones",
     "Physics",
     "StudioComponent",
-    "RenderTexture",
-    "Chipmunk",
     "Camera"
   ],
   "fit-height": true,
@@ -89,5 +86,6 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false
+  "use-project-simulator-setting": false,
+  "start-scene": "current"
 }

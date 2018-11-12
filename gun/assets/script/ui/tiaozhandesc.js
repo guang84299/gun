@@ -126,11 +126,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI(lv);
-
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.node.destroy();
     },
 

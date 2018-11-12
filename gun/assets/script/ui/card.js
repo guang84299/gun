@@ -48,10 +48,12 @@ cc.Class({
     {
         this.node.active = true;
         this.updateUI();
+        this.main.wxBannerShow();
     },
 
     hide: function()
     {
+        this.main.wxBannerHide();
         this.node.destroy();
     },
 
@@ -73,7 +75,8 @@ cc.Class({
         }
         else if(data == "sendcard")
         {
-            this.main.wxGropShareCard();
+            //this.main.wxGropShareCard();
+            this.main.wxVideoShow(9);
             this.main.qianqista.event("btn_fangdanyi_qiuzu");
         }
        

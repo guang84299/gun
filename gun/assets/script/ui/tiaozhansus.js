@@ -181,22 +181,34 @@ cc.Class({
               var self = this;
               if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || cc.sys.myweb)
               {
-                  FBInstant.shareAsync({
-                      intent: 'REQUEST',
-                      image: this.res.getBase64SharePic(),
-                      text: 'I am a sharpshooter! I see，I shot，I win.',
-                      data: { channel: 'sharetiaozhan' ,fromid:''+FBInstant.player.getID()}
-                  }).then(function() {
-                      // continue with the game.
-                      self.node_tiaozhan_xuanyao.interactable = false;
-                      storage.setStorageCoin(storage.getStorageCoin()+self.award*2);
-                      self.res.showToast("Coin+"+self.award*2);
-
-                      self.main.qianqista.share(true);
-                  }).catch(function (error) {
-                      self.main.qianqista.share(false);
-                      self.res.showToast("share fail！");
+                  this.main.share(function(res){
+                      if(res)
+                      {
+                          self.node_tiaozhan_xuanyao.interactable = false;
+                          storage.setStorageCoin(storage.getStorageCoin()+self.award*2);
+                          self.res.showToast("Coin+"+self.award*2);
+                      }
+                      else{
+                          self.res.showToast("share fail！");
+                      }
                   });
+
+                  //FBInstant.shareAsync({
+                  //    intent: 'REQUEST',
+                  //    image: this.res.getBase64SharePic(),
+                  //    text: 'I am a sharpshooter! I see，I shot，I win.',
+                  //    data: { channel: 'sharetiaozhan' ,fromid:''+FBInstant.player.getID()}
+                  //}).then(function() {
+                  //    // continue with the game.
+                  //    self.node_tiaozhan_xuanyao.interactable = false;
+                  //    storage.setStorageCoin(storage.getStorageCoin()+self.award*2);
+                  //    self.res.showToast("Coin+"+self.award*2);
+                  //
+                  //    self.main.qianqista.share(true);
+                  //}).catch(function (error) {
+                  //    self.main.qianqista.share(false);
+                  //    self.res.showToast("share fail！");
+                  //});
 
                   //var info = {};
                   //info.channel = "sharetiaozhan";

@@ -3,7 +3,7 @@
     "__type__": "cc.SceneAsset",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "scene": {
       "__id__": 1
     }
@@ -1223,7 +1223,9 @@
       "__id__": 27
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -1541,7 +1543,9 @@
       "__id__": 35
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -1859,7 +1863,9 @@
       "__id__": 43
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -2177,7 +2183,9 @@
       "__id__": 51
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -2495,7 +2503,9 @@
       "__id__": 59
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -2813,7 +2823,9 @@
       "__id__": 67
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -3131,7 +3143,9 @@
       "__id__": 75
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "alignMode": 1,
+    "_wasAlignOnce": {},
+    "isAlignOnce": {},
     "_target": null,
     "_alignFlags": 8,
     "_left": 1.08,
@@ -5654,7 +5668,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 145
@@ -6056,7 +6070,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 399,
+      "x": 294,
       "y": 41
     },
     "_skewX": 0,
@@ -7768,7 +7782,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 421,
+      "x": 360,
       "y": 1103
     },
     "_skewX": 0,
@@ -8092,7 +8106,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 205

@@ -60,6 +60,8 @@ cc.Class({
          // cc.game.addPersistRootNode(this.node);
          // cc.game.setFrameRate(50);
 
+         this.bannertime = 0;
+
      },
 
     initNet: function()
@@ -250,6 +252,11 @@ cc.Class({
         //        cc.scaleTo(0.5,1.2).easing(cc.easeSineIn()),
         //        cc.scaleTo(0.5,1).easing(cc.easeSineOut())
         //    )));
+
+        this.node_main_wangqiu_sp = cc.find("wangqiu/sp",this.node_main);
+        this.node_main_wangqiu_guang = cc.find("wangqiu/guang",this.node_main);
+        this.node_main_wangqiu_guang.runAction(cc.repeatForever(cc.rotateBy(1,180)));
+        this.node_main_wangqiu_sp.runAction(cc.repeatForever(cc.rotateBy(1,-180)));
 
         this.node_main_morebabg = cc.find("morebabg",this.node_main);
         this.node_main_morebabg_morebaarrow = cc.find("morebabg/morebaarrow",this.node_main);
@@ -1146,6 +1153,10 @@ cc.Class({
         else if(data == "buluo")
         {
             this.wxBuluo();
+        }
+        else if(data == "wangqiu")
+        {
+            this.wxWangqiu();
         }
 
 
@@ -5652,6 +5663,11 @@ cc.Class({
     {
         var self = this;
         this.wxBannerHide();
+        var t = new Date().getTime();
+
+        if(t - this.bannertime < 3000)
+            return;
+
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
             if(self.bannerAd == null)
@@ -5674,6 +5690,7 @@ cc.Class({
             {
                 self.bannerAd.isshows = true;
                 self.bannerAd.show();
+                self.bannertime = t;
             }
 
             //BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
@@ -5863,7 +5880,7 @@ cc.Class({
     {
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            BK.QQ.enterPubAccountCard("1290239091");
+            BK.QQ.enterPubAccountCard("1952564793");
             //wx.previewImage({
             //     urls: ["https://77qqup.com:442/img/wxgame/192b9782835246449b8f4e62f3ed568c.jpg?="+Math.random()],
             //     success: function (res) {
@@ -5881,6 +5898,16 @@ cc.Class({
         {
             var buluo = "https://buluo.qq.com/mobile/barindex.html?_bid=128&_wv=1027&bid=408719"
             BK.MQQ.Webview.open(buluo);
+        }
+    },
+
+    wxWangqiu: function()
+    {
+        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        {
+            var desGameId = 3116; //跳转的gameid，必须为数字
+            var extendInfo = "2903"; //额外参数，必须为字符串
+            BK.QQ.skipGame(desGameId, extendInfo);
         }
     }
 

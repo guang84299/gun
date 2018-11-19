@@ -71,7 +71,7 @@ cc.Class({
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
-        this.node_role_center.height = s.height - 335;
+        this.node_role_center.height = s.height - 235;
         this.node_role_center.color = this.main.ltcolor;
 
         this.node_role_top_player.destroyAllChildren();

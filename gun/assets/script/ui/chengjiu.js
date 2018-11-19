@@ -46,7 +46,7 @@ cc.Class({
     updateUI: function()
     {
         var s = cc.winSize;
-        this.node_chengjiu_center.height = s.height - 335;
+        this.node_chengjiu_center.height = s.height - 235;
         this.node_chengjiu_center.color = this.main.ltcolor;
 
         this.node_chengjiu_top_player.destroyAllChildren();
@@ -61,7 +61,7 @@ cc.Class({
         this.node_chengjiu_score.getComponent("cc.Label").string = storage.getStorageScore();
         this.node_chengjiu_coin.getComponent("cc.Label").string = storage.getStorageCoin();
 
-        for(var i=1;i<=6;i++)
+        for(var i=1;i<=5;i++)
         {
             var item = cc.find("item_"+i,this.node_chengjiu_scroll_content);
             var lnum = cc.find("num",item);

@@ -13,7 +13,7 @@ cc.Class({
 
 
      onLoad: function() {
-         cc.sys.myweb = (cc.sys.os == cc.sys.OS_ANDROID);
+         cc.sys.myweb = true;
          this.dsize = new cc.size(720, 1584);
          this.tex = new cc.Texture2D();
          this.subdt = 0;
@@ -78,7 +78,7 @@ cc.Class({
              cc.delayTime(0.2),
              cc.callFunc(function(){
                  if(cc.sys.myweb)
-                    jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "toLogin", "(Ljava/lang/String;)V","login");
+                     cc.game.loginFail();
                  else
                      cc.game.loginFail();
              })
@@ -111,7 +111,7 @@ cc.Class({
         cc.game.shareCallback = callback;
         if(cc.sys.myweb)
         {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "share", "(Ljava/lang/String;)V","share");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "share", "(Ljava/lang/String;)V","share");
         }
         else
         {
@@ -141,7 +141,7 @@ cc.Class({
         cc.game.vedioCallback = callback;
         if(cc.sys.myweb)
         {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showVedio", "(Ljava/lang/String;)V","vedio");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showVedio", "(Ljava/lang/String;)V","vedio");
         }
         else
         {
@@ -152,7 +152,9 @@ cc.Class({
     androidLog: function(str)
     {
         if(cc.sys.myweb)
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "log", "(Ljava/lang/String;)V", str);
+        {
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "log", "(Ljava/lang/String;)V", str);
+        }
         else
             cc.log(str);
     },
@@ -402,6 +404,11 @@ cc.Class({
         this.GAME.moreba = false;
         this.GAME.moreba_items = "";
         var sto_channel = cc.sys.localStorage.getItem("channel");
+
+        this.GAME.fangdanyi = true;
+        this.GAME.sharecard = true;
+        cc.find("fangdanyi",this.node_main).active = true;
+
 
         if(this.GAME.control.length>0)
         {
@@ -5115,7 +5122,7 @@ cc.Class({
         this.wxBannerHide();
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","1");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","1");
             //BK.Advertisement.fetchBannerAd(function (retCode, msg, adBannerHandle) {
             //    if (retCode == 0) {
             //        //2.开发者 使用adBannerHanlde
@@ -5171,7 +5178,7 @@ cc.Class({
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","0");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showBanner", "(Ljava/lang/String;)V","0");
             //if(self.bannerAd)
             //    self.bannerAd.close();
             //self.bannerAd = null;
@@ -5185,7 +5192,7 @@ cc.Class({
         var self = this;
         if(cc.sys.myweb)
         {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showSpot", "(Ljava/lang/String;)V","1");
+            //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showSpot", "(Ljava/lang/String;)V","1");
             //if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
             //{
             //    self.preloadedInterstitialisload = false;

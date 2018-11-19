@@ -75,6 +75,8 @@ module.exports = {
     avatarUrl: "",//头像
     init: function(appId,gameName,FBData,initcallback,showcallback)
     {
+        if(true)
+            return;
         var self = this;
         if(cc.sys.myweb)
         {
@@ -270,6 +272,8 @@ module.exports = {
     //获取控制数据
     control: function(callback)
     {
+        if(true)
+            return;
         this.sendRequest("control",{gameId:this.gameId},function(res){
             console.log("control:",res);
             if(callback)

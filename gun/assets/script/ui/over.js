@@ -56,7 +56,7 @@ cc.Class({
         //this.initGmae();
         this.main.node_game_ui.active = false;
         this.main.openover = true;
-        this.node_over_coin.getComponent("cc.Label").string = parseInt(this.main.GAME.coin);
+        this.node_over_coin.getComponent("cc.Label").string = parseInt(storage.getStorageCoin());
         this.node_over_score.getComponent("cc.Label").string = parseInt(this.main.GAME.score);
         this.node_over_chaoyue.getComponent("cc.Label").string = "More than "+ this.main.getChaoyue2() +" of users nationwide";
         cc.find("change/sp",this.node_over).color = this.main.ltcolor;
@@ -64,6 +64,7 @@ cc.Class({
         cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
         cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
         cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
+        cc.find("bg/coin/num",this.node_over).getComponent("cc.Label").string =  parseInt(this.main.GAME.coin);
         this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
         this.wxOverRank(Math.floor(this.main.GAME.score));
 

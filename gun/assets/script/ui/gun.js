@@ -61,7 +61,7 @@ cc.Class({
             this.node_roleyaoqing.active = true;
         else
             this.node_roleyaoqing.active = false;
-        this.node_gun_center.height = s.height - 335;
+        this.node_gun_center.height = s.height - 235;
         this.node_gun_center.color = this.main.ltcolor;
 
         this.node_gun_top_player.destroyAllChildren();
@@ -156,7 +156,7 @@ cc.Class({
             }
         }
         this.updateGunRiQi();
-        this.updateGunJifen();
+        //this.updateGunJifen();
 
         storage.playSound(this.res.audio_role);
     },

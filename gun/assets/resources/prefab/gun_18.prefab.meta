@@ -1,6 +1,7 @@
 {
   "ver": "1.0.0",
   "uuid": "9b7f3c08-fea8-435a-b703-252cf413f02d",
+  "optimizationPolicy": "AUTO",
   "asyncLoadAssets": false,
   "subMetas": {}
 }

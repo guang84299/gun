@@ -193,7 +193,7 @@ cc.Class({
 
                     this.node_paiming_num2.getComponent("cc.Label").string = rans;
                     this.loadPic(self.node_paiming_icon2,selfrank.avatarUrl);
-                    this.node_paiming_nick2.getComponent("cc.Label").string = selfrank.nick;
+                    this.node_paiming_nick2.getComponent("cc.Label").string = storage.getLabelStr(selfrank.nick,8);
                     this.node_paiming_score2.getComponent("cc.Label").string = selfrank.jscore;
                     this.node_paiming_lv2.getComponent("cc.Sprite").spriteFrame = this.res.getPkLvSp(selfrank.jscore,srank);
 
@@ -249,7 +249,7 @@ cc.Class({
                         num.getComponent("cc.Label").string = (i+1)+"";
                         if(rd.url && rd.url.length>0)
                             self.loadPic(icon,rd.url);
-                        nick.getComponent("cc.Label").string = rd.nick;
+                        nick.getComponent("cc.Label").string = storage.getLabelStr(rd.nick,8);
                         score.getComponent("cc.Label").string = rd.a1+"";
 
                         if(rd.selfFlag)
@@ -276,7 +276,7 @@ cc.Class({
                     {
                         self.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
                         self.loadPic(self.node_paiming_icon,selfrank.url);
-                        self.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
+                        self.node_paiming_nick.getComponent("cc.Label").string = storage.getLabelStr(selfrank.nick,8);
                         self.node_paiming_score.getComponent("cc.Label").string = selfrank.a1+"";
 
                         // self.node_paiming_role.destroyAllChildren();
@@ -318,7 +318,7 @@ cc.Class({
             num.getComponent("cc.Label").string = (rnum+1)+"";
             if(data.avatarUrl && data.avatarUrl.length>10)
                 this.loadPic(icon,data.avatarUrl);
-            nick.getComponent("cc.Label").string = data.nick;
+            nick.getComponent("cc.Label").string = storage.getLabelStr(data.nick,8);
             score.getComponent("cc.Label").string = data.jscore;
             lv.getComponent("cc.Sprite").spriteFrame = this.res.getPkLvSp(data.jscore,rnum+1);
 
@@ -386,7 +386,7 @@ cc.Class({
                     }
                     this.node_paiming_num.getComponent("cc.Label").string = rans;
                     this.loadPic(self.node_paiming_icon,selfrank.avatarUrl);
-                    this.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
+                    this.node_paiming_nick.getComponent("cc.Label").string = storage.getLabelStr(selfrank.nick,8);
                     this.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
                     this.node_paiming_lv.getComponent("cc.Sprite").spriteFrame = this.res.getPkLvSp(selfrank.score,srank);
 
@@ -445,7 +445,7 @@ cc.Class({
                         num.getComponent("cc.Label").string = (i+1)+"";
                         if(rd.url && rd.url.length>0)
                             self.loadPic(icon,rd.url);
-                        nick.getComponent("cc.Label").string = rd.nick;
+                        nick.getComponent("cc.Label").string = storage.getLabelStr(rd.nick,8);
                         score.getComponent("cc.Label").string = rd.score+"";
 
                         if(rd.selfFlag)
@@ -472,7 +472,7 @@ cc.Class({
                     {
                         self.node_paiming_num.getComponent("cc.Label").string = selfrank.num+"";
                         self.loadPic(self.node_paiming_icon,selfrank.url);
-                        self.node_paiming_nick.getComponent("cc.Label").string = selfrank.nick;
+                        self.node_paiming_nick.getComponent("cc.Label").string = storage.getLabelStr(selfrank.nick,8);
                         self.node_paiming_score.getComponent("cc.Label").string = selfrank.score+"";
 
                         // self.node_paiming_role.destroyAllChildren();
@@ -512,7 +512,7 @@ cc.Class({
             num.getComponent("cc.Label").string = (rnum+1)+"";
             if(data.avatarUrl && data.avatarUrl.length>10)
                 this.loadPic(icon,data.avatarUrl);
-            nick.getComponent("cc.Label").string = data.nick;
+            nick.getComponent("cc.Label").string = storage.getLabelStr(data.nick,8);
             score.getComponent("cc.Label").string = data.score+"";
             lv.getComponent("cc.Sprite").spriteFrame = this.res.getPkLvSp(data.score,rnum+1);
 

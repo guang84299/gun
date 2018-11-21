@@ -165,7 +165,10 @@ cc.Class({
                             }
                         }
                     }
-
+                    if(!cc.isValid(self))
+                    {
+                        return;
+                    }
                     if(chaoyue)
                     {
                         self.node_over_icon.active = true;
@@ -174,7 +177,7 @@ cc.Class({
 
 
                         self.main.loadPic(self.node_over_icon,chaoyue.url);
-                        self.node_over_nick.getComponent("cc.Label").string = chaoyue.nick;
+                        self.node_over_nick.getComponent("cc.Label").string = storage.getLabelStr(chaoyue.nick,18);
                     }
                     else
                     {

@@ -331,6 +331,36 @@ module.exports = {
         }
     },
 
+    isConec: function(callback)
+    {
+        var xhr = cc.loader.getXMLHttpRequest();
+        var requestURL = "https://www.baidu.com/";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && (xhr.status >= 200 && xhr.status < 300)) {
+                if (callback !== null) {
+                    callback(true);
+                }
+            }
+            else
+            {
+                if (callback !== null) {
+                    callback(false);
+                }
+            }
+        };
+        xhr.open("POST", requestURL, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        if (cc.sys.isNative) {
+            xhr.setRequestHeader("Accept-Encoding", "gzip,deflate");
+        }
+        // note: In Internet Explorer, the timeout property may be set only after calling the open()
+        // method and before calling the send() method.
+        xhr.timeout = 5000;// 5 seconds for timeout
+        var datas = "";
+        xhr.send(datas);
+    },
+
+
     getOpenId: function(callback)
     {
         var self = this;
@@ -685,10 +715,6 @@ module.exports = {
         xhr.send(datas);
         //xhr.send(params);
     }
-
-
-
-
 
 };
 

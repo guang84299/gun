@@ -646,5 +646,42 @@ module.exports = {
             }
         }
         return false;
+    },
+
+    getLabelStr: function(str,num)
+    {
+        var s = "";
+        var len = 0;
+        for (var i=0; i<str.length; i++) {
+            var c = str.charCodeAt(i);
+            //单字节加1
+            if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {
+                len++;
+                if(len>=num-2)
+                {
+                    if(i != str.length-1)
+                        s += "...";
+                   break;
+                }
+                else
+                {
+                    s += str.charAt(i);
+                }
+            }
+            else {
+                len+=2;
+                if(len>=num-2)
+                {
+                    if(i != str.length-1)
+                        s += "...";
+                    break;
+                }
+                else
+                {
+                    s += str.charAt(i);
+                }
+            }
+        }
+        return s;
     }
 };

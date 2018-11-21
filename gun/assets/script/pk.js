@@ -67,7 +67,7 @@ cc.Class({
 
         websocket.init(this,function(){
             websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
-         });
+        });
 
         this.subTime = 0;
         this.subDt =  0;
@@ -242,11 +242,14 @@ cc.Class({
 
     updateUI: function()
     {
-        this.loadPic(this.node_sel_box_1,this.qianqista.avatarUrl+"?"+Math.random());
-        this.node_sel_box_1_name.string = this.qianqista.userName;
+        if(this.main.isConec)
+        {
+            this.loadPic(this.node_sel_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+            this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
+        }
 
-        this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
-        this.node_sel2_box_1_name.string = this.qianqista.userName;
+        this.node_sel_box_1_name.string = storage.getLabelStr(this.qianqista.userName,12);
+        this.node_sel2_box_1_name.string = storage.getLabelStr(this.qianqista.userName,12);
 
         var rank = 1000;
         var pk = this.main.worldrank.pk;
@@ -950,7 +953,7 @@ cc.Class({
                 this.initRobot();
 
                 this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
-                this.node_sel_box_2_name.string = enemyPlayer.name;
+                this.node_sel_box_2_name.string = storage.getLabelStr(enemyPlayer.name,12);
                 this.node_sel_box_2_wenhao.active = false;
                 this.node_sel_title.string = "匹配成功";
                 this.node_sel_willstart.string = "即将开始游戏...3";
@@ -991,7 +994,7 @@ cc.Class({
             {
                 var enemyPlayer = this.findEnemyPlayerData();
                 this.loadPic(this.node_sel_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
-                this.node_sel_box_2_name.string = enemyPlayer.name;
+                this.node_sel_box_2_name.string = storage.getLabelStr(enemyPlayer.name,12);
                 this.node_sel_box_2_wenhao.active = false;
                 this.node_sel_title.string = "匹配成功";
                 this.node_sel_willstart.string = "即将开始游戏...3";
@@ -1062,12 +1065,12 @@ cc.Class({
             if(this.playerData.playerA)
             {
                 this.loadPic(this.node_sel2_box_1,this.playerData.playerA.avatarUrl+"?"+Math.random());
-                this.node_sel2_box_1_name.string = this.playerData.playerA.name;
+                this.node_sel2_box_1_name.string = storage.getLabelStr(this.playerData.playerA.name,12);
             }
             if(this.playerData.playerB)
             {
                 this.loadPic(this.node_sel2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
-                this.node_sel2_box_2_name.string = this.playerData.playerB.name;
+                this.node_sel2_box_2_name.string = storage.getLabelStr(this.playerData.playerB.name,12);
                 this.node_sel2_box_2_wenhao.active = false;
             }
             else
@@ -1079,7 +1082,7 @@ cc.Class({
             if(this.playerData.playerC)
             {
                 this.loadPic(this.node_sel2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
-                this.node_sel2_box_3_name.string = this.playerData.playerC.name;
+                this.node_sel2_box_3_name.string = storage.getLabelStr(this.playerData.playerC.name,12);
                 this.node_sel2_box_3_wenhao.active = false;
             }
             else
@@ -1091,7 +1094,7 @@ cc.Class({
             if(this.playerData.playerD)
             {
                 this.loadPic(this.node_sel2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
-                this.node_sel2_box_4_name.string = this.playerData.playerD.name;
+                this.node_sel2_box_4_name.string = storage.getLabelStr(this.playerData.playerD.name,12);
                 this.node_sel2_box_4_wenhao.active = false;
             }
             else
@@ -1225,7 +1228,7 @@ cc.Class({
         this.node_sel2_willstart.string = "";
 
         this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
-        this.node_sel2_box_1_name.string = this.qianqista.userName;
+        this.node_sel2_box_1_name.string = storage.getLabelStr(this.qianqista.userName,12);
         this.node_sel2_box_2_name.string = "等待加入";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
         this.node_sel2_box_3_name.string = "等待加入";
@@ -1256,7 +1259,7 @@ cc.Class({
         this.node_sel2_willstart.string = "";
 
         this.loadPic(this.node_sel2_box_1,this.qianqista.avatarUrl+"?"+Math.random());
-        this.node_sel2_box_1_name.string = this.qianqista.userName;
+        this.node_sel2_box_1_name.string = storage.getLabelStr(this.qianqista.userName,12);
         this.node_sel2_box_2_name.string = "等待加入";
         this.node_sel2_box_2.getComponent("cc.Sprite").spriteFrame = this.gray_sprite;
         this.node_sel2_box_3_name.string = "等待加入";
@@ -1600,7 +1603,7 @@ cc.Class({
         if(this.playerData.playerA)
         {
             this.loadPic(this.a_icon,this.playerData.playerA.avatarUrl+"?"+Math.random());
-            this.a_name.string = this.playerData.playerA.name;
+            this.a_name.string = storage.getLabelStr(this.playerData.playerA.name,12);
             this.a_pro.progress = 1;
             this.a_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerA);
@@ -1608,7 +1611,7 @@ cc.Class({
         if(this.playerData.playerB)
         {
             this.loadPic(this.b_icon,this.playerData.playerB.avatarUrl+"?"+Math.random());
-            this.b_name.string = this.playerData.playerB.name;
+            this.b_name.string = storage.getLabelStr(this.playerData.playerB.name,12);
             this.b_pro.progress = 1;
             this.b_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerB);
@@ -1616,7 +1619,7 @@ cc.Class({
         if(this.playerData.playerC)
         {
             this.loadPic(this.c_icon,this.playerData.playerC.avatarUrl+"?"+Math.random());
-            this.c_name.string = this.playerData.playerC.name;
+            this.c_name.string = storage.getLabelStr(this.playerData.playerC.name,12);
             this.c_pro.progress = 1;
             this.c_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerC);
@@ -1624,7 +1627,7 @@ cc.Class({
         if(this.playerData.playerD)
         {
             this.loadPic(this.d_icon,this.playerData.playerD.avatarUrl+"?"+Math.random());
-            this.d_name.string = this.playerData.playerD.name;
+            this.d_name.string = storage.getLabelStr(this.playerData.playerD.name,12);
             this.d_pro.progress = 1;
             this.d_pro_bar.color = cc.color(0,160,233);
             this.initPlayer(this.playerData.playerD);
@@ -2888,10 +2891,10 @@ cc.Class({
             this.loadPic(this.node_over2_box_2,this.playerData.playerB.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over2_box_3,this.playerData.playerC.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over2_box_4,this.playerData.playerD.avatarUrl+"?"+Math.random());
-            this.node_over2_box_1_name.string = this.playerData.playerA.name;
-            this.node_over2_box_2_name.string = this.playerData.playerB.name;
-            this.node_over2_box_3_name.string = this.playerData.playerC.name;
-            this.node_over2_box_4_name.string = this.playerData.playerD.name;
+            this.node_over2_box_1_name.string = storage.getLabelStr(this.playerData.playerA.name,12);
+            this.node_over2_box_2_name.string = storage.getLabelStr(this.playerData.playerB.name,12);
+            this.node_over2_box_3_name.string = storage.getLabelStr(this.playerData.playerC.name,12);
+            this.node_over2_box_4_name.string = storage.getLabelStr(this.playerData.playerD.name,12);
             this.node_over2_guang.stopAllActions();
             this.node_over2_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
 
@@ -3054,8 +3057,8 @@ cc.Class({
 
             this.loadPic(this.node_over_box_1,selfPlayer.avatarUrl+"?"+Math.random());
             this.loadPic(this.node_over_box_2,enemyPlayer.avatarUrl+"?"+Math.random());
-            this.node_over_box_1_name.string = selfPlayer.name;
-            this.node_over_box_2_name.string = enemyPlayer.name;
+            this.node_over_box_1_name.string = storage.getLabelStr(selfPlayer.name,12);
+            this.node_over_box_2_name.string = storage.getLabelStr(enemyPlayer.name,12);
             this.node_over_guang.stopAllActions();
             this.node_over_guang.runAction(cc.repeatForever(cc.rotateBy(2,180)));
 
@@ -3442,8 +3445,11 @@ cc.Class({
             }
             else
             {
-                var spriteFrame = new cc.SpriteFrame(tex);
-                sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
+                if (cc.isValid(sp))
+                {
+                    var spriteFrame = new cc.SpriteFrame(tex);
+                    sp.getComponent("cc.Sprite").spriteFrame = spriteFrame;
+                }
             }
         });
     }

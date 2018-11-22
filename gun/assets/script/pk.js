@@ -270,6 +270,13 @@ cc.Class({
         this.taizi_d.active = false;
 
         this.publish = storage.getStoragePublish();
+
+        if(cc.sys.isIOS)
+        {
+            this.node_sel_duizhan.active = false;
+            this.node_sel_suiji.x = cc.winSize.width/2+130;
+            this.node_sel_gun.x = cc.winSize.width/2-130;
+        }
     },
 
     updateCurrPkGun: function()

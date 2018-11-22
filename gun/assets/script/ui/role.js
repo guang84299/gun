@@ -178,6 +178,12 @@ cc.Class({
         }
 
         storage.playSound(this.res.audio_role);
+
+        if(cc.sys.isIOS)
+        {
+            this.node_roleyaoqing.active = false;
+            cc.find("rolejiesuo",this.node_role).x = cc.winSize.width/2;
+        }
     },
 
     show: function()

@@ -124,6 +124,13 @@ cc.Class({
             this.main.openShouYix2();
         }
 
+
+        if(cc.sys.isIOS)
+        {
+            cc.find("change",this.node_over).active = false;
+            cc.find("juese",this.node_over).x = cc.winSize.width/2-100;
+            cc.find("junhuo",this.node_over).x = cc.winSize.width/2+100;
+        }
     },
 
     wxOverRank: function(score)

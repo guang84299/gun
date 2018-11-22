@@ -33,6 +33,8 @@ cc.Class({
 
          this.res = cc.find("Canvas").getComponent("res");
          this.qianqista = qianqista;
+         //cc.sys.os = "web";
+         cc.sys.isIOS = (cc.sys.os == cc.sys.OS_IOS);
 
          this.initPhysics();
          this.initData();
@@ -500,6 +502,20 @@ cc.Class({
             {
                 this.openQianDao();
             }
+        }
+
+        if(cc.sys.isIOS)
+        {
+            this.node_main_morebabg.active = false;
+            cc.find("bottom/lingjiang",this.node_main).active = false;
+            cc.find("linggunbg",this.node_main).active = false;
+            cc.find("zhanshibg",this.node_main).x = cc.winSize.width/2;
+            cc.find("bottom/gongzhonghao",this.node_main).x = 197;
+            cc.find("bottom/chengjiu",this.node_main).x = 460;
+
+            cc.find("wangqiu",this.node_main).active = false;
+            cc.find("duihuan",this.node_main).active = false;
+            cc.find("duihuan2",this.node_main).active = true;
         }
     },
 
@@ -4020,7 +4036,7 @@ cc.Class({
         {
             if(Math.floor(this.GAME.score) > storage.getStorageScore())
                 storage.setStorageScore(Math.floor(this.GAME.score));
-            if(this.choujiangbossnum%3 == 0)
+            if(this.choujiangbossnum%3 == 0 && !cc.sys.isIOS)
                 this.openChouJiang();
             this.nextLevel();
             //this.wxUpdateScore2(1);
@@ -5135,7 +5151,7 @@ cc.Class({
 
                         self.node_main_lingqu.getComponent("cc.Button").interactable = false;
                         self.node_main_lingqu_time.active = true;
-                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                        self.node_main_lingqu_time.getComponent("cc.Label").string = "0:01";
 
                         storage.setStorageVideoTime(1);
 
@@ -5296,7 +5312,7 @@ cc.Class({
 
                             self.node_main_lingqu.getComponent("cc.Button").interactable = false;
                             self.node_main_lingqu_time.active = true;
-                            self.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                            self.node_main_lingqu_time.getComponent("cc.Label").string = "0:01";
 
                             storage.setStorageVideoTime(1);
 
@@ -5599,7 +5615,7 @@ cc.Class({
 
                 this.node_main_lingqu.getComponent("cc.Button").interactable = false;
                 this.node_main_lingqu_time.active = true;
-                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:30";
+                this.node_main_lingqu_time.getComponent("cc.Label").string = "0:01";
 
                 storage.setStorageVideoTime(1);
                 if(cc.isValid(self.node_coin))

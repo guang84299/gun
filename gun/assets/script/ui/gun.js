@@ -159,6 +159,12 @@ cc.Class({
         this.updateGunJifen();
 
         storage.playSound(this.res.audio_role);
+
+        if(cc.sys.isIOS)
+        {
+            this.node_roleyaoqing.active = false;
+            cc.find("gunjiesuo",this.node_gun).x = cc.winSize.width/2;
+        }
     },
 
     show: function()
@@ -219,7 +225,7 @@ cc.Class({
             var index = this.node_gun_page.getComponent("cc.PageView").getCurrentPageIndex();
             if(index < 2)
             {
-                if(this.main.GAME.fangdanyi)
+                if(this.main.GAME.fangdanyi && !cc.sys.isIOS)
                 {
                     cc.find("roleyaoqing",this.node_gun).active = true;
                 }

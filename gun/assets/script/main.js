@@ -1491,7 +1491,7 @@ cc.Class({
     {
         var playnum = cc.sys.localStorage.getItem("playnum");
         playnum = playnum ? playnum : 0;
-        if(playnum == 1)
+        if(playnum == 1 && !cc.sys.isIOS)
         {
             var tishi = cc.instantiate(this.res.node_tishi);
             this.node.addChild(tishi);

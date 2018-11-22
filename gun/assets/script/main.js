@@ -515,7 +515,19 @@ cc.Class({
 
             cc.find("wangqiu",this.node_main).active = false;
             cc.find("duihuan",this.node_main).active = false;
-            cc.find("duihuan2",this.node_main).active = true;
+            if(cc.sys.os == "web")
+            {
+                cc.find("zhanshibg",this.node_main).x = cc.winSize.width/2+100;
+                cc.find("rank",this.node_main).x = cc.winSize.width/2-100;
+                cc.find("buluo",this.node_main).active = false;
+                cc.find("bottom/gongzhonghao",this.node_main).active = false;
+                cc.find("bottom/chengjiu",this.node_main).x = cc.winSize.width/2;
+            }
+            else
+            {
+                cc.find("duihuan2",this.node_main).active = true;
+            }
+
         }
     },
 

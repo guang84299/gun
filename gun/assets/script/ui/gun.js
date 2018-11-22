@@ -247,7 +247,8 @@ cc.Class({
         var needcoin = storage.getStorageGunJieSuoNum()*50 + 200;
         if(storage.getStorageCoin()< needcoin)
         {
-            this.main.openCoinNode();
+            //this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
         }
         else
         {
@@ -329,7 +330,8 @@ cc.Class({
         var needcoin = storage.getStorageGunJieSuoNum2()*100 + 700;
         if(storage.getStorageCoin()< needcoin)
         {
-            this.main.openCoinNode();
+            //this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
         }
         else
         {

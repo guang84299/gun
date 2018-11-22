@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -22,7 +24,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 56
@@ -426,7 +428,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -157,
-      "y": 50
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -513,7 +515,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -157,
-      "y": -50
+      "y": -100
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -564,7 +566,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 17
@@ -694,7 +696,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 131,
-      "y": 50
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1019,7 +1021,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 131,
-      "y": -50
+      "y": -100
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1308,7 +1310,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 46

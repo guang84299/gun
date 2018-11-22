@@ -345,7 +345,7 @@ cc.Class({
         else if(awardnum == 20)
             this.main.qianqista.event("chengjiu_lingqu_num_20");
 
-        this.main.openCoinx2(coin);
+        //this.main.openCoinx2(coin);
     },
 
     

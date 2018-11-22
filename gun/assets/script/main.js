@@ -273,9 +273,9 @@ cc.Class({
             storage.setStorageVibrate(1);
             storage.setStorageShareGroupList("groups:");
             storage.setStorageShareGroupTime(-1);
-            storage.setStorageCard(2);
+            storage.setStorageCard(0);
         }
-
+        storage.setStorageCard(0);
         //for(var i=1;i<=9;i++)
         //    storage.setStoragePlayer(i,0);
         //for(var i=10;i<=19;i++)
@@ -405,9 +405,9 @@ cc.Class({
         this.GAME.moreba_items = "";
         var sto_channel = cc.sys.localStorage.getItem("channel");
 
-        this.GAME.fangdanyi = true;
-        this.GAME.sharecard = true;
-        cc.find("fangdanyi",this.node_main).active = true;
+        //this.GAME.fangdanyi = true;
+        //this.GAME.sharecard = true;
+        //cc.find("fangdanyi",this.node_main).active = true;
 
 
         if(this.GAME.control.length>0)
@@ -3345,7 +3345,7 @@ cc.Class({
             this.node_game_ui.killhead.active = true;
             sct = 1;
             this.addCoin();
-            if(disnum>12)
+            if(disnum>3)
                 this.addCoin();
 
             this.node_game_ui.hitbg.runAction(cc.sequence(
@@ -3703,6 +3703,8 @@ cc.Class({
             if(Math.floor(this.GAME.score) > storage.getStorageScore())
                 storage.setStorageScore(Math.floor(this.GAME.score));
             this.nextLevel();
+            if(Math.random()<0.5)
+                show_middle_ad();
         }
         else
         {
@@ -3713,7 +3715,7 @@ cc.Class({
             }
             else
             {
-                if(this.GAME.playerfuhuo || this.GAME.playerfuhuovideo)
+                if(this.GAME.playerfuhuo)//|| this.GAME.playerfuhuovideo
                 {
                     if(cc.sys.myweb)
                     {
@@ -5192,6 +5194,7 @@ cc.Class({
         var self = this;
         if(cc.sys.myweb)
         {
+            show_end_ad(Math.floor(this.GAME.score));
             //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showSpot", "(Ljava/lang/String;)V","1");
             //if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
             //{

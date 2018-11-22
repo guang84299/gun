@@ -97,7 +97,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 14
@@ -1550,7 +1550,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -140,
+      "x": 0,
       "y": -156
     },
     "_skewX": 0,
@@ -1686,7 +1686,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 130,
+      "width": 116,
       "height": 26
     },
     "_rotationX": 0,
@@ -1721,7 +1721,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "100 Revive",
+    "_N$string": "50 Revive",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1866,7 +1866,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 65

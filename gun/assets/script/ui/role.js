@@ -253,7 +253,8 @@ cc.Class({
         var self = this;
         if(storage.getStorageCoin()<5000)
         {
-            this.main.openCoinNode();
+            //this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
         }
         else
         {
@@ -280,7 +281,8 @@ cc.Class({
         var self = this;
         if(storage.getStorageCoin()<500)
         {
-            this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
+            //this.main.openCoinNode();
         }
         else
         {
@@ -362,7 +364,8 @@ cc.Class({
         var cost = storage.getStorageRoleJieSuoNum2()*100 + 1000;
         if(storage.getStorageCoin()<cost)
         {
-            this.main.openCoinNode();
+            //this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
         }
         else
         {

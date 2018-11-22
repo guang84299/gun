@@ -196,16 +196,17 @@ cc.Class({
     wxGropShareFuhuo: function()
     {
         var coinnum = storage.getStorageCoin();
-        if(coinnum>=100)
+        if(coinnum>=50)
         {
-            coinnum = parseInt(coinnum) - 100;
+            coinnum = parseInt(coinnum) - 50;
             storage.setStorageCoin(coinnum);
             this.main.fuhuo(false,true,false);
             this.main.uploadData();
         }
         else
         {
-            this.main.openCoinNode();
+            this.res.showToast("Not Enough Coins");
+            //this.main.openCoinNode();
         }
     },
 

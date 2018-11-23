@@ -2197,9 +2197,9 @@ cc.Class({
                     if(enemy == null || !enemy.player)
                         continue;
                     var pos2 = cc.v2(enemy.player.parent.parent.x,enemy.player.parent.parent.y+enemy.player.height*0.8);
-                    var dir = cc.pNormalize(cc.v2(pos2.x-pos.x,pos2.y-pos.y));
-                    var ang = cc.pToAngle(dir);
-                    ang = cc.radiansToDegrees(ang);
+                    var dir = cc.v2(pos2.x-pos.x,pos2.y-pos.y).normalizeSelf();
+                    var ang = Math.atan2(dir.x,dir.y);//cc.pToAngle(dir);
+                    ang = cc.misc.radiansToDegrees(ang);
                     if(ang>60)
                         ang = 180 - ang;
                     //爆头
@@ -2299,7 +2299,7 @@ cc.Class({
                 rota = -rota;
                 v = cc.v2(-1,0);
             }
-            var rad = cc.degreesToRadians(rota);
+            var rad = cc.misc.degreesToRadians(rota);
             //player.xuac = player.gun.getActionByTag(1);
             player.gun.stopAllActions();
             var gunConf = this.res.gunsconfig[gunId];
@@ -2307,11 +2307,11 @@ cc.Class({
             var bulletspeed = 1200;
             if(gunConf.type == 1)
             {
-                var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
-                var pos = cc.pMult(dir,1584);
+                var dir = v.rotate(rad,cc.v2(0,0));//cc.pRotateByAngle(v,cc.v2(0,0),rad);
+                var pos = dir.mul(1584);
 
                 var gw = player.gun.width*(1-player.gun.anchorX) + 10;
-                var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
+                var playerpos = player.parent.parent.position.add(player.parent.position);
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
@@ -2323,8 +2323,8 @@ cc.Class({
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
-                        smoke.position = cc.pAdd(playerpos,player.aim.position);
-                        smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
+                        smoke.position = playerpos.add(player.aim.position);
+                        smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
                         self.node_game.addChild(smoke,1000001);
                         smoke.runAction(cc.sequence(
@@ -2341,7 +2341,7 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
-                        shell.position = cc.pAdd(playerpos,player.aim.position);
+                        shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
                         self.node_game.addChild(shell,1000001);
                         shell.runAction(cc.sequence(
@@ -2377,13 +2377,13 @@ cc.Class({
                     bullet = cc.instantiate(this.res.ebullet_1);
                 }
 
-                bullet.position = cc.pAdd(playerpos,player.aim.position);
-                bullet.position = cc.pAdd(cc.pMult(dir,gw),bullet.position);
+                bullet.position = playerpos.add(player.aim.position);
+                bullet.position = dir.mul(gw).add(bullet.position);
                 bullet.opacity = 255;
                 this.node_game.addChild(bullet,1000001);
                 bullet.diedir = dir;
                 bullet.pos = playerData.pos;
-                pos = cc.pAdd(pos,bullet.position);
+                pos = pos.add(bullet.position);
 
                 var seq = cc.sequence(
                     cc.moveTo(dis/bulletspeed,pos),
@@ -2395,12 +2395,12 @@ cc.Class({
             {
                 var gw = player.gun.width*(1-player.gun.anchorX) + 10;
 
-                var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
+                var dir = v.rotate(rad,cc.v2(0,0));//cc.pRotateByAngle(v,cc.v2(0,0),rad);
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
                         storage.playSound(self.res.gunaudios[gunId]);
-                        var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
+                        var playerpos = player.parent.parent.position.add(player.parent.position);
 
                         var smoke = null;
                         if (self.main.poolsmokes.size() > 0) {
@@ -2409,8 +2409,8 @@ cc.Class({
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
-                        smoke.position = cc.pAdd(playerpos,player.aim.position);
-                        smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
+                        smoke.position = playerpos.add(player.aim.position);
+                        smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
                         self.node_game.addChild(smoke,1000001);
                         smoke.runAction(cc.sequence(
@@ -2427,7 +2427,7 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
-                        shell.position = cc.pAdd(playerpos,player.aim.position);
+                        shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
                         self.node_game.addChild(shell,1000001);
                         shell.runAction(cc.sequence(
@@ -2469,8 +2469,8 @@ cc.Class({
                     else if(i > 2)
                         r = rands[i-1]*gunConf.angle;
 
-                    var dir2 = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
-                    var pos = cc.pMult(dir2,1584);
+                    var dir2 = dir.rotate(cc.misc.degreesToRadians(r),cc.v2(0,0));
+                    var pos =  dir2.mul(1584);
 
                     var bullet = null;
                     if (this.main.poolebullets.size() > 0) {
@@ -2480,15 +2480,15 @@ cc.Class({
                     } else {
                         bullet = cc.instantiate(this.res.ebullet_1);
                     }
-                    var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
-                    bullet.position = cc.pAdd(playerpos,player.aim.position);
-                    bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
+                    var playerpos = player.parent.parent.position.add(player.parent.position);
+                    bullet.position = playerpos.add(player.aim.position);
+                    bullet.position = dir2.mul(gw).add(bullet.position);
                     bullet.opacity = 0;
                     this.node_game.addChild(bullet,1000001);
                     bullet.diedir = dir2;
                     bullet.pos = playerData.pos;
 
-                    pos = cc.pAdd(pos,bullet.position);
+                    pos = pos.add(bullet.position);
 
                     var seq = cc.sequence(
                         cc.delayTime(gunConf.speed*(i+1)),
@@ -2502,12 +2502,12 @@ cc.Class({
             else if(gunConf.type == 3)
             {
                 var gw = player.gun.width*(1-player.gun.anchorX) + 10;
-                var dir = cc.pRotateByAngle(v,cc.v2(0,0),rad);
+                var dir = v.rotate(rad,cc.v2(0,0));
 
                 var ac = cc.sequence(
                     cc.callFunc(function(){
                         storage.playSound(self.res.gunaudios[gunId]);
-                        var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
+                        var playerpos = player.parent.parent.position.add(player.parent.position);
                         var smoke = null;
                         if (self.main.poolsmokes.size() > 0) {
                             smoke = self.main.poolsmokes.get();
@@ -2515,8 +2515,8 @@ cc.Class({
                         } else {
                             smoke = cc.instantiate(self.res.smoke);
                         }
-                        smoke.position = cc.pAdd(playerpos,player.aim.position);
-                        smoke.position = cc.pAdd(cc.pMult(dir,gw),smoke.position);
+                        smoke.position = playerpos.add(player.aim.position);
+                        smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
                         self.node_game.addChild(smoke,1000001);
                         smoke.runAction(cc.sequence(
@@ -2533,7 +2533,7 @@ cc.Class({
                         } else {
                             shell = cc.instantiate(self.res.shell);
                         }
-                        shell.position = cc.pAdd(playerpos,player.aim.position);
+                        shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
                         self.node_game.addChild(shell,1000001);
                         shell.runAction(cc.sequence(
@@ -2569,8 +2569,8 @@ cc.Class({
                     else if(i > 2)
                         r = rands[i-1]*gunConf.angle;
 
-                    var dir2 = cc.pRotateByAngle(dir,cc.v2(0,0),cc.degreesToRadians(r));
-                    var pos = cc.pMult(dir2,1584);
+                    var dir2 = dir.rotate(cc.misc.degreesToRadians(r),cc.v2(0,0));
+                    var pos = dir2.mul(1584);
 
                     var bullet = null;
                     if (this.main.poolebullets.size() > 0) {
@@ -2580,8 +2580,8 @@ cc.Class({
                     } else {
                         bullet = cc.instantiate(this.res.ebullet_1);
                     }
-                    var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
-                    bullet.position = cc.pAdd(playerpos,player.aim.position);
+                    var playerpos = player.parent.parent.position.add(player.parent.position);
+                    bullet.position = playerpos.add(player.aim.position);
                     bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
                     //bullet.opacity = 0;
                     this.node_game.addChild(bullet,1000001);

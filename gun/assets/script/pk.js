@@ -2198,7 +2198,7 @@ cc.Class({
                         continue;
                     var pos2 = cc.v2(enemy.player.parent.parent.x,enemy.player.parent.parent.y+enemy.player.height*0.8);
                     var dir = cc.v2(pos2.x-pos.x,pos2.y-pos.y).normalizeSelf();
-                    var ang = Math.atan2(dir.x,dir.y);//cc.pToAngle(dir);
+                    var ang = Math.atan2(dir.y, dir.x); //cc.pToAngle(dir);
                     ang = cc.misc.radiansToDegrees(ang);
                     if(ang>60)
                         ang = 180 - ang;
@@ -2326,7 +2326,7 @@ cc.Class({
                         smoke.position = playerpos.add(player.aim.position);
                         smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
-                        self.node_game.addChild(smoke,1000001);
+                        self.node_game.addChild(smoke,cc.macro.MAX_ZINDEX);
                         smoke.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2343,7 +2343,7 @@ cc.Class({
                         }
                         shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
-                        self.node_game.addChild(shell,1000001);
+                        self.node_game.addChild(shell,cc.macro.MAX_ZINDEX);
                         shell.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2380,7 +2380,7 @@ cc.Class({
                 bullet.position = playerpos.add(player.aim.position);
                 bullet.position = dir.mul(gw).add(bullet.position);
                 bullet.opacity = 255;
-                this.node_game.addChild(bullet,1000001);
+                this.node_game.addChild(bullet,cc.macro.MAX_ZINDEX);
                 bullet.diedir = dir;
                 bullet.pos = playerData.pos;
                 pos = pos.add(bullet.position);
@@ -2412,7 +2412,7 @@ cc.Class({
                         smoke.position = playerpos.add(player.aim.position);
                         smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
-                        self.node_game.addChild(smoke,1000001);
+                        self.node_game.addChild(smoke,cc.macro.MAX_ZINDEX);
                         smoke.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2429,7 +2429,7 @@ cc.Class({
                         }
                         shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
-                        self.node_game.addChild(shell,1000001);
+                        self.node_game.addChild(shell,cc.macro.MAX_ZINDEX);
                         shell.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2484,7 +2484,7 @@ cc.Class({
                     bullet.position = playerpos.add(player.aim.position);
                     bullet.position = dir2.mul(gw).add(bullet.position);
                     bullet.opacity = 0;
-                    this.node_game.addChild(bullet,1000001);
+                    this.node_game.addChild(bullet,cc.macro.MAX_ZINDEX);
                     bullet.diedir = dir2;
                     bullet.pos = playerData.pos;
 
@@ -2518,7 +2518,7 @@ cc.Class({
                         smoke.position = playerpos.add(player.aim.position);
                         smoke.position = dir.mul(gw).add(smoke.position);
                         smoke.scaleX = -player.scaleX;
-                        self.node_game.addChild(smoke,1000001);
+                        self.node_game.addChild(smoke,cc.macro.MAX_ZINDEX);
                         smoke.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2535,7 +2535,7 @@ cc.Class({
                         }
                         shell.position = playerpos.add(player.aim.position);
                         shell.scaleX = -player.scaleX;
-                        self.node_game.addChild(shell,1000001);
+                        self.node_game.addChild(shell,cc.macro.MAX_ZINDEX);
                         shell.runAction(cc.sequence(
                             cc.delayTime(1),
                             cc.callFunc(function(){
@@ -2582,13 +2582,13 @@ cc.Class({
                     }
                     var playerpos = player.parent.parent.position.add(player.parent.position);
                     bullet.position = playerpos.add(player.aim.position);
-                    bullet.position = cc.pAdd(cc.pMult(dir2,gw),bullet.position);
+                    bullet.position = dir2.mul(gw).add(bullet.position);
                     //bullet.opacity = 0;
-                    this.node_game.addChild(bullet,1000001);
+                    this.node_game.addChild(bullet,cc.macro.MAX_ZINDEX);
                     bullet.diedir = dir2;
                     bullet.pos = playerData.pos;
 
-                    pos = cc.pAdd(pos,bullet.position);
+                    pos = pos.add(bullet.position);
 
                     var seq = cc.sequence(
                         cc.moveTo(dis/bulletspeed,pos),
@@ -2630,7 +2630,7 @@ cc.Class({
         var player = playerData.player;
         playerData.hp = hpnum;
 
-        var playerpos = cc.pAdd(player.parent.parent.position,player.parent.position);
+        var playerpos = player.parent.parent.position.add(player.parent.position);
 
         var hit = null;
         if (this.main.poolhits.size() > 0) {
@@ -2643,7 +2643,7 @@ cc.Class({
         hit.color = cc.color(255,0,0);
         hit.position = playerpos;
         hit.y += player.height/2;
-        this.node_game.addChild(hit,1000001);
+        this.node_game.addChild(hit,cc.macro.MAX_ZINDEX);
         var sct = 0.5;
         if(isHead)
         {
@@ -2675,7 +2675,7 @@ cc.Class({
             par.getComponent("cc.ParticleSystem").endColor = cc.color(255,0,0);
             par.position = hit.position;
             par.scaleX = -player.scaleX;
-            this.node_game.addChild(par,1000001);
+            this.node_game.addChild(par,cc.macro.MAX_ZINDEX);
             par.runAction(cc.sequence(
                 cc.delayTime(1),
                 cc.callFunc(function(){
@@ -2696,7 +2696,7 @@ cc.Class({
             par.getComponent("cc.ParticleSystem").endColor = cc.color(255,0,0);
             par.position = hit.position;
             par.scaleX = -player.scaleX;
-            this.node_game.addChild(par,1000001);
+            this.node_game.addChild(par,cc.macro.MAX_ZINDEX);
 
             par.runAction(cc.sequence(
                 cc.delayTime(1),
@@ -2718,7 +2718,7 @@ cc.Class({
         hp.string = "-"+hurt;
         hpbg.position = playerpos;
         hpbg.y += player.height;
-        this.node_game.addChild(hpbg,1000000000);
+        this.node_game.addChild(hpbg,cc.macro.MAX_ZINDEX);
 
         hpbg.runAction(cc.sequence(
             cc.spawn(
@@ -2790,7 +2790,7 @@ cc.Class({
             {
                 roang = -roang;
             }
-            var pos = cc.pAdd(player.position,cc.pMult(diedir, dis));
+            var pos = player.position.add(diedir.mul(dis));
 
             var ac = cc.sequence(
                 cc.spawn(

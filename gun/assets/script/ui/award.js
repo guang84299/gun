@@ -36,7 +36,11 @@ cc.Class({
         this.node_award = this.node;
         this.node_award_itembg = cc.find("bg/itembg",this.node_award);
 
-        this.updateUI();
+        var self = this;
+        this.main.updateData(function(){
+            self.updateUI();
+        });
+
     },
 
     updateUI: function()
@@ -97,13 +101,22 @@ cc.Class({
                 }
             }
         }
+
     },
 
     show: function()
     {
         this.node.active = true;
         this.updateUI();
-        this.main.wxBannerShow();
+
+        var self = this;
+        this.node.runAction(cc.sequence(
+            cc.delayTime(1),
+            cc.callFunc(function(){
+                self.main.wxBannerShow();
+            })
+        ));
+
     },
 
     hide: function()
@@ -173,6 +186,7 @@ cc.Class({
         {
             var info = {};
             info.channel = "sharecoinmenu";
+            info.fromid = this.main.qianqista.openid;
             var query = JSON.stringify(info);
             var title = "5W悬赏金，助你成为最牛神枪手！";
             var imageUrl = "http://www.qiqiup.com/gun.gif";

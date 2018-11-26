@@ -73,6 +73,7 @@ module.exports = {
     pkfromid:"",
     pkroomtype: 0,
     avatarUrl: "",//头像
+    isCanpvp: false,
     init: function(appId,gameName,initcallback,showcallback)
     {
         var self = this;
@@ -114,8 +115,9 @@ module.exports = {
 
                     if(this.power == 1 && this.channel && this.channel == "shareonline" && this.pkfromid && this.pkroomtype>0)
                     {
-                        if(this.showcallback)
-                            this.showcallback();
+                        this.isCanpvp = true;
+                        //if(this.showcallback)
+                        //    this.showcallback();
                     }
                 }
 
@@ -241,6 +243,11 @@ module.exports = {
                     });
                 }
 
+                if(self.isCanpvp)
+                {
+                    if(self.showcallback)
+                        self.showcallback();
+                }
             });
         }
     },

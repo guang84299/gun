@@ -392,7 +392,7 @@ cc.Class({
             }
             else
             {
-                this.res.showToast("服务器登录失败！重新登录中...");
+                //this.res.showToast("服务器登录失败！重新登录中...");
                 websocket.close();
                 websocket.init(this,function(){
                     websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
@@ -408,7 +408,7 @@ cc.Class({
             if(websocket.state != 1)
             {
                 var self = this;
-                this.res.showToast("服务器登录失败！重新登录中...");
+                //this.res.showToast("服务器登录失败！重新登录中...");
                 websocket.close();
                 websocket.init(this,function(){
                     websocket.login(self.qianqista.openid,self.qianqista.userName,self.qianqista.avatarUrl);
@@ -3209,6 +3209,7 @@ cc.Class({
             self.main.worldrank.pk = res.data;
         });
 
+        this.main.uploadData();
     },
 
     jifenx2: function()

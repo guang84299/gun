@@ -813,7 +813,7 @@ cc.Class({
         }
     },
 
-    updateData: function()
+    updateData: function(callback)
     {
         var self = this;
         qianqista.datas(function(res){
@@ -822,6 +822,8 @@ cc.Class({
             {
                 self.updateLocalData(res.data);
             }
+            if(callback)
+                callback();
         });
     },
 
@@ -4298,6 +4300,7 @@ cc.Class({
             this.subdt += dt;
             var sdd = 0.02;
 
+
             //if(this.GAME.state == "start")
             //{
             //    sdd = 0.5;
@@ -5806,10 +5809,19 @@ cc.Class({
             //    self.bannerAd.hide();
             //
             //}
-            self.bannershow = false;
-            if(self.bannerAd)
-                self.bannerAd.destory();
-            self.bannerAd = null;
+            this.node.stopActionByTag(10101);
+            var ac = cc.sequence(
+                cc.delayTime(2),
+                cc.callFunc(function(){
+                    self.bannershow = false;
+                    if(self.bannerAd)
+                        self.bannerAd.destory();
+                    self.bannerAd = null;
+                })
+            );
+            ac.setTag(10101);
+            this.node.runAction(ac);
+
             //if(this.bannerAd)
             //    this.bannerAd.hide();
         }

@@ -15,10 +15,9 @@ module.exports = {
                 {
                     this.audioContext = BK.createAudioContext();
                     this.audioContext.loop = true;
-                    this.audioContext.src = "GameRes:///res/raw-assets/audio/bg_1.mp3";
+                    this.audioContext.src = "GameRes://"+music;
                 }
                 this.audioContext.play();
-                BK.Script.log(1,1,'---------play.audioContex');
             }
             else
             {
@@ -66,7 +65,7 @@ module.exports = {
                     this.effectContext = BK.createAudioContext({'type':'effect'});
                 }
                 //播放多个音效
-                this.effectContext.src = "GameRes:///"+sound;
+                this.effectContext.src = "GameRes://"+sound;
                 this.effectContext.play()
             }
             else

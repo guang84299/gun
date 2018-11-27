@@ -14,6 +14,7 @@ cc.Class({
 
      onLoad: function() {
          cc.sys.myweb = true;
+         cc.sys.isLieBao = true;
          this.dsize = new cc.size(720, 1584);
          this.tex = new cc.Texture2D();
          this.subdt = 0;
@@ -122,25 +123,109 @@ cc.Class({
 
     initVedioAd: function()
     {
+        cc.game.loadVedioAd = function()
+        {
+            if(cc.sys.isLieBao)
+            {
+                SMGameInstant.context.actionLoadAd(AD_TYPE.REWARD_VIDEO, "default", function(responseData){
+                    if(LOAD_AD_RESULT.SUCCEED == responseData){
+                        //Load AD succeed
+                    }else{
+                        //Load AD failure.
+                    }
+                    console.log("actionLoadAd result :" + responseData);
+                });
+            }
+        };
+        cc.game.loadSpotAd = function()
+        {
+            if(cc.sys.isLieBao)
+            {
+                SMGameInstant.context.actionLoadAd(AD_TYPE.INTERSTITIAL, "default", function(responseData){
+                    if(LOAD_AD_RESULT.SUCCEED == responseData){
+                        //Load AD succeed
+                    }else{
+                        //Load AD failure.
+                    }
+                    console.log("actionLoadAd result :" + responseData);
+                });
+            }
+        };
+        cc.game.loadVedioAd();
+        cc.game.loadSpotAd();
+
         cc.game.vedioSuccess = function()
         {
             if(cc.game.vedioCallback)
                 cc.game.vedioCallback(true);
+            cc.game.loadVedioAd();
         };
 
         cc.game.vedioFail = function()
         {
             if(cc.game.vedioCallback)
                 cc.game.vedioCallback(false);
+            cc.game.loadVedioAd();
         };
         cc.game.vedioCallback = null;
     },
 
     showVedioAd: function(callback)
     {
+        var self = this;
         cc.game.vedioCallback = callback;
         if(cc.sys.myweb)
         {
+            if(cc.sys.isLieBao)
+            {
+                SMGameInstant.context.actionHasAd(AD_TYPE.REWARD_VIDEO, "default", function(responseData){
+                    if(HAS_AD_RESULT.HAS_AD == responseData){
+                        //Has AD.
+                        SMGameInstant.context.actionShowAd(AD_TYPE.REWARD_VIDEO, "default", function(responseData){ //type 代表相应的广告类型
+                            console.log(responseData);
+                            if(SHOW_AD_RESULT.SUCCEED == responseData){
+                                //TODO 实现广告展示成功回调的业务逻辑。
+                                cc.game.vedioSuccess();
+                            }else if(SHOW_AD_RESULT.DISPLAY == responseData){
+                                //表示激励视频开始展示出来。
+                            }else {
+                                //TODO 实现广告展示失败回调的业务逻辑。
+                                cc.game.vedioFail();
+                            }
+                        });
+
+                    }else{
+                        //No AD.
+
+                        SMGameInstant.context.actionHasAd(AD_TYPE.INTERSTITIAL, "default", function(responseData){
+                            if(HAS_AD_RESULT.HAS_AD == responseData){
+                                //Has AD.
+                                SMGameInstant.context.actionShowAd(AD_TYPE.INTERSTITIAL, "default", function(responseData){ //type 代表相应的广告类型
+                                    console.log(responseData);
+                                    if(SHOW_AD_RESULT.SUCCEED == responseData){
+                                        //TODO 实现广告展示成功回调的业务逻辑。
+                                        cc.game.vedioSuccess();
+                                        cc.game.loadSpotAd();
+                                    }else if(SHOW_AD_RESULT.DISPLAY == responseData){
+                                        //表示激励视频开始展示出来。
+                                    }else {
+                                        //TODO 实现广告展示失败回调的业务逻辑。
+                                        cc.game.vedioFail();
+                                        cc.game.loadSpotAd();
+                                    }
+                                });
+                            }else{
+                                //No AD.
+                                cc.game.vedioFail();
+                                cc.game.loadSpotAd();
+                            }
+                            console.log("actionHasAd result :" + responseData);
+                        });
+
+                    }
+                    console.log("actionHasAd result :" + responseData);
+                });
+            }
             //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showVedio", "(Ljava/lang/String;)V","vedio");
         }
         else
@@ -195,7 +280,16 @@ cc.Class({
             }
         });
 
-
+        if(cc.sys.isLieBao)
+        {
+            SMGameInstant.context.onInitialize("35daebc0b59735564aa77a26a5d12da935ab2e09", "gamekey_qianqi_westernshooter", function(responseData){
+                if(responseData == INIT_RESULT.SUCCEED){ //初始化成功
+                    console.log("onInitialize result :" + responseData);
+                }else{
+                    //初始化成功失败。
+                }
+            });
+        }
     },
 
     initPhysics: function()
@@ -5192,6 +5286,30 @@ cc.Class({
         var self = this;
         if(cc.sys.myweb)
         {
+            if(cc.sys.isLieBao)
+            {
+                SMGameInstant.context.actionHasAd(AD_TYPE.INTERSTITIAL, "default", function(responseData){
+                    if(HAS_AD_RESULT.HAS_AD == responseData){
+                        //Has AD.
+                        SMGameInstant.context.actionShowAd(AD_TYPE.INTERSTITIAL, "default", function(responseData){ //type 代表相应的广告类型
+                            console.log(responseData);
+                            if(SHOW_AD_RESULT.SUCCEED == responseData){
+                                //TODO 实现广告展示成功回调的业务逻辑。
+                                cc.game.loadSpotAd();
+                            }else if(SHOW_AD_RESULT.DISPLAY == responseData){
+                                //表示激励视频开始展示出来。
+                            }else {
+                                //TODO 实现广告展示失败回调的业务逻辑。
+                                cc.game.loadSpotAd();
+                            }
+                        });
+                    }else{
+                        //No AD.
+                        cc.game.loadSpotAd();
+                    }
+                    console.log("actionHasAd result :" + responseData);
+                });
+            }
             //jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AppActivity", "showSpot", "(Ljava/lang/String;)V","1");
             //if(!self.preloadedInterstitial || !self.preloadedInterstitialisload)
             //{

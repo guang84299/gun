@@ -109,7 +109,7 @@ module.exports = {
         //     intVar = (new Int32Array(arr))[0];
         //     console.log(intVar);
         //   });
-        if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        if (cc.sys.os == cc.sys.OS_ANDROID && cc.sys.os == cc.sys.OS_IOS)
         {
             var unit8Arr = new Uint8Array(data) ;
             var encodedString = String.fromCharCode.apply(null, unit8Arr);

@@ -562,6 +562,9 @@ cc.Class({
 
     loadPic: function(sp,url)
     {
+        url += "";
+        if(url.length < 5)
+            return;
         cc.loader.load({url: url, type: 'png'}, function (err, tex) {
             if(err)
             {
@@ -4089,6 +4092,8 @@ cc.Class({
         this.node_over = over.getComponent("over");
         this.node_over.show();
 
+        var self = this;
+        self.res.showToast("---1--");
         qianqista.rankScore(function(res){
             self.worldrank.wujin = res.data;
         });
@@ -4835,7 +4840,7 @@ cc.Class({
                 BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
                     BK.Script.log(1,1,"-------wxUpdateScore callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
                     // 返回错误码信息
-                    if (errCode !== 0) {
+                    if (errCode != 0) {
                         BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
                         return;
                     }
@@ -4947,6 +4952,23 @@ cc.Class({
                 picUrl:imageUrl,               //QQ聊天消息图片
                 extendInfo:query   //QQ聊天消息扩展字段
             };
+
+            BK.QQ.shareToArk(0, title, imageUrl, true, query,function (errCode, cmd, data) {
+                if (errCode == 0) {
+                    BK.Script.log(1, 1," ret:" + data.ret +  // 是否成功 (0:成功，1：不成功)
+                    " aioType:" + data.aioType + // 聊天类型 （1：个人，4：群，5：讨论组，6：热聊）
+                    " gameId:" + data.gameId); // 游戏 id
+                    if(data.ret == 0)
+                    {
+                        qianqista.share(true);
+                    }
+                    else
+                    {
+                        qianqista.share(false);
+                    }
+                }
+            });
+
             //BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
             //        BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
             //        if (retCode == 0) {
@@ -4959,24 +4981,24 @@ cc.Class({
             //        }
             //});
 
-            BK.Share.share({
-                qqImgUrl: imageUrl,
-                summary: title,
-                extendInfo: query,
-                success: function(succObj){
-                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
-
-                    qianqista.share(true);
-                },
-                fail: function(failObj){
-                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
-
-                    qianqista.share(false);
-                },
-                complete: function(){
-                    BK.Console.log('Waaaah! share complete');
-                }
-            });
+            //BK.Share.share({
+            //    qqImgUrl: imageUrl,
+            //    summary: title,
+            //    extendInfo: query,
+            //    success: function(succObj){
+            //        BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+            //
+            //        qianqista.share(true);
+            //    },
+            //    fail: function(failObj){
+            //        BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+            //
+            //        qianqista.share(false);
+            //    },
+            //    complete: function(){
+            //        BK.Console.log('Waaaah! share complete');
+            //    }
+            //});
 
 
             //
@@ -5719,6 +5741,8 @@ cc.Class({
 
     wxBannerShow: function()
     {
+        if(true)
+            return;
         var self = this;
         if(self.bannershow)
             return;
@@ -5808,6 +5832,8 @@ cc.Class({
 
     wxBannerHide: function()
     {
+        if(true)
+            return;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {

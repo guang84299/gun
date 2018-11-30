@@ -83,44 +83,48 @@ cc.Class({
                 extendInfo:query,    //QQ聊天消息扩展字段
             };
 
-            //BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-            //    BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-            //    if (retCode == 0) {
-            //        BK.Script.log(1, 1, "分享成功：" + retCode);
+            BK.QQ.shareToArk(0, title, imageUrl, true, query,function (errCode, cmd, data) {
+                if (errCode == 0) {
+                    BK.Script.log(1, 1," ret:" + data.ret +  // 是否成功 (0:成功，1：不成功)
+                    " aioType:" + data.aioType + // 聊天类型 （1：个人，4：群，5：讨论组，6：热聊）
+                    " gameId:" + data.gameId); // 游戏 id
+                    if(data.ret == 0)
+                    {
+                        self.res.showToast("续命成功");
+                        self.main.fuhuo(false,true,false);
+                        self.main.qianqista.share(true);
+                        self.hide();
+                    }
+                    else
+                    {
+                        self.main.qianqista.share(false);
+                        self.hide();
+                    }
+                }
+            });
+
+            //BK.Share.share({
+            //    qqImgUrl: imageUrl,
+            //    summary: title,
+            //    extendInfo: query,
+            //    success: function(succObj){
+            //        BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+            //
             //        self.res.showToast("续命成功");
             //        self.main.fuhuo(false,true,false);
             //        self.main.qianqista.share(true);
             //        self.hide();
-            //    }
-            //    else {
-            //        BK.Script.log(1, 1, "分享失败" + retCode);
+            //    },
+            //    fail: function(failObj){
+            //        BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+            //
             //        self.main.qianqista.share(false);
             //        self.hide();
+            //    },
+            //    complete: function(){
+            //        BK.Console.log('Waaaah! share complete');
             //    }
             //});
-
-            BK.Share.share({
-                qqImgUrl: imageUrl,
-                summary: title,
-                extendInfo: query,
-                success: function(succObj){
-                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
-
-                    self.res.showToast("续命成功");
-                    self.main.fuhuo(false,true,false);
-                    self.main.qianqista.share(true);
-                    self.hide();
-                },
-                fail: function(failObj){
-                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
-
-                    self.main.qianqista.share(false);
-                    self.hide();
-                },
-                complete: function(){
-                    BK.Console.log('Waaaah! share complete');
-                }
-            });
 
 
 

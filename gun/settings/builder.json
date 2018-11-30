@@ -1,4 +1,12 @@
 {
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
   "appKey": "",
   "appSecret": "",
   "encryptJs": true,
@@ -27,7 +35,7 @@
   },
   "startScene": "af092c72-7cfe-4c69-a3fb-0d770d2028a1",
   "title": "gun",
-  "webOrientation": "auto",
+  "webOrientation": "portrait",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
     "appid": "wx5fbc3c48bb79327b",
@@ -36,6 +44,5 @@
     "subContext": "rank"
   },
   "xxteaKey": "7171e9f9-a6b4-4c",
-  "zipCompressJs": true,
-  "renderMode": "0"
+  "zipCompressJs": true
 }

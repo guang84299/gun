@@ -110,7 +110,7 @@ cc.Class({
             BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
                 BK.Script.log(1,1,"-------wxFuhuoRank callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
                 // 返回错误码信息
-                if (errCode !== 0) {
+                if (errCode != 0) {
                     BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
                     return;
                 }

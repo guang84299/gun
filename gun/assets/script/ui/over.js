@@ -72,6 +72,7 @@ cc.Class({
         if(this.main.GAME.isShouYix2)
             storage.setStorageCoin(parseInt(storage.getStorageCoin()) + parseInt(this.main.GAME.coin));
         //this.initGmae();
+
         this.main.node_game_ui.active = false;
         this.main.openover = true;
         this.node_over_coin.getComponent("cc.Label").string = storage.getStorageCoin();
@@ -80,14 +81,13 @@ cc.Class({
         //this.node_over_chaoyue.getComponent("cc.Label").string = "超过全国"+ this.main.getChaoyue2() +"的用户";
         cc.find("change/sp",this.node_over).color = this.main.ltcolor;
         cc.find("change/txt",this.node_over).color = this.main.ltcolor;
-
         this.main.loadPic(this.node_over_iconme,this.main.qianqista.avatarUrl);
         //cc.find("bg/playerbg/title",this.node_over).getComponent("cc.Label").string = this.main.getChaoyue3();
         //cc.find("bg/playerbg/lv",this.node_over).getComponent("cc.Label").string = "LV-"+this.main.getChaoyue();
         //cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
         this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
         this.wxOverRank(Math.floor(this.main.GAME.score));
-
+        //this.res.showToast("---3");
         if(this.main.GAME.useZhanShi)
         {
             if(storage.getStorageHasZhanShi() == 0)
@@ -147,7 +147,7 @@ cc.Class({
             BK.QQ.getRankListWithoutRoom(attr, order, rankType, function(errCode, cmd, data) {
                 BK.Script.log(1,1,"-------wxOverRank callback  cmd" + cmd + " errCode:" + errCode + "  data:" + JSON.stringify(data));
                 // 返回错误码信息
-                if (errCode !== 0) {
+                if (errCode != 0) {
                     BK.Script.log(1,1,'------获取排行榜数据失败!错误码：' + errCode);
                     return;
                 }
@@ -356,36 +356,40 @@ cc.Class({
                 extendInfo:query,    //QQ聊天消息扩展字段
             };
 
-            //BK.QQ.share(shareInfo, function (retCode, shareDest, isFirstShare) {
-            //    BK.Script.log(1, 1, "retCode:" + retCode + " shareDest:" + shareDest + " isFirstShare:" + isFirstShare);
-            //    if (retCode == 0) {
-            //        BK.Script.log(1, 1, "分享成功：" + retCode);
-            //        self.main.qianqista.share(true);
-            //    }
-            //    else {
-            //        BK.Script.log(1, 1, "分享失败" + retCode);
-            //        self.main.qianqista.share(false);
-            //    }
-            //});
-
-            BK.Share.share({
-                qqImgUrl: imageUrl,
-                summary: title,
-                extendInfo: query,
-                success: function(succObj){
-                    BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
-
-                    self.main.qianqista.share(true);
-                },
-                fail: function(failObj){
-                    BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
-
-                    self.main.qianqista.share(false);
-                },
-                complete: function(){
-                    BK.Console.log('Waaaah! share complete');
+            BK.QQ.shareToArk(0, title, imageUrl, true, query,function (errCode, cmd, data) {
+                if (errCode == 0) {
+                    BK.Script.log(1, 1," ret:" + data.ret +  // 是否成功 (0:成功，1：不成功)
+                    " aioType:" + data.aioType + // 聊天类型 （1：个人，4：群，5：讨论组，6：热聊）
+                    " gameId:" + data.gameId); // 游戏 id
+                    if(data.ret == 0)
+                    {
+                        self.main.qianqista.share(true);
+                    }
+                    else
+                    {
+                        self.main.qianqista.share(false);
+                    }
                 }
             });
+
+            //BK.Share.share({
+            //    qqImgUrl: imageUrl,
+            //    summary: title,
+            //    extendInfo: query,
+            //    success: function(succObj){
+            //        BK.Console.log('Waaaah! share success', succObj.code, JSON.stringify(succObj.data));
+            //
+            //        self.main.qianqista.share(true);
+            //    },
+            //    fail: function(failObj){
+            //        BK.Console.log('Waaaah! share fail', failObj.code, JSON.stringify(failObj.msg));
+            //
+            //        self.main.qianqista.share(false);
+            //    },
+            //    complete: function(){
+            //        BK.Console.log('Waaaah! share complete');
+            //    }
+            //});
 
 
 

@@ -9,20 +9,20 @@ module.exports = {
         if(this.getStorageMusic() == 1)
         {
             this.stopMusic();
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            {
-                if(this.audioContext == null)
-                {
-                    this.audioContext = BK.createAudioContext();
-                    this.audioContext.loop = true;
-                    this.audioContext.src = "GameRes://"+music;
-                }
-                this.audioContext.play();
-            }
-            else
-            {
+            //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            //{
+            //    if(this.audioContext == null)
+            //    {
+            //        this.audioContext = BK.createAudioContext();
+            //        this.audioContext.loop = true;
+            //        this.audioContext.src = "GameRes://"+music;
+            //    }
+            //    this.audioContext.play();
+            //}
+            //else
+            //{
                 cc.audioEngine.playMusic(music,true);
-            }
+            //}
         }
 
     },
@@ -41,16 +41,16 @@ module.exports = {
 
     stopMusic: function()
     {
-        if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-        {
-            //BK.Audio.switch = false;
-            if(this.audioContext)
-                this.audioContext.pause();
-        }
-        else
-        {
+        //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+        //{
+        //    //BK.Audio.switch = false;
+        //    if(this.audioContext)
+        //        this.audioContext.pause();
+        //}
+        //else
+        //{
             cc.audioEngine.stopMusic();
-        }
+        //}
 
     },
 
@@ -58,20 +58,20 @@ module.exports = {
     {
         if(this.getStorageSound() == 1)
         {
-            if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
-            {
-                if(this.effectContext == null)
-                {
-                    this.effectContext = BK.createAudioContext({'type':'effect'});
-                }
-                //播放多个音效
-                this.effectContext.src = "GameRes://"+sound;
-                this.effectContext.play()
-            }
-            else
-            {
+            //if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
+            //{
+            //    if(this.effectContext == null)
+            //    {
+            //        this.effectContext = BK.createAudioContext({'type':'effect'});
+            //    }
+            //    //播放多个音效
+            //    this.effectContext.src = "GameRes://"+sound;
+            //    this.effectContext.play()
+            //}
+            //else
+            //{
                 cc.audioEngine.play(sound,false,1);
-            }
+            //}
         }
 
     },

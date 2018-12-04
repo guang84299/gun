@@ -87,7 +87,6 @@ cc.Class({
         //cc.find("bg/playerbg/player",this.node_over).getComponent("cc.Sprite").spriteFrame = this.main.getChaoyue4();
         this.main.wxOverRank(Math.floor(this.main.GAME.score),this.main.GAME.currPlayer,this.main.GAME.currGun);
         this.wxOverRank(Math.floor(this.main.GAME.score));
-        //this.res.showToast("---3");
         if(this.main.GAME.useZhanShi)
         {
             if(storage.getStorageHasZhanShi() == 0)

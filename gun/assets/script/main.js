@@ -69,6 +69,7 @@ cc.Class({
     initNet: function()
     {
         var self = this;
+
         qianqista.init("101486189","西部神枪手",function(){
             qianqista.datas(function(res){
                 console.log('my datas:', res);
@@ -482,13 +483,13 @@ cc.Class({
 
         if(this.GAME.moreba)
         {
-            this.node_main_morebabg.active = true;
-            this.node_main_morebabg_morebaarrow.runAction(cc.repeatForever(cc.sequence(
-                cc.moveBy(0.4,6,0).easing(cc.easeSineIn()),
-                cc.moveBy(0.4,-6,0).easing(cc.easeSineIn())
-            )));
-
-            this.initMoreBaItems();
+            //this.node_main_morebabg.active = true;
+            //this.node_main_morebabg_morebaarrow.runAction(cc.repeatForever(cc.sequence(
+            //    cc.moveBy(0.4,6,0).easing(cc.easeSineIn()),
+            //    cc.moveBy(0.4,-6,0).easing(cc.easeSineIn())
+            //)));
+            //
+            //this.initMoreBaItems();
         }
 
         this.updateDian();
@@ -510,8 +511,8 @@ cc.Class({
             cc.find("bottom/lingjiang",this.node_main).active = false;
             cc.find("linggunbg",this.node_main).active = false;
             cc.find("zhanshibg",this.node_main).x = cc.winSize.width/2;
-            cc.find("bottom/gongzhonghao",this.node_main).x = 197;
-            cc.find("bottom/chengjiu",this.node_main).x = 460;
+            cc.find("bottom/gongzhonghao",this.node_main).active = false;
+            cc.find("bottom/chengjiu",this.node_main).x = 360;
 
             cc.find("wangqiu",this.node_main).active = false;
             cc.find("duihuan",this.node_main).active = false;
@@ -525,7 +526,7 @@ cc.Class({
             }
             else
             {
-                cc.find("duihuan2",this.node_main).active = true;
+                //cc.find("duihuan2",this.node_main).active = true;
             }
 
         }
@@ -4093,7 +4094,6 @@ cc.Class({
         this.node_over.show();
 
         var self = this;
-        self.res.showToast("---1--");
         qianqista.rankScore(function(res){
             self.worldrank.wujin = res.data;
         });
@@ -5324,7 +5324,7 @@ cc.Class({
                 var videoAd = BK.Advertisement.createVideoAd();
                 videoAd.onLoad(function () {
                     //加载成功
-                    BK.Script.log(1,1,"onLoad")
+                    BK.Script.log(1,1,"onLoad");
                 });
 
                 videoAd.onPlayStart(function () {
@@ -5342,6 +5342,7 @@ cc.Class({
                 videoAd.onError(function (err) {
                     //加载失败
                     BK.Script.log(1,1,"onError code:"+err.code+" msg:"+err.msg);
+
                 });
 
                 videoAd.onClose(function (err) {
@@ -5741,8 +5742,6 @@ cc.Class({
 
     wxBannerShow: function()
     {
-        if(true)
-            return;
         var self = this;
         if(self.bannershow)
             return;
@@ -5753,7 +5752,7 @@ cc.Class({
                 if(self.bannerAd == null)
                 {
                     self.bannerAd = BK.Advertisement.createBannerAd({
-                        viewId:1001
+                        viewId:1003
                     });
                     self.bannerAd.onLoad(function () {
                         //广告加载成功
@@ -5832,8 +5831,6 @@ cc.Class({
 
     wxBannerHide: function()
     {
-        if(true)
-            return;
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
         {

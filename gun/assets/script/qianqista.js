@@ -74,7 +74,7 @@ module.exports = {
     pkroomtype: 0,
     avatarUrl: "",//头像
     isCanpvp: false,
-    init: function(appId,gameName,initcallback,showcallback)
+    init: function(appId,gameName,initcallback,showcallback,test)
     {
         var self = this;
         if(cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS)
@@ -136,13 +136,22 @@ module.exports = {
 //                    if(self.showcallback)
 //                        self.showcallback();
 //                }
-
-                BK.MQQ.Account.getNick(this.openid,function(openID,nick){
-                    self.userName = nick;
+                if(cc.sys.os == cc.sys.OS_IOS)
+                {
+                    self.userName = "我";
                     self.getAvatarUrl(function(){
                         self.initdata();
                     });
-                });
+                }
+                else{
+                    BK.MQQ.Account.getNick(this.openid,function(openID,nick){
+                        self.userName = nick;
+                        self.getAvatarUrl(function(){
+                            self.initdata();
+                        });
+                    });
+                }
+
 
                 //new BK.Game({
                 //    onLoad: function()
@@ -208,6 +217,8 @@ module.exports = {
                     if(rd.selfFlag)
                     {
                         self.avatarUrl = rd.url;
+                        if(cc.sys.os == cc.sys.OS_IOS)
+                            self.userName = rd.nick;
                         break;
                     }
                 }
